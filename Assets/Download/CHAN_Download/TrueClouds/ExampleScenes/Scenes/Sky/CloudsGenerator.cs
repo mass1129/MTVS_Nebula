@@ -29,9 +29,9 @@ public class CloudsGenerator : MonoBehaviour
                 }
                 float height = HeightMap.GetPixel(x, y).g * 46 - 30;
                 float width = HeightMap.GetPixel(x, y).b * 40;
-                height *= 5;
+                height *= 10;
                 width *= 5;
-                curPos.y = 150;
+                curPos.y = 50;
                 int id = Random.Range(0, Prefabs.Length);
                 cnt++;
                 GameObject placed = (GameObject)Instantiate(Prefabs[id], curPos, Quaternion.identity);
