@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.41960785, g: 0.54505664, b: 0.627451, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 4067de1a02072244798361060c5e7325, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 71f14a2d79f732f4d9893ef1b911f4ff, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1746414291}
-  m_IndirectSpecularColor: {r: 0.52118295, g: 0.36980844, b: 0.30509248, a: 1}
+  m_IndirectSpecularColor: {r: 0.044527292, g: 0.19503772, b: 0.36834043, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -128,7 +128,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5316302218026839763, guid: 3448a79bf2eb83748b2f7245beee2b5e, type: 3}
   m_PrefabInstance: {fileID: 1283370735}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &124327029
+--- !u!114 &124327031
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -137,7 +137,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 124327028}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f40293bae1e88304d927f4d42330e387, type: 3}
+  m_Script: {fileID: 11500000, guid: 4291f65896df80e42aaa69d26a7c9b3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   PlanetColor: {fileID: 2100000, guid: b50bbf97ed266724f9400505f4c95f8d, type: 2}
@@ -147,7 +147,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5316302218026839763, guid: 3448a79bf2eb83748b2f7245beee2b5e, type: 3}
   m_PrefabInstance: {fileID: 1164212826}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &202099976
+--- !u!114 &202099978
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -156,17 +156,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 202099975}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f40293bae1e88304d927f4d42330e387, type: 3}
+  m_Script: {fileID: 11500000, guid: 4291f65896df80e42aaa69d26a7c9b3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlanetColor: {fileID: 2100000, guid: 9a811b648c5c5804b86c02eee59294c0, type: 2}
+  PlanetColor: {fileID: 2100000, guid: 1fcc2a655f7230140a371465265dc105, type: 2}
   prefab: {fileID: 121631708518975768, guid: 33decbdbf17cfd24eb4c4c3a3ff8329e, type: 3}
 --- !u!1 &365666505 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5316302218026839763, guid: 3448a79bf2eb83748b2f7245beee2b5e, type: 3}
   m_PrefabInstance: {fileID: 1084964417}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &365666506
+--- !u!114 &365666508
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -175,10 +175,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 365666505}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f40293bae1e88304d927f4d42330e387, type: 3}
+  m_Script: {fileID: 11500000, guid: 4291f65896df80e42aaa69d26a7c9b3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlanetColor: {fileID: 2100000, guid: 6496e454943aa27408472d66e8d221ba, type: 2}
+  PlanetColor: {fileID: 2100000, guid: 82cc91f434b7369409c3faf6213b281a, type: 2}
   prefab: {fileID: 121631708518975768, guid: 33decbdbf17cfd24eb4c4c3a3ff8329e, type: 3}
 --- !u!1 &522612222
 GameObject:
@@ -228,7 +228,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &701025323
 PrefabInstance:
@@ -239,7 +239,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4196638788966588084, guid: 3448a79bf2eb83748b2f7245beee2b5e, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4196638788966588084, guid: 3448a79bf2eb83748b2f7245beee2b5e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -373,7 +373,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5316302218026839763, guid: 3448a79bf2eb83748b2f7245beee2b5e, type: 3}
   m_PrefabInstance: {fileID: 701025323}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &968676058
+--- !u!114 &968676060
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -382,10 +382,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 968676057}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f40293bae1e88304d927f4d42330e387, type: 3}
+  m_Script: {fileID: 11500000, guid: 4291f65896df80e42aaa69d26a7c9b3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlanetColor: {fileID: 2100000, guid: 1a19c0c8df11a764cbf048e43f74a564, type: 2}
+  PlanetColor: {fileID: 2100000, guid: db18d42bbad7df6499f08864ee6465c2, type: 2}
   prefab: {fileID: 121631708518975768, guid: 33decbdbf17cfd24eb4c4c3a3ff8329e, type: 3}
 --- !u!1001 &1084964417
 PrefabInstance:
@@ -599,7 +599,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5316302218026839763, guid: 3448a79bf2eb83748b2f7245beee2b5e, type: 3}
   m_PrefabInstance: {fileID: 1162005668}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1178563399
+--- !u!114 &1178563401
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -608,10 +608,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1178563398}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f40293bae1e88304d927f4d42330e387, type: 3}
+  m_Script: {fileID: 11500000, guid: 4291f65896df80e42aaa69d26a7c9b3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlanetColor: {fileID: 2100000, guid: 1fcc2a655f7230140a371465265dc105, type: 2}
+  PlanetColor: {fileID: 2100000, guid: 6496e454943aa27408472d66e8d221ba, type: 2}
   prefab: {fileID: 121631708518975768, guid: 33decbdbf17cfd24eb4c4c3a3ff8329e, type: 3}
 --- !u!1001 &1253032519
 PrefabInstance:
@@ -887,7 +887,7 @@ MonoBehaviour:
   DepthFilteringPower: 0.478
   UseNoise: 1
   Noise: {fileID: 2800000, guid: ea4ad7e4f21a143478fefc813c9174ab, type: 3}
-  Wind: {x: -50, y: 1, z: -100}
+  Wind: {x: -50, y: 1, z: -500}
   NoiseScale: 4
   DepthNoiseScale: 6
   NormalNoisePower: 1.55
@@ -1080,14 +1080,14 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1603660873 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5316302218026839763, guid: 3448a79bf2eb83748b2f7245beee2b5e, type: 3}
   m_PrefabInstance: {fileID: 1253032519}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1603660874
+--- !u!114 &1603660876
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1096,10 +1096,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1603660873}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f40293bae1e88304d927f4d42330e387, type: 3}
+  m_Script: {fileID: 11500000, guid: 4291f65896df80e42aaa69d26a7c9b3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlanetColor: {fileID: 2100000, guid: 82cc91f434b7369409c3faf6213b281a, type: 2}
+  PlanetColor: {fileID: 2100000, guid: 1a19c0c8df11a764cbf048e43f74a564, type: 2}
   prefab: {fileID: 121631708518975768, guid: 33decbdbf17cfd24eb4c4c3a3ff8329e, type: 3}
 --- !u!1 &1746414290
 GameObject:
@@ -1200,7 +1200,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5316302218026839763, guid: 3448a79bf2eb83748b2f7245beee2b5e, type: 3}
   m_PrefabInstance: {fileID: 702064689}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1797038087
+--- !u!114 &1797038089
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1209,8 +1209,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 1797038086}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f40293bae1e88304d927f4d42330e387, type: 3}
+  m_Script: {fileID: 11500000, guid: 4291f65896df80e42aaa69d26a7c9b3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlanetColor: {fileID: 2100000, guid: db18d42bbad7df6499f08864ee6465c2, type: 2}
+  PlanetColor: {fileID: 2100000, guid: 9a811b648c5c5804b86c02eee59294c0, type: 2}
   prefab: {fileID: 121631708518975768, guid: 33decbdbf17cfd24eb4c4c3a3ff8329e, type: 3}

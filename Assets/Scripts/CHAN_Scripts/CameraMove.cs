@@ -21,7 +21,16 @@ public class CameraMove : MonoBehaviour
         // 카메라 위치 이동기
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
+
         dir = (x * transform.right + y * transform.forward).normalized;
+        if (Input.GetKey(KeyCode.E))
+        {
+            dir.y += 1;
+        }
+        if (Input.GetKey(KeyCode.Q))
+        {
+            dir.y -= 1;
+        }
         transform.position += dir * cameraSpeed * Time.deltaTime;
         // 카메라 시점 이동기
         float mx = Input.GetAxis("Mouse X");

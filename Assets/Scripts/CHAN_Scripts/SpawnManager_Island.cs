@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnManager_2D : MonoBehaviour
+public class SpawnManager_Island : MonoBehaviour
 {
     // Start is called before the first frame update
-    PlanetInfo info = new PlanetInfo();
+    IslandInfo info = new IslandInfo();
     public Material PlanetColor;
     public GameObject prefab;
     void Start()
@@ -15,14 +15,14 @@ public class SpawnManager_2D : MonoBehaviour
         //count만큼 행성을 생성한다.
         for (int i = 0; i < info.PlanetCount; i++)
         {
-            GameObject p = Instantiate(Resources.Load<GameObject>("CHAN_Resources/planet" ));
+            GameObject p = Instantiate(Resources.Load<GameObject>("CHAN_Resources/"+ prefab.ToString().Substring(0,prefab.ToString().IndexOf(" "))));
             p.transform.localScale = p.transform.localScale * Random.Range(info.minScale, info.maxScale);
             info.planets.Add(p);
             Vector2 randomPos = Random.insideUnitCircle;
             p.transform.position = transform.position + new Vector3(randomPos.x * info.radius, 0, randomPos.y * info.radius);
             Material _material = p.GetComponent<Renderer>().material;
-            _material.SetColor("_EmissionColor", PlanetColor.GetColor("_EmissionColor"));
-
+            _material.SetColor("_Color", PlanetColor.GetColor("_Color"));
+           
 
             info.eachSpeed[i] = Time.deltaTime * Random.Range(0.2f, info.rotateSpeed);
         }
