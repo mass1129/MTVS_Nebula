@@ -8,7 +8,7 @@ public class PlanetInfo :MonoBehaviour
     // 기준 반경을 설정
     public float radius=250;
     [HideInInspector]public float[] eachSpeed;
-    public float rotateSpeed=1.5f;
+    public float rotateSpeed=2.5f;
     public float minScale=0.5f;
     public float maxScale=10;
 
