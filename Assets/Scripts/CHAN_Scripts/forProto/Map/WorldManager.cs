@@ -5,6 +5,11 @@ using UnityEngine.UI;
 
 public class WorldManager : MonoBehaviour 
 {
+    public static WorldManager instance;
+    private void Awake()
+    {
+        instance = this;
+    }
     // 하늘맵 씬의 전반적인 액션을 관리하는 스크립트
     // * 유저들에게 할당받은 좌표값을 해당 맵에 스폰할 수 있도록 만들어야함
     // * 월드의 한계선을 정해야 함, 이를 속성으로 부여
@@ -52,8 +57,7 @@ public class WorldManager : MonoBehaviour
                 if (Mathf.Abs(userPos.x)> DangerZone_width || Mathf.Abs(userPos.z) > DangerZone_width || Mathf.Abs(userPos.y) > DangerZone_height)
                 {
                     //일단은 원점으로 다시 돌려 보내자
-                    user.transform.position = Vector3.zero;
-  
+                    ReSpawnUser(user);
                 }
                 
             }
@@ -74,5 +78,10 @@ public class WorldManager : MonoBehaviour
     {
         userObjs.Remove(player);
     }
-#endregion
+    #endregion
+    void ReSpawnUser(GameObject user)
+    {
+        user.transform.position = Vector3.zero;
+        Camera.main.transform.position = Vector3.zero;
+    }
 }

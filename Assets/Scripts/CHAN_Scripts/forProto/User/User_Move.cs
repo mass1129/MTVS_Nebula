@@ -20,7 +20,7 @@ public class User_Move : MonoBehaviour
         float mx = Input.GetAxis("Mouse X");
         float my = Input.GetAxis("Mouse Y");
 
-        dir = ((x * transform.right) + (y * transform.forward)).normalized;
+        dir = (/*(x* transform.right) +*/ (y * transform.forward)).normalized;
         //쉬프트키를 눌렀을 때 대쉬되도록 만든다.
         float totalSpeed;
         if (Input.GetKeyDown(KeyCode.LeftShift))
