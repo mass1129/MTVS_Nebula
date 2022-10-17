@@ -14,7 +14,5 @@ class Info_Island
     public Vector3 pos;
     // 유저 하늘섬에 대한 정보
 }
-public class User_Info : MonoBehaviour
-{
 
-}
+
