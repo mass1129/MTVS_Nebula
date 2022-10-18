@@ -1,34 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
-public class IslandSpawner : MonoBehaviour
+//json에서 받아온 정보들을 해당 클래스에 저장한다. 
+public class Island_Spawner : MonoBehaviour
 {
+
+    
     //유저가 접속하면 유저의 정보를 가져온다. 
     //일단 인위적으로 100명의 유저가 접속했다고 가정하겠음
     List<GameObject> islands = new List<GameObject>();
     List<Vector3> islandsPos = new List<Vector3>();
     public Transform islandsTransForm;
+
     private void Start()
     {
-
-        for (int i = 0; i < 50; i++)
+        //OnLoadUserInfo();
+        for (int i = 0; i < LoadJson.instance.positions.Count; i++)
         {
             //Info_Island island = new Info_Island();
-            GameObject land = Instantiate(Resources.Load<GameObject>("CHAN_Resources/Island 1"));
+            
+            GameObject land = Instantiate(Resources.Load<GameObject>("CHAN_Resources/"+ LoadJson.instance.Islands[i]),islandsTransForm);
+            land.transform.localScale *= 0.1f;
             islands.Add(land);
-            Vector3 pos = RandomPos();
-            for (int j = 0; j < islandsPos.Count; j++)
-            {
-                if (pos == islandsPos[j])
-                {
-                    pos = RandomPos();
-                }
-            }
-            land.transform.position = pos;
+            //Vector3 pos = RandomPos();
+            //for (int j = 0; j < islandsPos.Count; j++)
+            //{
+            //    if (pos == islandsPos[j])
+            //    {
+            //        pos = RandomPos();
+            //    }
+            //}
+            land.transform.position = LoadJson.instance.positions[i];
+
+            
             //land.transform.localScale *=0.5f ;
             //그리고 스폰한 위치를 리스트에 저장 
-            islandsPos.Add(land.transform.position);
+            //islandsPos.Add(land.transform.position);
             //만약 스폰하려는 위치가 이미 리스트상에 있으면 다시 랜덤으로 돌린다.
         }
     }

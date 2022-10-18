@@ -7,18 +7,25 @@ using UnityEngine;
 
 public class User_Move : MonoBehaviour
 {
+    public static User_Move instance;
+    private void Awake()
+    {
+        instance = this;
+    }
     public float userSpeed;
     public float speedMultiplier;
-    public float rotateSpeed;
-    float rx, ry;
+  
+    
     Vector3 dir;
+    public bool islandSelected;
+
+
 
     void Update()
     {
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
-        float mx = Input.GetAxis("Mouse X");
-        float my = Input.GetAxis("Mouse Y");
+        
 
         dir = (/*(x* transform.right) +*/ (y * transform.forward)).normalized;
         //쉬프트키를 눌렀을 때 대쉬되도록 만든다.
@@ -31,10 +38,8 @@ public class User_Move : MonoBehaviour
         {
             totalSpeed = userSpeed;
         }
-        rx -= my * rotateSpeed * Time.deltaTime;
-        ry += mx * rotateSpeed * Time.deltaTime;
 
-        transform.localRotation = Quaternion.EulerAngles(rx, ry, 0);
+            
         transform.position += dir * totalSpeed * Time.deltaTime;
     }
 }
