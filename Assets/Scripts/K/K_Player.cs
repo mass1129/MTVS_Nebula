@@ -8,6 +8,7 @@ public enum PlayerStates // Player의 기본 상태
     ThirdMove,
     FirstMove,
     SpaceCamMode,
+    BuildingMode,
     Jump,
     Falling,
     Death,
@@ -73,7 +74,7 @@ public class K_Player : MonoBehaviour
         Updated();
         //Updated_UpperBody();
         GroundedCheck();
-        Debug.Log(CurrentState.ToString());
+        //Debug.Log(CurrentState.ToString());
         //Debug.Log(cc.isGrounded);
     }
 

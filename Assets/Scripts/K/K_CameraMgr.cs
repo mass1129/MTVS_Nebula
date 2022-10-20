@@ -11,22 +11,33 @@ public class K_CameraMgr : MonoBehaviour
     public Transform spaceCamRoot;
     public Transform spaceCamStartPos;
 
+    public GameObject buildingSystem;
+    public Transform buildCamTarget;
+    public Transform buildTargetStartPos;
+
     public Cinemachine.AxisState xAxis;
     public Cinemachine.AxisState yAxis;
 
     public Camera playerCamera;
     public CinemachineVirtualCamera firstPersonCamera;
     public CinemachineVirtualCamera spaceCamera;
-
+    public CinemachineVirtualCamera buildCamera;
+    [HideInInspector]
+    public CinemachineCameraOffset  buildCamOffset;
     K_Player player;
     public bool firstPersonView= false;
     public bool spaceView= false;
+
+    public float zoomChangeAmount = 100;
     // Start is called before the first frame update
     void Start()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         player = GetComponent<K_Player>();
+        buildingSystem.SetActive(false);
+        buildCamOffset = buildCamera.gameObject.GetComponent<CinemachineCameraOffset>();
+        
     }
 
     // Update is called once per frame

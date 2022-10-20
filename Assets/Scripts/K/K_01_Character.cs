@@ -12,11 +12,12 @@ public class K_01_Character : K_Player
        
 
         // Assult가 가질 수 있는 상태 개수만큼 메모리 할당, 각 상태에 클래스 메모리 할당. states[(int)PlayerStates.Idle].Execute()와 같은 방식으로 사용.
-        states = new K_PlayerState<K_Player>[4];
+        states = new K_PlayerState<K_Player>[5];
         states[(int)PlayerStates.Idle] = new K_01_OwnedStates.Idle();
         states[(int)PlayerStates.ThirdMove] = new K_01_OwnedStates.ThirdMove();
         states[(int)PlayerStates.FirstMove] = new K_01_OwnedStates.FirstMove();
         states[(int)PlayerStates.SpaceCamMode] = new K_01_OwnedStates.SpaceCamMode();
+        states[(int)PlayerStates.BuildingMode] = new K_01_OwnedStates.BuildingMode();
         //states[(int)PlayerStates.Falling] = new K_01_OwnedStates.Falling();
         //states[(int)PlayerStates.Death] = new K_01_OwnedStates.Death();
         //states[(int)PlayerStates.Global] = new K_01_OwnedStates.Global();

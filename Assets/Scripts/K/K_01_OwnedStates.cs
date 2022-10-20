@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CodeMonkey.Utils;
 
 
 namespace K_01_OwnedStates
@@ -53,7 +54,11 @@ namespace K_01_OwnedStates
             {
                 entity.ChangeState(PlayerStates.SpaceCamMode);
             }
-         
+            
+            if(Input.GetKeyDown(KeyCode.C))
+            {
+                entity.ChangeState(PlayerStates.BuildingMode);
+            }
             //if (Input.GetButtonDown("Jump"))
             //{
             //    entity.ChangeState(PlayerStates.Jump);
@@ -267,6 +272,108 @@ namespace K_01_OwnedStates
             entity.ResetTrigger("SpaceCamMode");
         }
     }
+
+    public class BuildingMode : K_PlayerState<K_Player>
+    {
+        public enum Axis
+        {
+            XZ,
+            XY,
+        }
+
+        [SerializeField] private Axis axis = Axis.XZ;
+        [SerializeField] private float moveSpeed = 50f;
+        float zoomAmount;
+
+
+        public override void Enter(K_Player entity)
+        {
+            entity.camMgr.buildingSystem.SetActive(true);
+            entity.camMgr.buildCamOffset.m_Offset.z = 0f;
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            zoomAmount = entity.camMgr.zoomChangeAmount;
+        }
+
+        public override void Execute(K_Player entity)
+        {
+
+
+            float moveX = 0f;
+            float moveY = 0f;
+
+            if (Input.GetKey(KeyCode.W))
+            {
+                moveY = +1f;
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                moveY = -1f;
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                moveX = -1f;
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                moveX = +1f;
+            }
+
+            Vector3 moveDir;
+
+            switch (axis)
+            {
+                default:
+                case Axis.XZ:
+                    moveDir = new Vector3(moveX, 0, moveY).normalized;
+                    break;
+                case Axis.XY:
+                    moveDir = new Vector3(moveX, moveY).normalized;
+                    break;
+            }
+
+            if (moveX != 0 || moveY != 0)
+            {
+                // Not idle
+            }
+
+            if (axis == Axis.XZ)
+            {
+                moveDir = UtilsClass.ApplyRotationToVectorXZ(moveDir, 30f);
+            }
+
+            entity.camMgr.buildCamTarget.position += ((entity.camMgr.buildCamTarget.forward * moveY) 
+                + (entity.camMgr.buildCamTarget.right * moveX)) * moveSpeed * Time.deltaTime;
+
+            entity.camMgr.buildCamOffset.m_Offset.z = Mathf.Clamp(entity.camMgr.buildCamOffset.m_Offset.z, 0, 35);
+
+            if (Input.mouseScrollDelta.y > 0)
+            {
+                entity.camMgr.buildCamOffset.m_Offset.z += zoomAmount * Time.deltaTime;
+            }
+            if (Input.mouseScrollDelta.y < 0)
+            {
+                entity.camMgr.buildCamOffset.m_Offset.z -= zoomAmount * Time.deltaTime;
+            }
+            
+
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                entity.ChangeState(PlayerStates.Idle);
+            }
+        }
+
+    
+
+    public override void Exit(K_Player entity)
+        {
+            entity.camMgr.buildingSystem.SetActive(false);
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+    }
+
+
     //public class Jump : K_PlayerState<K_Player>
     //{
     //    float jumpVelocity = 0;
