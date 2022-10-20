@@ -17,11 +17,13 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
     public Dictionary<string, string> island_Type = new Dictionary<string, string>();
     public Dictionary<string, string> User_image = new Dictionary<string, string>();
     public List<string> User_name = new List<string>();
+    // islandSpawner에서 생성한 섬 오브젝트를 저장하는 리스트
+    public List<GameObject> UserObj = new List<GameObject>();
     // 카테고리 비교 하는 배열
     string[] compare_category = { "cat", "dog", "animation", "celeb", "car" };
     string[] island_category = { "island 1", "island 2", "island 3", "island 4", "island 5" };
     //섬 사이 간격 구배
-    float dis_multiplier=100;
+    float dis_multiplier=10;
 
     #region 서버에게 정보를 가져오는 함수 모음
     public void LoadIslandInfo()
@@ -83,8 +85,9 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
             Vector3 temp_pos = new Vector3(float.Parse(data_values[0])* dis_multiplier, float.Parse(data_values[1])* dis_multiplier, float.Parse(data_values[2])* dis_multiplier);
             island_Pos.Add(count.ToString(),temp_pos);
             //csv의 이미지 주소값을  string 으로 저장하자
-            User_image.Add(count.ToString(), data_values[3].Remove(data_values[3].IndexOf('.')));
-            
+            //이미 Resources에 저장된 jpg 파일은 뒤에 .jpg 문자가 없어야 한다.
+            //User_image.Add(count.ToString(), data_values[3].Remove(data_values[3].IndexOf('.')));
+            User_image.Add(count.ToString(), data_values[3]);
         }
 
     }

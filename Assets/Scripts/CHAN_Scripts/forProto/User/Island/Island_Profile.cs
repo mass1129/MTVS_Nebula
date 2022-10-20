@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
 public class Island_Profile : MonoBehaviour
 {
@@ -55,8 +57,29 @@ public class Island_Profile : MonoBehaviour
     }
     void LoadImage()
     {
-        profileImage.sprite = Resources.Load<Sprite>("CHAN_Resources/subset_30/" + IslandInformation.instance.User_image[user_name]);
+        StartCoroutine(GetTexture(IslandInformation.instance.User_image[user_name]));
+        //profileImage.sprite = Resources.Load<Sprite>("CHAN_Resources/subset_30/" + IslandInformation.instance.User_image[user_name]);
         userName_Text.text = "UserName_" + user_name;
         userName_Text.enabled = false;
     }
+    // 이 코루틴은 한번만 사용되어야 한다. 
+    IEnumerator GetTexture(string url)
+    {
+        UnityWebRequest www = UnityWebRequestTexture.GetTexture(url);
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log(www.error);
+        }
+        else
+        {
+            Texture2D myTexture = ((DownloadHandlerTexture)www.downloadHandler).texture;
+
+            profileImage.sprite = Sprite.Create(myTexture, new Rect(0f, 0f, myTexture.width, myTexture.height), Vector2.zero);
+            
+        }
+    }
+
+
 }

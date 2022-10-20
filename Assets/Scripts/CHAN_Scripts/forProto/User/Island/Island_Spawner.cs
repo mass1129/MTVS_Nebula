@@ -22,7 +22,7 @@ public class Island_Spawner : MonoBehaviour
     {
         //일단 csv파일 추출해서 콘솔에 보이도록 해보자
         //key값이 2부터 시작한다 딱히 신경쓸부분은 아니다 나중에 key값에 유저 이름 들어가니까
-        IslandInformation.instance.LoadFromCSV("subset30.csv");
+        IslandInformation.instance.LoadFromCSV("subset_30_v2_fin.csv");
         ForVerifyInfo();
 
         for (int i = 0; i < IslandInformation.instance.User_name.Count; i++)
@@ -33,13 +33,11 @@ public class Island_Spawner : MonoBehaviour
             land.transform.localScale *= 0.5f;
             //생성한 하늘섬에게 이름을 부여
             land.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Island_Profile>().user_name = userName;
-
-
             land.transform.position = IslandInformation.instance.island_Pos[userName];
+            IslandInformation.instance.UserObj.Add(land);
 
             //        //land.transform.localScale *=0.5f ;
             //        //그리고 스폰한 위치를 리스트에 저장 
-            //        //islandsPos.Add(land.transform.position);
             //        //만약 스폰하려는 위치가 이미 리스트상에 있으면 다시 랜덤으로 돌린다.
         }
     }
