@@ -1,53 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class Island_Setting : MonoBehaviour
 {
 
-    //¸¶¿ì½º Æ÷ÀÎÅÍ°¡ ÇØ´ç ÇÏ´Ã¼¶¿¡ Á¢±ÙÇßÀ»¶§, 
-    //¾Æ¿ô¶óÀÎÀÌ ¶ß°í À¯Àú ÀÌ¸§ÀÌ UI·Î º¸ÀÌ°Ô µÈ´Ù. 
-    //¸¶¿ì½º·Î ÇÏ´Ã¼¶À» Å¬¸¯ÇÏ¸é 
-    //Ä«¸Þ¶ó À§Ä¡¸¦ ÇÏ´Ã¼¶ Ä«¸Þ¶ó Æ÷Áö¼ÇÀ¸·Î Ä«¸Þ¶ó¸¦ lerpÀÌµ¿ ½ÃÅ²´Ù. 
-    //UI_Manager¿¡¼­ ¼³Á¤ÇÑ UI¸¦ ¶ç¿ì°Ô ÇÑ´Ù. (Å¥ºêÇüÅÂ·Î ±¸ÇöÀº ¾ÆÁ÷ ¸ð¸£°ÚÀ½)
-    //UI ÀÇ x ¹öÆ° ´©¸£¸é UI ´Ý±â 
+    //ï¿½ï¿½ï¿½ì½º ï¿½ï¿½ï¿½ï¿½ï¿½Í°ï¿½ ï¿½Ø´ï¿½ ï¿½Ï´Ã¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, 
+    //ï¿½Æ¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ UIï¿½ï¿½ ï¿½ï¿½ï¿½Ì°ï¿½ ï¿½È´ï¿½. 
+    //ï¿½ï¿½ï¿½ì½ºï¿½ï¿½ ï¿½Ï´Ã¼ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½Ï¸ï¿½ 
+    //Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ï´Ã¼ï¿½ Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½Þ¶ï¿½ lerpï¿½Ìµï¿½ ï¿½ï¿½Å²ï¿½ï¿½. 
+    //UI_Managerï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ UIï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½. (Å¥ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ð¸£°ï¿½ï¿½ï¿½)
+    //UI ï¿½ï¿½ x ï¿½ï¿½Æ° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ UI ï¿½Ý±ï¿½ 
     GameObject islandObj;
     
+    
+    
+    public GameObject profile_Image;
+
+    private void Start()
+    {
+        
+        
+        
+    }
     public void Update()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        // ¸¶¿ì½º°¡ ´êÀº ÁöÁ¡ÀÇ °ÔÀÓ¿ÀºêÁ§Æ®¸¦ °¡Á®¿Â´Ù.
-        if (Physics.Raycast(ray, out hit, 500))
-        {
-            islandObj = hit.transform.gameObject;
-            islandObj.GetComponent<Outline>().enabled = true;
-            //¿©±â¼­ ¸¶¿ì½º Å¬¸¯À» ÇÏ¸é ÇÁ·ÎÇÊ UI°¡ ³ª¿Àµµ·Ï ÇÑ´Ù.
-            if (Input.GetMouseButtonDown(0))
-            {
-                //UIÃ¢ ¶ç¿ì´Â ±â´ÉÀ» ¸¸µéÀÚ 
-                UI_Manager.instance.OnFriendMenu(true);
-                StartCoroutine(MoveCamera());
-                User_Move.instance.islandSelected = true;
-            }
-        }
-        else
-        {
-            if (!islandObj)
-                return;
-            islandObj.GetComponent<Outline>().enabled = false;
-            
-
-        }
-        
+        //ï¿½ï¿½ï¿½â¼­ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿Í¾ï¿½ ï¿½Ñ´ï¿½. 
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Å¸ï¿½ ï¿½Ì³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â´Ù¸ï¿½
        
+
+
     }
-    void MousePointer()
-    {
-        // ¸¶¿ì½º Æ÷ÀÎÅÍ(V2ÁÂÇ¥¿¡¼­ ¿ùµå·Î ray ½îµµ·Ï ÇÑ´Ù. 
-    }
+  
     IEnumerator MoveCamera()
     {
         float distance;

@@ -5,16 +5,20 @@ using UnityEngine;
 
 
 
-public class IslandInformation : Server_IslandInfo
+public class IslandInformation :MonoBehaviour, Server_IslandInfo
 {
-    
+    public static IslandInformation instance;
+    private void Awake()
+    {
+        instance = this;
+    }
     // csv에서 저장시킬 딕셔너리 모음
     public Dictionary<string, Vector3> island_Pos = new Dictionary<string, Vector3>();
     public Dictionary<string, string> island_Type = new Dictionary<string, string>();
-    public Dictionary<string,string> User_image = new Dictionary<string, string>();
+    public Dictionary<string, string> User_image = new Dictionary<string, string>();
     public List<string> User_name = new List<string>();
     // 카테고리 비교 하는 배열
-    public string[] compare_category = { "cat", "dog", "animation", "celeb", "car" };
+    string[] compare_category = { "cat", "dog", "animation", "celeb", "car" };
     string[] island_category = { "island 1", "island 2", "island 3", "island 4", "island 5" };
     //섬 사이 간격 구배
     float dis_multiplier=100;
@@ -31,7 +35,7 @@ public class IslandInformation : Server_IslandInfo
         //서버에게 하늘섬 정보를 저장시킨다. 
     }
     #endregion
-
+    //csv파일 정보 로드 함수
     public void LoadFromCSV(string fileName)
     {
         StreamReader sr = new StreamReader(Application.dataPath + "/" + fileName);
@@ -79,7 +83,8 @@ public class IslandInformation : Server_IslandInfo
             Vector3 temp_pos = new Vector3(float.Parse(data_values[0])* dis_multiplier, float.Parse(data_values[1])* dis_multiplier, float.Parse(data_values[2])* dis_multiplier);
             island_Pos.Add(count.ToString(),temp_pos);
             //csv의 이미지 주소값을  string 으로 저장하자
-            User_image.Add(count.ToString(), data_values[3]);
+            User_image.Add(count.ToString(), data_values[3].Remove(data_values[3].IndexOf('.')));
+            
         }
 
     }
