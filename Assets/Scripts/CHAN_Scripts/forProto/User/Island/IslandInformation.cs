@@ -5,18 +5,6 @@ using UnityEngine;
 using Newtonsoft.Json.Linq;
 
 [System.Serializable]
-class IslandData
-{
-    public Dictionary<string, float> pc1 = new Dictionary<string, float>();
-    public Dictionary<string, float> pc2 = new Dictionary<string, float>();
-    public Dictionary<string, float> pc3 = new Dictionary<string, float>();
-    public Dictionary<string, string> file_name = new Dictionary<string, string>();
-
-
-
-}
-
-[System.Serializable]
 public class DDDD
 {
     public Vector3 island_Pos = new Vector3();
@@ -27,7 +15,6 @@ public class DDDD
 public class IslandInformation :MonoBehaviour, Server_IslandInfo
 {
     public static IslandInformation instance;
-    IslandData Data = new IslandData();
     private void Awake()
     {
         instance = this;
@@ -42,7 +29,7 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
     public Dictionary<string, string> User_image = new Dictionary<string, string>();
 
     
-    // 유저들의 닉네임을 저장할 딕셔너리(Key: 유저 네임,Value:닉네임)
+    // 유저들의 닉네임을 저장할 리스트(Key:닉네임)
     public List<string> User_name = new List<string>();
     // islandSpawner에서 생성한 섬 오브젝트를 저장하는딕셔너리(Key: 유저 네임,Value:오브젝트정보)
     public Dictionary<string, GameObject> UserObj = new Dictionary<string, GameObject>();
@@ -133,8 +120,6 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
                 //만약 카테고리가 일치한다면
                 if (data_values[data_values.Length-1].Contains(compare_category[i]))
                 {
-                    
-                    
                     //섬 카테고리 딕셔너리에 해당 정보 저장
                     island_Type.Add(Parsing(data_values[3]), island_category[i]);
                     //유저 이름 저장
@@ -158,29 +143,35 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
     }
     public void LoadFromJson()
     {
-        //
+        //정보 -> json
         Vector3 pos = new Vector3(10, 10, 10);
         string s = JsonUtility.ToJson(pos);
-
+        // JObject 생성
         JObject jobj = new JObject();
+        // 
         jobj["x"] = pos.x;
         jobj["y"] = pos.y;
         jobj["z"] = pos.z;
         s = jobj.ToString();
 
         Vector3 pos2 = new Vector3();
+        // string 값을 JObject로 파싱
         JObject j2 = JObject.Parse(s);
+        
         pos2.x = j2["x"].ToObject<float>();
         pos2.y = j2["y"].ToObject<float>();
         pos2.z = j2["z"].ToObject<float>();
 
-
+        // 딕셔너리 초기화
         dddDic.Clear();
+
+        // 클래스 생성
         DDDD info;
-
+        // json 로드
         var loadedJson = Resources.Load<TextAsset>("DataSet/subset30");
+        // 로드한 json 을 string으로 변환
         string jsonData = loadedJson.ToString();
-
+        // string 값을 JObject로 파싱
         JObject jObject = JObject.Parse(jsonData);
         for (int i = 0; i < 3; i++)
         {
@@ -220,14 +211,14 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
 
 
 
-        Data = JsonUtility.FromJson<IslandData>(loadedJson.ToString());
-        for (int i = 0; i < Data.pc1.Count; i++)
-        {
-            print(Data.pc1.Values);
-            print(Data.pc2.Values);
-            print(Data.pc3.Values);
-            print(Data.file_name.Values);
-        }
+        //Data = JsonUtility.FromJson<IslandData>(loadedJson.ToString());
+        //for (int i = 0; i < Data.pc1.Count; i++)
+        //{
+        //    print(Data.pc1.Values);
+        //    print(Data.pc2.Values);
+        //    print(Data.pc3.Values);
+        //    print(Data.file_name.Values);
+        //}
         
     }
     string Parsing(string s)

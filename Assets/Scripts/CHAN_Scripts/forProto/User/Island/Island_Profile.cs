@@ -22,9 +22,6 @@ public class Island_Profile : MonoBehaviour
         profileImage.enabled = false;
         camPos = Camera.main.transform;
         userName_Text = gameObject.transform.GetComponentInChildren<Text>();
-
-       
-
     }
 
     // Update is called once per frame
@@ -32,7 +29,8 @@ public class Island_Profile : MonoBehaviour
     {
         if (!turn)
         { 
-            LoadImage();
+           // LoadImage();
+            LoadImageByJson();
             turn = true;
         }
         if (visualDistance > GetDistanceToPlayer())
@@ -55,12 +53,22 @@ public class Island_Profile : MonoBehaviour
         dis = Vector3.Distance(transform.position, camPos.position);
         return dis;
     }
+
+    #region 이것은 CSV타입
     void LoadImage()
     {
         StartCoroutine(GetTexture(IslandInformation.instance.User_image[user_name]));
         userName_Text.text = "UserName_" + user_name;
         userName_Text.enabled = false;
     }
+    void LoadImageByJson()
+    {
+        JsonInfo JInfo = LoadJson.instance.Island_Dic[user_name];
+        StartCoroutine(GetTexture(JInfo.User_image));
+        userName_Text.text = "UserName_" + user_name;
+        userName_Text.enabled = false;
+    }
+    #endregion
     // 이 코루틴은 한번만 사용되어야 한다. 
     IEnumerator GetTexture(string url)
     {
