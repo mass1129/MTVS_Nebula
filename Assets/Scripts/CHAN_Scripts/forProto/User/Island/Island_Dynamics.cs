@@ -25,9 +25,9 @@ public class Island_Dynamics : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        foreach (GameObject a in IslandInformation.instance.UserObj)
+        foreach (GameObject a in IslandInformation.instance.UserObj.Values)
         {
-            foreach (GameObject b in IslandInformation.instance.UserObj)
+            foreach (GameObject b in IslandInformation.instance.UserObj.Values)
             {
                 // 만약 a,b가 서로 다른 오브젝트일 경우
                 if (!a.Equals(b))

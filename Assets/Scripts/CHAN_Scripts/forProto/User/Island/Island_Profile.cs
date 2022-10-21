@@ -18,7 +18,7 @@ public class Island_Profile : MonoBehaviour
     void Start()
     {
         //player = GameObject.Find("Player").transform;
-        profileImage = GetComponent<Image>();
+        profileImage = transform.GetChild(0).GetComponent<Image>();
         profileImage.enabled = false;
         camPos = Camera.main.transform;
         userName_Text = gameObject.transform.GetComponentInChildren<Text>();
@@ -39,8 +39,8 @@ public class Island_Profile : MonoBehaviour
         {
             profileImage.enabled = true;
             userName_Text.enabled = true;
-            userName_Text.transform.LookAt(camPos.position);
-            profileImage.transform.LookAt(camPos.position);
+            transform.LookAt(camPos.position);
+            //profileImage.transform.LookAt(camPos.position);
         }
         else
         {
@@ -58,7 +58,6 @@ public class Island_Profile : MonoBehaviour
     void LoadImage()
     {
         StartCoroutine(GetTexture(IslandInformation.instance.User_image[user_name]));
-        //profileImage.sprite = Resources.Load<Sprite>("CHAN_Resources/subset_30/" + IslandInformation.instance.User_image[user_name]);
         userName_Text.text = "UserName_" + user_name;
         userName_Text.enabled = false;
     }
@@ -75,10 +74,9 @@ public class Island_Profile : MonoBehaviour
         else
         {
             Texture2D myTexture = ((DownloadHandlerTexture)www.downloadHandler).texture;
-
             profileImage.sprite = Sprite.Create(myTexture, new Rect(0f, 0f, myTexture.width, myTexture.height), Vector2.zero);
-            
         }
+
     }
 
 

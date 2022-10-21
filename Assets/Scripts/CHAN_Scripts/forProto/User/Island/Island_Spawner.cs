@@ -11,6 +11,9 @@ public class Island_Spawner : MonoBehaviour
     //IslandInformation islandInformation = new IslandInformation();
     //List<GameObject> islands = new List<GameObject>();
     public Transform islandsTransForm;
+    public string CSV_File_Name;
+    public string CSV_File_Name2;
+    GameObject islands;
 
     private void Start()
     {
@@ -18,23 +21,44 @@ public class Island_Spawner : MonoBehaviour
 
     }
     //섬 정보 가져오게 하는 트리거 함수
-    public void OnLoadUserInfo()
+    public void InitializeIsland()
     {
         //일단 csv파일 추출해서 콘솔에 보이도록 해보자
         //key값이 2부터 시작한다 딱히 신경쓸부분은 아니다 나중에 key값에 유저 이름 들어가니까
-        IslandInformation.instance.LoadFromCSV("subset_30_v2_fin.csv");
-        ForVerifyInfo();
-
+        IslandInformation.instance.LoadFromCSV(CSV_File_Name+".csv");
+        islands = new GameObject("Islands");
         for (int i = 0; i < IslandInformation.instance.User_name.Count; i++)
         {
             // 리스트에 있는 유저들의  Key값을 가져온다.
             string userName = IslandInformation.instance.User_name[i];
-            GameObject land = Instantiate(Resources.Load<GameObject>("CHAN_Resources/" + IslandInformation.instance.island_Type[userName]), islandsTransForm);
+            GameObject land = Instantiate(Resources.Load<GameObject>("CHAN_Resources/" + IslandInformation.instance.island_Type[userName]), islands.transform);
             land.transform.localScale *= 0.5f;
             //생성한 하늘섬에게 이름을 부여
-            land.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Island_Profile>().user_name = userName;
+            land.transform.GetChild(0).GetChild(0).GetComponent<Island_Profile>().user_name = userName;
             land.transform.position = IslandInformation.instance.island_Pos[userName];
-            IslandInformation.instance.UserObj.Add(land);
+            IslandInformation.instance.UserObj.Add(userName, land);
+
+            //        //land.transform.localScale *=0.5f ;
+            //        //그리고 스폰한 위치를 리스트에 저장 
+            //        //만약 스폰하려는 위치가 이미 리스트상에 있으면 다시 랜덤으로 돌린다.
+        }
+    }
+    public void ReLoadIsland()
+    {
+        IslandInformation.instance.UserObj.Clear();
+        Destroy(islands);
+        islands = new GameObject("Islands");
+        IslandInformation.instance.LoadFromCSV(CSV_File_Name2 + ".csv");
+        for (int i = 0; i < IslandInformation.instance.User_name.Count; i++)
+        {
+            // 리스트에 있는 유저들의  Key값을 가져온다.
+            string userName = IslandInformation.instance.User_name[i];
+            GameObject land = Instantiate(Resources.Load<GameObject>("CHAN_Resources/" + IslandInformation.instance.island_Type[userName]), islands.transform);
+            land.transform.localScale *= 0.5f;
+            //생성한 하늘섬에게 이름을 부여
+            land.transform.GetChild(0).GetChild(0).GetComponent<Island_Profile>().user_name = userName;
+            land.transform.position = IslandInformation.instance.island_Pos[userName];
+            IslandInformation.instance.UserObj.Add(userName, land);
 
             //        //land.transform.localScale *=0.5f ;
             //        //그리고 스폰한 위치를 리스트에 저장 
@@ -54,12 +78,12 @@ public class Island_Spawner : MonoBehaviour
         return pos;
     }
     // 받아온 데이터 확인 전용 함수
-    void ForVerifyInfo()
-    {
-        for (int i = 2; i < IslandInformation.instance.island_Pos.Count + 2; i++)
-        {
-            print(IslandInformation.instance.island_Pos[i.ToString()] + " " + IslandInformation.instance.island_Type[i.ToString()]
-                + IslandInformation.instance.User_image[i.ToString()]);
-        }
-    }
+    //void ForVerifyInfo()
+    //{
+    //    for (int i = 2; i < IslandInformation.instance.island_Pos.Count + 2; i++)
+    //    {
+    //        print(IslandInformation.instance.island_Pos[i.ToString()] + " " + IslandInformation.instance.island_Type[i.ToString()]
+    //            + IslandInformation.instance.User_image[i.ToString()]);
+    //    }
+    //}
 }
