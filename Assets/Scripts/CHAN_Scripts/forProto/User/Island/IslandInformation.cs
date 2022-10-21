@@ -2,22 +2,46 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using Newtonsoft.Json.Linq;
+
+[System.Serializable]
+class IslandData
+{
+    public Dictionary<string, float> pc1 = new Dictionary<string, float>();
+    public Dictionary<string, float> pc2 = new Dictionary<string, float>();
+    public Dictionary<string, float> pc3 = new Dictionary<string, float>();
+    public Dictionary<string, string> file_name = new Dictionary<string, string>();
 
 
+
+}
+
+[System.Serializable]
+public class DDDD
+{
+    public Vector3 island_Pos = new Vector3();
+    public string island_Type;
+    public string User_image;
+}
 
 public class IslandInformation :MonoBehaviour, Server_IslandInfo
 {
     public static IslandInformation instance;
+    IslandData Data = new IslandData();
     private void Awake()
     {
         instance = this;
     }
+    public Dictionary<string, DDDD> dddDic = new Dictionary<string, DDDD>();
+    #region 서버에서 받아온 유저 하늘섬 정보 저장 딕셔너리, 속성모음
     // 유저들이 배치 될 좌표정보를 저장할 딕셔너리(Key: 유저 네임,Value: 좌표)
     public Dictionary<string, Vector3> island_Pos = new Dictionary<string, Vector3>();
     // 유저들이 커스텀한 하늘섬 정보를 저장할 딕셔너리(Key: 유저 네임,Value: 섬 타입)
     public Dictionary<string, string> island_Type = new Dictionary<string, string>();
     // 유저들의 프로필 이미지를 저장할 딕셔너리(Key: 유저 네임,Value:이미지URL)
     public Dictionary<string, string> User_image = new Dictionary<string, string>();
+
+    
     // 유저들의 닉네임을 저장할 딕셔너리(Key: 유저 네임,Value:닉네임)
     public List<string> User_name = new List<string>();
     // islandSpawner에서 생성한 섬 오브젝트를 저장하는딕셔너리(Key: 유저 네임,Value:오브젝트정보)
@@ -27,7 +51,7 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
     string[] island_category = { "island 1", "island 2", "island 3", "island 4", "island 5" };
     //섬 사이 간격 구배
     float dis_multiplier=100;
-
+    #endregion
     #region 서버에게 정보를 가져오는 함수 모음
     public void LoadIslandInfo()
     {
@@ -40,8 +64,34 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
         //서버에게 하늘섬 정보를 저장시킨다. 
     }
     #endregion
-    //csv파일 정보 로드 함수
-    // 처음 하늘뷰에 들어왔을 때 발동되는 함수
+    #region 중간에 정보가 추가되거나 삭제됐을 때, 이용되는 함수모음
+    // 임시 배열모음 (삭제 할 정보, 추가 할 정보)
+    public string[] temp_Delete;
+    public string[] temp_Add;
+    //유저가 나갔다고 간주
+
+
+
+    public void RemoveInfo()
+    {
+        //삭제하고자 하는 정보길이만큼 반복
+        for (int i = 0; i < temp_Delete.Length; i++)
+        {
+            UserObj.Remove(temp_Delete[i]);
+            User_image.Remove(temp_Delete[i]);
+            print(temp_Delete[i] + "삭제");
+        }
+    }
+    //유저가 들어왔다고 간주
+    public void AddInfo()
+    {
+        for (int i = 0; i < temp_Add.Length; i++)
+        {
+            print(Parsing(temp_Add[i]));
+        }
+    }
+    #endregion
+    //csv파일 정보 로드 함수, 처음 하늘뷰에서 들어왔을 때 발동된다.
     public void LoadFromCSV(string fileName)
     {
         StreamReader sr = new StreamReader(Application.dataPath + "/" + fileName);
@@ -98,35 +148,92 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
             User_image.Add(Parsing(data_values[3]), data_values[3]);
         }
 
+        LoadFromJson();
     }
-    // 임시 배열모음 (삭제 할 정보, 추가 할 정보)
-    public string[] temp_Delete;
-    public string[] temp_Add;
-    //유저가 나갔다고 간주
+    // 임시로 유저 닉네임을 이미지URL의 카테고리 정보로 대체하기 위한 함수
+    //json 형식 로드 함수
+    private void Start()
+    {
+        //LoadFromJson();
+    }
+    public void LoadFromJson()
+    {
+        //
+        Vector3 pos = new Vector3(10, 10, 10);
+        string s = JsonUtility.ToJson(pos);
+
+        JObject jobj = new JObject();
+        jobj["x"] = pos.x;
+        jobj["y"] = pos.y;
+        jobj["z"] = pos.z;
+        s = jobj.ToString();
+
+        Vector3 pos2 = new Vector3();
+        JObject j2 = JObject.Parse(s);
+        pos2.x = j2["x"].ToObject<float>();
+        pos2.y = j2["y"].ToObject<float>();
+        pos2.z = j2["z"].ToObject<float>();
+
+
+        dddDic.Clear();
+        DDDD info;
+
+        var loadedJson = Resources.Load<TextAsset>("DataSet/subset30");
+        string jsonData = loadedJson.ToString();
+
+        JObject jObject = JObject.Parse(jsonData);
+        for (int i = 0; i < 3; i++)
+        {
+            string key = "pc" + (i + 1);
+
+            JObject pc = jObject[key].ToObject<JObject>();
+            for(int j = 0; j < pc.Count; j++)
+            {
+                float f = pc[j.ToString()].ToObject<float>();
+                if(i == 0)
+                {
+                    info = new DDDD();
+                    info.island_Pos.x = f;
+                    dddDic[User_name[j]] = info;
+                }
+                else if(i == 1)
+                {
+                    info = dddDic[User_name[j]];
+                    info.island_Pos.y = f;
+                }
+                else
+                {
+                    info = dddDic[User_name[j]];
+                    info.island_Pos.z = f;
+                }
+            }
+        }
+
+        JObject jFileName = jObject["file_name"].ToObject<JObject>();
+        for(int i = 0; i < jFileName.Count; i++)
+        {
+            info = dddDic[User_name[i]];
+            info.User_image = jFileName[i.ToString()].ToString();
+        }
+
+
+
+
+
+        Data = JsonUtility.FromJson<IslandData>(loadedJson.ToString());
+        for (int i = 0; i < Data.pc1.Count; i++)
+        {
+            print(Data.pc1.Values);
+            print(Data.pc2.Values);
+            print(Data.pc3.Values);
+            print(Data.file_name.Values);
+        }
+        
+    }
     string Parsing(string s)
     {
-        string[] s1=s.Split('/');
-        return s1[4].Remove(s1[4].IndexOf('.')); 
-    }
-
-
-    public void RemoveInfo()
-    {
-        //삭제하고자 하는 정보길이만큼 반복
-        for (int i = 0; i < temp_Delete.Length; i++)
-        {
-            UserObj.Remove(temp_Delete[i]);
-            User_image.Remove(temp_Delete[i]);
-            print(temp_Delete[i]+"삭제");
-        }
-    }
-    //유저가 들어왔다고 간주
-    public void AddInfo()
-    {
-        for (int i = 0; i < temp_Add.Length; i++)
-        {
-            print(Parsing(temp_Add[i]));
-        }
+        string[] s1 = s.Split('/');
+        return s1[4].Remove(s1[4].IndexOf('.'));
     }
 
 }
