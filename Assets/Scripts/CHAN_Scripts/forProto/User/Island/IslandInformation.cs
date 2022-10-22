@@ -5,11 +5,16 @@ using UnityEngine;
 using Newtonsoft.Json.Linq;
 
 [System.Serializable]
-public class DDDD
+public class JsonInfo
 {
+    // 섬배치 정보
     public Vector3 island_Pos = new Vector3();
+    // 섬 타입
     public string island_Type;
+    // 유저 프로필 이미지 
     public string User_image;
+    // 하늘섬 오브젝트
+    public GameObject User_Obj;
 }
 
 public class IslandInformation :MonoBehaviour, Server_IslandInfo
@@ -19,26 +24,15 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
     {
         instance = this;
     }
-    public Dictionary<string, DDDD> dddDic = new Dictionary<string, DDDD>();
-    #region 서버에서 받아온 유저 하늘섬 정보 저장 딕셔너리, 속성모음
-    // 유저들이 배치 될 좌표정보를 저장할 딕셔너리(Key: 유저 네임,Value: 좌표)
-    public Dictionary<string, Vector3> island_Pos = new Dictionary<string, Vector3>();
-    // 유저들이 커스텀한 하늘섬 정보를 저장할 딕셔너리(Key: 유저 네임,Value: 섬 타입)
-    public Dictionary<string, string> island_Type = new Dictionary<string, string>();
-    // 유저들의 프로필 이미지를 저장할 딕셔너리(Key: 유저 네임,Value:이미지URL)
-    public Dictionary<string, string> User_image = new Dictionary<string, string>();
-
-    
+    public Dictionary<string, JsonInfo> Island_Dic = new Dictionary<string, JsonInfo>();
     // 유저들의 닉네임을 저장할 리스트(Key:닉네임)
     public List<string> User_name = new List<string>();
     // islandSpawner에서 생성한 섬 오브젝트를 저장하는딕셔너리(Key: 유저 네임,Value:오브젝트정보)
-    public Dictionary<string, GameObject> UserObj = new Dictionary<string, GameObject>();
     // 카테고리 비교 하는 배열
     string[] compare_category = { "cat", "dog", "animation", "celeb", "car" };
     string[] island_category = { "island 1", "island 2", "island 3", "island 4", "island 5" };
     //섬 사이 간격 구배
     float dis_multiplier=100;
-    #endregion
     #region 서버에게 정보를 가져오는 함수 모음
     public void LoadIslandInfo()
     {
@@ -57,26 +51,6 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
     public string[] temp_Add;
     //유저가 나갔다고 간주
 
-
-
-    public void RemoveInfo()
-    {
-        //삭제하고자 하는 정보길이만큼 반복
-        for (int i = 0; i < temp_Delete.Length; i++)
-        {
-            UserObj.Remove(temp_Delete[i]);
-            User_image.Remove(temp_Delete[i]);
-            print(temp_Delete[i] + "삭제");
-        }
-    }
-    //유저가 들어왔다고 간주
-    public void AddInfo()
-    {
-        for (int i = 0; i < temp_Add.Length; i++)
-        {
-            print(Parsing(temp_Add[i]));
-        }
-    }
     #endregion
     //csv파일 정보 로드 함수, 처음 하늘뷰에서 들어왔을 때 발동된다.
     public void LoadFromCSV(string fileName)
@@ -89,8 +63,6 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
         int count = 0;
         while (!endOfFile)
         {
-            count++;
-            
             // csv파일의 한 줄을 읽은 값을 data_string에 저장
             string data_string = sr.ReadLine();
             // 만약 값이 없다면
@@ -109,122 +81,108 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
                 turn = true;
                 continue;
             }
-            //만약 추가하고자 하는 정보가 이미 딕셔너리에 있으면 넘어간다.
-            if (User_name.Contains(Parsing(data_values[3])))
-            {
-                continue;
-            }
-            //카테고리 숫자만큼 반복
-            for (int i = 0; i < compare_category.Length; i++)
-            {
-                //만약 카테고리가 일치한다면
-                if (data_values[data_values.Length-1].Contains(compare_category[i]))
-                {
-                    //섬 카테고리 딕셔너리에 해당 정보 저장
-                    island_Type.Add(Parsing(data_values[3]), island_category[i]);
-                    //유저 이름 저장
-                    User_name.Add(Parsing(data_values[3]));
-                    break;
-                }
-            }
-            //csv의x,y,z값을 받아내고 Vector로 저장하자
             Vector3 temp_pos = new Vector3(float.Parse(data_values[0])* dis_multiplier, float.Parse(data_values[1])* dis_multiplier, float.Parse(data_values[2])* dis_multiplier);
-            island_Pos.Add(Parsing(data_values[3]), temp_pos);
-            User_image.Add(Parsing(data_values[3]), data_values[3]);
+            InsertData(count, data_values[3], temp_pos);
+              //csv의x,y,z값을 받아내고 Vector로 저장하자
+            count++;
+
         }
 
-        LoadFromJson();
     }
-    // 임시로 유저 닉네임을 이미지URL의 카테고리 정보로 대체하기 위한 함수
-    //json 형식 로드 함수
-    private void Start()
+    void LoadFromJson()
     {
-        //LoadFromJson();
-    }
-    public void LoadFromJson()
-    {
-        //정보 -> json
-        Vector3 pos = new Vector3(10, 10, 10);
-        string s = JsonUtility.ToJson(pos);
-        // JObject 생성
-        JObject jobj = new JObject();
-        // 
-        jobj["x"] = pos.x;
-        jobj["y"] = pos.y;
-        jobj["z"] = pos.z;
-        s = jobj.ToString();
-
-        Vector3 pos2 = new Vector3();
-        // string 값을 JObject로 파싱
-        JObject j2 = JObject.Parse(s);
-        
-        pos2.x = j2["x"].ToObject<float>();
-        pos2.y = j2["y"].ToObject<float>();
-        pos2.z = j2["z"].ToObject<float>();
-
-        // 딕셔너리 초기화
-        dddDic.Clear();
-
-        // 클래스 생성
-        DDDD info;
-        // json 로드
-        var loadedJson = Resources.Load<TextAsset>("DataSet/subset30");
-        // 로드한 json 을 string으로 변환
-        string jsonData = loadedJson.ToString();
-        // string 값을 JObject로 파싱
+        var info = Resources.Load<TextAsset>("DataSet/subset_30_v3");
+        string jsonData = info.ToString();
         JObject jObject = JObject.Parse(jsonData);
-        for (int i = 0; i < 3; i++)
-        {
-            string key = "pc" + (i + 1);
 
-            JObject pc = jObject[key].ToObject<JObject>();
-            for(int j = 0; j < pc.Count; j++)
+
+        for (int i = 0; i < jObject.Count; i++)
+        {
+            //json의 하나의 인덱스를 가져왔다.
+            JObject objPerIndex = jObject[i.ToString()].ToObject<JObject>();
+
+            // 임시로 저장할 좌표인자, url
+            float x = 0, y = 0, z = 0;
+            string url;
+            //x,y,z 좌표값 받아온다. 
+            for (int j = 0; j < 3; j++)
             {
-                float f = pc[j.ToString()].ToObject<float>();
-                if(i == 0)
-                {
-                    info = new DDDD();
-                    info.island_Pos.x = f;
-                    dddDic[User_name[j]] = info;
-                }
-                else if(i == 1)
-                {
-                    info = dddDic[User_name[j]];
-                    info.island_Pos.y = f;
-                }
+                string pc = "pc" + (j + 1).ToString();
+                objPerIndex[pc].ToObject<float>();
+                if (j == 0)
+                { x = objPerIndex[pc].ToObject<float>(); }
+                else if (j == 1)
+                { y = objPerIndex[pc].ToObject<float>(); }
                 else
-                {
-                    info = dddDic[User_name[j]];
-                    info.island_Pos.z = f;
-                }
+                { z = objPerIndex[pc].ToObject<float>(); }
+            }
+            //받은 좌표인자값을 통해 Vector3 에 저장한다. 
+            Vector3 pos = new Vector3(x * dis_multiplier, y * dis_multiplier, z * dis_multiplier);
+            // URL 주소 문자열 추출
+            url = objPerIndex["image_url"].ToString();
+            InsertData(i, url, pos);
+        }
+    }
+    // 하늘섬 배치 함수 
+    public void Spawn()
+    {
+        LoadFromJson();
+        foreach (string i in Island_Dic.Keys)
+        {
+
+            JsonInfo info = Island_Dic[i];
+            GameObject island = InstantiateIsland(info.island_Type);
+            info.User_Obj = island;
+            island.transform.position = info.island_Pos;
+            island.transform.GetChild(0).GetChild(0).GetComponent<Island_Profile>().user_name = i;
+        }
+    }
+    // 하늘섬 생성 코드
+    GameObject InstantiateIsland(string IslandType)
+    {
+        GameObject land = Instantiate(Resources.Load<GameObject>("CHAN_Resources/" + IslandType));
+        return land;
+    }
+    // 하늘섬 타입 결정 코드
+    string Return_IslandType(string s)
+    {
+        string s1 = null;
+        for (int i = 0; i < compare_category.Length; i++)
+        {
+            //만약 카테고리가 일치한다면
+            if (Parsing(s) == compare_category[i])
+            {
+                s1 = island_category[i];
+                break;
             }
         }
-
-        JObject jFileName = jObject["file_name"].ToObject<JObject>();
-        for(int i = 0; i < jFileName.Count; i++)
-        {
-            info = dddDic[User_name[i]];
-            info.User_image = jFileName[i.ToString()].ToString();
-        }
-
-
-
-
-
-        //Data = JsonUtility.FromJson<IslandData>(loadedJson.ToString());
-        //for (int i = 0; i < Data.pc1.Count; i++)
-        //{
-        //    print(Data.pc1.Values);
-        //    print(Data.pc2.Values);
-        //    print(Data.pc3.Values);
-        //    print(Data.file_name.Values);
-        //}
-        
+        return s1;
     }
+    // url 주소에서 카테고리 문자열만 추출하는 코드 
     string Parsing(string s)
     {
         string[] s1 = s.Split('/');
-        return s1[4].Remove(s1[4].IndexOf('.'));
+        string[] s2 = s1[4].Split('-');
+        return s2[1];
+
+    }
+    void InsertData(int i, string url, Vector3 pos)
+    {
+        JsonInfo dic = new JsonInfo();
+        //딕셔너리 인덱스 생성
+        Island_Dic.Add(i.ToString(), dic);
+        //딕셔너리에 값들을 모두 넣는다. 
+        dic = Island_Dic[i.ToString()];
+        dic.island_Type = Return_IslandType(url);
+        dic.island_Pos = pos;
+        dic.User_image = url;
     }
 
+
+
+
+
 }
+
+
+

@@ -14,6 +14,7 @@ public class Island_Dynamics : MonoBehaviour
     GameObject[] Islands;
     public float setDistance;
     public float forceMultiplier;
+    public string user_name;
 
     void Start()
     {
@@ -25,22 +26,26 @@ public class Island_Dynamics : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        foreach (GameObject a in IslandInformation.instance.UserObj.Values)
+        
+        foreach (string a in IslandInformation.instance.Island_Dic.Keys)
         {
-            foreach (GameObject b in IslandInformation.instance.UserObj.Values)
+            GameObject obj_a = IslandInformation.instance.Island_Dic[a].User_Obj;
+            foreach (string b in IslandInformation.instance.Island_Dic.Keys)
             {
+                GameObject obj_b = IslandInformation.instance.Island_Dic[b].User_Obj;
                 // 만약 a,b가 서로 다른 오브젝트일 경우
                 if (!a.Equals(b))
                 {
+                    
                     //거리계산 시작
-                    float distanceEachOther = Vector3.Distance(a.transform.position, b.transform.position);
+                    float distanceEachOther = Vector3.Distance(obj_a.transform.position, obj_b.transform.position);
                     //만약 거리가 일정범위 이하로 근접했을 경우
                     if (distanceEachOther < setDistance)
                     {
                         //둘의 방향을 가져옴 
-                        Vector3 dir = (a.transform.position - b.transform.position).normalized;
+                        Vector3 dir = (obj_a.transform.position -obj_b.transform.position).normalized;
                         //멀어질때까지 힘을 부여
-                        Rigidbody rb = a.GetComponent<Rigidbody>();
+                        Rigidbody rb = obj_a.GetComponent<Rigidbody>();
                         rb.AddForce(dir * forceMultiplier * Time.deltaTime, ForceMode.Force);
                     }
                 }

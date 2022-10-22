@@ -29,8 +29,8 @@ public class Island_Profile : MonoBehaviour
     {
         if (!turn)
         { 
-           // LoadImage();
-            LoadImageByJson();
+            LoadImage();
+           //LoadImageByJson();
             turn = true;
         }
         if (visualDistance > GetDistanceToPlayer())
@@ -57,17 +57,18 @@ public class Island_Profile : MonoBehaviour
     #region 이것은 CSV타입
     void LoadImage()
     {
-        StartCoroutine(GetTexture(IslandInformation.instance.User_image[user_name]));
-        userName_Text.text = "UserName_" + user_name;
-        userName_Text.enabled = false;
-    }
-    void LoadImageByJson()
-    {
-        JsonInfo JInfo = LoadJson.instance.Island_Dic[user_name];
+        JsonInfo JInfo = IslandInformation.instance.Island_Dic[user_name];
         StartCoroutine(GetTexture(JInfo.User_image));
         userName_Text.text = "UserName_" + user_name;
         userName_Text.enabled = false;
     }
+    //void LoadImageByJson()
+    //{
+    //    JsonInfo JInfo = LoadJson.instance.Island_Dic[user_name];
+    //    StartCoroutine(GetTexture(JInfo.User_image));
+    //    userName_Text.text = "UserName_" + user_name;
+    //    userName_Text.enabled = false;
+    //}
     #endregion
     // 이 코루틴은 한번만 사용되어야 한다. 
     IEnumerator GetTexture(string url)
