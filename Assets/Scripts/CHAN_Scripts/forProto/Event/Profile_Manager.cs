@@ -51,7 +51,6 @@ public class Profile_Manager : MonoBehaviour
         // create 버튼 활성화
         btn_create.SetActive(true);
         //나머지 버튼 모두 비활성화 
-        created.enabled = false;
         OnMainSelect(false);
         btn_Done.SetActive(false);
         //키워드창 꺼짐

@@ -40,7 +40,7 @@ public class Login_Manager : MonoBehaviour
         else
         {
             errorMassage.enabled = true;
-            errorMassage.text = "옳바른 정보를 입력해 주세요.";
+            errorMassage.text = "올바른 정보를 입력해 주세요.";
         }
     }
 }
