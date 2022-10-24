@@ -22,11 +22,11 @@ public class WorldManager : MonoBehaviour
 
     [SerializeField]List<GameObject> userObjs = new List<GameObject>();
 
-    public Text warningText;
+    //public Text warningText;
 
     private void Start()
     {
-        warningText.enabled = false;
+        //warningText.enabled = false;
     }
     private void Update()
     {
@@ -52,8 +52,8 @@ public class WorldManager : MonoBehaviour
             if (Mathf.Abs(userPos.x) > warningZone_Width || Mathf.Abs(userPos.z) > warningZone_Width || Mathf.Abs(userPos.y) > warningZone_height)
             {
                 //이때 경고 메세지를 보낸다. 
-                warningText.enabled = true;
-                warningText.text = "맵에서 벗어나고 있어요!";
+                //warningText.enabled = true;
+                //warningText.text = "맵에서 벗어나고 있어요!";
                 if (Mathf.Abs(userPos.x)> DangerZone_width || Mathf.Abs(userPos.z) > DangerZone_width || Mathf.Abs(userPos.y) > DangerZone_height)
                 {
                     //일단은 원점으로 다시 돌려 보내자
@@ -63,7 +63,7 @@ public class WorldManager : MonoBehaviour
             }
             else
             {
-                warningText.enabled = false;
+                //warningText.enabled = false;
             }
         }
             
