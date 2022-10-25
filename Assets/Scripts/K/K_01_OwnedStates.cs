@@ -188,24 +188,13 @@ namespace K_01_OwnedStates
             entity.cc.Move(stepForwardAmount + stepDownAmount);
             entity.rootMotion = Vector3.zero;
 
-            // 이동 중에 떨어지면 Falling으로 상태 전환
-
 
             if (_currentVelocity.magnitude <= 0.05f && !(Input.GetButton("Horizontal") || Input.GetButton("Vertical")))
             {
                 entity.ChangeState(PlayerStates.Idle);
             }
            
-           //else
-           // {
-           //     if (!entity.camMgr.spaceView && !entity.camMgr.firstPersonView)
-           //     {
-           //         entity.camMgr.firstPersonCamera.gameObject.SetActive(false);
-           //         entity.ChangeState(PlayerStates.ThirdMove);
-                    
-           //     }
-
-           // }
+         
             //if (Input.GetButtonDown("Jump"))
             //{
 

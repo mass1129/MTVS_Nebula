@@ -72,6 +72,7 @@ public class PlacedObjectTypeSO : ScriptableObject {
             case Dir.Left:  return new Vector2Int(0, width);
             case Dir.Up:    return new Vector2Int(width, height);
             case Dir.Right: return new Vector2Int(height, 0);
+                
         }
     }
 

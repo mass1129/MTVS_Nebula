@@ -7,7 +7,8 @@ using CodeMonkey.Utils;
 public class GridXZ<TGridObject> {
 
     public event EventHandler<OnGridObjectChangedEventArgs> OnGridObjectChanged;
-    public class OnGridObjectChangedEventArgs : EventArgs {
+    public class OnGridObjectChangedEventArgs : EventArgs 
+    {
         public int x;
         public int z;
     }

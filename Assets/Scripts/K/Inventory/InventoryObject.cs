@@ -45,7 +45,7 @@ public class InventoryObject : ScriptableObject
     public void Save()
     {
         #region past
-        //string saveData = JsonUtility.ToJson(this, true);
+        //string saveData = JsonUtility.ToJson(Container, true);
         //Debug.Log(saveData);
         //스트림으로부터 인코딩된 문자를 읽고 이를 스트림에 쓰기 위한 형식을 제공합니다.
         //기본값을 사용하여 BinaryFormatter 클래스의 새 인스턴스를 초기화합니다.
