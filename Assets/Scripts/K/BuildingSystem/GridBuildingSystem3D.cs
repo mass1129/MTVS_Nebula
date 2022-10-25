@@ -338,7 +338,7 @@ public class GridBuildingSystem3D : MonoBehaviour {
         };
         string json = JsonUtility.ToJson(saveObject,true);
         PlayerPrefs.SetString("HouseBuildingSystemSave", json);
-        SaveSystem.Save("HouseBuildingSystemSave", json, true);
+        K_SaveSystem.Save("HouseBuildingSystemSave", json, true);
         
     }
     private void Load()
@@ -346,7 +346,7 @@ public class GridBuildingSystem3D : MonoBehaviour {
         if (PlayerPrefs.HasKey("HouseBuildingSystemSave"))
         {
             string json = PlayerPrefs.GetString("HouseBuildingSystemSave");
-            json = SaveSystem.Load("HouseBuildingSystemSave");
+            json = K_SaveSystem.Load("HouseBuildingSystemSave");
 
             SaveObject saveObject = JsonUtility.FromJson<SaveObject>(json);
 

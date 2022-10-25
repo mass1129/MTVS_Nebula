@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class SaveSystem
+public static class K_SaveSystem
 {
 
     private const string SAVE_EXTENSION = "txt";
