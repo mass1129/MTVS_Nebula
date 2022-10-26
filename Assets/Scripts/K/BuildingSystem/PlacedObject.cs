@@ -71,8 +71,6 @@ public class PlacedObject : MonoBehaviour {
         public string placedObjectTypeSOName;
         public Vector2Int origin;
         public PlacedObjectTypeSO.Dir dir;
-        public string floorPlacedObjectSave;
-
     }
 
 }

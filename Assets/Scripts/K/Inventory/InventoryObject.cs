@@ -44,39 +44,34 @@ public class InventoryObject : ScriptableObject
     [ContextMenu("Save")]
     public void Save()
     {
-        #region past
-        //string saveData = JsonUtility.ToJson(this, true);
-        //Debug.Log(saveData);
-        //스트림으로부터 인코딩된 문자를 읽고 이를 스트림에 쓰기 위한 형식을 제공합니다.
-        //기본값을 사용하여 BinaryFormatter 클래스의 새 인스턴스를 초기화합니다.
-        //BinaryFormatter bf = new BinaryFormatter();
-        //FileStream ? 파일을 읽고 쓰는 데 사용됩니다.
-        //FileStream file = File.Create(string.Concat(Application.persistentDataPath, savePath));
-        //개체나 지정된 최상위(루트)를 가진 개체의 그래프를 해당 스트림으로 serialize합니다.
-        //bf.Serialize(file, saveData);
-        //현재 스트림을 닫고 현재 스트림과 관련된 소켓과 파일 핸들 등의 리소스를 모두 해제합니다.
-        //이 메서드를 호출하는 대신 스트림이 올바르게 삭제되었는지 확인합니다.
-        //file.Close();
-        #endregion
-        IFormatter formatter = new BinaryFormatter();
-        Stream stream = new FileStream(string.Concat(Application.persistentDataPath, savePath), FileMode.Create, FileAccess.Write);
-        formatter.Serialize(stream, Container);
-        stream.Close();
+
+        string json = JsonUtility.ToJson(Container, true);
+        PlayerPrefs.SetString("InventorySystemSave", json);
+        K_SaveSystem.Save("InventorySystemSave", json, true);
+
     }
     [ContextMenu("Load")]
     public void Load()
     {
-        if(File.Exists(string.Concat(Application.persistentDataPath, savePath)))
+        if (PlayerPrefs.HasKey("InventorySystemSave"))
         {
-            //BinaryFormatter bf = new BinaryFormatter();
-            //FileStream file = File.Open(string.Concat(Application.persistentDataPath, savePath), FileMode.Open);
-            //JsonUtility.FromJsonOverwrite(bf.Deserialize(file).ToString(), this);
-            //file.Close();
-            IFormatter formatter = new BinaryFormatter();
-            Stream stream = new FileStream(string.Concat(Application.persistentDataPath, savePath), FileMode.Open, FileAccess.Read);
-            Container = (Inventory)formatter.Deserialize(stream);
-            stream.Close();
+            string json = PlayerPrefs.GetString("InventorySystemSave");
+            json = K_SaveSystem.Load("InventorySystemSave");
+
+            JsonUtility.FromJsonOverwrite(json, Container);
+
         }
+        //    if (File.Exists(string.Concat(Application.persistentDataPath, savePath)))
+        //{
+        //    //BinaryFormatter bf = new BinaryFormatter();
+        //    //FileStream file = File.Open(string.Concat(Application.persistentDataPath, savePath), FileMode.Open);
+        //    //JsonUtility.FromJsonOverwrite(bf.Deserialize(file).ToString(), this);
+        //    //file.Close();
+        //    IFormatter formatter = new BinaryFormatter();
+        //    Stream stream = new FileStream(string.Concat(Application.persistentDataPath, savePath), FileMode.Open, FileAccess.Read);
+        //    Container = (Inventory)formatter.Deserialize(stream);
+        //    stream.Close();
+        //}
     }
     [ContextMenu("Clear")]
     public void Clear()
