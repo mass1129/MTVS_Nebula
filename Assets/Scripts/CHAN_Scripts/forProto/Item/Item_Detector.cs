@@ -21,11 +21,13 @@ public class Item_Detector : MonoBehaviour
             {
                 //여기서 감지가 되면 TV 앞에 안내 Text 나오게 한다.
                 Item_TVManager.instance.CanControlTV(true);
+                Item_TVManager.instance.done = true;
             }
         }
         if (detect.Length == 0)
         {
             Item_TVManager.instance.CanControlTV(false);
+            Item_TVManager.instance.done = false;
         }
     }
 }
