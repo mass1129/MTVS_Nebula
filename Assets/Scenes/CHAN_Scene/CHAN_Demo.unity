@@ -4675,15 +4675,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 342234880}
-  m_LocalRotation: {x: -0.15846471, y: -0, z: -0, w: 0.98736465}
-  m_LocalPosition: {x: 73.41, y: 14.3, z: 68.3}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 69.74, y: -5, z: 68.3}
   m_LocalScale: {x: 14.999999, y: 10, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 532091860}
   m_Father: {fileID: 0}
   m_RootOrder: 14
-  m_LocalEulerAnglesHint: {x: -18.236, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &353363358
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4908,6 +4908,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89b3295879914b44baa582629aeaee44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefab_Wall: {fileID: 342234884}
+  prefab_TVScreem: {fileID: 1352974966}
+  done: 0
   introduceText: {fileID: 1597463317}
 --- !u!4 &455356644
 Transform:
@@ -4922,7 +4925,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &457973850
 PrefabInstance:
@@ -8529,6 +8532,11 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4803705504180976, guid: feddb6666a6474b4a80e6e7fc805f21f, type: 3}
   m_PrefabInstance: {fileID: 1089516622}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1352974966 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6525439662377361863, guid: 33da36a12450811418acb8244c2c909e, type: 3}
+  m_PrefabInstance: {fileID: 1887623484}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1353221071
 PrefabInstance:
@@ -12522,7 +12530,7 @@ Transform:
   m_Children:
   - {fileID: 316549464}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &7691639194192483091
 GameObject:
