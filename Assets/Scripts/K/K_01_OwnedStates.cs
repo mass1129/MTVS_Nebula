@@ -334,7 +334,7 @@ namespace K_01_OwnedStates
             entity.camMgr.buildCamTarget.position += ((entity.camMgr.buildCamTarget.forward * moveY) 
                 + (entity.camMgr.buildCamTarget.right * moveX)) * moveSpeed * Time.deltaTime;
 
-            entity.camMgr.buildCamOffset.m_Offset.z = Mathf.Clamp(entity.camMgr.buildCamOffset.m_Offset.z, 0, 35);
+            entity.camMgr.buildCamOffset.m_Offset.z = Mathf.Clamp(entity.camMgr.buildCamOffset.m_Offset.z, 0, 50);
 
             if (Input.mouseScrollDelta.y > 0)
             {
