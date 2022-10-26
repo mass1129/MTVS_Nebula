@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 // 플레이어 프로필 정보를 저장할 클래스 
 class ProfileInfo
@@ -28,6 +29,8 @@ public class Profile_Manager : MonoBehaviour
     public GameObject btn_SelectKeywords;
     // 생성 완료 버튼
     public GameObject btn_Done;
+    public GameObject btn_MoveNextScene;
+    public GameObject btn_Appeared_Profile;
     [Header("이미지 업로드 관련 설정들")]
     string[] paths;
     public RawImage rawImage;
@@ -58,6 +61,7 @@ public class Profile_Manager : MonoBehaviour
         
         //뒤로가기 버튼 활성화
         btn_backToStart.SetActive(true);
+        btn_MoveNextScene.SetActive(false);
         // create 이미지 활성화
         create.enabled = true;
         // create 버튼 활성화
@@ -67,6 +71,8 @@ public class Profile_Manager : MonoBehaviour
         btn_Done.SetActive(false);
         //키워드창 꺼짐
         OnKeywords(false);
+        
+
         print("꺼짐");
     }
     #endregion
@@ -84,6 +90,8 @@ public class Profile_Manager : MonoBehaviour
         btn_UploadImage.SetActive(b);
         //키워드 버튼 
         btn_SelectKeywords.SetActive(b);
+        
+        btn_Appeared_Profile.SetActive(b);
     }
 
     #endregion
@@ -99,15 +107,16 @@ public class Profile_Manager : MonoBehaviour
         }
         //프로필 생성 함수 
         UpdateProfile();
+        btn_Appeared_Profile.SetActive(true);
     }
     void UpdateProfile()
     {
         //클래스에 저장된 정보를 해당  UI에 저장한다. 
-        Texture upload_texture = Area_Created.GetChild(0).GetComponent<RawImage>().texture;
-        upload_texture = info.User_Texture;
+        Area_Created.GetChild(0).GetComponent<RawImage>().texture = info.User_Texture;
+        
         for (int i = 0; i < Area_Created.GetChild(1).childCount; i++)
         {
-            Area_Created.GetChild(1).GetChild(0).GetChild(i).GetComponent<Text>().text = info.User_Keywords[i];
+            Area_Created.GetChild(1).GetChild(i).GetChild(0).GetComponent<Text>().text = info.User_Keywords[i];
         }
         
 
@@ -176,5 +185,14 @@ public class Profile_Manager : MonoBehaviour
         AddProfile();
     }
     #endregion
-
+    #region 만약 플레이어가 등록된 프로필을 눌렀을 때 발생하는 함수
+    public void OnNextSceneBtn()
+    {
+        btn_MoveNextScene.SetActive(true);
+    }
+    public void LoadNextScene()
+    {
+        SceneManager.LoadScene(2);
+    }
+    #endregion
 }
