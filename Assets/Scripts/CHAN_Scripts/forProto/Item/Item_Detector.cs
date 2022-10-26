@@ -19,6 +19,7 @@ public class Item_Detector : MonoBehaviour
         {
             if (c.gameObject.CompareTag("TV"))
             {
+
                 //여기서 감지가 되면 TV 앞에 안내 Text 나오게 한다.
                 Item_TVManager.instance.CanControlTV(true);
                 Item_TVManager.instance.done = true;
