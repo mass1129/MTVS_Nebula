@@ -12,15 +12,22 @@ class ProfileInfo
     public Texture User_Texture;
     public List<string> User_Keywords = new List<string>();
 }
+public class Profile_Info
+{
+    public string Nickname;
+    public Texture rawImage;
+    public List<string> Keywords = new List<string>();
+}
 public class Profile_Manager : MonoBehaviour
 {
+    
     #region 속성 모음
+    // 프로필 프리팹
+
     //뒤로가기 버튼
-    public GameObject btn_backToStart;
+
     // 생성 이미지
     //public Image create;
-    // 생성된 이미지
-    public Image created;
     // 생성 버튼
     public GameObject btn_create;
     // 이미지 업로드 버튼
@@ -30,7 +37,6 @@ public class Profile_Manager : MonoBehaviour
     // 생성 완료 버튼
     public GameObject btn_Done;
     //다음씬으로 넘어가는 버튼
-    public GameObject btn_MoveNextScene;
     [Header("이미지 업로드 관련 설정들")]
     string[] paths;
     public RawImage rawImage;
@@ -45,28 +51,35 @@ public class Profile_Manager : MonoBehaviour
     #endregion
     //일단 네트워크를 적용하지 않은 상태이므로 임시로 정보를 받을  클래스를 생성시켜서 저장해보자 
     ProfileInfo info = new ProfileInfo();
-    void Start()
+    Profile_Info profile = new Profile_Info();
+    //해로 생성된 프로필 버튼 위치 지정해주는 함수
+    public void transfer(GameObject obj)
     {
-        InitializeUIs();
+        btn_create = obj.transform.GetChild(0).gameObject;
+        btn_UploadImage = obj.transform.GetChild(1).GetChild(0).gameObject;
+        btn_SelectKeywords = obj.transform.GetChild(1).GetChild(1).gameObject;
+        btn_Done=obj.transform.GetChild(1).GetChild(2).gameObject;
+        for (int i = 0; i < obj.transform.GetChild(2).GetChild(0).childCount; i++)
+        {
+            input_keywords[i] = obj.transform.GetChild(2).GetChild(0).GetChild(i).gameObject;
+        }  
+        btn_keywordsDone= obj.transform.GetChild(2).GetChild(1).gameObject;
+        Area_Load_Profile= obj.transform.GetChild(3);
+        Btn_ReviceProfile= obj.transform.GetChild(4).GetChild(0).gameObject;
+        Btn_DeleteProfile= obj.transform.GetChild(4).GetChild(1).gameObject;
     }
+    void Start()
+    {}
 
  
     void Update()
     {
-        if (info.User_Texture != null && info.User_Keywords.Count > 0)
-        {
-            btn_Done.SetActive(true);
-        }
+        
     }
     #region 1. 초기에 해당 씬에 들어왔을 때 디폴트로 나오게 할 설정들
-    public void InitializeUIs()
+    public void Initialize()
     {
         
-        //뒤로가기 버튼 활성화
-        btn_backToStart.SetActive(true);
-        btn_MoveNextScene.SetActive(false);
-        // create 이미지 활성화
-        //create.enabled = true;
         // create 버튼 활성화
         btn_create.SetActive(true);
         //나머지 버튼 모두 비활성화 
@@ -75,9 +88,9 @@ public class Profile_Manager : MonoBehaviour
         //키워드창 꺼짐
         OnKeywords(false);
         OnLoadInfo(false);
-
-
-        print("꺼짐");
+        //수정, 삭제 버튼 안보이도록
+        Btn_ReviceProfile.SetActive(false);
+        Btn_DeleteProfile.SetActive(false);
     }
     #endregion
     #region 2. 만약 플레이어가 btn_create 를 눌렀을때 작동됨
@@ -92,6 +105,10 @@ public class Profile_Manager : MonoBehaviour
         }
         else
         { OnMainSelect(false); }
+        if (info.User_Texture != null && info.User_Keywords.Count > 0)
+        {
+            btn_Done.SetActive(true);
+        }
     }
     void OnMainSelect(bool b)
     {
@@ -125,7 +142,6 @@ public class Profile_Manager : MonoBehaviour
         else
         {
             Texture myTexture = ((DownloadHandlerTexture)www.downloadHandler).texture;
-            //rawImage.texture = myTexture;
             info.User_Texture = myTexture;
         }
     }
@@ -166,7 +182,7 @@ public class Profile_Manager : MonoBehaviour
         {
             info.User_Keywords.Add(input_keywords[i].GetComponent<InputField>().text);
         }
-        InitializeUIs();
+        Initialize();
         AddProfile(true);
     }
     #endregion
@@ -184,28 +200,65 @@ public class Profile_Manager : MonoBehaviour
         UpdateProfile();
         OnLoadInfo(true);
         AddProfile(false);
+        if (!isRevice)
+        { 
+            Profile_Main_Manager.instance.AddProfileBlock();
+        }
+        isRevice = true;
+        Test_UserProfile.instance.Save(profile);
     }
     void UpdateProfile()
     {
         //클래스에 저장된 정보를 해당  UI에 저장한다. 
         Area_Load_Profile.GetChild(0).GetComponent<RawImage>().texture = info.User_Texture;
-        
+       
+        profile.rawImage = info.User_Texture;
+
         for (int i = 0; i < Area_Load_Profile.GetChild(1).childCount; i++)
         {
             Area_Load_Profile.GetChild(1).GetChild(i).GetChild(0).GetComponent<Text>().text = info.User_Keywords[i];
+            profile.Keywords.Add(info.User_Keywords[i]);
         }
-        
+    }
+    void InitialProfiles()
+    {
+        Area_Load_Profile.GetChild(0).GetComponent<RawImage>().texture = null;
 
+        for (int i = 0; i < Area_Load_Profile.GetChild(1).childCount; i++)
+        {
+            Area_Load_Profile.GetChild(1).GetChild(i).GetChild(0).GetComponent<Text>().text = null;
+        }
     }
     #endregion
     #region 6. 만약 플레이어가 등록된 프로필을 눌렀을 때 발생하는 함수
+    //다음 씬으로 넘어가는 버튼을 킨다.
     public void OnNextSceneBtn()
     {
-        btn_MoveNextScene.SetActive(true);
+        Profile_Main_Manager.instance.btn_MoveNextScene.SetActive(true);
+        Btn_ReviceProfile.SetActive(!Btn_ReviceProfile.activeSelf);
+        Btn_DeleteProfile.SetActive(!Btn_DeleteProfile.activeSelf);
     }
+    //다음씬으로 이동
     public void LoadNextScene()
     {
         SceneManager.LoadScene(2);
     }
+
     #endregion
+    #region 7. 프로필 수정, 삭제 
+    bool isRevice;
+    public void Revice()
+    {
+        Initialize();
+        AddProfile(true);
+        isRevice = true;
+    }
+    public void Delate()
+    {
+        InitialProfiles();
+        Destroy(transform.parent.gameObject);
+    }
+    #endregion 프로필 수정, 삭제
+
 }
+

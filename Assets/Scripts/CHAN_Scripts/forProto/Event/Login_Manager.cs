@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Login_Manager : MonoBehaviour
@@ -35,7 +36,7 @@ public class Login_Manager : MonoBehaviour
         {
             //다음 씬으로 입장
             errorMassage.enabled = false;
-            print("다음 씬으로 입장");
+            SceneManager.LoadScene(1);
         }
         else
         {
