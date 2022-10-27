@@ -383,7 +383,7 @@ public class UIControllerDEMO : MonoBehaviour
         CharacterCustomization.ClearSavedData();
         CharacterCustomization.SaveCharacterToFile(CharacterCustomizationSetup.CharacterFileSaveFormat.Json);
         // 씬 로드
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(3);
     }
     public void ClearFromFile()
     {

@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 // 플레이어 프로필 정보를 저장할 클래스 
 class ProfileInfo
 {
+    public string User_Name;
     public Texture User_Texture;
     public List<string> User_Keywords = new List<string>();
 }
@@ -22,18 +23,14 @@ public class Profile_Manager : MonoBehaviour
 {
     
     #region 속성 모음
-    // 프로필 프리팹
-
-    //뒤로가기 버튼
-
-    // 생성 이미지
-    //public Image create;
     // 생성 버튼
     public GameObject btn_create;
     // 이미지 업로드 버튼
     public GameObject btn_UploadImage;
     // 키워드 선택 버튼 
     public GameObject btn_SelectKeywords;
+    //닉네임 생성 버튼
+    public GameObject btn_AddNickName;
     // 생성 완료 버튼
     public GameObject btn_Done;
     //다음씬으로 넘어가는 버튼
@@ -45,6 +42,10 @@ public class Profile_Manager : MonoBehaviour
     public GameObject btn_keywordsDone;
     [Header("업로드 된 프로필")]
     public Transform Area_Load_Profile;
+    [Header("닉네임 입력")]
+    public Transform Area_NickName;
+    public GameObject btn_NickNameDone;
+    GameObject input_NickName;
     [Header("프로필 수정")]
     public GameObject Btn_ReviceProfile;
     public GameObject Btn_DeleteProfile;
@@ -58,15 +59,19 @@ public class Profile_Manager : MonoBehaviour
         btn_create = obj.transform.GetChild(0).gameObject;
         btn_UploadImage = obj.transform.GetChild(1).GetChild(0).gameObject;
         btn_SelectKeywords = obj.transform.GetChild(1).GetChild(1).gameObject;
-        btn_Done=obj.transform.GetChild(1).GetChild(2).gameObject;
+        btn_AddNickName = obj.transform.GetChild(1).GetChild(2).gameObject;
+        btn_Done =obj.transform.GetChild(1).GetChild(3).gameObject;
         for (int i = 0; i < obj.transform.GetChild(2).GetChild(0).childCount; i++)
         {
             input_keywords[i] = obj.transform.GetChild(2).GetChild(0).GetChild(i).gameObject;
         }  
         btn_keywordsDone= obj.transform.GetChild(2).GetChild(1).gameObject;
-        Area_Load_Profile= obj.transform.GetChild(3);
-        Btn_ReviceProfile= obj.transform.GetChild(4).GetChild(0).gameObject;
-        Btn_DeleteProfile= obj.transform.GetChild(4).GetChild(1).gameObject;
+        Area_NickName = obj.transform.transform.GetChild(3);
+        input_NickName= obj.transform.transform.GetChild(3).GetChild(0).gameObject;
+        btn_NickNameDone = obj.transform.GetChild(3).GetChild(1).gameObject;
+        Area_Load_Profile = obj.transform.GetChild(4);
+        Btn_ReviceProfile= obj.transform.GetChild(5).GetChild(0).gameObject;
+        Btn_DeleteProfile= obj.transform.GetChild(5).GetChild(1).gameObject;
     }
     void Start()
     {}
@@ -88,6 +93,7 @@ public class Profile_Manager : MonoBehaviour
         //키워드창 꺼짐
         OnKeywords(false);
         OnLoadInfo(false);
+        OnNickname(false);
         //수정, 삭제 버튼 안보이도록
         Btn_ReviceProfile.SetActive(false);
         Btn_DeleteProfile.SetActive(false);
@@ -105,7 +111,7 @@ public class Profile_Manager : MonoBehaviour
         }
         else
         { OnMainSelect(false); }
-        if (info.User_Texture != null && info.User_Keywords.Count > 0)
+        if (info.User_Texture != null && info.User_Keywords.Count > 0 && info.User_Name != null)
         {
             btn_Done.SetActive(true);
         }
@@ -116,6 +122,8 @@ public class Profile_Manager : MonoBehaviour
         btn_UploadImage.SetActive(b);
         //키워드 버튼 
         btn_SelectKeywords.SetActive(b);
+        //닉네임 추가 부분
+        btn_AddNickName.SetActive(b);
     }
     // 저장된 정보모음
     void OnLoadInfo(bool b)
@@ -150,10 +158,10 @@ public class Profile_Manager : MonoBehaviour
     public void AddKeywords()
     {
         OnMainSelect(false);
-        // done 버튼 비활성화
-        btn_Done.SetActive(false);
         // 키워드1234 버튼, 키워드 선택 완료 버튼 활성화
         OnKeywords(true);
+        // done 버튼 비활성화
+        btn_Done.SetActive(false);
         
     }
     //키워드 창을 켜는 함수
@@ -186,12 +194,38 @@ public class Profile_Manager : MonoBehaviour
         AddProfile(true);
     }
     #endregion
-    #region 5. 최종적으로 프로필을 생성시키는 함수
+    #region 5.닉네임 관련 기능 목록
+    public void AddNickName()
+    {
+        OnMainSelect(false);
+        OnNickname(true);
+        btn_Done.SetActive(false);
+    }
+    void OnNickname(bool b)
+    {
+        Area_NickName.gameObject.SetActive(b);
+        input_NickName.SetActive(true);
+    }
+    public void OnNickNameDone()
+    {
+        if (input_NickName.GetComponent<InputField>().text.Length > 0)
+        {
+            info.User_Name = input_NickName.GetComponent<InputField>().text;
+        }
+        else
+        {
+            print("입력란을 모두 채워주세요!!");
+        }
+        Initialize();
+        AddProfile(true);
+    }
+    #endregion
+    #region 6. 최종적으로 프로필을 생성시키는 함수
     public void Btn_CreateProfile()
     {
         //이미지가 있는가?
         //keyword가 저장되어 있는가?
-        if (!info.User_Texture == null&& info.User_Keywords.Count>0)
+        if (!info.User_Texture == null&& info.User_Keywords.Count>0&&info.User_Name!=null)
         { 
             //저장 완료!
             //서버에 json으로 해당 정보를 보내자!
@@ -230,7 +264,7 @@ public class Profile_Manager : MonoBehaviour
         }
     }
     #endregion
-    #region 6. 만약 플레이어가 등록된 프로필을 눌렀을 때 발생하는 함수
+    #region 7. 만약 플레이어가 등록된 프로필을 눌렀을 때 발생하는 함수
     //다음 씬으로 넘어가는 버튼을 킨다.
     public void OnNextSceneBtn()
     {
@@ -238,12 +272,6 @@ public class Profile_Manager : MonoBehaviour
         Btn_ReviceProfile.SetActive(!Btn_ReviceProfile.activeSelf);
         Btn_DeleteProfile.SetActive(!Btn_DeleteProfile.activeSelf);
     }
-    //다음씬으로 이동
-    public void LoadNextScene()
-    {
-        SceneManager.LoadScene(2);
-    }
-
     #endregion
     #region 7. 프로필 수정, 삭제 
     bool isRevice;
