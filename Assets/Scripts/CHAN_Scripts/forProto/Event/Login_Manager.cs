@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Login_Manager : MonoBehaviour
@@ -22,20 +23,13 @@ public class Login_Manager : MonoBehaviour
         // 처음 에러메세지는 끈다. 
         errorMassage.enabled=false;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-        
-    }
     public void ClickedLogInBtn()
     {
         if (Input_Id.text == temp_Id && Input_Pass.text == temp_Password)
         {
             //다음 씬으로 입장
             errorMassage.enabled = false;
-            print("다음 씬으로 입장");
+            SceneManager.LoadScene(1);
         }
         else
         {
