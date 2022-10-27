@@ -13,8 +13,8 @@ class ProfileInfo
     public List<string> User_Keywords = new List<string>();
 }
 public class Profile_Info
-{
-    public string Nickname;
+{ 
+    //d
     public Texture rawImage;
     public List<string> Keywords = new List<string>();
 }

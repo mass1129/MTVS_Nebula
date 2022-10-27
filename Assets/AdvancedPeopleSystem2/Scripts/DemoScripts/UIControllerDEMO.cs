@@ -382,6 +382,7 @@ public class UIControllerDEMO : MonoBehaviour
     {
         CharacterCustomization.ClearSavedData();
         CharacterCustomization.SaveCharacterToFile(CharacterCustomizationSetup.CharacterFileSaveFormat.Json);
+        // 씬 로드
         SceneManager.LoadScene(1);
     }
     public void ClearFromFile()
@@ -417,4 +418,5 @@ public class UIControllerDEMO : MonoBehaviour
         Camera.transform.position = Vector3.Lerp(Camera.transform.position, CameraPositionForPanels[currentPanelIndex], Time.deltaTime * 5);
         Camera.transform.eulerAngles = Vector3.Lerp(Camera.transform.eulerAngles, CameraEulerForPanels[currentPanelIndex], Time.deltaTime * 5);
     }
+   
 }

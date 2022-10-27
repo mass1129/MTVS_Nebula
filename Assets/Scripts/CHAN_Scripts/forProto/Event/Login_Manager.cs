@@ -23,13 +23,6 @@ public class Login_Manager : MonoBehaviour
         // 처음 에러메세지는 끈다. 
         errorMassage.enabled=false;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-        
-    }
     public void ClickedLogInBtn()
     {
         if (Input_Id.text == temp_Id && Input_Pass.text == temp_Password)

@@ -38,7 +38,6 @@ public class InventoryObject : ScriptableObject
         }
         //새로운 아이템 슬롯을 리스트에 더한다.
         Container.Items.Add(new InventorySlot(_item.Id, _item, _amount));
-        
     }
 
     [ContextMenu("Save")]
