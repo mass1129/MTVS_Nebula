@@ -8,5 +8,9 @@ public class K_TestSceneMgr : MonoBehaviour
     {
         SceneManager.LoadScene(2);
     }
-    
+    public void LoadSkyScene()
+    {
+        SceneManager.LoadScene(4);
+    }
+
 }

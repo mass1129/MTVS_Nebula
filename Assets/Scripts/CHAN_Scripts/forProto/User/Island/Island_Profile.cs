@@ -85,7 +85,6 @@ public class Island_Profile : MonoBehaviour
             Texture2D myTexture = ((DownloadHandlerTexture)www.downloadHandler).texture;
             profileImage.sprite = Sprite.Create(myTexture, new Rect(0f, 0f, myTexture.width, myTexture.height), Vector2.zero);
         }
-
     }
 
 
