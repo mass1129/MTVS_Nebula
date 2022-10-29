@@ -55,7 +55,7 @@ public class UwcDesktopLayouter : MonoBehaviour
         foreach (var kv in manager_.windows) {
             var windowTexture = kv.Value;
             CheckWindow(windowTexture);
-            MoveWindow(windowTexture, usePositionFilter);
+            //MoveWindow(windowTexture, usePositionFilter);
             ScaleWindow(windowTexture, useScaleFilter);
         }
     }
@@ -65,6 +65,7 @@ public class UwcDesktopLayouter : MonoBehaviour
         windowTexture.enabled = !windowTexture.window.isIconic;
     }
 
+    // 화면 공유창 이동 관리 함수 
     void MoveWindow(UwcWindowTexture windowTexture, bool useFilter)
     {
         var window = windowTexture.window;
