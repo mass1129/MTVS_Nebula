@@ -28,28 +28,37 @@ public class Copy_Window_Texture : MonoBehaviour
     }
     public void OnClicked()
     {
-        texture = new Texture[Window.childCount];
-        // window�� �ڽ� ���� �ľ� 
-        for (int i = 0; i < Window.childCount; i++)
-        {
-            GameObject obj = Instantiate(btn_Copy,transform);
-            texture[i] = obj.GetComponent<RawImage>().texture;
-            copys.Add(obj);
-
-        }
+        
         isOn = true;
     }
     void Copying()
     {
+        texture = new Texture[Window.childCount];
         for (int i = 0; i < Window.childCount; i++)
         {
-            texture[i]= Window.GetChild(i).gameObject.GetComponent<Renderer>().material.mainTexture;
-            copys[i].GetComponent<RawImage>().texture = texture[i];
+            if (copys.Count < Window.childCount)
+            {
+                GameObject obj = Instantiate(btn_Copy, transform);
+                copys.Add(obj);
+            }
+            else if (copys.Count > Window.childCount)
+            {
+                Destroy(copys[i].gameObject);
+                copys.Remove(copys[i].gameObject);
+            }
+            copys[i].GetComponent<RawImage>().texture = Window.GetChild(i).gameObject.GetComponent<Renderer>().material.mainTexture;
         }
     }
-    public void TurnOffTV()
-    { 
-        
+    void ClearList()
+    {
+        if (copys.Count != 0)
+        {
+            for (int i = 0; i < copys.Count; i++)
+            {
+                Destroy(copys[i].gameObject);
+            }
+        }
+            copys.Clear();
     }
     
 }
