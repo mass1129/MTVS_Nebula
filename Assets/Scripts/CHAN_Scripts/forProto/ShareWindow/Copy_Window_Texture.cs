@@ -2,19 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using uWindowCapture;
 
 public class Copy_Window_Texture : MonoBehaviour
 {
-
+    public static Copy_Window_Texture instance;
+    private void Awake()
+    {
+        instance = this;
+    }
     public Transform Window;
     public GameObject btn_Copy;
     Texture[] texture;
     float curtime;
     List<GameObject> copys = new List<GameObject>();
     bool isOn;
+    Image image;
     void Start()
     {
-
+        image = GetComponent<Image>();
+        image.enabled = false;
     }
 
     // Update is called once per frame
@@ -26,10 +33,11 @@ public class Copy_Window_Texture : MonoBehaviour
         }
         
     }
-    public void OnClicked()
+    public void OnClicked(bool b)
     {
         
-        isOn = true;
+        isOn = b;
+        image.enabled = b;
     }
     void Copying()
     {
@@ -46,7 +54,25 @@ public class Copy_Window_Texture : MonoBehaviour
                 Destroy(copys[i].gameObject);
                 copys.Remove(copys[i].gameObject);
             }
-            copys[i].GetComponent<RawImage>().texture = Window.GetChild(i).gameObject.GetComponent<Renderer>().material.mainTexture;
+            if (copys[i].activeSelf)
+            { 
+                copys[i].transform.GetChild(0).GetComponent<Btn_window>().SetNum(i);
+ 
+            }
+            GameObject o = Window.GetChild(i).gameObject;
+            Transform c = copys[i].transform.GetChild(0);
+            Text c1 = copys[i].transform.GetChild(1).GetComponent<Text>();
+            c.GetComponent<RawImage>().texture = o.GetComponent<Renderer>().material.mainTexture;
+            c.localScale = new Vector2(o.transform.localScale.x, o.transform.localScale.y);
+            c1.text = "  "+o.GetComponent<UwcWindowTexture>().window.title;
+            if (c1.text.Length > 30)
+            {
+                c1.text.Substring(0, 30);
+                c1.text += "...";
+            }
+                
+            
+
         }
     }
     void ClearList()

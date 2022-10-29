@@ -55,7 +55,7 @@ public class UwcDesktopLayouter : MonoBehaviour
         foreach (var kv in manager_.windows) {
             var windowTexture = kv.Value;
             CheckWindow(windowTexture);
-            //MoveWindow(windowTexture, usePositionFilter);
+            MoveWindow(windowTexture, usePositionFilter);
             ScaleWindow(windowTexture, useScaleFilter);
         }
     }
@@ -71,7 +71,7 @@ public class UwcDesktopLayouter : MonoBehaviour
         var window = windowTexture.window;
         var pos = UwcWindowUtil.ConvertDesktopCoordToUnityPosition(window, basePixel);
         pos.z = window.zOrder * zMargin;
-        var targetPos = transform.localToWorldMatrix.MultiplyPoint3x4(pos);
+            var targetPos = transform.position;//transform.localToWorldMatrix.MultiplyPoint3x4(pos);
         windowTexture.transform.position = (useFilter ? 
             Vector3.Slerp(windowTexture.transform.position, targetPos, filter) :
             targetPos);

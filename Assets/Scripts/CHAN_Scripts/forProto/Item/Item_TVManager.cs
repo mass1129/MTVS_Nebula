@@ -7,7 +7,8 @@ public class Item_TVManager : MonoBehaviour
 {
     public static Item_TVManager instance;
     public Transform prefab_Wall;
-    public GameObject prefab_TVScreem;
+    public Transform window;
+    public GameObject[] prefab_TVScreem;
     
     public bool done;
         
@@ -21,10 +22,18 @@ public class Item_TVManager : MonoBehaviour
     int  isTurn=-1;
     void Start()
     {
-        prefab_TVScreem.SetActive(false);
-        
+        window.position = prefab_Wall.position;
     }
-
+    public void InsertScreenObject(bool b)
+    {
+        prefab_TVScreem = new GameObject[window.childCount];
+        for (int i = 0; i < window.childCount; i++)
+        {
+            prefab_TVScreem[i]=window.GetChild(i).gameObject;
+            prefab_TVScreem[i].SetActive(b);
+            
+        }
+    }
 
     void Update()
     {
@@ -36,6 +45,15 @@ public class Item_TVManager : MonoBehaviour
     }
     void OnSpaceBar()
     {
+        if (isTurn == 1)
+        {
+            Copy_Window_Texture.instance.OnClicked(true);
+        }
+        else
+        {
+            Copy_Window_Texture.instance.OnClicked(false);
+        }
+        
         StartCoroutine(MoveTV(isTurn));
     }
     IEnumerator MoveTV(int i)
@@ -43,10 +61,8 @@ public class Item_TVManager : MonoBehaviour
         done = false;
         // TV가 땅에서 나온다.
         // 초기에 스크린은 땅에 위치하도록(y= -5에 위치)
-        if (isTurn == -1)
-        {
-            prefab_TVScreem.SetActive(false);
-        }
+        InsertScreenObject(false);
+        
         float multi = i * 10; 
         Vector3 SetPos = prefab_Wall.position + Vector3.up * multi;
         float distance = Vector3.Distance(prefab_Wall.position, SetPos);
@@ -54,14 +70,11 @@ public class Item_TVManager : MonoBehaviour
         {
             prefab_Wall.position = Vector3.Lerp(prefab_Wall.position, SetPos, Time.deltaTime * 2);
             distance=Vector3.Distance(prefab_Wall.position, SetPos);
+            window.position = prefab_Wall.position;
             yield return null;
         }
+        window.position -= transform.forward * 0.51f;
         //버튼을 누르면 y=10 만큼 좌표 lerp하게 이동 
-        // 이동하면서 목표 높이와 기존높이 차이 구하기 
-        if (isTurn == 1)
-        {
-            prefab_TVScreem.SetActive(true);
-        }
         done = true;
 
     }
