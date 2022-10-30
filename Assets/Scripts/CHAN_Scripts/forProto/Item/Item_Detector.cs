@@ -29,6 +29,8 @@ public class Item_Detector : MonoBehaviour
         {
             Item_TVManager.instance.CanControlTV(false);
             Item_TVManager.instance.done = false;
+            if (Item_TVManager.instance.isTurn)
+                Copy_Window_Texture.instance.OnClicked(false);
         }
     }
 }

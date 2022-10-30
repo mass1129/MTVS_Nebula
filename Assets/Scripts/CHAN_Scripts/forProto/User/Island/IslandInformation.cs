@@ -13,6 +13,7 @@ public class JsonInfo
     public string island_Type;
     // 유저 프로필 이미지 
     public string User_image;
+    public string User_NickName;
     // 하늘섬 오브젝트
     public GameObject User_Obj;
 }
@@ -55,12 +56,13 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
     //csv파일 정보 로드 함수, 처음 하늘뷰에서 들어왔을 때 발동된다.
     public void LoadFromCSV(string fileName)
     {
-        StreamReader sr = new StreamReader(Application.dataPath + "/" + fileName);
+        StreamReader sr = new StreamReader(Application.streamingAssetsPath + "/" + fileName);
         // csv파일 인덱스가 끝났는지 판별
         bool endOfFile = false;
         // csv 파일의 목차부분 생략하기 위해쓰는 변수
         bool turn = false;
         int count = 0;
+        string nickname = null;
         while (!endOfFile)
         {
             // csv파일의 한 줄을 읽은 값을 data_string에 저장
@@ -82,7 +84,8 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
                 continue;
             }
             Vector3 temp_pos = new Vector3(float.Parse(data_values[0])* dis_multiplier, float.Parse(data_values[1])* dis_multiplier, float.Parse(data_values[2])* dis_multiplier);
-            InsertData(count, data_values[3], temp_pos);
+            nickname = data_values[4];
+            InsertData(count, data_values[3], temp_pos, nickname);
               //csv의x,y,z값을 받아내고 Vector로 저장하자
             count++;
 
@@ -126,7 +129,8 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
     // 하늘섬 배치 함수 
     public void Spawn()
     {
-        LoadFromJson();
+        //LoadFromJson();
+        LoadFromCSV("test_FriendList.csv");
         foreach (string i in Island_Dic.Keys)
         {
 
@@ -166,7 +170,7 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
         return s2[1];
 
     }
-    void InsertData(int i, string url, Vector3 pos)
+    void InsertData(int i, string url, Vector3 pos,string nickname="")
     {
         JsonInfo dic = new JsonInfo();
         //딕셔너리 인덱스 생성
@@ -176,6 +180,7 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
         dic.island_Type = Return_IslandType(url);
         dic.island_Pos = pos;
         dic.User_image = url;
+        dic.User_NickName = nickname;
     }
 
 

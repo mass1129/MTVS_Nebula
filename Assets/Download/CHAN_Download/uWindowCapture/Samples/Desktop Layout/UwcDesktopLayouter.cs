@@ -65,12 +65,13 @@ public class UwcDesktopLayouter : MonoBehaviour
         windowTexture.enabled = !windowTexture.window.isIconic;
     }
 
+    // 화면 공유창 이동 관리 함수 
     void MoveWindow(UwcWindowTexture windowTexture, bool useFilter)
     {
         var window = windowTexture.window;
         var pos = UwcWindowUtil.ConvertDesktopCoordToUnityPosition(window, basePixel);
         pos.z = window.zOrder * zMargin;
-        var targetPos = transform.localToWorldMatrix.MultiplyPoint3x4(pos);
+            var targetPos = transform.position;//transform.localToWorldMatrix.MultiplyPoint3x4(pos);
         windowTexture.transform.position = (useFilter ? 
             Vector3.Slerp(windowTexture.transform.position, targetPos, filter) :
             targetPos);

@@ -39,5 +39,10 @@ public class Profile_Main_Manager : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
+    //다음씬으로 이동
+    public void LoadNextScene()
+    {
+        SceneManager.LoadScene(2);
+    }
 
 }
