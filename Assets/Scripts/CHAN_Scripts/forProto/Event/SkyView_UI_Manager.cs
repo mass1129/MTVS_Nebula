@@ -84,8 +84,10 @@ public class SkyView_UI_Manager : MonoBehaviour
     // 친구리스트 목록 나오게 하는 기능
     public void Btn_FriendLists()
     {
+        Dic_Friend.Clear();
         foreach (string i in IslandInformation.instance.Island_Dic.Keys)
         {
+            
             JsonInfo info = IslandInformation.instance.Island_Dic[i];
             Friend_Info f_info=new Friend_Info();
             Dic_Friend.Add(info.User_NickName, f_info);

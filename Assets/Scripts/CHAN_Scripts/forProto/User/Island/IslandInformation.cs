@@ -56,7 +56,7 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
     //csv파일 정보 로드 함수, 처음 하늘뷰에서 들어왔을 때 발동된다.
     public void LoadFromCSV(string fileName)
     {
-        StreamReader sr = new StreamReader(Application.dataPath + "/" + fileName);
+        StreamReader sr = new StreamReader(Application.streamingAssetsPath + "/" + fileName);
         // csv파일 인덱스가 끝났는지 판별
         bool endOfFile = false;
         // csv 파일의 목차부분 생략하기 위해쓰는 변수
