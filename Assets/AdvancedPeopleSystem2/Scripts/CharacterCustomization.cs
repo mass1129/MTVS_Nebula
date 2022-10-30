@@ -90,7 +90,7 @@ namespace AdvancedPeopleSystem
         }
         private void Start()
         {
-            LoadLastSaveData();
+            
         }
         void LoadLastSaveData()
         {

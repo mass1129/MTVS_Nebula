@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class K_PlayerStats : MonoBehaviour
 {
 
     public Attribute[] attributes;
+    //public TextMeshPro[] displayValue; 
     public Attribute Agility => attributes[0];
 
     private InventoryObject _equipment;
@@ -17,6 +20,7 @@ public class K_PlayerStats : MonoBehaviour
         for (int i = 0; i < attributes.Length; i++)
         {
             attributes[i].SetParent(this);
+            //(displayValue[i], attributes[i]);
         }
 
         for (int i = 0; i < _equipment.GetSlots.Length; i++)
@@ -28,7 +32,7 @@ public class K_PlayerStats : MonoBehaviour
 
     public void AttributeModified(Attribute attribute)
     {
-        Debug.Log(string.Concat(attribute.type, " was updated! Value is now ", attribute.value.ModifiedValue));
+        //displayValue.text = string.Concat(attribute.type, " : ", attribute.value.ModifiedValue);
     }
 
     public void OnRemoveItem(InventorySlot slot)
