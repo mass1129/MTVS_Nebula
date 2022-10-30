@@ -12,16 +12,18 @@ public class Copy_Window_Texture : MonoBehaviour
         instance = this;
     }
     public Transform Window;
+    public Transform Area_btns;
     public GameObject btn_Copy;
     Texture[] texture;
     float curtime;
     List<GameObject> copys = new List<GameObject>();
     bool isOn;
-    Image image;
+    public Image image;
     void Start()
     {
         image = GetComponent<Image>();
         image.enabled = false;
+        Area_btns.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -35,9 +37,16 @@ public class Copy_Window_Texture : MonoBehaviour
     }
     public void OnClicked(bool b)
     {
-        
-        isOn = b;
+        if (Item_TVManager.instance.isTurn)
+        { 
+            isOn = b;
+        }
         image.enabled = b;
+        Area_btns.gameObject.SetActive(b);
+        foreach (GameObject go in copys)
+        {
+            go.SetActive(b);
+        }
     }
     void Copying()
     {
@@ -70,21 +79,18 @@ public class Copy_Window_Texture : MonoBehaviour
                 c1.text.Substring(0, 30);
                 c1.text += "...";
             }
-                
-            
-
         }
     }
-    void ClearList()
+    //버튼을 선택했을 때
+    public void Btn_Select()
     {
-        if (copys.Count != 0)
-        {
-            for (int i = 0; i < copys.Count; i++)
-            {
-                Destroy(copys[i].gameObject);
-            }
-        }
-            copys.Clear();
+        OnClicked(false);
     }
-    
+    //화면 선택 취소
+    public void Btn_CloseWindow()
+    {
+        OnClicked(false);
+        Item_TVManager.instance.isTurn = !Item_TVManager.instance.isTurn;
+        Item_TVManager.instance.OnSpaceBar();
+    }
 }

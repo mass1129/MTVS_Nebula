@@ -332,8 +332,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1999605774}
-        m_TargetAssemblyTypeName: Profile_Manager, Assembly-CSharp
+      - m_Target: {fileID: 2054377833}
+        m_TargetAssemblyTypeName: Profile_Main_Manager, Assembly-CSharp
         m_MethodName: LoadNextScene
         m_Mode: 1
         m_Arguments:
@@ -1004,17 +1004,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1999605774 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1999605774, guid: fe56674cd4534754e8dd0a68eebd4461, type: 3}
-  m_PrefabInstance: {fileID: 8054465065242704686}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15c61f3eb79e9b74a814f1af089ecce0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2045773869
 GameObject:
   m_ObjectHideFlags: 0

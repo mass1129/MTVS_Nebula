@@ -9,8 +9,9 @@ public class Item_TVManager : MonoBehaviour
     public Transform prefab_Wall;
     public Transform window;
     public GameObject[] prefab_TVScreem;
-    
+    Vector3 InitialPos;
     public bool done;
+    bool moving;
         
 
     private void Awake()
@@ -19,9 +20,10 @@ public class Item_TVManager : MonoBehaviour
     }
     public Text introduceText;
     //TV가 켜졌는지 꺼졌는지 판별
-    int  isTurn=-1;
+    public bool isTurn;
     void Start()
     {
+        InitialPos = prefab_Wall.position;
         window.position = prefab_Wall.position;
     }
     public void InsertScreenObject(bool b)
@@ -37,15 +39,15 @@ public class Item_TVManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)&&done)
+        if (Input.GetKeyDown(KeyCode.Space) && done&& !moving)
         {
-            isTurn *=-1;
+            isTurn = !isTurn;
             OnSpaceBar();
         }
     }
-    void OnSpaceBar()
+    public void OnSpaceBar()
     {
-        if (isTurn == 1)
+        if (isTurn)
         {
             Copy_Window_Texture.instance.OnClicked(true);
         }
@@ -53,18 +55,15 @@ public class Item_TVManager : MonoBehaviour
         {
             Copy_Window_Texture.instance.OnClicked(false);
         }
-        
         StartCoroutine(MoveTV(isTurn));
     }
-    IEnumerator MoveTV(int i)
+    IEnumerator MoveTV(bool b)
     {
-        done = false;
+        moving = true;
         // TV가 땅에서 나온다.
         // 초기에 스크린은 땅에 위치하도록(y= -5에 위치)
         InsertScreenObject(false);
-        
-        float multi = i * 10; 
-        Vector3 SetPos = prefab_Wall.position + Vector3.up * multi;
+        Vector3 SetPos = b == true ? InitialPos + Vector3.up * 10 : InitialPos;
         float distance = Vector3.Distance(prefab_Wall.position, SetPos);
         while (distance > 0.1f)
         {
@@ -73,9 +72,10 @@ public class Item_TVManager : MonoBehaviour
             window.position = prefab_Wall.position;
             yield return null;
         }
+        prefab_Wall.position = SetPos;
         window.position -= transform.forward * 0.51f;
         //버튼을 누르면 y=10 만큼 좌표 lerp하게 이동 
-        done = true;
+        moving = false;
 
     }
     // 티비 킬 수 있는지 없는지 
@@ -83,7 +83,7 @@ public class Item_TVManager : MonoBehaviour
     {
         if (b==true)
         {
-            if (isTurn==1)
+            if (isTurn)
             {
                 introduceText.text = "Turn Off Screen";
             }
