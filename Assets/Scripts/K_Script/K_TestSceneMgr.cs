@@ -6,7 +6,7 @@ public class K_TestSceneMgr : MonoBehaviour
 {   
     public void LoadCostomScene()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex -1);
     }
     
 }

@@ -4,24 +4,15 @@
             "AllowedItems": [],
             "item": {
                 "Name": "Coin",
-                "Id": 6,
+                "Id": 2,
                 "buffs": [
                     {
-                        "attribute": 2,
+                        "stat": 2,
                         "value": 1,
                         "min": 1,
                         "max": 1
                     }
                 ]
-            },
-            "amount": 1
-        },
-        {
-            "AllowedItems": [],
-            "item": {
-                "Name": "Wall1",
-                "Id": 11,
-                "buffs": []
             },
             "amount": 2
         },
@@ -37,16 +28,9 @@
         {
             "AllowedItems": [],
             "item": {
-                "Name": "Coin",
-                "Id": 6,
-                "buffs": [
-                    {
-                        "attribute": 2,
-                        "value": 1,
-                        "min": 1,
-                        "max": 1
-                    }
-                ]
+                "Name": "Wall1",
+                "Id": 11,
+                "buffs": []
             },
             "amount": 1
         },
@@ -57,7 +41,7 @@
                 "Id": 9,
                 "buffs": []
             },
-            "amount": 2
+            "amount": 1
         },
         {
             "AllowedItems": [],
@@ -66,7 +50,7 @@
                 "Id": 8,
                 "buffs": []
             },
-            "amount": 2
+            "amount": 1
         },
         {
             "AllowedItems": [],
@@ -75,7 +59,7 @@
                 "Id": 0,
                 "buffs": [
                     {
-                        "attribute": 4,
+                        "stat": 4,
                         "value": 2,
                         "min": 1,
                         "max": 4
@@ -88,10 +72,10 @@
             "AllowedItems": [],
             "item": {
                 "Name": "Bag1",
-                "Id": 5,
+                "Id": 1,
                 "buffs": [
                     {
-                        "attribute": 4,
+                        "stat": 4,
                         "value": 2,
                         "min": 2,
                         "max": 5
@@ -104,10 +88,10 @@
             "AllowedItems": [],
             "item": {
                 "Name": "Hat1",
-                "Id": 7,
+                "Id": 3,
                 "buffs": [
                     {
-                        "attribute": 4,
+                        "stat": 4,
                         "value": 4,
                         "min": 3,
                         "max": 5
@@ -119,20 +103,50 @@
         {
             "AllowedItems": [],
             "item": {
-                "Name": "",
-                "Id": -1,
-                "buffs": []
+                "Name": "Shirt1",
+                "Id": 5,
+                "buffs": [
+                    {
+                        "stat": 4,
+                        "value": 3,
+                        "min": 3,
+                        "max": 5
+                    }
+                ]
             },
-            "amount": 0
+            "amount": 1
         },
         {
             "AllowedItems": [],
             "item": {
-                "Name": "",
-                "Id": -1,
-                "buffs": []
+                "Name": "Weapon1",
+                "Id": 7,
+                "buffs": [
+                    {
+                        "stat": 4,
+                        "value": 4,
+                        "min": 3,
+                        "max": 5
+                    }
+                ]
             },
-            "amount": 0
+            "amount": 1
+        },
+        {
+            "AllowedItems": [],
+            "item": {
+                "Name": "Shoe1",
+                "Id": 6,
+                "buffs": [
+                    {
+                        "stat": 4,
+                        "value": 4,
+                        "min": 3,
+                        "max": 5
+                    }
+                ]
+            },
+            "amount": 1
         },
         {
             "AllowedItems": [],

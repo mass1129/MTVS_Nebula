@@ -7,7 +7,14 @@
             "item": {
                 "Name": "Hat1",
                 "Id": 3,
-                "buffs": []
+                "buffs": [
+                    {
+                        "stat": 4,
+                        "value": 4,
+                        "min": 3,
+                        "max": 5
+                    }
+                ]
             },
             "amount": 1
         },
@@ -18,7 +25,14 @@
             "item": {
                 "Name": "Accessory1",
                 "Id": 0,
-                "buffs": []
+                "buffs": [
+                    {
+                        "stat": 4,
+                        "value": 2,
+                        "min": 1,
+                        "max": 4
+                    }
+                ]
             },
             "amount": 1
         },
@@ -29,7 +43,14 @@
             "item": {
                 "Name": "Shirt1",
                 "Id": 5,
-                "buffs": []
+                "buffs": [
+                    {
+                        "stat": 4,
+                        "value": 3,
+                        "min": 3,
+                        "max": 5
+                    }
+                ]
             },
             "amount": 1
         },
@@ -49,22 +70,36 @@
                 10
             ],
             "item": {
-                "Name": "",
-                "Id": -1,
-                "buffs": []
+                "Name": "Shoe1",
+                "Id": 6,
+                "buffs": [
+                    {
+                        "stat": 4,
+                        "value": 4,
+                        "min": 3,
+                        "max": 5
+                    }
+                ]
             },
-            "amount": 0
+            "amount": 1
         },
         {
             "AllowedItems": [
                 11
             ],
             "item": {
-                "Name": "",
-                "Id": -1,
-                "buffs": []
+                "Name": "Bag1",
+                "Id": 1,
+                "buffs": [
+                    {
+                        "stat": 4,
+                        "value": 2,
+                        "min": 2,
+                        "max": 5
+                    }
+                ]
             },
-            "amount": 0
+            "amount": 1
         },
         {
             "AllowedItems": [
