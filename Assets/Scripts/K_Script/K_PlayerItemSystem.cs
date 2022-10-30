@@ -5,7 +5,7 @@ using UnityEngine;
 public class K_PlayerItemSystem : MonoBehaviour
 {
     
-    bool isVisible = false;
+    public bool isVisible = false;
     public InventoryObject inventory;
     public InventoryObject equipment;
 

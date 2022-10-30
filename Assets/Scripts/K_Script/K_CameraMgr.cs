@@ -29,11 +29,14 @@ public class K_CameraMgr : MonoBehaviour
     public bool spaceView= false;
 
     public float zoomChangeAmount = 100;
+
+    K_PlayerItemSystem itemSystem;
     // Start is called before the first frame update
     void Start()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        itemSystem = GetComponent<K_PlayerItemSystem>();
         player = GetComponent<K_Player>();
         buildingSystem.SetActive(false);
         buildCamOffset = buildCamera.gameObject.GetComponent<CinemachineCameraOffset>();
@@ -43,6 +46,7 @@ public class K_CameraMgr : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (itemSystem.isVisible) return;
         xAxis.Update(Time.deltaTime);
         yAxis.Update(Time.deltaTime);
 
@@ -57,7 +61,8 @@ public class K_CameraMgr : MonoBehaviour
         
     }
     private void LateUpdate()
-    {   
+    {
+        
         if(!spaceView)
         {
             cameraLookAt.eulerAngles = new Vector3(yAxis.Value, xAxis.Value, 0);
