@@ -5,63 +5,97 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using UnityEditor;
 using System.Runtime.Serialization;
+using System;
 
+public enum InterFaceType
+{
+    Inventory,
+    Equipment,
+    Chest
+}
 [CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory System/Inventory")]
 public class InventoryObject : ScriptableObject
 {
     public string savePath;
     public ItemDatabaseObject database;
+    public InterFaceType type;
     public Inventory Container;
+    public InventorySlot[] GetSlots { get { return Container.Slots; } }
 
-    public void AddItem(Item _item, int _amount)
+    public bool AddItem(Item _item, int _amount)
     {
-        if (_item.buffs.Length > 0)
+        if (EmptySlotCount <= 0)
+            return false;
+        InventorySlot slot = FindItemOnInventory(_item);
+        if (!database.ItemObjects[_item.Id].stackable || slot == null)
         {
             SetEmptySlot(_item, _amount);
-            return;
+            return true;
         }
-        //아이템의 갯수만큼
-        for (int i = 0; i < Container.Items.Length; i++)
-        {
-            //아이템 리스트 i 자리에 같은 아이템이 있다면
-            if (Container.Items[i].ID == _item.Id)
-            {
-                //아이템의 갯수를 더한다.
-                Container.Items[i].AddAmount(_amount);
-                return;
-            }
-        }
-        SetEmptySlot(_item, _amount);
+        slot.AddAmount(_amount);
+        return true;
     }
 
+    
+
+    public int EmptySlotCount
+    {
+        get
+        {
+            int counter = 0;
+            for(int i =0; i<GetSlots.Length; i++)
+            {
+                if (GetSlots[i].item.Id <=-1)
+                    counter++;
+            }
+            return counter;
+        }
+    }
+    public InventorySlot FindItemOnInventory(Item _item)
+    {
+        for (int i = 0; i < GetSlots.Length; i++)
+        {
+            if (GetSlots[i].item.Id == _item.Id)
+            {
+                return GetSlots[i];
+            }
+            
+        }
+        return null;
+
+    }
     public InventorySlot SetEmptySlot(Item _item, int _amount)
     {
-        for(int i = 0; i < Container.Items.Length; i++)
+        for(int i = 0; i < GetSlots.Length; i++)
         {
-            if (Container.Items[i].ID <=-1)
+            if (GetSlots[i].item.Id <= -1)
             {
-                Container.Items[i].UpdateSlot(_item.Id, _item, _amount);
-                return Container.Items[i];
+                GetSlots[i].UpdateSlot(_item, _amount);
+                return GetSlots[i];
             }
         }
         //set up functionality for full inventory
         return null;
     }
 
-    public void MoveItem(InventorySlot item1, InventorySlot item2)
-    {
-        InventorySlot temp = new InventorySlot(item2.ID, item2.item, item2.amount);
-        item2.UpdateSlot(item1.ID, item1.item, item1.amount);
-        item1.UpdateSlot(temp.ID, temp.item, temp.amount);
+    public void SwapItems(InventorySlot item1, InventorySlot item2)
+    {   
+        if(item2.CanPlaceInSlot(item1.ItemObject) && item1.CanPlaceInSlot(item2.ItemObject))
+        {
+            InventorySlot temp = new InventorySlot(item2.item, item2.amount);
+            item2.UpdateSlot(item1.item, item1.amount);
+            item1.UpdateSlot(temp.item, temp.amount);
+        }
+
     }
 
     public void RemoveItem(Item _item)
     {
-        for(int i =0; i < Container.Items.Length; i++)
+        for(int i =0; i < GetSlots.Length; i++)
         {
-            if(Container.Items[i].item == _item)
+            if(GetSlots[i].item == _item)
             {
-                Container.Items[i].UpdateSlot(-1, null, 0);
+                GetSlots[i].UpdateSlot( null, 0);
             }
         }
     }
@@ -70,27 +104,30 @@ public class InventoryObject : ScriptableObject
     {
 
         string json = JsonUtility.ToJson(Container, true);
-        PlayerPrefs.SetString("InventorySystemSave", json);
-        K_SaveSystem.Save("InventorySystemSave", json, true);
+        PlayerPrefs.SetString(savePath, json);
+        K_SaveSystem.Save(savePath, json, true);
 
     }
     [ContextMenu("Load")]
     public void Load()
     {
-        if (PlayerPrefs.HasKey("InventorySystemSave"))
+        if (PlayerPrefs.HasKey(savePath))
         {
-            string json = PlayerPrefs.GetString("InventorySystemSave");
-            json = K_SaveSystem.Load("InventorySystemSave");
+            string json = PlayerPrefs.GetString(savePath);
+            json = K_SaveSystem.Load(savePath);
 
             JsonUtility.FromJsonOverwrite(json, Container);
-
+            for(int i = 0; i < Container.Slots.Length; i++)
+            {
+                Container.Slots[i].UpdateSlot(Container.Slots[i].item, Container.Slots[i].amount);
+            }
         }
 
     }
     [ContextMenu("Clear")]
     public void Clear()
     {
-        Container = new Inventory();
+        Container.Clear();
     }
    
 }
@@ -100,42 +137,87 @@ public class InventoryObject : ScriptableObject
 public class Inventory
 {
     //아이템 슬롯(아이템종류, 아이템 수량)으로 이루어진 리스트
-    public InventorySlot[] Items = new InventorySlot[24];
+    public InventorySlot[] Slots = new InventorySlot[24];
+    public void Clear()
+    {
+        for(int i = 0; i<Slots.Length; i++)
+        {
+            Slots[i].RemoveItem();  
+        }
+    }
 }
 
+public delegate void SlotUpdated(InventorySlot _slot);
 //아이템슬룻 한개
 [System.Serializable]
 public class InventorySlot
 {
-    public int ID = -1;
+    public ItemType[] AllowedItems = new ItemType[0];
+    [System.NonSerialized]
+    public K_UserInterface parent;
+    [System.NonSerialized]
+    public GameObject slotDisplay;
+    [System.NonSerialized]
+    public SlotUpdated OnAfterUpdate;
+    [System.NonSerialized]
+    public SlotUpdated OnBeforeUpdate;
     public Item item;
     public int amount;
+
+    public ItemObject ItemObject
+    {
+        get
+        {
+            if(item.Id>=0)
+            {
+                return parent.inventory.database.ItemObjects[item.Id];
+            }
+            return null;
+        }
+    }
     //기본 new InventorySlot시 만들어지는 형태
     public InventorySlot()
     {
-        ID = -1;
-        item = null;
-        amount = 0;
+        UpdateSlot(new Item(), 0);
     }
     //매개변수를 넣을때 만들어지는 형태
-    public InventorySlot(int _id, Item _item, int _amount)
+    public InventorySlot(Item _item, int _amount)
     {
-        ID = _id;
-        item = _item;
-        amount = _amount;
+        UpdateSlot(_item, _amount);
     }
     //슬룻한개를 업데이트하는 함수
-    public void UpdateSlot(int _id, Item _item, int _amount)
+    public void UpdateSlot(Item _item, int _amount)
     {
-        ID = _id;
+        if (OnBeforeUpdate != null)
+            OnBeforeUpdate.Invoke(this);
         item = _item;
         amount = _amount;
+        if (OnAfterUpdate != null)
+            OnAfterUpdate.Invoke(this);
+    }
+
+    public void RemoveItem()
+    {
+        UpdateSlot(new Item(), 0);
     }
     //슬룻한개의 갯수를 제어하는 함수
     public void AddAmount(int value)
     {
-        amount += value;
+        UpdateSlot(item, amount += value);
+        
     }
-
+    public bool CanPlaceInSlot(ItemObject _itemObject)
+    {
+        if(AllowedItems.Length <=0 || _itemObject ==null || _itemObject.data.Id<0)
+        {
+            return true;
+        }
+        for(int i=0; i<AllowedItems.Length; i++)
+        {
+            if (_itemObject.type == AllowedItems[i])
+                return true;
+        }
+        return false;
+    }
 
 }

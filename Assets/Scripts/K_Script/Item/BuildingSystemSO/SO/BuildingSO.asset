@@ -12,11 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78dce631f99e2764caa1cbac2101ba10, type: 3}
   m_Name: BuildingSO
   m_EditorClassIdentifier: 
-  Id: 3
   uiDisplay: {fileID: 21300000, guid: 02d37cccccdad5248b369eaf2dd84af2, type: 3}
+  stackable: 1
   type: 0
   description: 
-  buffs: []
+  data:
+    Name: 
+    Id: -1
+    buffs: []
   nameString: Building
   prefab: {fileID: 6500274869274460519, guid: e04256ef945b4904a816d89f8af8fd08, type: 3}
   visual: {fileID: 6981069948881282455, guid: 865326463cefa1345a6920120750f4b2, type: 3}

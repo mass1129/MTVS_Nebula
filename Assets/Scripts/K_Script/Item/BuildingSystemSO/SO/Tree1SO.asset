@@ -12,11 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78dce631f99e2764caa1cbac2101ba10, type: 3}
   m_Name: Tree1SO
   m_EditorClassIdentifier: 
-  Id: 6
   uiDisplay: {fileID: 21300000, guid: 710bf28e6543a354d87c47d3b3d14390, type: 3}
+  stackable: 1
   type: 0
   description: 
-  buffs: []
+  data:
+    Name: 
+    Id: -1
+    buffs: []
   nameString: Tree1
   prefab: {fileID: 5116308597853357191, guid: 4f9df626955506f4d94cda922581da06, type: 3}
   visual: {fileID: 844778583526976979, guid: 386a0c143bc37ca48b980e50057932b8, type: 3}

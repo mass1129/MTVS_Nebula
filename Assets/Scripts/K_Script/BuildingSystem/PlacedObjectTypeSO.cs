@@ -3,17 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Equipment Object", menuName = "Inventory System/Items/Building")]
-public class PlacedObjectTypeSO : ItemObject
+public class PlacedObjectTypeSO : ScriptableObject
 {
     public string nameString;
     public Transform prefab;
     public Transform visual;
     public int width;
     public int height;
-    public void Awake()
-    {
-        type = ItemType.BuildObject;
-    }
+  
     public static Dir GetNextDir(Dir dir) {
         switch (dir) {
             default:
