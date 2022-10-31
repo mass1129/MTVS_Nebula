@@ -52,14 +52,7 @@ public class GridBuildingSystem3D : MonoBehaviour {
         {
             DeselectObjectType();
         }
-        if(Input.GetKeyDown(KeyCode.Alpha8))
-        {
-            Save();
-        }
-        if(Input.GetKeyDown(KeyCode.Alpha9))
-        {
-            Load();
-        }
+
     }
 
 
@@ -306,7 +299,7 @@ public class GridBuildingSystem3D : MonoBehaviour {
         return isDemolishActive;
     }
 
-    private void Save()
+    public void Save()
     {
         List<PlacedObjectSaveObjectArray> placedObjectSaveObjectArrayList = new List<PlacedObjectSaveObjectArray>();
 
@@ -341,7 +334,7 @@ public class GridBuildingSystem3D : MonoBehaviour {
         K_SaveSystem.Save("HouseBuildingSystemSave", json, true);
         
     }
-    private void Load()
+    public void Load()
     {
         if (PlayerPrefs.HasKey("HouseBuildingSystemSave"))
         {

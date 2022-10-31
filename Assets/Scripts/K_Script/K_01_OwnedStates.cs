@@ -279,8 +279,6 @@ namespace K_01_OwnedStates
         {
             entity.camMgr.buildingSystem.SetActive(true);
             entity.camMgr.buildCamOffset.m_Offset.z = 0f;
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
             zoomAmount = entity.camMgr.zoomChangeAmount;
         }
 
@@ -357,8 +355,6 @@ namespace K_01_OwnedStates
     public override void Exit(K_Player entity)
         {
             entity.camMgr.buildingSystem.SetActive(false);
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
         }
     }
 

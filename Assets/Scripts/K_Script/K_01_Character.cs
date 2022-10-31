@@ -61,7 +61,13 @@ public class K_01_Character : K_Player
         anim.SetFloat(s, f);
     }
 
-
+    public void ChangeToBuildingState()
+    {   
+        if(CurrentState ==PlayerStates.Idle)
+        ChangeState(PlayerStates.BuildingMode);
+        else if(CurrentState == PlayerStates.BuildingMode)
+            ChangeState(PlayerStates.Idle);
+    }
 
     public override void Play(string s, int layer, float normallizedTime)
     {
