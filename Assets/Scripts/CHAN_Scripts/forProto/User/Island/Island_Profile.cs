@@ -8,7 +8,7 @@ using UnityEngine.Networking;
 public class Island_Profile : MonoBehaviour
 {
     //이미지 파일을 가져와서  섬에 띄우도록 한다.
-    float visualDistance =300;
+    float visualDistance =200;
     public string user_name;
     Image profileImage;
     Text userName_Text;

@@ -30,7 +30,6 @@ Transform:
   m_Children:
   - {fileID: 4682749066083438402}
   - {fileID: 4682749066178887977}
-  - {fileID: 4682749066562506804}
   - {fileID: 4682749066259271863}
   - {fileID: 4682749067505274813}
   - {fileID: 4682749066386584325}
@@ -180,7 +179,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1542654174708582452}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4682749066259271864
 MonoBehaviour:
@@ -199,7 +198,6 @@ MonoBehaviour:
   warningZoneRatio: 5
   userObjs:
   - {fileID: 0}
-  warningText: {fileID: 0}
 --- !u!1 &4682749066386584327
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,7 +228,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1542654174708582452}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4682749066386584326
 MonoBehaviour:
@@ -247,53 +245,6 @@ MonoBehaviour:
   User_name: []
   temp_Delete: []
   temp_Add: []
---- !u!1 &4682749066562506806
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4682749066562506804}
-  - component: {fileID: 4682749066562506803}
-  m_Layer: 0
-  m_Name: IslandSpawnManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4682749066562506804
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4682749066562506806}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1542654174708582452}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4682749066562506803
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4682749066562506806}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e77e2293d0b8cc4bb2553d511805862, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  islandsTransForm: {fileID: 0}
-  CSV_File_Name: 
-  CSV_File_Name2: 
 --- !u!1 &4682749067505274815
 GameObject:
   m_ObjectHideFlags: 0
@@ -324,7 +275,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1542654174708582452}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4682749067505274814
 MonoBehaviour:
@@ -338,7 +289,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9875d1f049ae5584c95abd63aed858a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BackGround: {fileID: 0}
-  UserName: {fileID: 0}
-  AddFreind: {fileID: 0}
-  ExitButton: {fileID: 0}
+  btn_Freinds: {fileID: 0}
+  btn_Favorites: {fileID: 0}
+  btn_MyWorld: {fileID: 0}
+  Area_FriendsList: {fileID: 0}
+  Area_Friend_info: {fileID: 0}
+  Area_Friend_Profile: {fileID: 0}
+  Btn_Obj: {fileID: 0}
+  Create_Location: {fileID: 0}

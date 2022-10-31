@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 0}
+  m_Sun: {fileID: 21468025}
   m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 2b4873cf3bc64c144af119576bbb650e, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -759,11 +759,11 @@ MonoBehaviour:
   m_Content: {fileID: 1429963239}
   m_Horizontal: 1
   m_Vertical: 1
-  m_MovementType: 1
+  m_MovementType: 2
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 10
   m_Viewport: {fileID: 1379891834}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 1021370756}
@@ -1058,6 +1058,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1546338207}
     - target: {fileID: 4682749066259271864, guid: ddfc56e64ded4844abe54df0704c6e69, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4682749066259271864, guid: ddfc56e64ded4844abe54df0704c6e69, type: 3}
       propertyPath: warningText
       value: 
       objectReference: {fileID: 0}
@@ -1065,6 +1069,10 @@ PrefabInstance:
       propertyPath: userObjs.Array.data[0]
       value: 
       objectReference: {fileID: 1745615103}
+    - target: {fileID: 4682749066259271866, guid: ddfc56e64ded4844abe54df0704c6e69, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4682749067505274814, guid: ddfc56e64ded4844abe54df0704c6e69, type: 3}
       propertyPath: Btn_Obj
       value: 
@@ -1108,7 +1116,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6493682401211939728, guid: 40479411297e6954aa23f2e8613cc82a, type: 3}
       propertyPath: m_CullingMask.m_Bits
-      value: 1536
+      value: 1024
       objectReference: {fileID: 0}
     - target: {fileID: 6493682401211939734, guid: 40479411297e6954aa23f2e8613cc82a, type: 3}
       propertyPath: m_RootOrder
@@ -1209,7 +1217,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &411884413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1423,7 +1431,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a01bb75f2de8204b8693136f4de04f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  followSpeed: 0.7
+  followSpeed: 4
   camHolderPos: {fileID: 568015342}
   multi: 0.1
 --- !u!4 &568015342 stripped
@@ -2046,11 +2054,11 @@ MonoBehaviour:
   m_Content: {fileID: 691080192}
   m_Horizontal: 1
   m_Vertical: 1
-  m_MovementType: 1
+  m_MovementType: 2
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 10
   m_Viewport: {fileID: 845631965}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 64228229}
@@ -3130,6 +3138,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3252203795677890437, guid: e69d0d4dc59a3784bbfc772eab79a415, type: 3}
+      propertyPath: userSpeed
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 3252203795677890437, guid: e69d0d4dc59a3784bbfc772eab79a415, type: 3}
+      propertyPath: speedMultiplier
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3252203795677890439, guid: e69d0d4dc59a3784bbfc772eab79a415, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -6057,7 +6073,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   setDistance: 300
-  forceMultiplier: 100
+  forceMultiplier: 120
   user_name: 
 --- !u!4 &6585576682558793718
 Transform:
@@ -6072,7 +6088,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1734737916}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!222 &8398052521658379115
 CanvasRenderer:

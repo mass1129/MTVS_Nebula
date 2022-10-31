@@ -25,6 +25,10 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
     {
         instance = this;
     }
+    void Start()
+    {
+        Spawn();
+    }
     public Dictionary<string, JsonInfo> Island_Dic = new Dictionary<string, JsonInfo>();
     // 유저들의 닉네임을 저장할 리스트(Key:닉네임)
     public List<string> User_name = new List<string>();

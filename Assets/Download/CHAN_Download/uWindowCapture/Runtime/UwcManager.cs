@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -137,6 +138,7 @@ public class UwcManager : MonoBehaviour
         Lib.SetDebugMode(debugMode);
         Lib.Initialize();
         renderEventFunc_ = Lib.GetRenderEventFunc();
+        DontDestroyOnLoad(this);
     }
 
     void Start()
