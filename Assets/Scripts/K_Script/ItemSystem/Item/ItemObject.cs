@@ -11,7 +11,9 @@ public class ItemObject : ScriptableObject
 
     //아이템 UI이미지 프리펩
     public Sprite uiDisplay;
+    //아바타커스텀 인덱스
     public int charCustomIndex=-1;
+    //스택쌓이는지여부
     public bool stackable;
     //아이템 타입
     public ItemType type;

@@ -8,7 +8,7 @@ public class K_PlayerStats : MonoBehaviour
 {
 
     public Attribute[] attributes;
-    //public TextMeshPro[] displayValue; 
+    public GameObject[] displayValue; 
     public Attribute Agility => attributes[0];
 
     private InventoryObject _equipment;
@@ -20,7 +20,7 @@ public class K_PlayerStats : MonoBehaviour
         for (int i = 0; i < attributes.Length; i++)
         {
             attributes[i].SetParent(this);
-            //(displayValue[i], attributes[i]);
+            attributes[i].textUI = displayValue[i];
         }
 
         for (int i = 0; i < _equipment.GetSlots.Length; i++)
@@ -32,7 +32,7 @@ public class K_PlayerStats : MonoBehaviour
 
     public void AttributeModified(Attribute attribute)
     {
-        //displayValue.text = string.Concat(attribute.type, " : ", attribute.value.ModifiedValue);
+        attribute.textUI.GetComponentInChildren<TextMeshProUGUI>().text = string.Concat(": ", attribute.value.ModifiedValue);
     }
 
     public void OnRemoveItem(InventorySlot slot)

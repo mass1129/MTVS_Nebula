@@ -93,7 +93,6 @@ public abstract class K_UserInterface : MonoBehaviour
 
     public void OnEnter(GameObject obj)
     {
-        
         MouseData.slotHoveredOver = obj;
     }
     public void OnEnterInterface(GameObject obj)
