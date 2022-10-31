@@ -45,6 +45,7 @@ public class Profile_Manager : MonoBehaviour
     [Header("닉네임 입력")]
     public Transform Area_NickName;
     public GameObject btn_NickNameDone;
+    public Text Text_Nickname;
     GameObject input_NickName;
     [Header("프로필 수정")]
     public GameObject Btn_ReviceProfile;
@@ -72,6 +73,7 @@ public class Profile_Manager : MonoBehaviour
         Area_Load_Profile = obj.transform.GetChild(4);
         Btn_ReviceProfile= obj.transform.GetChild(5).GetChild(0).gameObject;
         Btn_DeleteProfile= obj.transform.GetChild(5).GetChild(1).gameObject;
+        Text_Nickname = obj.transform.GetChild(6).gameObject.GetComponent<Text>();
     }
     void Start()
     {}
@@ -93,6 +95,8 @@ public class Profile_Manager : MonoBehaviour
         //키워드창 꺼짐
         OnKeywords(false);
         OnLoadInfo(false);
+        // 상단 닉네임 입력부
+        Text_Nickname.gameObject.SetActive(false);
         OnNickname(false);
         //수정, 삭제 버튼 안보이도록
         Btn_ReviceProfile.SetActive(false);
@@ -129,6 +133,7 @@ public class Profile_Manager : MonoBehaviour
     void OnLoadInfo(bool b)
     {
         Area_Load_Profile.gameObject.SetActive(b);
+        Text_Nickname.gameObject.SetActive(b);
     }
 
     #endregion
@@ -205,12 +210,14 @@ public class Profile_Manager : MonoBehaviour
     {
         Area_NickName.gameObject.SetActive(b);
         input_NickName.SetActive(true);
+        
     }
     public void OnNickNameDone()
     {
         if (input_NickName.GetComponent<InputField>().text.Length > 0)
         {
             info.User_Name = input_NickName.GetComponent<InputField>().text;
+            Text_Nickname.text= input_NickName.GetComponent<InputField>().text;
         }
         else
         {
@@ -239,7 +246,7 @@ public class Profile_Manager : MonoBehaviour
             Profile_Main_Manager.instance.AddProfileBlock();
         }
         isRevice = true;
-        Test_UserProfile.instance.Save(profile);
+        //Test_UserProfile.instance.Save(profile);
     }
     void UpdateProfile()
     {
