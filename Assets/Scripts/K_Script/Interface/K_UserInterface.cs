@@ -17,6 +17,7 @@ public abstract class K_UserInterface : MonoBehaviour
     public Dictionary<GameObject, InventorySlot> slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
 
     public GameObject inventoryWindow;
+    public GameObject invenTab;
     bool isShowed = false;
     public void OnEnable()
     {
@@ -73,6 +74,8 @@ public abstract class K_UserInterface : MonoBehaviour
     {
         isShowed = !isShowed;
         inventoryWindow.SetActive(isShowed);
+        if(invenTab != null)
+        invenTab.SetActive(isShowed);
 
     }
 

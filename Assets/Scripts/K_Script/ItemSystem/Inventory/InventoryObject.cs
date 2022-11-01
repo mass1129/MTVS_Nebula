@@ -52,7 +52,8 @@ public class InventoryObject : ScriptableObject
 
     //인벤토리 슬롯에 해당 item이 있는 슬롯을 찾아서 해당 slot를 리턴한다.
     public InventorySlot FindItemOnInventory(Item item)
-    {
+    {   
+        //
         for (int i = 0; i < GetSlots.Length; i++)
         {
             if (GetSlots[i].item.Id == item.Id)
