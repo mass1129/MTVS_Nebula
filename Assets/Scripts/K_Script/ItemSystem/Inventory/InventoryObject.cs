@@ -19,9 +19,11 @@ public class InventoryObject : ScriptableObject
     public InventorySlot[] GetSlots => Container.Slots;
 
     public bool AddItem(Item item, int amount)
-    {
+    {   
+        //빈 슬룻이 없다면 false리턴
         if (EmptySlotCount <= 0)
             return false;
+        //
         InventorySlot slot = FindItemOnInventory(item);
         if (!database.ItemObjects[item.Id].stackable || slot == null)
         {
@@ -47,6 +49,8 @@ public class InventoryObject : ScriptableObject
             return counter;
         }
     }
+
+    //인벤토리 슬롯에 해당 item이 있는 슬롯을 찾아서 해당 slot를 리턴한다.
     public InventorySlot FindItemOnInventory(Item item)
     {
         for (int i = 0; i < GetSlots.Length; i++)
