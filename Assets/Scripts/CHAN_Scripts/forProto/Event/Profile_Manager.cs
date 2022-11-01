@@ -138,11 +138,14 @@ public class Profile_Manager : MonoBehaviour
 
     #endregion
     #region 3. 만약 플레이어가 이미지 업로드 버튼을 눌렀을 경우 발생하는 함수
+    [System.Obsolete]
     public void AddImage()
     {
         paths = StandaloneFileBrowser.OpenFilePanel("Open File", "", "png", true);
         StartCoroutine(GetTexture());
     }
+
+    [System.Obsolete]
     IEnumerator GetTexture()
     {
         UnityWebRequest www = UnityWebRequestTexture.GetTexture("file:///" + paths[0]);
@@ -232,7 +235,7 @@ public class Profile_Manager : MonoBehaviour
     {
         //이미지가 있는가?
         //keyword가 저장되어 있는가?
-        if (!info.User_Texture == null&& info.User_Keywords.Count>0&&info.User_Name!=null)
+        if (info.User_Texture != null&& info.User_Keywords.Count>0&&info.User_Name!=null)
         { 
             //저장 완료!
             //서버에 json으로 해당 정보를 보내자!

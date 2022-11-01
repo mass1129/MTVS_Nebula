@@ -19,6 +19,7 @@ public class Minimap_IconManager : MonoBehaviour
     }
 
     // Update is called once per frame
+    [System.Obsolete]
     void Update()
     {
         playerIcon.transform.position = player.position;

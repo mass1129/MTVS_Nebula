@@ -38,11 +38,13 @@ public class CanvasSampleOpenFileText : MonoBehaviour, IPointerDownHandler {
     //
     public void OnPointerDown(PointerEventData eventData) { }
 
+    [System.Obsolete]
     void Start() {
         var button = GetComponent<Button>();
         button.onClick.AddListener(OnClick);
     }
 
+    [System.Obsolete]
     private void OnClick() {
         var paths = StandaloneFileBrowser.OpenFilePanel(Title, Directory, Extension, Multiselect);
         if (paths.Length > 0) {
@@ -51,6 +53,7 @@ public class CanvasSampleOpenFileText : MonoBehaviour, IPointerDownHandler {
     }
 #endif
 
+    [System.Obsolete]
     private IEnumerator OutputRoutine(string url) {
         var loader = new WWW(url);
         yield return loader;
