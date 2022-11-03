@@ -38,7 +38,7 @@ public class Login_Manager : MonoBehaviour
 
         
         StartCoroutine(API_Login("ec2-43-201-62-61.ap-northeast-2.compute.amazonaws.com:8001/auth/login", json));
-
+        
     }
 
 
@@ -54,7 +54,7 @@ public class Login_Manager : MonoBehaviour
 
     IEnumerator API_Login(string URL, string json)
     {
-        UnityWebRequest request;
+        UnityWebRequest request=null;
         using (request = UnityWebRequest.Post(URL, json))
         {
             byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
@@ -73,10 +73,15 @@ public class Login_Manager : MonoBehaviour
             {
                 SetToken(request.downloadHandler.text);
                 Debug.Log(token);
+                request.Dispose();
+                SceneManager.LoadScene(1);
                 //if (request.responseCode != 200)
-                   // ErrorCheck(-(int)request.responseCode, "API_Login");
+                // ErrorCheck(-(int)request.responseCode, "API_Login");
+
             }
+            
         }
+        
     }
 
     /// <summary>

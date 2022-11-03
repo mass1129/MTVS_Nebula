@@ -328,12 +328,12 @@ public class GridBuildingSystem3D : MonoBehaviourPun
                 }
             }
 
-            PlacedObjectSaveObjectArray placedObjectSaveObjectArray = new PlacedObjectSaveObjectArray { placedObjectSaveObjectArray = saveObjectList.ToArray() };
+            PlacedObjectSaveObjectArray placedObjectSaveObjectArray = new PlacedObjectSaveObjectArray { GridPlaceObjectList = saveObjectList.ToArray() };
             placedObjectSaveObjectArrayList.Add(placedObjectSaveObjectArray);
         }
         SaveObject saveObject = new SaveObject
         {
-            placedObjectSaveObjectArrayArray = placedObjectSaveObjectArrayList.ToArray()
+            IslandGridList = placedObjectSaveObjectArrayList.ToArray()
         };
         string json = JsonUtility.ToJson(saveObject,true);
         PlayerPrefs.SetString("HouseBuildingSystemSave", json);
@@ -354,7 +354,7 @@ public class GridBuildingSystem3D : MonoBehaviourPun
             for (int i = 0; i < gridList.Count; i++)
             {
                 GridXZ<GridObject> grid = gridList[i];
-                foreach (PlacedObject.SaveObject placedObjectSaveObject in saveObject.placedObjectSaveObjectArrayArray[i].placedObjectSaveObjectArray)
+                foreach (PlacedObject.SaveObject placedObjectSaveObject in saveObject.IslandGridList[i].GridPlaceObjectList)
                 {
                     PlacedObjectTypeSO placedObjectTypeSO = BuildingSystemAssets.Instance.GetPlacedObjectTypeSOFromName(placedObjectSaveObject.placedObjectTypeSOName);
                     TryPlaceObject(placedObjectSaveObject.origin, placedObjectTypeSO, placedObjectSaveObject.dir, out PlacedObject placedObject);
@@ -366,12 +366,12 @@ public class GridBuildingSystem3D : MonoBehaviourPun
     [Serializable]
     public class SaveObject
     {
-        public PlacedObjectSaveObjectArray[] placedObjectSaveObjectArrayArray;
+        public PlacedObjectSaveObjectArray[] IslandGridList;
     }
 
     [Serializable]
     public class PlacedObjectSaveObjectArray
     {
-        public PlacedObject.SaveObject[] placedObjectSaveObjectArray;
+        public PlacedObject.SaveObject[] GridPlaceObjectList;
     }
 }
