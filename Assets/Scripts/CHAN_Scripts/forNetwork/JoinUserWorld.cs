@@ -44,6 +44,6 @@ public class JoinUserWorld : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
-        PhotonNetwork.LoadLevel(UserWorld);
+        //PhotonNetwork.LoadLevel(UserWorld);
     }
 }
