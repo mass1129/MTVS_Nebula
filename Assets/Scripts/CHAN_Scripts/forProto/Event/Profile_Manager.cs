@@ -138,11 +138,14 @@ public class Profile_Manager : MonoBehaviour
 
     #endregion
     #region 3. 만약 플레이어가 이미지 업로드 버튼을 눌렀을 경우 발생하는 함수
+    [System.Obsolete]
     public void AddImage()
     {
         paths = StandaloneFileBrowser.OpenFilePanel("Open File", "", "png", true);
         StartCoroutine(GetTexture());
     }
+
+    [System.Obsolete]
     IEnumerator GetTexture()
     {
         UnityWebRequest www = UnityWebRequestTexture.GetTexture("file:///" + paths[0]);

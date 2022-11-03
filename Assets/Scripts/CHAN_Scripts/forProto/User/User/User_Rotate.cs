@@ -19,6 +19,7 @@ public class User_Rotate : MonoBehaviour
     }
 
     // Update is called once per frame
+    [System.Obsolete]
     void Update()
     {
         float mx = Input.GetAxis("Mouse X");

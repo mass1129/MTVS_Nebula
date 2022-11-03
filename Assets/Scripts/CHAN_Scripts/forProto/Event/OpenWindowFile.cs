@@ -16,11 +16,14 @@ public class OpenWindowFile : MonoBehaviour
     }
 
     // Update is called once per frame
+    [System.Obsolete]
     public void OnBtn()
     {
         paths=StandaloneFileBrowser.OpenFilePanel("Open File", "", "png", true);
         StartCoroutine(GetTexture());
     }
+
+    [System.Obsolete]
     IEnumerator GetTexture()
     {
         UnityWebRequest www = UnityWebRequestTexture.GetTexture("file:///" + paths[0]);
