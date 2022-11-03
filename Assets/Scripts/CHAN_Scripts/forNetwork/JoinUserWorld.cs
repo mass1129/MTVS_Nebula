@@ -48,9 +48,9 @@ public class JoinUserWorld : MonoBehaviourPunCallbacks
         roomOptions.MaxPlayers = 10;
         // 로비에서 해당 룸에 입장할 때 요구되는 정보들을 정의
         // 포톤의 해쉬테이블을 생성
-        ExitGames.Client.Photon.Hashtable hash = new ExitGames.Client.Photon.Hashtable();
+        //ExitGames.Client.Photon.Hashtable hash = new ExitGames.Client.Photon.Hashtable();
         //hash[roomName] =// 여기에 유저 월드 이름이 들어가야 함
-        roomOptions.CustomRoomProperties = hash;
+        //roomOptions.CustomRoomProperties = hash;
 
         return roomOptions;
     }
