@@ -13,12 +13,6 @@ public class FastJoinManager : MonoBehaviourPunCallbacks
     [Header("이동하고자 하는 씬 이름 입력 (해당 씬이 빌드 세팅에 있어야 함)")]
     public string Room;
     public string UserWorld;
-    private void Awake()
-    {
-        // 이 오브젝트는 사라지면 안된다. 
-        DontDestroyOnLoad(this);
-
-    }
     private void Start()
     {
         testKey();
@@ -52,19 +46,10 @@ public class FastJoinManager : MonoBehaviourPunCallbacks
     {
         base.OnConnectedToMaster();
         print("마스터 서버 접속 성공");
-        print("로비 입장");
-        PhotonNetwork.JoinLobby();
-
-    }
-    public override void OnJoinedLobby()
-    {
-        base.OnJoinedLobby();
-        print("로비 접속 성공");
-        //PhotonNetwork.LoadLevel("");
         CreateRoom();
 
-
     }
+
     #endregion
     //만약 "내 하늘섬으로 돌아가기 버튼을 누르면 룸으로 입장하도록 만든다. 
     string roomName = "1";
@@ -83,8 +68,6 @@ public class FastJoinManager : MonoBehaviourPunCallbacks
     {
         base.OnCreatedRoom();
         print("방 생성 완료");
-        //GetBtn();
-
     }
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
