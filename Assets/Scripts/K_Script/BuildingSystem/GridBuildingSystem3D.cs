@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CodeMonkey.Utils;
+using Photon.Pun;
 
-public class GridBuildingSystem3D : MonoBehaviour {
+public class GridBuildingSystem3D : MonoBehaviourPun
+{
 
     public static GridBuildingSystem3D Instance { get; private set; }
 
@@ -226,7 +228,7 @@ public class GridBuildingSystem3D : MonoBehaviour {
 
             foreach (Vector2Int gridPosition in gridPositionList) {
                 selectedGrid.GetGridObject(gridPosition.x, gridPosition.y).SetPlacedObject(placedObject);
-            }
+            }                       
 
             placedObject.GridSetupDone();
 

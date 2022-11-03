@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 // 상태 관리에 대한 클래스
 public class K_StateMachine<T> where T : class
@@ -60,6 +61,9 @@ public class K_StateMachine<T> where T : class
     //{
     //    globalState = newState;
     //}
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
 
+    }
 
 }

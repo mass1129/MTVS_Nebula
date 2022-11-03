@@ -2,14 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using Photon.Pun;
 
-
-public class K_CameraMgr : MonoBehaviour
+public class K_CameraMgr : MonoBehaviourPun
 {
     public Transform cameraLookAt;
     public Transform camModeRoot;
-    public Transform spaceCamRoot;
-    public Transform spaceCamStartPos;
 
     public GameObject buildingSystem;
     public Transform buildCamTarget;
@@ -20,20 +18,26 @@ public class K_CameraMgr : MonoBehaviour
 
     public Camera playerCamera;
     public CinemachineVirtualCamera firstPersonCamera;
-    public CinemachineVirtualCamera spaceCamera;
+    
     public CinemachineVirtualCamera buildCamera;
     [HideInInspector]
     public CinemachineCameraOffset  buildCamOffset;
     K_Player player;
     public bool firstPersonView= false;
-    public bool spaceView= false;
 
     public float zoomChangeAmount = 100;
 
     K_PlayerItemSystem itemSystem;
+    private void Awake()
+    {
+        if (!photonView.IsMine)
+            this.enabled = false;
+    }
     // Start is called before the first frame update
     void Start()
     {
+        
+
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         itemSystem = GetComponent<K_PlayerItemSystem>();
@@ -50,10 +54,10 @@ public class K_CameraMgr : MonoBehaviour
         xAxis.Update(Time.deltaTime);
         yAxis.Update(Time.deltaTime);
 
-        if (!spaceView)
+       
             HandleCamMode();
 
-        HandleSpaceCamMode();
+      
     }
     void FixedUpdate()
     {
@@ -63,15 +67,11 @@ public class K_CameraMgr : MonoBehaviour
     private void LateUpdate()
     {
         
-        if(!spaceView)
-        {
+        
             cameraLookAt.eulerAngles = new Vector3(yAxis.Value, xAxis.Value, 0);
             camModeRoot.eulerAngles = new Vector3(yAxis.Value, xAxis.Value, 0);
-        }
-        else
-        {
-            spaceCamRoot.eulerAngles = new Vector3(yAxis.Value, xAxis.Value, 0);
-        }    
+        
+        
     }
     void HandleCamMode()
     {
@@ -99,28 +99,6 @@ public class K_CameraMgr : MonoBehaviour
             }
         }
     }
-    void HandleSpaceCamMode()
-    {
-        
-        bool trySpaceCamMode = Input.GetKeyDown(KeyCode.B);
-        if (trySpaceCamMode && !spaceView && player.CurrentState == PlayerStates.Idle)
-        {
-            spaceView = true;
-
-        }
-
-        else if (spaceView)
-        {
-            
-            
-            if (trySpaceCamMode)
-            {
-
-                
-                spaceView = false;
-
-            }
-        }
-    }
+   
 
 }

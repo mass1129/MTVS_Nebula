@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BuildingGhost : MonoBehaviour {
+    public GridBuildingSystem3D buildingSystem;
 
     private Transform visual;
     private PlacedObjectTypeSO placedObjectTypeSO;
@@ -10,7 +11,7 @@ public class BuildingGhost : MonoBehaviour {
     private void Start() {
         RefreshVisual();
 
-        GridBuildingSystem3D.Instance.OnSelectedChanged += Instance_OnSelectedChanged;
+        buildingSystem.OnSelectedChanged += Instance_OnSelectedChanged;
     }
 
     private void Instance_OnSelectedChanged(object sender, System.EventArgs e) {
@@ -18,11 +19,11 @@ public class BuildingGhost : MonoBehaviour {
     }
 
     private void LateUpdate() {
-        Vector3 targetPosition = GridBuildingSystem3D.Instance.GetMouseWorldSnappedPosition();
+        Vector3 targetPosition = buildingSystem.GetMouseWorldSnappedPosition();
         targetPosition.y = 0f;
         transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * 15f);
 
-        transform.rotation = Quaternion.Lerp(transform.rotation, GridBuildingSystem3D.Instance.GetPlacedObjectRotation(), Time.deltaTime * 15f);
+        transform.rotation = Quaternion.Lerp(transform.rotation, buildingSystem.GetPlacedObjectRotation(), Time.deltaTime * 15f);
     }
 
     private void RefreshVisual() {
@@ -31,7 +32,7 @@ public class BuildingGhost : MonoBehaviour {
             visual = null;
         }
 
-        PlacedObjectTypeSO placedObjectTypeSO = GridBuildingSystem3D.Instance.GetPlacedObjectTypeSO();
+        PlacedObjectTypeSO placedObjectTypeSO = buildingSystem.GetPlacedObjectTypeSO();
 
         if (placedObjectTypeSO != null) {
             visual = Instantiate(placedObjectTypeSO.visual, Vector3.zero, Quaternion.identity);

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CodeMonkey.Utils;
-
+using Photon.Pun;
 
 namespace K_01_OwnedStates
 {
@@ -21,19 +21,17 @@ namespace K_01_OwnedStates
 
             if (Input.GetButton("Horizontal") || (Input.GetButton("Vertical")))
             {   
-                if(!entity.camMgr.spaceView)
-                {
+               
                     if (!entity.camMgr.firstPersonView)
                         entity.ChangeState(PlayerStates.ThirdMove);
                     else
                         entity.ChangeState(PlayerStates.FirstMove);
-                }
+                
                 
             }
             else
             {
-                if (!entity.camMgr.spaceView)
-                {
+               
                     if (!entity.camMgr.firstPersonView)
                         entity.camMgr.firstPersonCamera.gameObject.SetActive(false);
                     else
@@ -47,13 +45,10 @@ namespace K_01_OwnedStates
                         entity.transform.rotation = Quaternion.Slerp(entity.transform.rotation, Quaternion.Euler(0, yawCamera, 0),
                             entity.turnSpeed * Time.deltaTime);
                     }
-                }
+                
             }
 
-            if(entity.camMgr.spaceView)
-            {
-                entity.ChangeState(PlayerStates.SpaceCamMode);
-            }
+            
             
             if(Input.GetKeyDown(KeyCode.C))
             {
@@ -217,50 +212,7 @@ namespace K_01_OwnedStates
             entity.ResetTrigger("FirstMove");
         }
     }
-    public class SpaceCamMode : K_PlayerState<K_Player>
-    {
-        Vector2 _currentVelocity;
-        public override void Enter(K_Player entity)
-        {
-            entity.camMgr.spaceCamera.gameObject.SetActive(true);
-            entity.SetTrigger("SpaceCamMode");
-            entity.camMgr.xAxis.Value = 0f;
-            entity.camMgr.yAxis.Value = 0f;
-
-            entity.camMgr.spaceCamRoot.position = entity.camMgr.spaceCamStartPos.position;
-            entity.camMgr.spaceCamRoot.rotation = entity.camMgr.spaceCamStartPos.rotation;
-        }
-
-        public override void Execute(K_Player entity)
-        {
-
-
-            entity.input.x = Input.GetAxis("Horizontal");
-            entity.input.y = Input.GetAxis("Vertical");
-            Vector3 dir;
-
-            dir = entity.camMgr.spaceCamRoot.right * entity.input.x + entity.camMgr.spaceCamRoot.forward * entity.input.y;
-            dir.Normalize();
-            entity.camMgr.spaceCamRoot.position += dir * entity.SpceCamSpeed * Time.deltaTime;
-            if (!entity.camMgr.spaceView)
-            {
-                if (!entity.camMgr.firstPersonView)
-                    entity.ChangeState(PlayerStates.ThirdMove);
-                else
-                    entity.ChangeState(PlayerStates.FirstMove);
-            }
-
-
-        }
-
-        public override void Exit(K_Player entity)
-        {
-            entity.camMgr.spaceCamera.gameObject.SetActive(false);
-            entity.camMgr.xAxis.Value = 0f;
-            entity.camMgr.yAxis.Value = 0f;
-            entity.ResetTrigger("SpaceCamMode");
-        }
-    }
+    
 
     public class BuildingMode : K_PlayerState<K_Player>
     {
