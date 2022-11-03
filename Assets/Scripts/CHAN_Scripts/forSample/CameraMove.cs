@@ -16,6 +16,7 @@ public class CameraMove : MonoBehaviour
     }
 
     // Update is called once per frame
+    [System.Obsolete]
     void Update()
     {
         // 카메라 위치 이동기
