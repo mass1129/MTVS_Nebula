@@ -41,10 +41,10 @@ public class K_PlayerStats : MonoBehaviour
             return;
         switch (slot.parent.inventory.type)
         {
-            case InterfaceType.Inventory:
-                print("Removed " + slot.GetItemObject() + " on: " + slot.parent.inventory.type + ", Allowed items: " +
-                      string.Join(", ", slot.AllowedItems));
-                break;
+            //case InterfaceType.Inventory:
+            //    print("Removed " + slot.GetItemObject() + " on: " + slot.parent.inventory.type + ", Allowed items: " +
+            //          string.Join(", ", slot.AllowedItems));
+            //    break;
 
             case InterfaceType.Equipment:
                     print("Removed " + slot.GetItemObject() + " on: " + slot.parent.inventory.type + ", Allowed items: " +
@@ -69,10 +69,10 @@ public class K_PlayerStats : MonoBehaviour
             return;
         switch (slot.parent.inventory.type)
         {
-            case InterfaceType.Inventory:
-                print("Placed " + slot.GetItemObject() + " on: " + slot.parent.inventory.type + ", Allowed items: " +
-                      string.Join(", ", slot.AllowedItems));
-                break;
+            //case InterfaceType.Inventory:
+            //    print("Placed " + slot.GetItemObject() + " on: " + slot.parent.inventory.type + ", Allowed items: " +
+            //          string.Join(", ", slot.AllowedItems));
+            //    break;
 
             case InterfaceType.Equipment:
                  print("Placed " + slot.GetItemObject() + " on: " + slot.parent.inventory.type + ", Allowed items: " +

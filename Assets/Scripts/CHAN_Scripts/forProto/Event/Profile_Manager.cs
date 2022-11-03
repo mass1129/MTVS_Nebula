@@ -232,7 +232,7 @@ public class Profile_Manager : MonoBehaviour
     {
         //이미지가 있는가?
         //keyword가 저장되어 있는가?
-        if (!info.User_Texture == null&& info.User_Keywords.Count>0&&info.User_Name!=null)
+        if (info.User_Texture != null&& info.User_Keywords.Count>0&&info.User_Name!=null)
         { 
             //저장 완료!
             //서버에 json으로 해당 정보를 보내자!

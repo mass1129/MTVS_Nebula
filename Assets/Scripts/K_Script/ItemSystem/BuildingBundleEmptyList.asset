@@ -10,50 +10,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ede9f2211b6a7a34ab86b34eb3b2c346, type: 3}
-  m_Name: PlayerEquipment
+  m_Name: BuildingBundleEmptyList
   m_EditorClassIdentifier: 
-  savePath: EquipmentSave
-  database: {fileID: 11400000, guid: 2ef6ad25b8d7948488dda3b23dc7008b, type: 2}
-  type: 5
+  savePath: 
+  database: {fileID: 11400000, guid: 33dc55d3885d4d247be196ca968c55b9, type: 2}
+  type: 1
   Container:
     Slots:
-    - AllowedItems: 08000000
+    - AllowedItems: 
+      item:
+        Name: CampFire
+        Id: 0
+        buffs: []
+      amount: 1
+    - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
       amount: 0
-    - AllowedItems: 07000000
+    - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
       amount: 0
-    - AllowedItems: 09000000
-      item:
-        Name: 
-        Id: -1
-        buffs: []
-      amount: 0
-    - AllowedItems: 0a000000
-      item:
-        Name: 
-        Id: -1
-        buffs: []
-      amount: 0
-    - AllowedItems: 0b000000
-      item:
-        Name: 
-        Id: -1
-        buffs: []
-      amount: 0
-    - AllowedItems: 0c000000
-      item:
-        Name: 
-        Id: -1
-        buffs: []
-      amount: 0
-    - AllowedItems: 0d000000
+    - AllowedItems: 
       item:
         Name: 
         Id: -1

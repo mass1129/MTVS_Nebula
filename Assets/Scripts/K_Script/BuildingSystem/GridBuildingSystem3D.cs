@@ -40,6 +40,10 @@ public class GridBuildingSystem3D : MonoBehaviour {
         placedObjectTypeSO = null;
         selectedGrid = gridList[0];
     }
+    private void Start()
+    {
+        Load();
+    }
     private void Update()
     {
         HandleTypeSelect();

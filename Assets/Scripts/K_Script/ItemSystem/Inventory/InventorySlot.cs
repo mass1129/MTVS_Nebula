@@ -11,7 +11,6 @@ public class InventorySlot
     [System.NonSerialized]
     public GameObject slotDisplay;
 
-
     [System.NonSerialized]
     public Action<InventorySlot> onAfterUpdated;
     [System.NonSerialized]
@@ -22,12 +21,14 @@ public class InventorySlot
 
     public ItemObject GetItemObject()
     {
+        
         return item.Id >= 0 ? parent.inventory.database.ItemObjects[item.Id] : null;
     }
-
+    
     public InventorySlot() => UpdateSlot(new Item(), 0);
 
     public InventorySlot(Item item, int amount) => UpdateSlot(item, amount);
+    
 
     public void RemoveItem() => UpdateSlot(new Item(), 0);
 
@@ -41,6 +42,7 @@ public class InventorySlot
         amount = amountValue;
         onAfterUpdated?.Invoke(this);
     }
+
 
     public bool CanPlaceInSlot(ItemObject itemObject)
     {
