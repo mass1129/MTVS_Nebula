@@ -12,22 +12,29 @@ public class FastJoinManager : MonoBehaviourPunCallbacks
     Button goMyWorld;
     [Header("이동하고자 하는 씬 이름 입력 (해당 씬이 빌드 세팅에 있어야 함)")]
     public string Room;
+<<<<<<< Updated upstream
     public string UserWorld;
     private void Awake()
     {
         // 이 오브젝트는 사라지면 안된다. 
         DontDestroyOnLoad(this);
+=======
+    //private void Awake()
+    //{
+    //    // 이 오브젝트는 사라지면 안된다. 
+    //    DontDestroyOnLoad(this);
+>>>>>>> Stashed changes
 
-    }
+    //}
     private void Start()
     {
         testKey();
     }
     [ContextMenu("go")]
     public void testKey()
-    { 
+    {
         OnClickConnect();
-        
+
     }
     #region 마스터서버 -> 로비 입장 함수
     //1. 마스터 서버 접속 시도
@@ -53,16 +60,7 @@ public class FastJoinManager : MonoBehaviourPunCallbacks
         base.OnConnectedToMaster();
         print("마스터 서버 접속 성공");
         print("로비 입장");
-        PhotonNetwork.JoinLobby();
-
-    }
-    public override void OnJoinedLobby()
-    {
-        base.OnJoinedLobby();
-        print("로비 접속 성공");
-        //PhotonNetwork.LoadLevel("");
         CreateRoom();
-
 
     }
     #endregion
@@ -75,7 +73,7 @@ public class FastJoinManager : MonoBehaviourPunCallbacks
         RoomOptions roomOptions = new RoomOptions();
         //최대인원
         //where '0' means "no limit"
-        roomOptions.MaxPlayers = 4;//byte.Parse(totalNum.text);
+        roomOptions.MaxPlayers = 20;//byte.Parse(totalNum.text);
         // 방을 만든다.
         PhotonNetwork.CreateRoom(roomName, roomOptions, TypedLobby.Default);
     }
@@ -102,5 +100,11 @@ public class FastJoinManager : MonoBehaviourPunCallbacks
         print("방 입장 실패");
         base.OnJoinRoomFailed(returnCode, message);
     }
+<<<<<<< Updated upstream
+=======
+
+    
+
+>>>>>>> Stashed changes
 
 }
