@@ -8,19 +8,13 @@ public class JoinUserWorld : MonoBehaviourPunCallbacks
 {
     //해당 스크립트는 싱글톤으로 만든다.
     public static JoinUserWorld instance;
-<<<<<<< Updated upstream
     
     
-=======
-    public string UserWorld;
-
->>>>>>> Stashed changes
     private void Awake()
     {
         instance = this;
     }
     // 특정 버튼을 누르면 특정 룸에 들어가도록 만들 것임 
-<<<<<<< Updated upstream
     public void Btn_JoinRoom()
     {
         //로비로 빠져나온다.
@@ -52,54 +46,4 @@ public class JoinUserWorld : MonoBehaviourPunCallbacks
         base.OnJoinedRoom();
         PhotonNetwork.LoadLevel(UserWorld);
     }
-=======
-    public void JoinFriendRoom()
-    {
-        print("나감");
-        PhotonNetwork.LeaveRoom();
-    }
-    public override void OnLeftRoom()
-    {
-        base.OnLeftRoom();
-        print("나갔음");
-        PhotonNetwork.JoinLobby();
-        
-        
-        
-    }
-    //public override void OnCreatedRoom()
-    //{
-    //    base.OnCreatedRoom();
-    //}
-    RoomOptions SetRoomOption(string name)
-    {
-        RoomOptions options = new RoomOptions();
-        options.MaxPlayers = 10;
-        //string[] properties = { "name" };
-        //options.CustomRoomPropertiesForLobby = properties;
-        ExitGames.Client.Photon.Hashtable hash = new ExitGames.Client.Photon.Hashtable();
-        hash["name"] = name;
-        options.CustomRoomProperties = hash;
-        return options;
-    }
-    public override void OnConnectedToMaster()
-    {
-        print("마스터 재입장");
-        base.OnConnectedToMaster();
-        PhotonNetwork.JoinOrCreateRoom("1", SetRoomOption("1"), TypedLobby.Default);
-    }
-    public override void OnJoinedRoom()
-    {
-        print("룸 재입장");
-        base.OnJoinedRoom();
-        PhotonNetwork.LoadLevel(UserWorld);
-    }
-    public override void OnJoinedLobby()
-    {
-        //룸 입장
-        print("로비 재입장");
-        base.OnJoinedLobby();
-       
-    }
->>>>>>> Stashed changes
 }
