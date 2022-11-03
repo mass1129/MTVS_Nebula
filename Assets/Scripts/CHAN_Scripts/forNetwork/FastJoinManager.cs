@@ -12,6 +12,7 @@ public class FastJoinManager : MonoBehaviourPunCallbacks
     Button goMyWorld;
     [Header("이동하고자 하는 씬 이름 입력 (해당 씬이 빌드 세팅에 있어야 함)")]
     public string Room;
+    public string UserWorld;
     private void Awake()
     {
         // 이 오브젝트는 사라지면 안된다. 
@@ -101,15 +102,5 @@ public class FastJoinManager : MonoBehaviourPunCallbacks
         print("방 입장 실패");
         base.OnJoinRoomFailed(returnCode, message);
     }
-    //public async void GetBtn()
-    //{
-    //    while (!GameObject.Find("Btn_MyWorld"))
-    //    {
-    //        await Task.Yield();
-    //    }
-    //    goMyWorld = GameObject.Find("Btn_MyWorld").GetComponent<Button>();
-    //    goMyWorld.onClick.AddListener(CreateRoom);
-
-    //}
 
 }
