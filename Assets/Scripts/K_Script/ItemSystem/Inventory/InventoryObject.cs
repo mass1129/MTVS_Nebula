@@ -19,7 +19,7 @@ public class InventoryObject : ScriptableObject
     public InventorySlot[] GetSlots => Container.Slots;
 
     public bool AddItem(Item item, int amount)
-    {   
+    {
         //∫Û ΩΩ∑Ì¿Ã æ¯¥Ÿ∏È false∏Æ≈œ
         if (EmptySlotCount <= 0)
             return false;
@@ -33,7 +33,14 @@ public class InventoryObject : ScriptableObject
         slot.AddAmount(amount);
         return true;
     }
-
+    public void AddBundleListToWindow(List<ItemObject> bundleList)
+    {
+        Clear();
+            Item item = new Item(bundleList[0]);
+             GetSlots[0].UpdateSlot(item, 1);
+        
+        
+    }
 
 
     public int EmptySlotCount
@@ -130,11 +137,22 @@ public class InventoryObject : ScriptableObject
         }
 
     }
+    public void UpdateInventory()
+    {
+        for (int i = 0; i < Container.Slots.Length; i++)
+        {
+            Container.Slots[i].UpdateSlot(Container.Slots[i].item, Container.Slots[i].amount);
+        }
+    }
+
     [ContextMenu("Clear")]
     public void Clear()
     {
         Container.Clear();
     }
-   
+    public void Click()
+    {
+        //Debug.Log(GetSlots.item.);
+    }
 }
 

@@ -102,7 +102,7 @@ public class K_PlayerItemSystem : MonoBehaviour
         inven_Default.Clear();
         inven_Vehicle.Clear();
         equipment.Clear();
-        equipment.Clear();
+        
     }
 
    
