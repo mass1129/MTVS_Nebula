@@ -7,17 +7,15 @@ using UnityEngine;
 /// </summary>
 public class Camera_Follower : MonoBehaviour
 {
-    Transform playerPos;
-
-    private void Start()
-    {
-        playerPos = GameObject.Find("Player").transform;
-
-    }
+    public float yPos;
     private void Update()
     {
-        Vector3 Pos = new Vector3(playerPos.position.x, playerPos.position.y+10, playerPos.position.z);
-        transform.position = Pos;
+        //플레이어가 없으면 그냥 리턴 시킨다.
+        if (!CHAN_PlayerManger.LocalPlayerInstance) return;
+        
+            Vector3 Pos = new Vector3(CHAN_PlayerManger.LocalPlayerInstance.transform.position.x, yPos, CHAN_PlayerManger.LocalPlayerInstance.transform.position.z);
+            transform.position = Pos;
+            transform.rotation = CHAN_PlayerManger.LocalPlayerInstance.transform.rotation;
     }
 
 }

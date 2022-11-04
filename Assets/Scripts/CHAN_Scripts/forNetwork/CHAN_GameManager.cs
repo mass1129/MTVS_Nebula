@@ -78,17 +78,21 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
     void SetPlayer()
     {
         GameObject playerObj = PN.Instantiate("Player_Whale", Vector3.zero, Quaternion.identity);
+        print("°í·¡ ºÒ·¯¿È");
     }
 
     public void Go_Sky_Scene()
     {
         roomName = "sky";
         sceneName = name_SkyScene;
+        PN.LeaveRoom();
     }
     public void Go_User_Scene(string NickName)
     {
+
         roomName = NickName;
         sceneName = name_UserScene;
+        PN.LeaveRoom();
     }
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
@@ -97,5 +101,7 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         base.OnPlayerLeftRoom(otherPlayer);
+        
+
     }
 }   

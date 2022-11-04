@@ -142,7 +142,8 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
             GameObject island = InstantiateIsland(info.island_Type);
             info.User_Obj = island;
             island.transform.position = info.island_Pos;
-            island.transform.GetChild(0).GetChild(0).GetComponent<Island_Profile>().user_name = i;
+            //island.transform.GetChild(0).GetChild(0).GetComponent<Island_Profile>().user_name = i;
+            island.transform.GetComponent<Island_Profile>().user_name = i;
         }
     }
     // 하늘섬 생성 코드

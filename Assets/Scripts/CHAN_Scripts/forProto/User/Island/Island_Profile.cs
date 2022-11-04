@@ -11,17 +11,16 @@ public class Island_Profile : MonoBehaviour
     //이미지 파일을 가져와서  섬에 띄우도록 한다.
     float visualDistance =200;
     public string user_name;
-    Image profileImage;
+    public Image profileImage;
     Text userName_Text;
     Transform playerPos;
     //Transform player;
     bool turn;
     void Start()
     {
-        //player = GameObject.Find("Player").transform;
-        profileImage = transform.GetChild(0).GetComponent<Image>();
+        //profileImage = transform.GetChild(0).GetComponent<Image>();
         profileImage.enabled = false;
-        //playerPos = GameObject.Find();
+        playerPos = CHAN_PlayerManger.LocalPlayerInstance.transform;
         userName_Text = gameObject.transform.GetComponentInChildren<Text>();
         LoadImage();
     }
@@ -45,12 +44,12 @@ public class Island_Profile : MonoBehaviour
         //    //이미지를 끈다.
         //}
     }
-    float GetDistanceToPlayer()
-    {
-        float dis;
-        dis = Vector3.Distance(transform.position, playerPos.position);
-        return dis;
-    }
+    //float GetDistanceToPlayer()
+    //{
+    //    float dis;
+    //    dis = Vector3.Distance(transform.position, playerPos.position);
+    //    return dis;
+    //}
 
     #region 이것은 CSV타입
     void LoadImage()
@@ -90,14 +89,24 @@ public class Island_Profile : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        profileImage.enabled = true;
-        userName_Text.enabled = true;
-        transform.LookAt(playerPos.position);
+        if (other.gameObject.CompareTag("Player"))
+        {
+            print("감지");
+            profileImage.enabled = true;
+            userName_Text.enabled = true;
+            profileImage.gameObject.transform.LookAt(playerPos.position);
+  
+        }
+
     }
     private void OnTriggerExit(Collider other)
     {
-        profileImage.enabled = false;
-        userName_Text.enabled = false;
+        if (other.gameObject.CompareTag("Player"))
+        {
+            profileImage.enabled = false;
+            userName_Text.enabled = false;
+        }
+
     }
 
 

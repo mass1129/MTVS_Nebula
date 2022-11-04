@@ -193,7 +193,6 @@ GameObject:
   - component: {fileID: 8598658219150321321}
   - component: {fileID: 5445571166785741742}
   - component: {fileID: 20362921727229622}
-  - component: {fileID: 8331218798890905685}
   m_Layer: 9
   m_Name: Canvas_Profile
   m_TagString: Untagged
@@ -283,19 +282,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &8331218798890905685
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 567994659502875270}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3af8803a207fbf041bdec2f9632f76f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  user_name: 
 --- !u!1 &742889384956796866
 GameObject:
   m_ObjectHideFlags: 0
@@ -307,6 +293,7 @@ GameObject:
   - component: {fileID: 73347704292525432}
   - component: {fileID: 2268396646852932503}
   - component: {fileID: 8037766294969351180}
+  - component: {fileID: 3162410791336555252}
   m_Layer: 0
   m_Name: Island 3
   m_TagString: UserIsland
@@ -344,10 +331,10 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 742889384956796866}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 20.81
+  m_Radius: 100
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &8037766294969351180
 Rigidbody:
@@ -365,6 +352,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &3162410791336555252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 742889384956796866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3af8803a207fbf041bdec2f9632f76f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  user_name: 
+  profileImage: {fileID: 7471755405913463256}
 --- !u!1 &2253941130509025428
 GameObject:
   m_ObjectHideFlags: 0

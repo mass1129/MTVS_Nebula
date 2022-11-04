@@ -13517,6 +13517,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 184f5cb54eadd6f45802b065ec8c7e61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buildingSystem: {fileID: 0}
 --- !u!4 &1477381281
 Transform:
   m_ObjectHideFlags: 0
@@ -29503,7 +29504,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!137 &6244125010621033750
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -29912,8 +29913,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraLookAt: {fileID: 1679971965}
   camModeRoot: {fileID: 1518877953}
-  spaceCamRoot: {fileID: 0}
-  spaceCamStartPos: {fileID: 0}
   buildingSystem: {fileID: 583293958}
   buildCamTarget: {fileID: 1966227539}
   buildTargetStartPos: {fileID: 10775569}
@@ -29955,11 +29954,9 @@ MonoBehaviour:
       m_LegacyVelocityFilterStrength: 0
   playerCamera: {fileID: 1880158626}
   firstPersonCamera: {fileID: 1627783305}
-  spaceCamera: {fileID: 0}
   buildCamera: {fileID: 573634067}
   buildCamOffset: {fileID: 0}
   firstPersonView: 0
-  spaceView: 0
   zoomChangeAmount: 100
 --- !u!114 &6331675993661434738
 MonoBehaviour:
@@ -29996,6 +29993,8 @@ MonoBehaviour:
   GroundLayers:
     serializedVersion: 2
     m_Bits: 1
+  camPos: {fileID: 0}
+  playerUI: {fileID: 0}
 --- !u!143 &6331675993661434739
 CharacterController:
   m_ObjectHideFlags: 0
