@@ -19,10 +19,10 @@ public class Minimap_IconManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    [System.Obsolete]
-    void Update()
-    {
-        playerIcon.transform.position = player.position;
-        playerIcon.transform.localRotation = Quaternion.EulerAngles(0,User_Rotate.instance.ry,0);
-    }
+    //[System.Obsolete]
+    //void Update()
+    //{
+    //    playerIcon.transform.position = player.position;
+    //    playerIcon.transform.localRotation = Quaternion.EulerAngles(0,User_Rotate.instance.ry,0);
+    //}
 }

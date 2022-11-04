@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 709965759}
   - component: {fileID: 709965758}
+  - component: {fileID: 709965760}
   m_Layer: 0
   m_Name: FastJoinRoom
   m_TagString: Untagged
@@ -147,7 +148,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 709965757}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0a5e7d8e47638884a90ee4b5b11a1d9d, type: 3}
   m_Name: 
@@ -168,6 +169,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &709965760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 709965757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba81d7983e5bf754a9a35c4cf90ea755, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nick: user
+  name_SkyScene: 3.SkyView_Scene
+  name_UserScene: 4_ User World
 --- !u!1 &745545347
 GameObject:
   m_ObjectHideFlags: 0
