@@ -12,7 +12,6 @@ public class Minimap_IconManager : MonoBehaviour
     public List<GameObject> playerIcons=new List<GameObject>();
     public GameObject Icon_prefab;
     public Image IslandIcon;
-
     Transform player;
     void Start()
     {

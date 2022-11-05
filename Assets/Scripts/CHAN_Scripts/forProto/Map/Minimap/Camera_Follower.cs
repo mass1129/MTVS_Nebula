@@ -15,7 +15,8 @@ public class Camera_Follower : MonoBehaviour
         
             Vector3 Pos = new Vector3(CHAN_PlayerManger.LocalPlayerInstance.transform.position.x, yPos, CHAN_PlayerManger.LocalPlayerInstance.transform.position.z);
             transform.position = Pos;
-            transform.rotation = CHAN_PlayerManger.LocalPlayerInstance.transform.rotation;
+            transform.rotation = 
+            CHAN_PlayerManger.LocalPlayerInstance.transform.rotation;
     }
 
 }
