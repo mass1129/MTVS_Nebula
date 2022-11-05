@@ -61,6 +61,7 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
     #endregion
     //csv파일 정보 로드 함수, 처음 하늘뷰에서 들어왔을 때 발동된다.
     public bool Done;
+    public Transform Islands;
     public async Task LoadFromCSV(string fileName)
     {
         StreamReader sr = new StreamReader(Application.streamingAssetsPath + "/" + fileName);
@@ -160,7 +161,9 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
     // 하늘섬 생성 코드
     GameObject InstantiateIsland(string IslandType)
     {
-        GameObject land = Instantiate(Resources.Load<GameObject>("CHAN_Resources/" + IslandType));
+        float randomScale=UnityEngine.Random.RandomRange(0.3f, 3);
+        GameObject land = Instantiate(Resources.Load<GameObject>("CHAN_Resources/" + IslandType), Islands);
+        land.transform.GetChild(1).gameObject.transform.localScale *= randomScale;
         return land;
     }
     // 하늘섬 타입 결정 코드
@@ -199,7 +202,9 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
         dic.User_NickName = nickname;
     }
 
-
+    // 중간에 새로운 데이터가 들어왔을 때, 어떻게 갱신할지 생각해보자 
+    // 게임은 초기에 서버에게 섬의 좌표를 받아온다. 
+    // 그 좌표를 기반으로 섬은 배치가 된다. 
 
 
 

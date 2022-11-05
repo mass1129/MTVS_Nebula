@@ -1092,6 +1092,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4682749066386584326, guid: ddfc56e64ded4844abe54df0704c6e69, type: 3}
+      propertyPath: Islands
+      value: 
+      objectReference: {fileID: 2073228992}
     - target: {fileID: 4682749067505274814, guid: ddfc56e64ded4844abe54df0704c6e69, type: 3}
       propertyPath: btn_Freinds
       value: 
@@ -1123,6 +1127,14 @@ PrefabInstance:
     - target: {fileID: 6585576682558793713, guid: ddfc56e64ded4844abe54df0704c6e69, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6585576682558793713, guid: ddfc56e64ded4844abe54df0704c6e69, type: 3}
+      propertyPath: setDistance
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 6585576682558793713, guid: ddfc56e64ded4844abe54df0704c6e69, type: 3}
+      propertyPath: forceMultiplier
+      value: 500
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ddfc56e64ded4844abe54df0704c6e69, type: 3}
@@ -5669,6 +5681,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2061506213}
   m_CullTransparentMesh: 1
+--- !u!1 &2073228991
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2073228992}
+  m_Layer: 0
+  m_Name: Islands
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2073228992
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2073228991}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -372.13, y: 100.46504, z: -23.049128}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2088542018 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4682749066386584326, guid: ddfc56e64ded4844abe54df0704c6e69, type: 3}
