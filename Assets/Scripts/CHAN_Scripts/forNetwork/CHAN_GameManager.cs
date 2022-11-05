@@ -85,6 +85,10 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
     {
         roomName = "sky";
         sceneName = name_SkyScene;
+        if (photonView.IsMine)
+        { 
+            RemoveMyPhotonView(); 
+        }
         PN.LeaveRoom();
     }
     public void Go_User_Scene(string NickName)
@@ -92,6 +96,10 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
 
         roomName = NickName;
         sceneName = name_UserScene;
+        if (photonView.IsMine)
+        {
+            RemoveMyPhotonView();
+        }
         PN.LeaveRoom();
     }
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -101,7 +109,17 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         base.OnPlayerLeftRoom(otherPlayer);
-        
-
+        print("플레이어 퇴장");
     }
+    void RemoveMyPhotonView()
+    {
+        photonView.RPC("RPCRemoveMyPhotonView", RpcTarget.All);
+    }
+    [PunRPC]
+    void RPCRemoveMyPhotonView()
+    {
+        Minimap_IconManager.instance.Remove_User_Icon();
+        print(CHAN_PlayerManger.LocalPlayerInstance.GetComponent<PhotonView>());
+    }
+
 }   

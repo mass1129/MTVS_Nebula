@@ -19,19 +19,15 @@ public class CHAN_ClientManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    
 
     public void AddPlayer(PhotonView pv)
     {
         players.Add(pv);
     }
-    public void ExitPlayer(PhotonView pv)
+    public void RemovePlayer(PhotonView pv)
     {
-        foreach (PhotonView view in players)
-        {
-            if (view.Owner.NickName == pv.Owner.NickName)
-            {
-                players.Remove(pv);
-            }
-        }
+        players.Remove(pv);
     }
+
 }

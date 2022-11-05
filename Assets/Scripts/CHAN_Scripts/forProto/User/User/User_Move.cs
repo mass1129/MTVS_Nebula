@@ -14,7 +14,13 @@ public class User_Move : MonoBehaviourPun,IPunObservable
     }
     public float userSpeed;
     public float speedMultiplier;
-  
+
+
+    void Start()
+    {
+        
+    }
+
     
     Vector3 dir;
     float lerpSpeed = 10;
@@ -24,6 +30,7 @@ public class User_Move : MonoBehaviourPun,IPunObservable
 
     void Update()
     {
+
         if (photonView.IsMine)
         {
             float x = Input.GetAxis("Horizontal");

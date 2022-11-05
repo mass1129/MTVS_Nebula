@@ -12,16 +12,21 @@ public class CHAN_PlayerManger : MonoBehaviourPun
         if (photonView.IsMine)
         { 
             CHAN_PlayerManger.LocalPlayerInstance = this.gameObject;
+            transform.GetChild(1).GetComponent<IconMove>().OnPlayerIcon();
         }
         else
         {
             gameObject.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
+            transform.GetChild(1).GetComponent<IconMove>().OnUserIcon();
         }
         DontDestroyOnLoad(gameObject);
-        CHAN_ClientManager.instance.AddPlayer(photonView);
+        CHAN_ClientManager.instance.AddPlayer(this.photonView);
     }
     private void OnDestroy()
     {
-        CHAN_ClientManager.instance.ExitPlayer(photonView);
+        if (photonView.IsMine)
+        {
+            CHAN_ClientManager.instance.RemovePlayer(this.photonView);
+        }
     }
 }

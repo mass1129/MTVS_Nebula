@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using Newtonsoft.Json.Linq;
+using System.Threading.Tasks;
 
 [System.Serializable]
 public class JsonInfo
@@ -16,6 +17,7 @@ public class JsonInfo
     public string User_NickName;
     // 하늘섬 오브젝트
     public GameObject User_Obj;
+    
 }
 
 public class IslandInformation :MonoBehaviour, Server_IslandInfo
@@ -58,7 +60,8 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
 
     #endregion
     //csv파일 정보 로드 함수, 처음 하늘뷰에서 들어왔을 때 발동된다.
-    public void LoadFromCSV(string fileName)
+    public bool Done;
+    public async Task LoadFromCSV(string fileName)
     {
         StreamReader sr = new StreamReader(Application.streamingAssetsPath + "/" + fileName);
         // csv파일 인덱스가 끝났는지 판별
@@ -92,6 +95,7 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
             InsertData(count, data_values[3], temp_pos, nickname);
               //csv의x,y,z값을 받아내고 Vector로 저장하자
             count++;
+            await Task.Yield();
 
         }
 
@@ -131,10 +135,16 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
         }
     }
     // 하늘섬 배치 함수 
-    public void Spawn()
+    public async void Spawn()
     {
         //LoadFromJson();
-        LoadFromCSV("test_FriendList.csv");
+        await LoadFromCSV("test_FriendList.csv");
+        await InsertInfo();
+        Done = true;
+    }
+    public async Task InsertInfo()
+    {
+        
         foreach (string i in Island_Dic.Keys)
         {
 
@@ -144,6 +154,7 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
             island.transform.position = info.island_Pos;
             //island.transform.GetChild(0).GetChild(0).GetComponent<Island_Profile>().user_name = i;
             island.transform.GetComponent<Island_Profile>().user_name = i;
+            await Task.Yield();
         }
     }
     // 하늘섬 생성 코드

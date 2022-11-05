@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 public class Island_Profile : MonoBehaviour
 {
     //이미지 파일을 가져와서  섬에 띄우도록 한다.
-    float visualDistance =200;
     public string user_name;
     public Image profileImage;
     Text userName_Text;
@@ -24,32 +23,12 @@ public class Island_Profile : MonoBehaviour
         userName_Text = gameObject.transform.GetComponentInChildren<Text>();
         LoadImage();
     }
-
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (!turn)
-        { 
-           
-            turn = true;
-        }
-        //if (visualDistance > GetDistanceToPlayer())
-        //{
-
-        //    //profileImage.transform.LookAt(camPos.position);
-        //}
-        //else
-        //{
-
-        //    //이미지를 끈다.
-        //}
+            return;
+        ShowImage();
     }
-    //float GetDistanceToPlayer()
-    //{
-    //    float dis;
-    //    dis = Vector3.Distance(transform.position, playerPos.position);
-    //    return dis;
-    //}
 
     #region 이것은 CSV타입
     void LoadImage()
@@ -67,7 +46,6 @@ public class Island_Profile : MonoBehaviour
     //    userName_Text.enabled = false;
     //}
     #endregion
-    // 이 코루틴은 한번만 사용되어야 한다. 
     async void GetTexture(string url)
     {
         UnityWebRequest www = UnityWebRequestTexture.GetTexture(url);
@@ -94,19 +72,24 @@ public class Island_Profile : MonoBehaviour
             print("감지");
             profileImage.enabled = true;
             userName_Text.enabled = true;
-            profileImage.gameObject.transform.LookAt(playerPos.position);
-  
+            turn = true;
         }
 
     }
+    
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
             profileImage.enabled = false;
             userName_Text.enabled = false;
+            turn = false;
         }
 
+    }
+    void ShowImage()
+    {
+        profileImage.transform.LookAt(playerPos);
     }
 
 

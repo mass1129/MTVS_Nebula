@@ -26,7 +26,7 @@ public class Island_Dynamics : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        
+        if (!IslandInformation.instance.Done) return;
         foreach (string a in IslandInformation.instance.Island_Dic.Keys)
         {
             GameObject obj_a = IslandInformation.instance.Island_Dic[a].User_Obj;
