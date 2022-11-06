@@ -29,7 +29,7 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
     }
     void Start()
     {
-        Spawn();
+        Spawn("test_FriendList.csv");
     }
     public Dictionary<string, JsonInfo> Island_Dic = new Dictionary<string, JsonInfo>();
     // 유저들의 닉네임을 저장할 리스트(Key:닉네임)
@@ -136,10 +136,10 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
         }
     }
     // 하늘섬 배치 함수 
-    public async void Spawn()
+    public async void Spawn(string fileName)
     {
         //LoadFromJson();
-        await LoadFromCSV("test_FriendList.csv");
+        await LoadFromCSV(fileName);
         await InsertInfo();
         Done = true;
     }
@@ -206,7 +206,16 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
     // 게임은 초기에 서버에게 섬의 좌표를 받아온다. 
     // 그 좌표를 기반으로 섬은 배치가 된다. 
 
-
+    //기존에 있는 데이터 정보들을 모두 삭제시키는 함수
+    //하늘섬 오브젝트도 모두 삭제한다.
+    public void DeleteData()
+    {
+            foreach(JsonInfo i in Island_Dic.Values)
+        {
+            Destroy(i.User_Obj);
+        }
+        Island_Dic.Clear();
+    }
 
 }
 

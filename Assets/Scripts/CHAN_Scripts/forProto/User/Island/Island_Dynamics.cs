@@ -13,9 +13,8 @@ public class Island_Dynamics : MonoBehaviourPun
     // 만약 거리가 가까우면 방향을 섬과 섬끼리 방향을 산출
     // 일정 거리 멀어질 때 까지 멀어지는 방향으로 힘을 부여햐 준다. 
 
-    public float setDistance;
-    public float forceMultiplier;
-    public string user_name;
+    public float setDistance=300;
+    public float forceMultiplier=500;
 
     void Start()
     {
@@ -28,32 +27,6 @@ public class Island_Dynamics : MonoBehaviourPun
     {
         //정보들 모두 로드 전까지 잠시 대기 
         if (!IslandInformation.instance.Done) return;
-        // 정보가 모두 로드 되면 물리 작용 시작
-        //foreach (string a in IslandInformation.instance.Island_Dic.Keys)
-        //{
-        //    GameObject obj_a = IslandInformation.instance.Island_Dic[a].User_Obj;
-        //    foreach (string b in IslandInformation.instance.Island_Dic.Keys)
-        //    {
-        //        GameObject obj_b = IslandInformation.instance.Island_Dic[b].User_Obj;
-        //        // 만약 a,b가 서로 다른 오브젝트일 경우 그리고 서로 같은 카테고리일 경우
-        //        if (!a.Equals(b)&&)
-        //        {
-                    
-        //            //거리계산 시작
-        //            float distanceEachOther = Vector3.Distance(obj_a.transform.position, obj_b.transform.position);
-        //            //만약 거리가 일정범위 이하로 근접했을 경우
-        //            if (distanceEachOther < setDistance)
-        //            {
-        //                //둘의 방향을 가져옴 
-        //                Vector3 dir = (obj_a.transform.position -obj_b.transform.position).normalized;
-        //                //멀어질때까지 힘을 부여
-        //                Rigidbody rb = obj_a.GetComponent<Rigidbody>();
-        //                rb.AddForce(dir * forceMultiplier * Time.deltaTime, ForceMode.Force);
-        //            }
-                   
-        //        }
-        //    }
-        //}
         foreach (JsonInfo info_a in IslandInformation.instance.Island_Dic.Values)
         {
             GameObject obj_a = info_a.User_Obj;
