@@ -23,6 +23,8 @@ public class Login_Manager : MonoBehaviour
     public InputField Input_Id;
     public InputField Input_Pass;
     public Text errorMassage;
+    public string preUserName;
+    public string prePassWord;
 
     private string token = null;
 
@@ -34,8 +36,8 @@ public class Login_Manager : MonoBehaviour
     {
         LoginInfo user = new LoginInfo
         {
-            username = "test2",
-            password = "pwd"
+            username = preUserName,
+            password = prePassWord
         };
         string json = JsonUtility.ToJson(user,true);
 
