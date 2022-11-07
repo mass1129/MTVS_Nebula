@@ -5,11 +5,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using System.Threading.Tasks;
+using Photon.Pun;
 
-public class Island_Profile : MonoBehaviour
+public class Island_Profile : MonoBehaviourPun
 {
     //이미지 파일을 가져와서  섬에 띄우도록 한다.
     public string user_name;
+    string user_Url;
     public Image profileImage;
     Text userName_Text;
     Transform playerPos;
@@ -22,19 +24,33 @@ public class Island_Profile : MonoBehaviour
         playerPos = CHAN_PlayerManger.LocalPlayerInstance.transform;
         userName_Text = gameObject.transform.GetComponentInChildren<Text>();
         LoadImage();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            SendInfo();
+        }
+
     }
     private void Update()
     {
+        //트리거 발동됐을 때 이미지 보이게 하는 부분
         if (!turn)
             return;
         ShowImage();
     }
 
     #region 이것은 CSV타입
-    void LoadImage()
+    async void LoadImage()
     {
-        JsonInfo JInfo = IslandInformation.instance.Island_Dic[user_name];
-        GetTexture(JInfo.User_image);
+        while (IslandInformation.instance.Island_Dic == null)
+        {
+            await Task.Yield();
+        }
+        if (PhotonNetwork.IsMasterClient)
+        {
+            JsonInfo JInfo = IslandInformation.instance.Island_Dic[user_name];
+            user_Url = JInfo.User_image;
+        }
+        GetTexture(user_Url);
         userName_Text.text = "UserName_" + user_name;
         userName_Text.enabled = false;
     }
@@ -48,8 +64,9 @@ public class Island_Profile : MonoBehaviour
     #endregion
     async void GetTexture(string url)
     {
+
         UnityWebRequest www = UnityWebRequestTexture.GetTexture(url);
-        var operation= www.SendWebRequest();
+        var operation = www.SendWebRequest();
         while (!operation.isDone)
         {
             await Task.Yield();
@@ -64,6 +81,7 @@ public class Island_Profile : MonoBehaviour
             Debug.Log(www.error);
         }
 
+
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -76,7 +94,7 @@ public class Island_Profile : MonoBehaviour
         }
 
     }
-    
+
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
@@ -91,6 +109,17 @@ public class Island_Profile : MonoBehaviour
     {
         profileImage.transform.LookAt(playerPos);
     }
+    public void SendInfo()
+    {
+        photonView.RPC("RPCSendInfo", RpcTarget.OthersBuffered, user_name, user_Url);
+    }
+    [PunRPC]
+    void RPCSendInfo(string User_name, string Url)
+    {
+        user_name = User_name;
+        user_Url = Url;
+    }
+
 
 
 }

@@ -26,7 +26,7 @@ public class Island_Dynamics : MonoBehaviourPun
     void FixedUpdate()
     {
         //정보들 모두 로드 전까지 잠시 대기 
-        if (!IslandInformation.instance.Done) return;
+        if (!IslandInformation.instance.Done||!PhotonNetwork.IsMasterClient) return;
         foreach (JsonInfo info_a in IslandInformation.instance.Island_Dic.Values)
         {
             GameObject obj_a = info_a.User_Obj;

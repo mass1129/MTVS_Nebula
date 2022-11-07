@@ -4,6 +4,8 @@ using System.IO;
 using UnityEngine;
 using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
+using Photon.Pun;
+using Photon.Realtime;
 
 [System.Serializable]
 public class JsonInfo
@@ -20,7 +22,7 @@ public class JsonInfo
     
 }
 
-public class IslandInformation :MonoBehaviour, Server_IslandInfo
+public class IslandInformation :MonoBehaviourPun
 {
     public static IslandInformation instance;
     private void Awake()
@@ -29,7 +31,17 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
     }
     void Start()
     {
-        Spawn("test_FriendList.csv");
+        //포톤 마스터 클라이언트일 때 해당 스폰기능이 발생하도록 한다.
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Spawn("subset_30_v3_fin.csv");
+        }
+        //
+        else
+        {
+        }
+
+        
     }
     public Dictionary<string, JsonInfo> Island_Dic = new Dictionary<string, JsonInfo>();
     // 유저들의 닉네임을 저장할 리스트(Key:닉네임)
@@ -143,6 +155,11 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
         await InsertInfo();
         Done = true;
     }
+    public async void JustLoad(string fileName)
+    { 
+        await LoadFromCSV(fileName);
+        Done = true;
+    }
     public async Task InsertInfo()
     {
         
@@ -150,13 +167,17 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
         {
 
             JsonInfo info = Island_Dic[i];
-            GameObject island = InstantiateIsland(info.island_Type);
-            info.User_Obj = island;
-            island.transform.position = info.island_Pos;
-            //island.transform.GetChild(0).GetChild(0).GetComponent<Island_Profile>().user_name = i;
-            island.transform.GetComponent<Island_Profile>().user_name = i;
+            //GameObject island = InstantiateIsland(info.island_Type);.
+                GameObject island = PhotonNetwork.Instantiate("CHAN_Resources/" + info.island_Type, info.island_Pos, Quaternion.identity);
+                info.User_Obj = island;
+                island.transform.position = info.island_Pos;
+                //island.transform.GetChild(0).GetChild(0).GetComponent<Island_Profile>().user_name = i;
+                island.transform.GetComponent<Island_Profile>().user_name = i;
             await Task.Yield();
         }
+        //프로필 이미지 url
+        //user_name;
+
     }
     // 하늘섬 생성 코드
     GameObject InstantiateIsland(string IslandType)
@@ -216,6 +237,16 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
         }
         Island_Dic.Clear();
     }
+    //public void SendIslandInfo()
+    //{
+    //    photonView.RPC("RPCSendIslandInfo", RpcTarget.OthersBuffered, Island_Dic);
+    //}
+    //[PunRPC]
+    //public void RPCSendIslandInfo(Dictionary<string, JsonInfo> islandDic)
+    //{
+    //    Island_Dic = islandDic;
+    //    print("done");
+    //}
 
 }
 

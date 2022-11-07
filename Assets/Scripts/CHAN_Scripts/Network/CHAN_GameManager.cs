@@ -127,6 +127,7 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         base.OnPlayerEnteredRoom(newPlayer);
+        //IslandInformation.instance.SendIslandInfo();
     }
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
