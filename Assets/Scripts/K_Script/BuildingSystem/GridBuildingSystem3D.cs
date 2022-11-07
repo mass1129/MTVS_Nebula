@@ -349,7 +349,7 @@ public class GridBuildingSystem3D : MonoBehaviourPun
             json = K_SaveSystem.Load("HouseBuildingSystemSave");
 
             SaveAllBuilding saveObject = JsonUtility.FromJson<SaveAllBuilding>(json);
-            Debug.Log(JsonUtility.ToJson(saveObject, true));
+            
 
 
             for (int i = 0; i < gridList.Count; i++)

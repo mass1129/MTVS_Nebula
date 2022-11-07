@@ -19,6 +19,7 @@ public abstract class K_UserInterface : MonoBehaviour
     public GameObject inventoryWindow;
     public GameObject invenTab;
     bool isShowed = false;
+   
     public void OnEnable()
     {   
         CreateSlots();
@@ -28,8 +29,8 @@ public abstract class K_UserInterface : MonoBehaviour
             inventory.GetSlots[i].parent = this;
             inventory.GetSlots[i].onAfterUpdated += OnSlotUpdate;
         }
-        AddEvent(gameObject, EventTriggerType.PointerEnter, delegate { OnEnterInterface(gameObject); });
-        AddEvent(gameObject, EventTriggerType.PointerExit, delegate { OnExitInterface(gameObject); });
+       
+        
     }
 
     public abstract void CreateSlots();

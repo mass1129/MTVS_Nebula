@@ -43,15 +43,7 @@ public class HttpRequester
 
         
             var result = _serializionOption.Deserialize<TResultType>(request.downloadHandler.text);
-            //JObject jObject = JObject.Parse(jsonResponse);
-            //IList<JToken> results = jObject["results"]["placeObjects"].Children().ToList();
-            //IList<TResultType> searchResults = new List<TResultType>();
-            //foreach(JToken result in results)
-            //{
-            //    var v = result.ToObject<TResultType>();
-            //    searchResults.Add(v);
-            //}
-           
+
 
             return result;
             //SceneManager.LoadScene(1);
