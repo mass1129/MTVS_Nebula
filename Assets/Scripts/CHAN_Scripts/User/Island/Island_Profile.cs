@@ -36,6 +36,7 @@ public class Island_Profile : MonoBehaviourPun
         if (!turn)
             return;
         ShowImage();
+
     }
 
     #region 이것은 CSV타입
@@ -87,10 +88,13 @@ public class Island_Profile : MonoBehaviourPun
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            print("감지");
-            profileImage.enabled = true;
-            userName_Text.enabled = true;
-            turn = true;
+            if (other.gameObject.GetComponent<PhotonView>().IsMine)
+            { 
+                print("감지");
+                profileImage.enabled = true;
+                userName_Text.enabled = true;
+                turn = true;
+            }
         }
 
     }
@@ -99,9 +103,14 @@ public class Island_Profile : MonoBehaviourPun
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            if (other.gameObject.GetComponent<PhotonView>().IsMine)
+            { 
             profileImage.enabled = false;
             userName_Text.enabled = false;
             turn = false;
+               
+            
+            }
         }
 
     }

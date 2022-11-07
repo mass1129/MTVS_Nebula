@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 3252203795677890438}
   - component: {fileID: 3908747327090746538}
   - component: {fileID: 1443112921067586490}
+  - component: {fileID: 7515067105150607125}
   m_Layer: 0
   m_Name: Player_Whale
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -102,6 +103,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d73c678b9c89cf4f9778f753d8a9ba0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &7515067105150607125
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3252203795677890440}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 4
+  m_Height: 20
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: -1}
 --- !u!1 &3252203797342670220
 GameObject:
   m_ObjectHideFlags: 0
@@ -311,7 +326,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6474469987144934788, guid: 4b661db9d4c2ac14f820964ae292754a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4b661db9d4c2ac14f820964ae292754a, type: 3}
 --- !u!4 &2726322940051371076 stripped
 Transform:
