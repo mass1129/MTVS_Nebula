@@ -1,54 +1,68 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
-
-//게시물 정보
-[Serializable]
-public class PostData
+public class HttpRequester
 {
-    public int userId;
-    public int id;
-    public string title;
-    public string body;
-}
+    private readonly ISerializationOption _serializionOption;
 
-[Serializable]
-public class PostDataArray
-{
-    public List<PostData> data;
-}
+    public HttpRequester(ISerializationOption serializionOption)
+    {
+        _serializionOption = serializionOption;
+    }
 
-public class UserData
-{
-    public string name;
-    public string id;
-   
-  
-}
+    public async Task<TResultType> Get<TResultType>(string url)
+    {
+        try
+        {
+        string token = PlayerPrefs.GetString("PlayerToken");
+        using var request = UnityWebRequest.Get(url);
+        
+        request.SetRequestHeader("Content-Type", _serializionOption.ContentType);
+        request.SetRequestHeader("Authorization", "Bearer " + token);
 
-public enum RequestType
-{
-    POST,
-    GET,
-    PUT,
-    DELETE
-}
+       
+        var operation = request.SendWebRequest();
 
-public class HttpRequester : MonoBehaviour
-{
-    //요청 타입 (GET, POST, PUT, DELETE)
-    public RequestType requestType;
-    //url   
-    public string url;
-   
+        while (!operation.isDone)
+            await Task.Yield();
 
-    //Post Data 
-    public string postData;//(body)
+    
+        
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError($"Failed: {request.error}");
+        }
 
-    //응답이 왔을 때 호출해줄 함수 (Action)
-    //Action : 함수를 넣을 수 있는 자료형
-    public Action<DownloadHandler> onComplete;
+
+        
+            var result = _serializionOption.Deserialize<TResultType>(request.downloadHandler.text);
+            //JObject jObject = JObject.Parse(jsonResponse);
+            //IList<JToken> results = jObject["results"]["placeObjects"].Children().ToList();
+            //IList<TResultType> searchResults = new List<TResultType>();
+            //foreach(JToken result in results)
+            //{
+            //    var v = result.ToObject<TResultType>();
+            //    searchResults.Add(v);
+            //}
+           
+
+            return result;
+            //SceneManager.LoadScene(1);
+        }
+
+        catch (Exception ex)
+        {
+            Debug.LogError($"{nameof(Get)} failed: {ex.Message}");
+            return default;
+        }
+
+        
+    }
 }

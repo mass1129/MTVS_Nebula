@@ -6,6 +6,9 @@ using UnityEngine.UI;
 using UnityEngine.Networking;
 using System.IO;
 using System;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+
 [System.Serializable]
 public class LoginInfo
 {
@@ -16,32 +19,31 @@ public class LoginInfo
 
 public class Login_Manager : MonoBehaviour
 {
-    // 로그인 정보를 서버에 보낸다. 
-    // 정보가 서버에 있는지 검사한다. 
-    // 만약 정보가 서버에 있으면 유저 정보를 가져온다. 
-    // 틀렸으면 잘못 입력했다는 경고( "올바른 정보를 입력해 주세요")
 
-    // 입력기
     public InputField Input_Id;
     public InputField Input_Pass;
     public Text errorMassage;
+
     private string token = null;
 
+    private void Start()
+    {
+        ClickedLogInBtn();
+    }
     public void ClickedLogInBtn()
     {
         LoginInfo user = new LoginInfo
         {
-            username = Input_Id.text,
-            password = Input_Pass.text
+            username = "test2",
+            password = "pwd"
         };
         string json = JsonUtility.ToJson(user,true);
 
         
-        StartCoroutine(API_Login("ec2-43-201-62-61.ap-northeast-2.compute.amazonaws.com:8001/auth/login", json));
+        API_Login("ec2-43-201-62-61.ap-northeast-2.compute.amazonaws.com:8001/auth/login", json);
         
     }
-
-
+   
 
 
     #region API_Func
@@ -52,38 +54,111 @@ public class Login_Manager : MonoBehaviour
     /// <returns>token = Gettoken</returns>
 
 
-    IEnumerator API_Login(string URL, string json)
+    //public async void API_LoadBuildingSystem()
+    //{
+        
+    //    using var request = UnityWebRequest.Get("ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/skyisland/1");
+    //    {
+    //        request.SetRequestHeader("Content-Type", "application/json");
+    //        request.SetRequestHeader("Authorization", "Bearer " + token);
+
+    //        var operation = request.SendWebRequest();
+
+    //        while (!operation.isDone)
+    //            await Task.Yield();
+
+
+    //        if (request.result != UnityWebRequest.Result.Success)
+    //        {
+    //            Debug.LogError($"Failed: {request.error}");
+    //        }
+
+    //        var jsonResponse = request.downloadHandler.text;
+
+    //        try
+    //        {   
+    //            //var result = JsonConvert.DeserializeObject<saveall>
+    //            Debug.Log($"Success: {request.downloadHandler.text}");
+               
+    //            //SceneManager.LoadScene(1);
+    //        }
+
+    //        catch (Exception ex)
+    //        {
+    //            Debug.LogError($"{this}Could not parse response {jsonResponse}. {ex.Message}");
+    //        }
+
+    //    }
+    //}
+    
+
+    public async void API_Login(string URL, string json)
     {
-        UnityWebRequest request=null;
-        using (request = UnityWebRequest.Post(URL, json))
+
+        using var request = UnityWebRequest.Post(URL, json);
         {
             byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
-            Debug.Log(jsonToSend);
             request.uploadHandler = new UploadHandlerRaw(jsonToSend);
-            request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
             request.SetRequestHeader("Content-Type", "application/json");
             
-            yield return request.SendWebRequest();
+            var operation = request.SendWebRequest();
 
-            if (request.isNetworkError)
+            while (!operation.isDone)
+                await Task.Yield();
+
+            var jsonResponse = request.downloadHandler.text;
+
+            if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.Log(request.error);
+                Debug.LogError($"Failed: {request.error}");
             }
-            else
-            {
-                SetToken(request.downloadHandler.text);
-                Debug.Log(token);
-                request.Dispose();
-                SceneManager.LoadScene(1);
-                //if (request.responseCode != 200)
-                // ErrorCheck(-(int)request.responseCode, "API_Login");
 
+            try
+            {
+                Debug.Log($"Success: {request.downloadHandler.text}");
+                SetToken(request.downloadHandler.text);
+                SceneManager.LoadScene(1);
+            }
+
+            catch(Exception ex)
+            {
+                Debug.LogError($"{this}Could not parse response {jsonResponse}. {ex.Message}");
             }
             
         }
         
     }
+    //IEnumerator API_Login(string URL, string json)
+    //{
+    //    UnityWebRequest request = null;
+    //    using (request = UnityWebRequest.Post(URL, json))
+    //    {
+    //        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
+    //        Debug.Log(jsonToSend);
+    //        request.uploadHandler = new UploadHandlerRaw(jsonToSend);
+    //        request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+    //        request.SetRequestHeader("Content-Type", "application/json");
 
+    //        yield return request.SendWebRequest();
+
+    //        if (request.isNetworkError)
+    //        {
+    //            Debug.Log(request.error);
+    //        }
+    //        else
+    //        {
+    //            SetToken(request.downloadHandler.text);
+    //            Debug.Log(token);
+    //            request.Dispose();
+    //            //SceneManager.LoadScene(1);
+    //            //if (request.responseCode != 200)
+    //            // ErrorCheck(-(int)request.responseCode, "API_Login");
+
+    //        }
+
+    //    }
+
+    //}
     /// <summary>
     /// API로 Logout을 하는 함수.
     /// 로그아웃시 가지고 있던 토큰값은 초기화됨.
@@ -121,7 +196,7 @@ public class Login_Manager : MonoBehaviour
             token = null;
             return 0;
         }
-        Debug.Log(_input);
+       
         // 로그인시 토큰 설정
         string[] temp = _input.Split('"');
 
@@ -129,6 +204,7 @@ public class Login_Manager : MonoBehaviour
             ErrorCheck(-1001); // 토큰 형식 에러
 
         token = temp[11];
+        PlayerPrefs.SetString("PlayerToken", token);
         return 0;
     }
     #endregion
