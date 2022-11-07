@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CodeMonkey.Utils;
+using Photon.Pun;
 
-public class GridBuildingSystem3D : MonoBehaviour {
+public class GridBuildingSystem3D : MonoBehaviourPun
+{
 
     public static GridBuildingSystem3D Instance { get; private set; }
 
@@ -39,6 +41,10 @@ public class GridBuildingSystem3D : MonoBehaviour {
        
         placedObjectTypeSO = null;
         selectedGrid = gridList[0];
+    }
+    private void Start()
+    {
+        
     }
     private void Update()
     {
@@ -222,7 +228,7 @@ public class GridBuildingSystem3D : MonoBehaviour {
 
             foreach (Vector2Int gridPosition in gridPositionList) {
                 selectedGrid.GetGridObject(gridPosition.x, gridPosition.y).SetPlacedObject(placedObject);
-            }
+            }                       
 
             placedObject.GridSetupDone();
 
@@ -322,13 +328,14 @@ public class GridBuildingSystem3D : MonoBehaviour {
                 }
             }
 
-            PlacedObjectSaveObjectArray placedObjectSaveObjectArray = new PlacedObjectSaveObjectArray { placedObjectSaveObjectArray = saveObjectList.ToArray() };
+            PlacedObjectSaveObjectArray placedObjectSaveObjectArray = new PlacedObjectSaveObjectArray { gridPlaceObjectList = saveObjectList.ToArray() };
             placedObjectSaveObjectArrayList.Add(placedObjectSaveObjectArray);
         }
-        SaveObject saveObject = new SaveObject
+        SaveAllBuilding saveObject = new SaveAllBuilding
         {
-            placedObjectSaveObjectArrayArray = placedObjectSaveObjectArrayList.ToArray()
+            islandGridList = placedObjectSaveObjectArrayList.ToArray()  
         };
+        
         string json = JsonUtility.ToJson(saveObject,true);
         PlayerPrefs.SetString("HouseBuildingSystemSave", json);
         K_SaveSystem.Save("HouseBuildingSystemSave", json, true);
@@ -341,14 +348,14 @@ public class GridBuildingSystem3D : MonoBehaviour {
             string json = PlayerPrefs.GetString("HouseBuildingSystemSave");
             json = K_SaveSystem.Load("HouseBuildingSystemSave");
 
-            SaveObject saveObject = JsonUtility.FromJson<SaveObject>(json);
-
+            SaveAllBuilding saveObject = JsonUtility.FromJson<SaveAllBuilding>(json);
+            Debug.Log(JsonUtility.ToJson(saveObject, true));
 
 
             for (int i = 0; i < gridList.Count; i++)
             {
                 GridXZ<GridObject> grid = gridList[i];
-                foreach (PlacedObject.SaveObject placedObjectSaveObject in saveObject.placedObjectSaveObjectArrayArray[i].placedObjectSaveObjectArray)
+                foreach (PlacedObject.SaveObject placedObjectSaveObject in saveObject.islandGridList[i].gridPlaceObjectList)
                 {
                     PlacedObjectTypeSO placedObjectTypeSO = BuildingSystemAssets.Instance.GetPlacedObjectTypeSOFromName(placedObjectSaveObject.placedObjectTypeSOName);
                     TryPlaceObject(placedObjectSaveObject.origin, placedObjectTypeSO, placedObjectSaveObject.dir, out PlacedObject placedObject);
@@ -357,15 +364,68 @@ public class GridBuildingSystem3D : MonoBehaviour {
         }
         Debug.Log("Load!");
     }
-    [Serializable]
-    public class SaveObject
+    [ContextMenu("test get")]
+    public async void TestLoad()
     {
-        public PlacedObjectSaveObjectArray[] placedObjectSaveObjectArrayArray;
+        var url = "ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/skyisland/1";
+        var httpReq = new HttpRequester(new JsonSerializationOption());
+        //PlacedObjectSaveObjectArray result1 = await httpReq.Get<PlacedObjectSaveObjectArray>(url);
+        Root result2 = await httpReq.Get<Root>(url);
+        
+        Debug.Log(JsonUtility.ToJson(result2, true));
+        for (int i = 0; i < gridList.Count; i++)
+        {
+            GridXZ<GridObject> grid = gridList[i];
+            foreach (GridPlaceObjectList placedObjectSaveObject in result2.results.placeObjects.islandGridList[i].gridPlaceObjectList)
+            {
+                PlacedObjectTypeSO placedObjectTypeSO = BuildingSystemAssets.Instance.GetPlacedObjectTypeSOFromName(placedObjectSaveObject.placedObjectTypeSOName);
+                TryPlaceObject(placedObjectSaveObject.origin, placedObjectTypeSO, placedObjectSaveObject.dir, out PlacedObject placedObject);
+            }
+        }
+    }
+    [Serializable]
+    public class SaveAllBuilding
+    {
+        public PlacedObjectSaveObjectArray[] islandGridList;
     }
 
     [Serializable]
     public class PlacedObjectSaveObjectArray
     {
-        public PlacedObject.SaveObject[] placedObjectSaveObjectArray;
+        public PlacedObject.SaveObject[] gridPlaceObjectList;
     }
+
+    public class GridPlaceObjectList
+    {
+        public string placedObjectTypeSOName;
+        public Vector2Int origin;
+        public PlacedObjectTypeSO.Dir dir;
+    }
+
+    public class IslandGridList
+    {
+        public List<GridPlaceObjectList> gridPlaceObjectList { get; set; }
+    }
+
+
+    public class PlaceObjects
+    {
+        public List<IslandGridList> islandGridList { get; set; }
+    }
+
+    public class Results
+    {
+        public int id { get; set; }
+        public string owner { get; set; }
+        public PlaceObjects placeObjects { get; set; }
+        public object dropItems { get; set; }
+    }
+
+    public class Root
+    {
+        public int httpStatus { get; set; }
+        public string message { get; set; }
+        public Results results { get; set; }
+    }
+
 }

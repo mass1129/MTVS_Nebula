@@ -19,7 +19,7 @@ public class InventoryObject : ScriptableObject
     public InventorySlot[] GetSlots => Container.Slots;
 
     public bool AddItem(Item item, int amount)
-    {   
+    {
         //빈 슬룻이 없다면 false리턴
         if (EmptySlotCount <= 0)
             return false;
@@ -33,7 +33,14 @@ public class InventoryObject : ScriptableObject
         slot.AddAmount(amount);
         return true;
     }
-
+    public void AddBundleListToWindow(List<ItemObject> bundleList)
+    {
+        Clear();
+            Item item = new Item(bundleList[0]);
+             GetSlots[0].UpdateSlot(item, 1);
+        
+        
+    }
 
 
     public int EmptySlotCount
@@ -52,7 +59,8 @@ public class InventoryObject : ScriptableObject
 
     //인벤토리 슬롯에 해당 item이 있는 슬롯을 찾아서 해당 slot를 리턴한다.
     public InventorySlot FindItemOnInventory(Item item)
-    {
+    {   
+        //
         for (int i = 0; i < GetSlots.Length; i++)
         {
             if (GetSlots[i].item.Id == item.Id)
@@ -129,11 +137,22 @@ public class InventoryObject : ScriptableObject
         }
 
     }
+    public void UpdateInventory()
+    {
+        for (int i = 0; i < Container.Slots.Length; i++)
+        {
+            Container.Slots[i].UpdateSlot(Container.Slots[i].item, Container.Slots[i].amount);
+        }
+    }
+
     [ContextMenu("Clear")]
     public void Clear()
     {
         Container.Clear();
     }
-   
+    public void Click()
+    {
+        //Debug.Log(GetSlots.item.);
+    }
 }
 

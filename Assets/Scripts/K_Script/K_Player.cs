@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public enum PlayerStates // Player의 기본 상태
 {
     Idle,
     ThirdMove,
     FirstMove,
-    SpaceCamMode,
     BuildingMode,
     Jump,
     Falling,
@@ -18,7 +18,7 @@ public enum PlayerStates // Player의 기본 상태
 
 
 // 모든 Player가 사용하는 에이전트 클래스
-public class K_Player : MonoBehaviour
+public class K_Player : MonoBehaviourPun, IPunObservable
 {
   
     public Animator anim;
@@ -70,7 +70,8 @@ public class K_Player : MonoBehaviour
     }
     private void Update()
     {
-        
+        if (!photonView.IsMine)
+            return;
         Updated();
         //Updated_UpperBody();
         GroundedCheck();
@@ -126,8 +127,8 @@ public class K_Player : MonoBehaviour
     }
 
 
-   
-   
+
+
 
     // PunRPC 함수들은 항상 오브젝트에 붙어있는 컴포넌트에서 실행되어야 한다. 따라서 virtual 클래스로 구현하여 각 직업군들의 클래스에서 override로 재정의 해줘야 한다.
     public virtual void SetTrigger(string s)
@@ -135,24 +136,47 @@ public class K_Player : MonoBehaviour
         /*photonView.RPC("RpcSetTrigger", RpcTarget.All, s);*/
     }
 
-    
+    [PunRPC]
+    public virtual void RpcSetTrigger(string s)
+    {
+        /*anim.SetTrigger(s);*/
+    }
+
     public virtual void ResetTrigger(string s)
     {
         /*photonView.RPC("RpcResetTrigger", RpcTarget.All, s);*/
     }
 
-  
+    [PunRPC]
+    public virtual void RpcResetTrigger(string s)
+    {
+        /*anim.ResetTrigger(s);*/
+    }
 
     public virtual void SetFloat(string s, float f)
     {
         /*photonView.RPC("RpcSetFloat", RpcTarget.All, s, f);*/
     }
 
-    
+    [PunRPC]
+    public virtual void RpcSetFloat(string s, float f)
+    {
+        /*anim.SetFloat(s, f);*/
+    }
 
     public virtual void Play(string s, int layer, float normallizedTime)
     {
         /*photonView.RPC("RpcPlay", RpcTarget.All, s, layer, normallizedTime);*/
+    }
+
+    [PunRPC]
+    public virtual void RpcPlay(string s, int layer, float normalizedTime)
+    {
+        /*anim.Play(s, layer, normalizedTime);*/
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
     }
     #endregion
 

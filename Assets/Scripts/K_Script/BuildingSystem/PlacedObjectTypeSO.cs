@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Equipment Object", menuName = "Inventory System/Items/Building")]
+[CreateAssetMenu(fileName = "New Building Object", menuName = "Inventory System/Items/Building")]
 public class PlacedObjectTypeSO : ScriptableObject
 {
     public string nameString;

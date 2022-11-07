@@ -1,6 +1,7 @@
 public enum ItemType
 {
     BuildObject,
+    System,
     Vehicle,
     Title,
     Default,
