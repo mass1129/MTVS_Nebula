@@ -10,7 +10,7 @@ public class K_TestSceneMgr : MonoBehaviour
     }
     public void LoadSkyScene()
     {
-        SceneManager.LoadScene(4);
+        CHAN_GameManager.instance.Go_Sky_Scene();
     }
 
 }

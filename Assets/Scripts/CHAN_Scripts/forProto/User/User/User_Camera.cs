@@ -34,7 +34,7 @@ public class User_Camera : MonoBehaviour
         {
             turn = false;
         }
-        if (turn&&!User_Move.instance.islandSelected)
+        if (turn)
         { 
             transform.position = Vector3.Lerp(transform.position, TranslateCamPos(), Time.deltaTime * followSpeed);
             transform.rotation = Quaternion.Lerp(transform.rotation, camHolderPos.rotation, Time.deltaTime * followSpeed);

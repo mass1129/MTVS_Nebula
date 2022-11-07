@@ -4,61 +4,37 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
+using System.Threading.Tasks;
 
 public class Island_Profile : MonoBehaviour
 {
     //이미지 파일을 가져와서  섬에 띄우도록 한다.
-    float visualDistance =200;
     public string user_name;
-    Image profileImage;
+    public Image profileImage;
     Text userName_Text;
-    Transform camPos;
+    Transform playerPos;
     //Transform player;
     bool turn;
     void Start()
     {
-        //player = GameObject.Find("Player").transform;
-        profileImage = transform.GetChild(0).GetComponent<Image>();
+        //profileImage = transform.GetChild(0).GetComponent<Image>();
         profileImage.enabled = false;
-        camPos = Camera.main.transform;
+        playerPos = CHAN_PlayerManger.LocalPlayerInstance.transform;
         userName_Text = gameObject.transform.GetComponentInChildren<Text>();
+        LoadImage();
     }
-
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (!turn)
-        { 
-            LoadImage();
-           //LoadImageByJson();
-            turn = true;
-        }
-        if (visualDistance > GetDistanceToPlayer())
-        {
-            profileImage.enabled = true;
-            userName_Text.enabled = true;
-            transform.LookAt(camPos.position);
-            //profileImage.transform.LookAt(camPos.position);
-        }
-        else
-        {
-            profileImage.enabled = false;
-            userName_Text.enabled = false;
-            //이미지를 끈다.
-        }
-    }
-    float GetDistanceToPlayer()
-    {
-        float dis;
-        dis = Vector3.Distance(transform.position, camPos.position);
-        return dis;
+            return;
+        ShowImage();
     }
 
     #region 이것은 CSV타입
     void LoadImage()
     {
         JsonInfo JInfo = IslandInformation.instance.Island_Dic[user_name];
-        StartCoroutine(GetTexture(JInfo.User_image));
+        GetTexture(JInfo.User_image);
         userName_Text.text = "UserName_" + user_name;
         userName_Text.enabled = false;
     }
@@ -70,21 +46,50 @@ public class Island_Profile : MonoBehaviour
     //    userName_Text.enabled = false;
     //}
     #endregion
-    // 이 코루틴은 한번만 사용되어야 한다. 
-    IEnumerator GetTexture(string url)
+    async void GetTexture(string url)
     {
         UnityWebRequest www = UnityWebRequestTexture.GetTexture(url);
-        yield return www.SendWebRequest();
-
-        if (www.result != UnityWebRequest.Result.Success)
+        var operation= www.SendWebRequest();
+        while (!operation.isDone)
         {
-            Debug.Log(www.error);
+            await Task.Yield();
         }
-        else
+        try
         {
             Texture2D myTexture = ((DownloadHandlerTexture)www.downloadHandler).texture;
             profileImage.sprite = Sprite.Create(myTexture, new Rect(0f, 0f, myTexture.width, myTexture.height), Vector2.zero);
         }
+        catch
+        {
+            Debug.Log(www.error);
+        }
+
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            print("감지");
+            profileImage.enabled = true;
+            userName_Text.enabled = true;
+            turn = true;
+        }
+
+    }
+    
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            profileImage.enabled = false;
+            userName_Text.enabled = false;
+            turn = false;
+        }
+
+    }
+    void ShowImage()
+    {
+        profileImage.transform.LookAt(playerPos);
     }
 
 

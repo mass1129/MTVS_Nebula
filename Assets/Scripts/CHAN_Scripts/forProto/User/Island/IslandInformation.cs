@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using Newtonsoft.Json.Linq;
+using System.Threading.Tasks;
 
 [System.Serializable]
 public class JsonInfo
@@ -16,6 +17,7 @@ public class JsonInfo
     public string User_NickName;
     // 하늘섬 오브젝트
     public GameObject User_Obj;
+    
 }
 
 public class IslandInformation :MonoBehaviour, Server_IslandInfo
@@ -27,7 +29,7 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
     }
     void Start()
     {
-        Spawn();
+        Spawn("test_FriendList.csv");
     }
     public Dictionary<string, JsonInfo> Island_Dic = new Dictionary<string, JsonInfo>();
     // 유저들의 닉네임을 저장할 리스트(Key:닉네임)
@@ -58,7 +60,9 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
 
     #endregion
     //csv파일 정보 로드 함수, 처음 하늘뷰에서 들어왔을 때 발동된다.
-    public void LoadFromCSV(string fileName)
+    public bool Done;
+    public Transform Islands;
+    public async Task LoadFromCSV(string fileName)
     {
         StreamReader sr = new StreamReader(Application.streamingAssetsPath + "/" + fileName);
         // csv파일 인덱스가 끝났는지 판별
@@ -92,6 +96,7 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
             InsertData(count, data_values[3], temp_pos, nickname);
               //csv의x,y,z값을 받아내고 Vector로 저장하자
             count++;
+            await Task.Yield();
 
         }
 
@@ -131,10 +136,16 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
         }
     }
     // 하늘섬 배치 함수 
-    public void Spawn()
+    public async void Spawn(string fileName)
     {
         //LoadFromJson();
-        LoadFromCSV("test_FriendList.csv");
+        await LoadFromCSV(fileName);
+        await InsertInfo();
+        Done = true;
+    }
+    public async Task InsertInfo()
+    {
+        
         foreach (string i in Island_Dic.Keys)
         {
 
@@ -142,13 +153,17 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
             GameObject island = InstantiateIsland(info.island_Type);
             info.User_Obj = island;
             island.transform.position = info.island_Pos;
-            island.transform.GetChild(0).GetChild(0).GetComponent<Island_Profile>().user_name = i;
+            //island.transform.GetChild(0).GetChild(0).GetComponent<Island_Profile>().user_name = i;
+            island.transform.GetComponent<Island_Profile>().user_name = i;
+            await Task.Yield();
         }
     }
     // 하늘섬 생성 코드
     GameObject InstantiateIsland(string IslandType)
     {
-        GameObject land = Instantiate(Resources.Load<GameObject>("CHAN_Resources/" + IslandType));
+        float randomScale=UnityEngine.Random.RandomRange(0.3f, 3);
+        GameObject land = Instantiate(Resources.Load<GameObject>("CHAN_Resources/" + IslandType), Islands);
+        land.transform.GetChild(1).gameObject.transform.localScale *= randomScale;
         return land;
     }
     // 하늘섬 타입 결정 코드
@@ -187,9 +202,20 @@ public class IslandInformation :MonoBehaviour, Server_IslandInfo
         dic.User_NickName = nickname;
     }
 
+    // 중간에 새로운 데이터가 들어왔을 때, 어떻게 갱신할지 생각해보자 
+    // 게임은 초기에 서버에게 섬의 좌표를 받아온다. 
+    // 그 좌표를 기반으로 섬은 배치가 된다. 
 
-
-
+    //기존에 있는 데이터 정보들을 모두 삭제시키는 함수
+    //하늘섬 오브젝트도 모두 삭제한다.
+    public void DeleteData()
+    {
+            foreach(JsonInfo i in Island_Dic.Values)
+        {
+            Destroy(i.User_Obj);
+        }
+        Island_Dic.Clear();
+    }
 
 }
 
