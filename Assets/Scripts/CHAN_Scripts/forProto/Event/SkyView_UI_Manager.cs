@@ -39,6 +39,7 @@ public class SkyView_UI_Manager : MonoBehaviour
     Dictionary<string, Friend_Info> Dic_Friend = new Dictionary<string, Friend_Info>();
     private void Start()
     {
+        
         Initialize();
     }
     // 처음에 친구정보를 서버에 모두 가져온다고 가정 
@@ -73,7 +74,7 @@ public class SkyView_UI_Manager : MonoBehaviour
     public void Btn_BackToMyWorld()
     {
         //현재는 single play 위해서 설정했을 뿐 네트워크 추가할 시 바꿔야 할 사항임
-        SceneManager.LoadScene(3);
+        CHAN_GameManager.instance.Go_User_Scene(CHAN_GameManager.instance.nick);
     }
     // 즐겨찾기 목록 나오는 기능
     public void Btn_FavoriteList()
