@@ -36,16 +36,19 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
     
     string roomName="";
     string sceneName="";
-
-    public bool IsSetWhale;
     // resources 의 프리팹정보
+    [HideInInspector]
+    public string prefab;
     public string userPrefab;
     public string WhalePrepab;
+
+    GameObject player;
     private void Start()
     {
         //처음에는 스카이씬에 바로 들어가도록 함
         roomName = "sky";
         sceneName = name_SkyScene;
+        prefab = WhalePrepab;
         Connect();
     }
     public void Connect()
@@ -69,15 +72,9 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
     {
         base.OnJoinedRoom();
         PN.LoadLevel(sceneName);
-        if (IsSetWhale)
-        {
-            SetPlayer(WhalePrepab);
-        }
-        else
-        {
-            SetPlayer(userPrefab);
-        }
-        
+        SetPlayer(prefab);
+
+
     }
     RoomOptions roomOption()
     {
@@ -96,35 +93,35 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
     }
     void SetPlayer(string prefab)
     {
-        GameObject playerObj = PN.Instantiate(prefab, Vector3.zero, Quaternion.identity);
+        player=PN.Instantiate(prefab, Vector3.zero, Quaternion.identity);
     }
 
     public void Go_Sky_Scene()
     {
+        Destroy(player);
         roomName = "sky";
         sceneName = name_SkyScene;
-        //if (photonView.IsMine)
-        //{ 
-        //    RemoveMyPhotonView(); 
-        //}
+        prefab = WhalePrepab;
+        print("Join : " + roomName+"Scene");
         PN.LeaveRoom();
     }
     public void Go_User_Scene(string NickName)
     {
-
+        Destroy(player);
         roomName = NickName;
         sceneName = name_UserScene;
-        //if (photonView.IsMine)
-        //{
-        //    RemoveMyPhotonView();
-        //}
+        prefab = WhalePrepab;
+        prefab = userPrefab;
+        print("Join : " + roomName);
         PN.LeaveRoom();
     }
     public void Go_User_Custom()
     {
+        Destroy(player);
         roomName = customName.text;
         sceneName = name_UserScene;
-        print("Set :" + customName.text);
+        prefab = userPrefab;
+        print("Join : " + customName.text);
         PN.LeaveRoom();
     }
     public override void OnPlayerEnteredRoom(Player newPlayer)
