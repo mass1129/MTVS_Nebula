@@ -19,30 +19,13 @@ public class ChattingSet : MonoBehaviourPun
      
     Color32 idColor;
 
-    private void Awake()
-    {
-        //if (instance == null)
-        //{
-        //    instance = this;
-        //    DontDestroyOnLoad(this);
-        //}
-        //else
-        //{
-        //    Destroy(this);
-        //}
 
-    }
     void Start()
     {
         btn_HideChatMenu.onClick.AddListener(HideChat);
         btn_Enter.onClick.AddListener(OnclickedEnter);
-        //엔터키를 누르면 바로 입력이 넣어지도록 한다. 
-        if (photonView.IsMine)
-        {
-            chats.onSubmit.AddListener(PostText);
-        }
-        //PhotonNetwork.ConnectUsingSettings();
-        //PhotonNetwork.NickName = "user"+Random.RandomRange(0,100).ToString();
+        chats.onSubmit.AddListener(PostText);
+
         idColor = new Color32(
             (byte)Random.Range(0, 256),
             (byte)Random.Range(0, 256),
