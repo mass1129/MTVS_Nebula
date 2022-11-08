@@ -21,21 +21,22 @@ public class ChattingSet : MonoBehaviourPunCallbacks
             chats.onSubmit.AddListener(PostText);
         }
         PhotonNetwork.ConnectUsingSettings();
-        PhotonNetwork.NickName = "user";
+        PhotonNetwork.NickName = "user"+Random.RandomRange(0,100).ToString();
     }
 
+    // 여기서 글자가 입력된다. 
     public void PostText(string s)
     {
-        photonView.RPC("RPCPostText", RpcTarget.All, s);
+        photonView.RPC("RPCPostText", RpcTarget.All, PhotonNetwork.NickName, s);
         chats.text = "";
         chats.ActivateInputField();
     }
     [PunRPC]
-    void RPCPostText(string text)
+    void RPCPostText(string nickName, string text)
     {
         GameObject text_Obj = Instantiate(texts, area_Text);
         text_Obj.SetActive(true);
-        text_Obj.GetComponent<Text>().text = text;
+        text_Obj.GetComponent<Text>().text = nickName+": "+text;
         
     }
     public override void OnConnectedToMaster()
