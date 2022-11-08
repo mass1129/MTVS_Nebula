@@ -105,7 +105,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d73c678b9c89cf4f9778f753d8a9ba0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speaker: {fileID: 5947097724825286896, guid: 74d3f5789ce48c041b35b67b9f1e8064, type: 3}
 --- !u!136 &7515067105150607125
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -403,6 +402,14 @@ PrefabInstance:
     - target: {fileID: 7712119216927183481, guid: 74d3f5789ce48c041b35b67b9f1e8064, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8019204407570763087, guid: 74d3f5789ce48c041b35b67b9f1e8064, type: 3}
+      propertyPath: MaxDistance
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8019204407570763087, guid: 74d3f5789ce48c041b35b67b9f1e8064, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 0.811
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74d3f5789ce48c041b35b67b9f1e8064, type: 3}
