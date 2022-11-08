@@ -5,8 +5,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ChattingSet : MonoBehaviourPunCallbacks
+public class ChattingSet : MonoBehaviourPun
 {
+    public static ChattingSet instance;
     //인풋 필드의 값을 가져온다.
     public InputField chats;
     public GameObject chatItem;
@@ -18,23 +19,36 @@ public class ChattingSet : MonoBehaviourPunCallbacks
      
     Color32 idColor;
 
+    private void Awake()
+    {
+        //if (instance == null)
+        //{
+        //    instance = this;
+        //    DontDestroyOnLoad(this);
+        //}
+        //else
+        //{
+        //    Destroy(this);
+        //}
+
+    }
     void Start()
     {
         btn_HideChatMenu.onClick.AddListener(HideChat);
         btn_Enter.onClick.AddListener(OnclickedEnter);
         //엔터키를 누르면 바로 입력이 넣어지도록 한다. 
         if (photonView.IsMine)
-        { 
+        {
             chats.onSubmit.AddListener(PostText);
         }
-        PhotonNetwork.ConnectUsingSettings();
-        PhotonNetwork.NickName = "user"+Random.RandomRange(0,100).ToString();
+        //PhotonNetwork.ConnectUsingSettings();
+        //PhotonNetwork.NickName = "user"+Random.RandomRange(0,100).ToString();
         idColor = new Color32(
             (byte)Random.Range(0, 256),
             (byte)Random.Range(0, 256),
             (byte)Random.Range(0, 256),
             255
-            ); 
+            );
     }
 
     public void HideChat()
@@ -56,7 +70,7 @@ public class ChattingSet : MonoBehaviourPunCallbacks
     {
         PostText(chats.text);
     }
-
+    #region 채팅관련 코드 모음
     // 이전 Content 의 H
     float previousContentH;
     // ScrollView 의 RectTransform
@@ -87,16 +101,18 @@ public class ChattingSet : MonoBehaviourPunCallbacks
         
         }
     }
-    public override void OnConnectedToMaster()
-    {
-        base.OnConnectedToMaster();
-        
-        PhotonNetwork.JoinOrCreateRoom("00", new RoomOptions(), TypedLobby.Default);
-    }
-    public override void OnJoinedRoom()
-    {
-        base.OnJoinedRoom();
-        print("입장");
+    #endregion
 
-    }
+    //public override void OnConnectedToMaster()
+    //{
+    //    base.OnConnectedToMaster();
+        
+    //    PhotonNetwork.JoinOrCreateRoom("00", new RoomOptions(), TypedLobby.Default);
+    //}
+    //public override void OnJoinedRoom()
+    //{
+    //    base.OnJoinedRoom();
+    //    print("입장");
+
+    //}
 }

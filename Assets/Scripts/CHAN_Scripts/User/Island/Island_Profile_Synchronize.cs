@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 using System.Threading.Tasks;
 using Photon.Pun;
 
-public class Island_Profile : MonoBehaviourPun
+public class Island_Profile_Synchronize : MonoBehaviourPun
 {
     //이미지 파일을 가져와서  섬에 띄우도록 한다.
     public string user_name;
@@ -24,6 +24,11 @@ public class Island_Profile : MonoBehaviourPun
         playerPos = CHAN_PlayerManger.LocalPlayerInstance.transform;
         userName_Text = gameObject.transform.GetComponentInChildren<Text>();
         LoadImage();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            SendInfo();
+        }
+
     }
     private void Update()
     {
@@ -84,7 +89,7 @@ public class Island_Profile : MonoBehaviourPun
         if (other.gameObject.CompareTag("Player"))
         {
             if (other.gameObject.GetComponent<PhotonView>().IsMine)
-            { 
+            {
                 print("감지");
                 profileImage.enabled = true;
                 userName_Text.enabled = true;
@@ -99,17 +104,30 @@ public class Island_Profile : MonoBehaviourPun
         if (other.gameObject.CompareTag("Player"))
         {
             if (other.gameObject.GetComponent<PhotonView>().IsMine)
-            { 
-            profileImage.enabled = false;
-            userName_Text.enabled = false;
-            turn = false;
-               
-            
+            {
+                profileImage.enabled = false;
+                userName_Text.enabled = false;
+                turn = false;
+
+
             }
         }
+
     }
     void ShowImage()
     {
         profileImage.transform.LookAt(playerPos);
     }
+    public void SendInfo()
+    {
+        photonView.RPC("RPCSendInfo", RpcTarget.OthersBuffered, user_name, user_Url);
+    }
+    [PunRPC]
+    void RPCSendInfo(string User_name, string Url)
+    {
+        user_name = User_name;
+        user_Url = Url;
+    }
+
 }
+

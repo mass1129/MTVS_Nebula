@@ -86,10 +86,10 @@ public class SkyView_UI_Manager : MonoBehaviour
     public void Btn_FriendLists()
     {
         Dic_Friend.Clear();
-        foreach (string i in IslandInformation.instance.Island_Dic.Keys)
+        foreach (string i in Island_Information.instance.Island_Dic.Keys)
         {
             
-            JsonInfo info = IslandInformation.instance.Island_Dic[i];
+            JsonInfo info = Island_Information.instance.Island_Dic[i];
             Friend_Info f_info=new Friend_Info();
             Dic_Friend.Add(info.User_NickName, f_info);
             Friend_Nicknames.Add(info.User_NickName);

@@ -29,9 +29,9 @@ public class for_DataTest : MonoBehaviourPun
     [PunRPC]
     void RPCSetData(string data)
     {
-        IslandInformation.instance.Done = false;
-        IslandInformation.instance.DeleteData();
-        IslandInformation.instance.Spawn(data);
+        Island_Information.instance.Done = false;
+        Island_Information.instance.DeleteData();
+        Island_Information.instance.Spawn(data);
         print("ภüผÛตส");
     }
 }

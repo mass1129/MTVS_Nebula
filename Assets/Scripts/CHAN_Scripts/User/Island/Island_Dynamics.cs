@@ -18,19 +18,16 @@ public class Island_Dynamics : MonoBehaviourPun
 
     void Start()
     {
-        // 오브젝트 중에 "UserIsland" 태그가 붙여진 오브젝트를 배열에 추가한다. 
-        
-        
+ 
     }
-
     void FixedUpdate()
     {
         //정보들 모두 로드 전까지 잠시 대기 
-        if (!IslandInformation.instance.Done||!PhotonNetwork.IsMasterClient) return;
-        foreach (JsonInfo info_a in IslandInformation.instance.Island_Dic.Values)
+        if (!Island_Information.instance.Done) return;
+        foreach (JsonInfo info_a in Island_Information.instance.Island_Dic.Values)
         {
             GameObject obj_a = info_a.User_Obj;
-            foreach (JsonInfo info_b in IslandInformation.instance.Island_Dic.Values)
+            foreach (JsonInfo info_b in Island_Information.instance.Island_Dic.Values)
             {
                 GameObject obj_b = info_b.User_Obj;
                 //거리계산 시작

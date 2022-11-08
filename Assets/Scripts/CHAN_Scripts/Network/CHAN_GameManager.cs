@@ -43,6 +43,7 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
     public string WhalePrepab;
 
     GameObject player;
+    //public GameObject Chat;
     private void Start()
     {
         //처음에는 스카이씬에 바로 들어가도록 함
@@ -62,7 +63,7 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
         // 서버에 접속하면 Room으로 바로 입장한다. 
         base.OnConnectedToMaster();
         PN.JoinOrCreateRoom(roomName,roomOption(), TypedLobby.Default);
-        
+
     }
     public override void OnCreatedRoom()
     {
@@ -72,8 +73,15 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
     {
         base.OnJoinedRoom();
         PN.LoadLevel(sceneName);
+        //if (sceneName == name_UserScene)
+        //{
+        //    PN.Instantiate("Chatting",Vector3.zero,Quaternion.identity);
+        //}
         SetPlayer(prefab);
-
+    }
+    public override void OnLeftRoom()
+    {
+        base.OnLeftRoom();
 
     }
     RoomOptions roomOption()
@@ -110,7 +118,6 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
         Destroy(player);
         roomName = NickName;
         sceneName = name_UserScene;
-        prefab = WhalePrepab;
         prefab = userPrefab;
         print("Join : " + roomName);
         PN.LeaveRoom();
@@ -127,22 +134,11 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         base.OnPlayerEnteredRoom(newPlayer);
-        //IslandInformation.instance.SendIslandInfo();
     }
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         base.OnPlayerLeftRoom(otherPlayer);
         print("플레이어 퇴장");
     }
-    //void RemoveMyPhotonView()
-    //{
-    //    photonView.RPC("RPCRemoveMyPhotonView", RpcTarget.All);
-    //}
-    //[PunRPC]
-    //void RPCRemoveMyPhotonView()
-    //{
-    //    Minimap_IconManager.instance.Remove_User_Icon();
-    //    print(CHAN_PlayerManger.LocalPlayerInstance.GetComponent<PhotonView>());
-    //}
 
 }   

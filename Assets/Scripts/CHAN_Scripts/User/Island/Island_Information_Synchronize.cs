@@ -1,4 +1,4 @@
-ï»¿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -7,31 +7,30 @@ using System.Threading.Tasks;
 using Photon.Pun;
 using Photon.Realtime;
 
-[System.Serializable]
-public class JsonInfo
+[Serializable]
+public class JsonInfo_Synchronize
 {
-    // ì„¬ë°°ì¹˜ ì •ë³´
+    // ¼¶¹èÄ¡ Á¤º¸
     public Vector3 island_Pos = new Vector3();
-    // ì„¬ íƒ€ì…
+    // ¼¶ Å¸ÀÔ
     public string island_Type;
-    // ìœ ì € í”„ë¡œí•„ ì´ë¯¸ì§€ 
+    // À¯Àú ÇÁ·ÎÇÊ ÀÌ¹ÌÁö 
     public string User_image;
     public string User_NickName;
-    // í•˜ëŠ˜ì„¬ ì˜¤ë¸Œì íŠ¸
+    // ÇÏ´Ã¼¶ ¿ÀºêÁ§Æ®
     public GameObject User_Obj;
-    
 }
 
-public class IslandInformation :MonoBehaviourPun
+public class Island_Information_Synchronize : MonoBehaviourPun
 {
-    public static IslandInformation instance;
+    public static Island_Information_Synchronize instance;
     private void Awake()
     {
         instance = this;
     }
     void Start()
     {
-        //í¬í†¤ ë§ˆìŠ¤í„° í´ë¼ì´ì–¸íŠ¸ì¼ ë•Œ í•´ë‹¹ ìŠ¤í°ê¸°ëŠ¥ì´ ë°œìƒí•˜ë„ë¡ í•œë‹¤.
+        //Æ÷Åæ ¸¶½ºÅÍ Å¬¶óÀÌ¾ğÆ®ÀÏ ¶§ ÇØ´ç ½ºÆù±â´ÉÀÌ ¹ß»ıÇÏµµ·Ï ÇÑ´Ù.
         if (PhotonNetwork.IsMasterClient)
         {
             Spawn("subset_30_v3_fin.csv");
@@ -41,72 +40,72 @@ public class IslandInformation :MonoBehaviourPun
         {
         }
 
-        
+
     }
-    public Dictionary<string, JsonInfo> Island_Dic = new Dictionary<string, JsonInfo>();
-    // ìœ ì €ë“¤ì˜ ë‹‰ë„¤ì„ì„ ì €ì¥í•  ë¦¬ìŠ¤íŠ¸(Key:ë‹‰ë„¤ì„)
+    public Dictionary<string, JsonInfo_Synchronize> Island_Dic = new Dictionary<string, JsonInfo_Synchronize>();
+    // À¯ÀúµéÀÇ ´Ğ³×ÀÓÀ» ÀúÀåÇÒ ¸®½ºÆ®(Key:´Ğ³×ÀÓ)
     public List<string> User_name = new List<string>();
-    // islandSpawnerì—ì„œ ìƒì„±í•œ ì„¬ ì˜¤ë¸Œì íŠ¸ë¥¼ ì €ì¥í•˜ëŠ”ë”•ì…”ë„ˆë¦¬(Key: ìœ ì € ë„¤ì„,Value:ì˜¤ë¸Œì íŠ¸ì •ë³´)
-    // ì¹´í…Œê³ ë¦¬ ë¹„êµ í•˜ëŠ” ë°°ì—´
+    // islandSpawner¿¡¼­ »ı¼ºÇÑ ¼¶ ¿ÀºêÁ§Æ®¸¦ ÀúÀåÇÏ´Âµñ¼Å³Ê¸®(Key: À¯Àú ³×ÀÓ,Value:¿ÀºêÁ§Æ®Á¤º¸)
+    // Ä«Å×°í¸® ºñ±³ ÇÏ´Â ¹è¿­
     string[] compare_category = { "cat", "dog", "animation", "celeb", "car" };
     string[] island_category = { "island 1", "island 2", "island 3", "island 4", "island 5" };
-    //ì„¬ ì‚¬ì´ ê°„ê²© êµ¬ë°°
-    float dis_multiplier=100;
-    #region ì„œë²„ì—ê²Œ ì •ë³´ë¥¼ ê°€ì ¸ì˜¤ëŠ” í•¨ìˆ˜ ëª¨ìŒ
+    //¼¶ »çÀÌ °£°İ ±¸¹è
+    float dis_multiplier = 100;
+    #region ¼­¹ö¿¡°Ô Á¤º¸¸¦ °¡Á®¿À´Â ÇÔ¼ö ¸ğÀ½
     public void LoadIslandInfo()
     {
-        // ì„œë²„ì—ê²Œ ì„¬ì •ë³´ë¥¼ ë¶ˆëŸ¬ì˜¨ë‹¤.
+        // ¼­¹ö¿¡°Ô ¼¶Á¤º¸¸¦ ºÒ·¯¿Â´Ù.
     }
     #endregion
-    #region ì„œë²„ì—ê²Œ ì •ë³´ ì €ì¥ìš”ì²­ì‹œí‚¤ëŠ” í•¨ìˆ˜ ëª¨ìŒ
+    #region ¼­¹ö¿¡°Ô Á¤º¸ ÀúÀå¿äÃ»½ÃÅ°´Â ÇÔ¼ö ¸ğÀ½
     public void SaveIslandInfo()
     {
-        //ì„œë²„ì—ê²Œ í•˜ëŠ˜ì„¬ ì •ë³´ë¥¼ ì €ì¥ì‹œí‚¨ë‹¤. 
+        //¼­¹ö¿¡°Ô ÇÏ´Ã¼¶ Á¤º¸¸¦ ÀúÀå½ÃÅ²´Ù. 
     }
     #endregion
-    #region ì¤‘ê°„ì— ì •ë³´ê°€ ì¶”ê°€ë˜ê±°ë‚˜ ì‚­ì œëì„ ë•Œ, ì´ìš©ë˜ëŠ” í•¨ìˆ˜ëª¨ìŒ
-    // ì„ì‹œ ë°°ì—´ëª¨ìŒ (ì‚­ì œ í•  ì •ë³´, ì¶”ê°€ í•  ì •ë³´)
+    #region Áß°£¿¡ Á¤º¸°¡ Ãß°¡µÇ°Å³ª »èÁ¦µÆÀ» ¶§, ÀÌ¿ëµÇ´Â ÇÔ¼ö¸ğÀ½
+    // ÀÓ½Ã ¹è¿­¸ğÀ½ (»èÁ¦ ÇÒ Á¤º¸, Ãß°¡ ÇÒ Á¤º¸)
     public string[] temp_Delete;
     public string[] temp_Add;
-    //ìœ ì €ê°€ ë‚˜ê°”ë‹¤ê³  ê°„ì£¼
+    //À¯Àú°¡ ³ª°¬´Ù°í °£ÁÖ
 
     #endregion
-    //csvíŒŒì¼ ì •ë³´ ë¡œë“œ í•¨ìˆ˜, ì²˜ìŒ í•˜ëŠ˜ë·°ì—ì„œ ë“¤ì–´ì™”ì„ ë•Œ ë°œë™ëœë‹¤.
+    //csvÆÄÀÏ Á¤º¸ ·Îµå ÇÔ¼ö, Ã³À½ ÇÏ´Ãºä¿¡¼­ µé¾î¿ÔÀ» ¶§ ¹ßµ¿µÈ´Ù.
     public bool Done;
     public Transform Islands;
     public async Task LoadFromCSV(string fileName)
     {
         StreamReader sr = new StreamReader(Application.streamingAssetsPath + "/" + fileName);
-        // csvíŒŒì¼ ì¸ë±ìŠ¤ê°€ ëë‚¬ëŠ”ì§€ íŒë³„
+        // csvÆÄÀÏ ÀÎµ¦½º°¡ ³¡³µ´ÂÁö ÆÇº°
         bool endOfFile = false;
-        // csv íŒŒì¼ì˜ ëª©ì°¨ë¶€ë¶„ ìƒëµí•˜ê¸° ìœ„í•´ì“°ëŠ” ë³€ìˆ˜
+        // csv ÆÄÀÏÀÇ ¸ñÂ÷ºÎºĞ »ı·«ÇÏ±â À§ÇØ¾²´Â º¯¼ö
         bool turn = false;
         int count = 0;
         string nickname = null;
         while (!endOfFile)
         {
-            // csvíŒŒì¼ì˜ í•œ ì¤„ì„ ì½ì€ ê°’ì„ data_stringì— ì €ì¥
+            // csvÆÄÀÏÀÇ ÇÑ ÁÙÀ» ÀĞÀº °ªÀ» data_string¿¡ ÀúÀå
             string data_string = sr.ReadLine();
-            // ë§Œì•½ ê°’ì´ ì—†ë‹¤ë©´
+            // ¸¸¾à °ªÀÌ ¾ø´Ù¸é
             if (data_string == null)
             {
-                //csv íŒŒì¼ ì½ê¸° ë
+                //csv ÆÄÀÏ ÀĞ±â ³¡
                 endOfFile = true;
                 break;
             }
-            // ì¶”ì¶œí•œ ë¬¸ìì—´ì„ , ë³„ë¡œ ë‚˜ëˆ„ì–´ì„œ ì €ì¥
+            // ÃßÃâÇÑ ¹®ÀÚ¿­À» , º°·Î ³ª´©¾î¼­ ÀúÀå
             string[] data_values = data_string.Split(',');
-            //í•œë²ˆë§Œ ì‹¤í–‰í• ê±°ë‹¤.
-            //ìµœì´ˆì˜ data_valueê°’ì„ ì €ì¥í•˜ì§€ ì•Šê³  ê·¸ëƒ¥ ë²„ë¦°ë‹¤.(í•„ìš”ì—†ë‹¤.)
+            //ÇÑ¹ø¸¸ ½ÇÇàÇÒ°Å´Ù.
+            //ÃÖÃÊÀÇ data_value°ªÀ» ÀúÀåÇÏÁö ¾Ê°í ±×³É ¹ö¸°´Ù.(ÇÊ¿ä¾ø´Ù.)
             if (!turn)
             {
                 turn = true;
                 continue;
             }
-            Vector3 temp_pos = new Vector3(float.Parse(data_values[0])* dis_multiplier, float.Parse(data_values[1])* dis_multiplier, float.Parse(data_values[2])* dis_multiplier);
+            Vector3 temp_pos = new Vector3(float.Parse(data_values[0]) * dis_multiplier, float.Parse(data_values[1]) * dis_multiplier, float.Parse(data_values[2]) * dis_multiplier);
             nickname = data_values[4];
             InsertData(count, data_values[3], temp_pos, nickname);
-              //csvì˜x,y,zê°’ì„ ë°›ì•„ë‚´ê³  Vectorë¡œ ì €ì¥í•˜ì
+            //csvÀÇx,y,z°ªÀ» ¹Ş¾Æ³»°í Vector·Î ÀúÀåÇÏÀÚ
             count++;
             await Task.Yield();
 
@@ -122,13 +121,13 @@ public class IslandInformation :MonoBehaviourPun
 
         for (int i = 0; i < jObject.Count; i++)
         {
-            //jsonì˜ í•˜ë‚˜ì˜ ì¸ë±ìŠ¤ë¥¼ ê°€ì ¸ì™”ë‹¤.
+            //jsonÀÇ ÇÏ³ªÀÇ ÀÎµ¦½º¸¦ °¡Á®¿Ô´Ù.
             JObject objPerIndex = jObject[i.ToString()].ToObject<JObject>();
 
-            // ì„ì‹œë¡œ ì €ì¥í•  ì¢Œí‘œì¸ì, url
+            // ÀÓ½Ã·Î ÀúÀåÇÒ ÁÂÇ¥ÀÎÀÚ, url
             float x = 0, y = 0, z = 0;
             string url;
-            //x,y,z ì¢Œí‘œê°’ ë°›ì•„ì˜¨ë‹¤. 
+            //x,y,z ÁÂÇ¥°ª ¹Ş¾Æ¿Â´Ù. 
             for (int j = 0; j < 3; j++)
             {
                 string pc = "pc" + (j + 1).ToString();
@@ -140,14 +139,14 @@ public class IslandInformation :MonoBehaviourPun
                 else
                 { z = objPerIndex[pc].ToObject<float>(); }
             }
-            //ë°›ì€ ì¢Œí‘œì¸ìê°’ì„ í†µí•´ Vector3 ì— ì €ì¥í•œë‹¤. 
+            //¹ŞÀº ÁÂÇ¥ÀÎÀÚ°ªÀ» ÅëÇØ Vector3 ¿¡ ÀúÀåÇÑ´Ù. 
             Vector3 pos = new Vector3(x * dis_multiplier, y * dis_multiplier, z * dis_multiplier);
-            // URL ì£¼ì†Œ ë¬¸ìì—´ ì¶”ì¶œ
+            // URL ÁÖ¼Ò ¹®ÀÚ¿­ ÃßÃâ
             url = objPerIndex["image_url"].ToString();
             InsertData(i, url, pos);
         }
     }
-    // í•˜ëŠ˜ì„¬ ë°°ì¹˜ í•¨ìˆ˜ 
+    // ÇÏ´Ã¼¶ ¹èÄ¡ ÇÔ¼ö 
     public async void Spawn(string fileName)
     {
         //LoadFromJson();
@@ -156,44 +155,44 @@ public class IslandInformation :MonoBehaviourPun
         Done = true;
     }
     public async void JustLoad(string fileName)
-    { 
+    {
         await LoadFromCSV(fileName);
         Done = true;
     }
     public async Task InsertInfo()
     {
-        
+
         foreach (string i in Island_Dic.Keys)
         {
 
-            JsonInfo info = Island_Dic[i];
+            JsonInfo_Synchronize info = Island_Dic[i];
             //GameObject island = InstantiateIsland(info.island_Type);.
-                GameObject island = PhotonNetwork.Instantiate("CHAN_Resources/" + info.island_Type, info.island_Pos, Quaternion.identity);
-                info.User_Obj = island;
-                island.transform.position = info.island_Pos;
-                //island.transform.GetChild(0).GetChild(0).GetComponent<Island_Profile>().user_name = i;
-                island.transform.GetComponent<Island_Profile>().user_name = i;
+            GameObject island = PhotonNetwork.Instantiate("CHAN_Resources/" + info.island_Type, info.island_Pos, Quaternion.identity);
+            info.User_Obj = island;
+            island.transform.position = info.island_Pos;
+            //island.transform.GetChild(0).GetChild(0).GetComponent<Island_Profile>().user_name = i;
+            island.transform.GetComponent<Island_Profile>().user_name = i;
             await Task.Yield();
         }
-        //í”„ë¡œí•„ ì´ë¯¸ì§€ url
+        //ÇÁ·ÎÇÊ ÀÌ¹ÌÁö url
         //user_name;
 
     }
-    // í•˜ëŠ˜ì„¬ ìƒì„± ì½”ë“œ
+    // ÇÏ´Ã¼¶ »ı¼º ÄÚµå
     GameObject InstantiateIsland(string IslandType)
     {
-        float randomScale=UnityEngine.Random.RandomRange(0.3f, 3);
+        float randomScale = UnityEngine.Random.RandomRange(0.3f, 3);
         GameObject land = Instantiate(Resources.Load<GameObject>("CHAN_Resources/" + IslandType), Islands);
         land.transform.GetChild(1).gameObject.transform.localScale *= randomScale;
         return land;
     }
-    // í•˜ëŠ˜ì„¬ íƒ€ì… ê²°ì • ì½”ë“œ
+    // ÇÏ´Ã¼¶ Å¸ÀÔ °áÁ¤ ÄÚµå
     string Return_IslandType(string s)
     {
         string s1 = null;
         for (int i = 0; i < compare_category.Length; i++)
         {
-            //ë§Œì•½ ì¹´í…Œê³ ë¦¬ê°€ ì¼ì¹˜í•œë‹¤ë©´
+            //¸¸¾à Ä«Å×°í¸®°¡ ÀÏÄ¡ÇÑ´Ù¸é
             if (Parsing(s) == compare_category[i])
             {
                 s1 = island_category[i];
@@ -202,7 +201,7 @@ public class IslandInformation :MonoBehaviourPun
         }
         return s1;
     }
-    // url ì£¼ì†Œì—ì„œ ì¹´í…Œê³ ë¦¬ ë¬¸ìì—´ë§Œ ì¶”ì¶œí•˜ëŠ” ì½”ë“œ 
+    // url ÁÖ¼Ò¿¡¼­ Ä«Å×°í¸® ¹®ÀÚ¿­¸¸ ÃßÃâÇÏ´Â ÄÚµå 
     string Parsing(string s)
     {
         string[] s1 = s.Split('/');
@@ -210,12 +209,12 @@ public class IslandInformation :MonoBehaviourPun
         return s2[1];
 
     }
-    void InsertData(int i, string url, Vector3 pos,string nickname="")
+    void InsertData(int i, string url, Vector3 pos, string nickname = "")
     {
-        JsonInfo dic = new JsonInfo();
-        //ë”•ì…”ë„ˆë¦¬ ì¸ë±ìŠ¤ ìƒì„±
+        JsonInfo_Synchronize dic = new JsonInfo_Synchronize();
+        //µñ¼Å³Ê¸® ÀÎµ¦½º »ı¼º
         Island_Dic.Add(i.ToString(), dic);
-        //ë”•ì…”ë„ˆë¦¬ì— ê°’ë“¤ì„ ëª¨ë‘ ë„£ëŠ”ë‹¤. 
+        //µñ¼Å³Ê¸®¿¡ °ªµéÀ» ¸ğµÎ ³Ö´Â´Ù. 
         dic = Island_Dic[i.ToString()];
         dic.island_Type = Return_IslandType(url);
         dic.island_Pos = pos;
@@ -223,32 +222,20 @@ public class IslandInformation :MonoBehaviourPun
         dic.User_NickName = nickname;
     }
 
-    // ì¤‘ê°„ì— ìƒˆë¡œìš´ ë°ì´í„°ê°€ ë“¤ì–´ì™”ì„ ë•Œ, ì–´ë–»ê²Œ ê°±ì‹ í• ì§€ ìƒê°í•´ë³´ì 
-    // ê²Œì„ì€ ì´ˆê¸°ì— ì„œë²„ì—ê²Œ ì„¬ì˜ ì¢Œí‘œë¥¼ ë°›ì•„ì˜¨ë‹¤. 
-    // ê·¸ ì¢Œí‘œë¥¼ ê¸°ë°˜ìœ¼ë¡œ ì„¬ì€ ë°°ì¹˜ê°€ ëœë‹¤. 
+    // Áß°£¿¡ »õ·Î¿î µ¥ÀÌÅÍ°¡ µé¾î¿ÔÀ» ¶§, ¾î¶»°Ô °»½ÅÇÒÁö »ı°¢ÇØº¸ÀÚ 
+    // °ÔÀÓÀº ÃÊ±â¿¡ ¼­¹ö¿¡°Ô ¼¶ÀÇ ÁÂÇ¥¸¦ ¹Ş¾Æ¿Â´Ù. 
+    // ±× ÁÂÇ¥¸¦ ±â¹İÀ¸·Î ¼¶Àº ¹èÄ¡°¡ µÈ´Ù. 
 
-    //ê¸°ì¡´ì— ìˆëŠ” ë°ì´í„° ì •ë³´ë“¤ì„ ëª¨ë‘ ì‚­ì œì‹œí‚¤ëŠ” í•¨ìˆ˜
-    //í•˜ëŠ˜ì„¬ ì˜¤ë¸Œì íŠ¸ë„ ëª¨ë‘ ì‚­ì œí•œë‹¤.
+    //±âÁ¸¿¡ ÀÖ´Â µ¥ÀÌÅÍ Á¤º¸µéÀ» ¸ğµÎ »èÁ¦½ÃÅ°´Â ÇÔ¼ö
+    //ÇÏ´Ã¼¶ ¿ÀºêÁ§Æ®µµ ¸ğµÎ »èÁ¦ÇÑ´Ù.
     public void DeleteData()
     {
-            foreach(JsonInfo i in Island_Dic.Values)
+        foreach (JsonInfo_Synchronize i in Island_Dic.Values)
         {
             Destroy(i.User_Obj);
         }
         Island_Dic.Clear();
     }
-    //public void SendIslandInfo()
-    //{
-    //    photonView.RPC("RPCSendIslandInfo", RpcTarget.OthersBuffered, Island_Dic);
-    //}
-    //[PunRPC]
-    //public void RPCSendIslandInfo(Dictionary<string, JsonInfo> islandDic)
-    //{
-    //    Island_Dic = islandDic;
-    //    print("done");
-    //}
 
 }
-
-
 
