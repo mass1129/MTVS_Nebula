@@ -72,12 +72,12 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
+        SetPlayer(prefab);
         PN.LoadLevel(sceneName);
         //if (sceneName == name_UserScene)
         //{
         //    PN.Instantiate("Chatting",Vector3.zero,Quaternion.identity);
         //}
-        SetPlayer(prefab);
     }
     public override void OnLeftRoom()
     {

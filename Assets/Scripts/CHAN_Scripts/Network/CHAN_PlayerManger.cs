@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class CHAN_PlayerManger : MonoBehaviourPun
 {
+    public GameObject Speaker;
+    
     public static GameObject LocalPlayerInstance;
     private void Awake()
     {
@@ -22,7 +24,7 @@ public class CHAN_PlayerManger : MonoBehaviourPun
                 transform.GetChild(1).GetComponent<IconMove>().OnUserIcon();
             }
         }
-        
+        //Instantiate(Speaker, gameObject.transform);
         DontDestroyOnLoad(gameObject);
         CHAN_ClientManager.instance.AddPlayer(this.photonView);
     }
