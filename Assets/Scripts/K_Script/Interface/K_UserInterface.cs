@@ -17,9 +17,10 @@ public abstract class K_UserInterface : MonoBehaviour
     public Dictionary<GameObject, InventorySlot> slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
 
     public GameObject inventoryWindow;
+
     public GameObject invenTab;
     bool isShowed = false;
-   
+    
     public void OnEnable()
     {   
         CreateSlots();
@@ -32,9 +33,12 @@ public abstract class K_UserInterface : MonoBehaviour
        
         
     }
-
+   
+      
+    
     public abstract void CreateSlots();
 
+    public abstract void DistorySlots();
     public void UpdateInventoryLinks()
     {
         int i = 0;
@@ -141,11 +145,11 @@ public abstract class K_UserInterface : MonoBehaviour
     public void OnDragEnd(GameObject obj)
     {
         Destroy(MouseData.tempItemBeingDragged);
-        if(MouseData.interfaceMouseIsOver == null)
-        {
-            slotsOnInterface[obj].RemoveItem();
-            return;
-        }
+        //if(MouseData.interfaceMouseIsOver == null)
+        //{
+        //    slotsOnInterface[obj].RemoveItem();
+        //    return;
+        //}
         if(MouseData.slotHoveredOver)
         {
             InventorySlot mouseHoverSlotData = MouseData.interfaceMouseIsOver.slotsOnInterface[MouseData.slotHoveredOver];
@@ -164,7 +168,7 @@ public abstract class K_UserInterface : MonoBehaviour
     {
 
         var selectInterface = obj.GetComponent<K_UserInterface>();
-
+        if (selectInterface == null) return;
         selectInterface.CreateSlots();
         for (int i = 0; i < selectInterface.inventory.GetSlots.Length; i++)
         {
@@ -175,18 +179,19 @@ public abstract class K_UserInterface : MonoBehaviour
         }
 
         selectInterface.inventoryWindow.SetActive(true);
-
-        obj.GetComponent<K_UserInterface>().inventory.AddBundleListToWindow(slotsOnInterface[obj].GetItemObject().subItem);
-        var item = new Item(slotsOnInterface[obj].GetItemObject());
-        Debug.Log(item.Name);
-        selectInterface.inventory.AddItem(item, 1);
-
-        //Debug.Log(obj.GetComponent<K_UserInterface>().inventory.name);
-        selectInterface.inventory.UpdateInventory();
+        selectInterface.inventoryWindow.GetComponent<RectTransform>().position = new Vector3(1139.25f, 536.0554f, 0f);
+        selectInterface.inventory.AddBundleListToWindow(slotsOnInterface[obj].GetItemObject().subItem);
         for (int i = 0; i < selectInterface.inventory.GetSlots.Length; i++)
         {
             selectInterface.inventory.GetSlots[i].onAfterUpdated += selectInterface.OnSlotUpdate;
         }
+        
+        
+        
+
+        //Debug.Log(obj.GetComponent<K_UserInterface>().inventory.name);
+        selectInterface.inventory.UpdateInventory();
+        
         Debug.Log(obj.GetComponent<K_UserInterface>().inventory.name);
 
     }
@@ -194,6 +199,7 @@ public abstract class K_UserInterface : MonoBehaviour
     {
         var deselectInterface = obj.GetComponent<K_UserInterface>();
         deselectInterface.inventory.Clear();
+     
         deselectInterface.inventoryWindow.SetActive(false);
     }
 

@@ -36,8 +36,12 @@ public class InventoryObject : ScriptableObject
     public void AddBundleListToWindow(ItemObject[] bundleList)
     {
         Clear();
-            Item item = new Item(bundleList[0]);
-             GetSlots[0].UpdateSlot(item, 1);
+        for(int i = 0; i < bundleList.Length; i++)
+        {
+            Item item = new Item(bundleList[i]);
+            GetSlots[i].UpdateSlot(item, 1);
+        }
+       
         
         
     }
