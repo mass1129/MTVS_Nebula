@@ -20,8 +20,7 @@ public class ItemObject : ScriptableObject
     //아이템 설명
     [TextArea(15, 20)]
     public string description;
-    public List<ItemObject> lowerRankItemSet = null;
-
+    public ItemObject[] subItem;
     public Item data = new Item();
 
     public Item CreateItem()

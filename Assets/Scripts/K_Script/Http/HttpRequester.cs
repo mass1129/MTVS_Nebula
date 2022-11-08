@@ -41,7 +41,7 @@ public class HttpRequester
         }
 
 
-        
+           
             var result = _serializionOption.Deserialize<TResultType>(request.downloadHandler.text);
 
 

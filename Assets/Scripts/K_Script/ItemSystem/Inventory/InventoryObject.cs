@@ -33,7 +33,7 @@ public class InventoryObject : ScriptableObject
         slot.AddAmount(amount);
         return true;
     }
-    public void AddBundleListToWindow(List<ItemObject> bundleList)
+    public void AddBundleListToWindow(ItemObject[] bundleList)
     {
         Clear();
             Item item = new Item(bundleList[0]);
@@ -137,6 +137,14 @@ public class InventoryObject : ScriptableObject
         }
 
     }
+    public async void TestLoad()
+    {
+        var url = "http://localhost:8001/inventory/building-bundle/testAvatar";
+        var httpReq = new HttpRequester(new JsonSerializationOption());
+
+        Inventory result2 = await httpReq.Get<Inventory>(url);
+    }
+
     public void UpdateInventory()
     {
         for (int i = 0; i < Container.Slots.Length; i++)

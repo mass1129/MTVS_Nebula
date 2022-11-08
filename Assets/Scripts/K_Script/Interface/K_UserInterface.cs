@@ -121,38 +121,7 @@ public abstract class K_UserInterface : MonoBehaviour
         MouseData.tempItemBeingDragged = CreateTempItem(obj);
     }
     
-    public void OnSelect(GameObject obj)
-    {
-       
-        var selectInterface = obj.GetComponent<K_UserInterface>();
-        
-        selectInterface.CreateSlots();
-        for (int i = 0; i < selectInterface.inventory.GetSlots.Length; i++)
-        {
-
-            selectInterface.inventory.GetSlots[i].parent = this;
-            selectInterface.inventory.GetSlots[i].onAfterUpdated += OnSlotUpdate;
-
-        }
-        
-        selectInterface.inventoryWindow.SetActive(true);
-        
-        //obj.GetComponent<K_UserInterface>().inventory.AddBundleListToWindow(slotsOnInterface[obj].GetItemObject().lowerRankItemSet);
-        var item = new Item(slotsOnInterface[obj].GetItemObject().lowerRankItemSet[0]);
-        Debug.Log(item.Name);
-        selectInterface.inventory.AddItem(item, 1);
-
-        //Debug.Log(obj.GetComponent<K_UserInterface>().inventory.name);
-        selectInterface.inventory.UpdateInventory();
-       Debug.Log(obj.GetComponent<K_UserInterface>().inventory.name);
-
-    }
-    public void OnDeselect(GameObject obj)
-    {
-        var deselectInterface = obj.GetComponent<K_UserInterface>();
-        deselectInterface.inventory.Clear();
-        deselectInterface.inventoryWindow.SetActive(false);
-    }
+   
 
         private GameObject CreateTempItem(GameObject obj)
     {
@@ -191,8 +160,43 @@ public abstract class K_UserInterface : MonoBehaviour
             MouseData.tempItemBeingDragged.GetComponent<RectTransform>().position = Input.mousePosition;
         }
     }
+    public void OnSelect(GameObject obj)
+    {
 
-    
+        var selectInterface = obj.GetComponent<K_UserInterface>();
+
+        selectInterface.CreateSlots();
+        for (int i = 0; i < selectInterface.inventory.GetSlots.Length; i++)
+        {
+
+            selectInterface.inventory.GetSlots[i].parent = this;
+            selectInterface.inventory.GetSlots[i].onAfterUpdated += OnSlotUpdate;
+
+        }
+
+        selectInterface.inventoryWindow.SetActive(true);
+
+        obj.GetComponent<K_UserInterface>().inventory.AddBundleListToWindow(slotsOnInterface[obj].GetItemObject().subItem);
+        var item = new Item(slotsOnInterface[obj].GetItemObject());
+        Debug.Log(item.Name);
+        selectInterface.inventory.AddItem(item, 1);
+
+        //Debug.Log(obj.GetComponent<K_UserInterface>().inventory.name);
+        selectInterface.inventory.UpdateInventory();
+        for (int i = 0; i < selectInterface.inventory.GetSlots.Length; i++)
+        {
+            selectInterface.inventory.GetSlots[i].onAfterUpdated += selectInterface.OnSlotUpdate;
+        }
+        Debug.Log(obj.GetComponent<K_UserInterface>().inventory.name);
+
+    }
+    public void OnDeselect(GameObject obj)
+    {
+        var deselectInterface = obj.GetComponent<K_UserInterface>();
+        deselectInterface.inventory.Clear();
+        deselectInterface.inventoryWindow.SetActive(false);
+    }
+
 
 }
 

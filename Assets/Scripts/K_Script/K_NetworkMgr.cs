@@ -15,6 +15,6 @@ public class K_NetworkMgr : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        PhotonNetwork.Instantiate("Player", new Vector3(51, 0, 47), Quaternion.identity);
+        PhotonNetwork.Instantiate("Player1", new Vector3(51, 0, 47), Quaternion.identity);
     }
 }

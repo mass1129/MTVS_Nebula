@@ -32,12 +32,13 @@ public class K_StaticInterface_bundleList : K_UserInterface
             AddEvent(obj, EventTriggerType.Drag, delegate { OnDrag(obj); });
 
             inventory.GetSlots[i].slotDisplay = obj;
-
+            inventory.GetSlots[i].parent = this;
             slotsOnInterface.Add(obj, inventory.GetSlots[i]);
+
         }
 
     }
-
+    
     private Vector3 GetPosition(int i)
     {
 
