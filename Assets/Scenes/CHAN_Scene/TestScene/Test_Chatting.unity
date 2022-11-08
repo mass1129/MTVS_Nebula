@@ -190,6 +190,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &271007079 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8397170918976572275, guid: 255254b8f9da43a49b6d86325f2bf112, type: 3}
+  m_PrefabInstance: {fileID: 8397170917903555657}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1698076022
 GameObject:
   m_ObjectHideFlags: 0
@@ -468,6 +473,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8397170917487929639, guid: 255254b8f9da43a49b6d86325f2bf112, type: 3}
+      propertyPath: Area_Scroll
+      value: 
+      objectReference: {fileID: 271007079}
     - target: {fileID: 8397170917487929657, guid: 255254b8f9da43a49b6d86325f2bf112, type: 3}
       propertyPath: sceneViewId
       value: 1
