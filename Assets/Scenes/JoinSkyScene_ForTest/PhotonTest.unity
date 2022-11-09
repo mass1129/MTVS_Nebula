@@ -915,7 +915,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91175dcc15224463780e01a8a98b1b60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  voiceDetection: 0
+  voiceDetection: 1
   voiceDetectionThreshold: 0.01
   voiceDetectionDelayMs: 500
   interestGroup: 0
@@ -923,11 +923,11 @@ MonoBehaviour:
   reliableMode: 0
   encrypt: 0
   transmitEnabled: 1
-  samplingRate: 24000
-  frameDuration: 60000
+  samplingRate: 48000
+  frameDuration: 20000
   bitrate: 30000
   sourceType: 0
-  microphoneType: 0
+  microphoneType: 1
   audioClip: {fileID: 0}
   loopAudioClip: 1
   recordingEnabled: 1
@@ -996,6 +996,7 @@ GameObject:
   - component: {fileID: 7116980318672106731}
   - component: {fileID: 837420835571812201}
   - component: {fileID: 324668242996851645}
+  - component: {fileID: 7116980318672106732}
   m_Layer: 0
   m_Name: VoiceManager
   m_TagString: Untagged
@@ -1018,3 +1019,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7116980318672106732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288327777652001513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7f95aa3c06eaa84bba4eafdedf12758, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HandleDeviceChange: 1
+  HandleDeviceChangeIOS: 0
+  HandleDeviceChangeAndroid: 0

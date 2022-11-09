@@ -134,6 +134,7 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         base.OnPlayerEnteredRoom(newPlayer);
+        
     }
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {

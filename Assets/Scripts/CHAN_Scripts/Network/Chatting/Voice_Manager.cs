@@ -21,6 +21,7 @@ public class Voice_Manager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (!myPhotonView.IsMine)
         {
             this.speakerImage.enabled = this.photonVoiceView.IsSpeaking;
