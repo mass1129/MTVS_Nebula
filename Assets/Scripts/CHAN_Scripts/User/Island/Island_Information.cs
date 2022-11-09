@@ -143,6 +143,10 @@ public class Island_Information :MonoBehaviourPun
         await LoadFromCSV(fileName);
         await InsertInfo();
         Done = true;
+        if (Done)
+        {
+            CHAN_GameManager.instance.LoadingObject.SetActive(false);
+        }
     }
     public async Task InsertInfo()
     {

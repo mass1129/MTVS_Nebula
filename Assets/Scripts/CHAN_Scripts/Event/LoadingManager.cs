@@ -11,7 +11,7 @@ public class LoadingManager : MonoBehaviour
     // 로딩 플레그, 이미지
     public bool isLoadingDone;
     public GameObject LoadingIcon;
-    public Image LoadingImage;
+    public RawImage LoadingImage;
     void Start()
     {
         

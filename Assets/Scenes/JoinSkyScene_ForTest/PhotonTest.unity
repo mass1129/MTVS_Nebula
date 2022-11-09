@@ -793,6 +793,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5727027392963185419, guid: 288c3f4371cf4fd4cb9eb03ff5dfb022, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5727027394143258949, guid: 288c3f4371cf4fd4cb9eb03ff5dfb022, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6818909327857841530, guid: 288c3f4371cf4fd4cb9eb03ff5dfb022, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -842,17 +850,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8345978188192650169, guid: 288c3f4371cf4fd4cb9eb03ff5dfb022, type: 3}
-      propertyPath: Chat
+      propertyPath: LoadingObject
       value: 
-      objectReference: {fileID: 3879050231060003264, guid: 255254b8f9da43a49b6d86325f2bf112, type: 3}
-    - target: {fileID: 8345978188192650169, guid: 288c3f4371cf4fd4cb9eb03ff5dfb022, type: 3}
-      propertyPath: chatting
-      value: 
-      objectReference: {fileID: 3879050231060003264, guid: 255254b8f9da43a49b6d86325f2bf112, type: 3}
-    - target: {fileID: 8345978188192650169, guid: 288c3f4371cf4fd4cb9eb03ff5dfb022, type: 3}
-      propertyPath: chat_prefab
-      value: 
-      objectReference: {fileID: 3879050231060003264, guid: 255254b8f9da43a49b6d86325f2bf112, type: 3}
+      objectReference: {fileID: 228043295467167374}
     - target: {fileID: 8345978188192650180, guid: 288c3f4371cf4fd4cb9eb03ff5dfb022, type: 3}
       propertyPath: m_Name
       value: FastJoinRoom
@@ -903,6 +903,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 288c3f4371cf4fd4cb9eb03ff5dfb022, type: 3}
+--- !u!1 &228043295467167374 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5727027392963185431, guid: 288c3f4371cf4fd4cb9eb03ff5dfb022, type: 3}
+  m_PrefabInstance: {fileID: 228043295467167373}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &324668242996851645
 MonoBehaviour:
   m_ObjectHideFlags: 0
