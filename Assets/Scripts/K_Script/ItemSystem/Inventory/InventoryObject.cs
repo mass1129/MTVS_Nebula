@@ -12,7 +12,7 @@ public class InventoryObject : ScriptableObject
 
     [SerializeField]
     private Inventory Container = new Inventory();
-    public InventorySlot[] GetSlots => Container.Slots;
+    public InventorySlot[] GetSlots => Container.slots;
 
     public bool AddItem(Item item, int amount)
     {
@@ -33,9 +33,14 @@ public class InventoryObject : ScriptableObject
     {
         Clear();
         for(int i = 0; i < bundleList.Length; i++)
-        {
-            Item item = new Item(bundleList[i]);
-            GetSlots[i].UpdateSlot(item, 1);
+        {   
+            if(bundleList[i] !=null)
+            {
+                Item item = new Item(bundleList[i]);
+                GetSlots[i].UpdateSlot(item, 1);
+
+            }
+            
         }
        
         
@@ -119,11 +124,14 @@ public class InventoryObject : ScriptableObject
             
             item2.UpdateSlot(item1.item, item1.amount);
             item1.UpdateSlot(item1.item, item1.amount);
-            Debug.Log("Quick" +item2.item.Name + ","+ item1.item.Name);
+            Debug.Log("Quick" +item2.item.name + ","+ item1.item.name);
         }
 
     }
-
+    public Inventory GetInventory()
+    {
+        return Container;
+    }
 
     [ContextMenu("Save")]
     public void Save()
@@ -143,33 +151,33 @@ public class InventoryObject : ScriptableObject
             json = K_SaveSystem.Load(savePath);
 
             JsonUtility.FromJsonOverwrite(json, Container);
-            for(int i = 0; i < Container.Slots.Length; i++)
+            for(int i = 0; i < Container.slots.Length; i++)
             {
-                Container.Slots[i].UpdateSlot(Container.Slots[i].item, Container.Slots[i].amount);
+                Container.slots[i].UpdateSlot(Container.slots[i].item, Container.slots[i].amount);
             }
         }
 
     }
     public async void TestLoad()
     {
-        var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/inventory/" + loadPath + "/testAvatar";
+        var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/" + loadPath + "/testAvatar";
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
         H_I_Root result2 = await httpReq.Get<H_I_Root>(url);
        
         //string json = JsonUtility.ToJson(array, true);
         //Debug.Log(json);
-        for (int i = 0; i < Container.Slots.Length; i++)
+        for (int i = 0; i < Container.slots.Length; i++)
         {
-            Container.Slots[i].UpdateSlot(result2.results.slots[i].item, result2.results.slots[i].amount);
+            Container.slots[i].UpdateSlot(result2.results.slots[i].item, result2.results.slots[i].amount);
         }
     }
 
     public void UpdateInventory()
     {
-        for (int i = 0; i < Container.Slots.Length; i++)
+        for (int i = 0; i < Container.slots.Length; i++)
         {
-            Container.Slots[i].UpdateSlot(Container.Slots[i].item, Container.Slots[i].amount);
+            Container.slots[i].UpdateSlot(Container.slots[i].item, Container.slots[i].amount);
         }
     }
 

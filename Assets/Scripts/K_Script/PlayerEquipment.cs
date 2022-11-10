@@ -14,7 +14,7 @@ public class PlayerEquipment : MonoBehaviour
 
     void Start()
     {
-        _equipment = GetComponent<K_PlayerItemSystem>().equipment;
+        _equipment = GetComponent<K_PlayerItemSystem>().inven_Equipment;
 
         CharacterCustomization = GetComponent<CharacterCustomization>();
 
@@ -34,7 +34,7 @@ public class PlayerEquipment : MonoBehaviour
         {
             case InterfaceType.Equipment:
 
-                    switch (slot.AllowedItems[0])
+                    switch (slot.allowedItems[0])
                     {
                         case ItemType.Hat:
                             CharacterCustomization.SetElementByIndex(CharacterElementType.Hat, itemObject.charCustomIndex);
@@ -79,7 +79,7 @@ public class PlayerEquipment : MonoBehaviour
         {
             case InterfaceType.Equipment:
 
-                switch (slot.AllowedItems[0])
+                switch (slot.allowedItems[0])
                 {
 
                     case ItemType.Hat:

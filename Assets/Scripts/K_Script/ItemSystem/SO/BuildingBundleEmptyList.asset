@@ -13,31 +13,36 @@ MonoBehaviour:
   m_Name: BuildingBundleEmptyList
   m_EditorClassIdentifier: 
   savePath: 
+  loadPath: 
   database: {fileID: 11400000, guid: 2ef6ad25b8d7948488dda3b23dc7008b, type: 2}
   type: 1
   Container:
-    Slots:
-    - AllowedItems: 
+    slots:
+    - allowedItems: 00000000
       item:
-        Name: CampFire
-        Id: 9
+        name: 
+        Id: -1
+        uniqueId: -1
         buffs: []
-      amount: 1
-    - AllowedItems: 
+      amount: 0
+    - allowedItems: 00000000
       item:
-        Name: Home
-        Id: 10
+        name: 
+        Id: -1
+        uniqueId: -1
         buffs: []
-      amount: 1
-    - AllowedItems: 
+      amount: 0
+    - allowedItems: 00000000
       item:
-        Name: Tree1
-        Id: 11
+        name: 
+        Id: -1
+        uniqueId: -1
         buffs: []
-      amount: 1
-    - AllowedItems: 
+      amount: 0
+    - allowedItems: 00000000
       item:
-        Name: Wall1
-        Id: 12
+        name: 
+        Id: -1
+        uniqueId: -1
         buffs: []
-      amount: 1
+      amount: 0

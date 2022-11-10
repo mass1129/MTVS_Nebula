@@ -6,6 +6,7 @@ public class InventoryUIManger : MonoBehaviour
 {
     public K_UserInterface[] inventoryArray;
     bool isShowed = false;
+    public GameObject tabButton;
     public void ShowSelectWindow(int i)
     {   
         for(int j = 0; j < inventoryArray.Length; j++)
@@ -24,7 +25,7 @@ public class InventoryUIManger : MonoBehaviour
         isShowed = !isShowed;
         if(isShowed)
         {
-           
+           tabButton.SetActive(true);
             for (int j = 0; j < inventoryArray.Length; j++)
             {
                 if (j == 1)
@@ -42,6 +43,7 @@ public class InventoryUIManger : MonoBehaviour
 
                 inventoryArray[j].inventoryWindow.SetActive(false);
             }
+            tabButton.SetActive(false);
         }
 
     }

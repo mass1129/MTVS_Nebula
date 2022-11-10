@@ -209,7 +209,7 @@ public abstract class K_UserInterface : MonoBehaviour
         //Debug.Log(obj.GetComponent<K_UserInterface>().inventory.name);
         selectInterface.inventory.UpdateInventory();
         
-        Debug.Log(obj.GetComponent<K_UserInterface>().inventory.name);
+       
 
     }
     public void OnDeselect(GameObject obj)

@@ -12,50 +12,58 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ede9f2211b6a7a34ab86b34eb3b2c346, type: 3}
   m_Name: PlayerEquipment
   m_EditorClassIdentifier: 
-  savePath: EquipmentSave
+  savePath: equipment
+  loadPath: equipment
   database: {fileID: 11400000, guid: 2ef6ad25b8d7948488dda3b23dc7008b, type: 2}
-  type: 5
+  type: 6
   Container:
-    Slots:
-    - AllowedItems: 08000000
+    slots:
+    - allowedItems: 08000000
       item:
-        Name: 
+        name: Hat1
+        Id: 3
+        uniqueId: 3
+        buffs: []
+      amount: 1
+    - allowedItems: 07000000
+      item:
+        name: 
         Id: -1
+        uniqueId: -1
         buffs: []
       amount: 0
-    - AllowedItems: 07000000
+    - allowedItems: 09000000
       item:
-        Name: 
+        name: Shirt1
+        Id: 5
+        uniqueId: 5
+        buffs: []
+      amount: 1
+    - allowedItems: 0a000000
+      item:
+        name: 
         Id: -1
+        uniqueId: -1
         buffs: []
       amount: 0
-    - AllowedItems: 09000000
+    - allowedItems: 0b000000
       item:
-        Name: 
+        name: Shoe1
+        Id: 6
+        uniqueId: 6
+        buffs: []
+      amount: 1
+    - allowedItems: 0c000000
+      item:
+        name: 
         Id: -1
+        uniqueId: -1
         buffs: []
       amount: 0
-    - AllowedItems: 0a000000
+    - allowedItems: 0d000000
       item:
-        Name: 
+        name: 
         Id: -1
-        buffs: []
-      amount: 0
-    - AllowedItems: 0b000000
-      item:
-        Name: 
-        Id: -1
-        buffs: []
-      amount: 0
-    - AllowedItems: 0c000000
-      item:
-        Name: 
-        Id: -1
-        buffs: []
-      amount: 0
-    - AllowedItems: 0d000000
-      item:
-        Name: 
-        Id: -1
+        uniqueId: -1
         buffs: []
       amount: 0

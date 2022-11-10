@@ -15,7 +15,7 @@ public class K_PlayerStats : MonoBehaviour
 
     private void Start()
     {
-        _equipment = GetComponent<K_PlayerItemSystem>().equipment;
+        _equipment = GetComponent<K_PlayerItemSystem>().inven_Equipment;
 
         for (int i = 0; i < attributes.Length; i++)
         {
@@ -47,8 +47,7 @@ public class K_PlayerStats : MonoBehaviour
             //    break;
 
             case InterfaceType.Equipment:
-                    print("Removed " + slot.GetItemObject() + " on: " + slot.parent.inventory.type + ", Allowed items: " +
-                          string.Join(", ", slot.AllowedItems));
+                    
                 for (int i = 0; i < slot.item.buffs.Length; i++)
                 {
                     for (int j = 0; j < attributes.Length; j++)
@@ -76,7 +75,7 @@ public class K_PlayerStats : MonoBehaviour
 
             case InterfaceType.Equipment:
                  print("Placed " + slot.GetItemObject() + " on: " + slot.parent.inventory.type + ", Allowed items: " +
-                      string.Join(", ", slot.AllowedItems));
+                      string.Join(", ", slot.allowedItems));
                 for (int i = 0; i < slot.item.buffs.Length; i++)
                 {
                     for (int j = 0; j < attributes.Length; j++)
