@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using Photon.Pun;
+using CodeMonkey.Utils;
+
 
 public class K_CameraMgr : MonoBehaviourPun
 {
@@ -18,6 +20,7 @@ public class K_CameraMgr : MonoBehaviourPun
 
     public Camera playerCamera;
     public CinemachineVirtualCamera firstPersonCamera;
+    public CinemachineVirtualCamera subBuildCamera;
     
     public CinemachineVirtualCamera buildCamera;
     [HideInInspector]
@@ -27,7 +30,8 @@ public class K_CameraMgr : MonoBehaviourPun
 
     public float zoomChangeAmount = 100;
 
-    K_PlayerItemSystem itemSystem;
+    public bool isCursorVisible = false;
+   
     private void Awake()
     {
         if (!photonView.IsMine)
@@ -40,7 +44,7 @@ public class K_CameraMgr : MonoBehaviourPun
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        itemSystem = GetComponent<K_PlayerItemSystem>();
+        
         player = GetComponent<K_Player>();
         buildingSystem.SetActive(false);
         buildCamOffset = buildCamera.gameObject.GetComponent<CinemachineCameraOffset>();
@@ -50,7 +54,30 @@ public class K_CameraMgr : MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
-        if (itemSystem.isVisible) return;
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+           
+            if (!isCursorVisible)
+            {
+
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                isCursorVisible = true;
+
+            }
+            else if (isCursorVisible)
+            {
+
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+                isCursorVisible = false;
+
+            }
+            
+
+        }
+
+        if (UtilsClass.IsPointerOverUI()) return;
         xAxis.Update(Time.deltaTime);
         yAxis.Update(Time.deltaTime);
 

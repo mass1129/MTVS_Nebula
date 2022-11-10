@@ -50,10 +50,10 @@ namespace K_01_OwnedStates
 
             
             
-            if(Input.GetKeyDown(KeyCode.C))
-            {
-                entity.ChangeState(PlayerStates.BuildingMode);
-            }
+            //if(Input.GetKeyDown(KeyCode.C))
+            //{
+            //    entity.ChangeState(PlayerStates.BuildingMode);
+            //}
             //if (Input.GetButtonDown("Jump"))
             //{
             //    entity.ChangeState(PlayerStates.Jump);
@@ -216,90 +216,72 @@ namespace K_01_OwnedStates
 
     public class BuildingMode : K_PlayerState<K_Player>
     {
-        public enum Axis
-        {
-            XZ,
-            XY,
-        }
 
-        [SerializeField] private Axis axis = Axis.XZ;
-        [SerializeField] private float moveSpeed = 50f;
         float zoomAmount;
 
+        float turnSmoothVelocity;
+        float scrollY = 0f;
+        float scrollZ = 0f;
 
         public override void Enter(K_Player entity)
         {
+            entity.input.x = 0;
+            entity.input.y = 0;
+            entity.SetTrigger("ThirdMove");
+
             entity.camMgr.buildingSystem.SetActive(true);
+            entity.camMgr.buildCamera.gameObject.SetActive(true);
+
             entity.camMgr.buildCamOffset.m_Offset.z = 0f;
+            entity.camMgr.buildCamOffset.m_Offset.y = 0f;
             zoomAmount = entity.camMgr.zoomChangeAmount;
         }
+    
 
         public override void Execute(K_Player entity)
         {
 
+            entity.camMgr.buildCamOffset.m_Offset.z = Mathf.Clamp(entity.camMgr.buildCamOffset.m_Offset.z, 0.0f, 10.0f);
+            entity.camMgr.buildCamOffset.m_Offset.y = Mathf.Clamp(entity.camMgr.buildCamOffset.m_Offset.y, -2.50f, 0.0f);
 
-            float moveX = 0f;
-            float moveY = 0f;
-
-            if (Input.GetKey(KeyCode.W))
-            {
-                moveY = +1f;
-            }
-            if (Input.GetKey(KeyCode.S))
-            {
-                moveY = -1f;
-            }
-            if (Input.GetKey(KeyCode.A))
-            {
-                moveX = -1f;
-            }
-            if (Input.GetKey(KeyCode.D))
-            {
-                moveX = +1f;
-            }
-
-            Vector3 moveDir;
-
-            switch (axis)
-            {
-                default:
-                case Axis.XZ:
-                    moveDir = new Vector3(moveX, 0, moveY).normalized;
-                    break;
-                case Axis.XY:
-                    moveDir = new Vector3(moveX, moveY).normalized;
-                    break;
-            }
-
-            if (moveX != 0 || moveY != 0)
-            {
-                // Not idle
-            }
-
-            if (axis == Axis.XZ)
-            {
-                moveDir = UtilsClass.ApplyRotationToVectorXZ(moveDir, 30f);
-            }
-
-            entity.camMgr.buildCamTarget.position += ((entity.camMgr.buildCamTarget.forward * moveY) 
-                + (entity.camMgr.buildCamTarget.right * moveX)) * moveSpeed * Time.deltaTime;
-
-            entity.camMgr.buildCamOffset.m_Offset.z = Mathf.Clamp(entity.camMgr.buildCamOffset.m_Offset.z, 0, 50);
-
-            if (Input.mouseScrollDelta.y > 0)
+            if (Input.mouseScrollDelta.y > 0 && entity.camMgr.buildCamOffset.m_Offset.z < 10f && entity.camMgr.buildCamOffset.m_Offset.y>-2.5f)
             {
                 entity.camMgr.buildCamOffset.m_Offset.z += zoomAmount * Time.deltaTime;
+                entity.camMgr.buildCamOffset.m_Offset.y -= 0.25f*zoomAmount * Time.deltaTime;
             }
-            if (Input.mouseScrollDelta.y < 0)
+            if (Input.mouseScrollDelta.y < 0 && entity.camMgr.buildCamOffset.m_Offset.z > 0.0f && entity.camMgr.buildCamOffset.m_Offset.y < -0.0f)
             {
                 entity.camMgr.buildCamOffset.m_Offset.z -= zoomAmount * Time.deltaTime;
+                entity.camMgr.buildCamOffset.m_Offset.y += 0.25f * zoomAmount * Time.deltaTime;
             }
-            
 
-            if (Input.GetKeyDown(KeyCode.C))
+            entity.input.x = Input.GetAxis("Horizontal");
+            entity.input.y = Input.GetAxis("Vertical");
+
+            Vector3 direction = new Vector3(entity.input.x, 0f, entity.input.y).normalized;
+
+            if (direction.magnitude >= 0.1f)
             {
-                entity.ChangeState(PlayerStates.Idle);
+                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + entity.cam.eulerAngles.y;
+                float angle = Mathf.SmoothDampAngle(entity.transform.eulerAngles.y,
+                    targetAngle, ref turnSmoothVelocity, entity.turnSmoothTime);
+
+                entity.transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
             }
+
+            // 이동 방향에 따라 ThirdMove BlendTree 값 설정
+            entity.SetFloat("InputX", entity.input.x);
+            entity.SetFloat("InputY", entity.input.y);
+
+            Vector3 stepForwardAmount = entity.rootMotion * entity.groundSpeed;
+            Vector3 stepDownAmount = Vector3.down * entity.stepDown;
+
+            entity.cc.Move(stepForwardAmount + stepDownAmount);
+            entity.rootMotion = Vector3.zero;
+
+
+
         }
 
     
@@ -307,6 +289,8 @@ namespace K_01_OwnedStates
     public override void Exit(K_Player entity)
         {
             entity.camMgr.buildingSystem.SetActive(false);
+            entity.camMgr.buildCamera.gameObject.SetActive(false);
+            entity.ResetTrigger("ThirdMove");
         }
     }
 

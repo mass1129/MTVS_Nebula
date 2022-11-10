@@ -5,7 +5,7 @@ using UnityEngine;
 public class K_PlayerItemSystem : MonoBehaviour
 {
 
-    public bool isVisible = false;
+    
     public InventoryObject inven_Cloths;
     public InventoryObject inven_Building;
     public InventoryObject inven_Default;
@@ -15,32 +15,10 @@ public class K_PlayerItemSystem : MonoBehaviour
 
     private void Update()
     {
-        UpdateDisplay();
+      
 
     }
-    private void UpdateDisplay()
-    {
-
-
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            if (!isVisible)
-            {
-
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-                isVisible = true;
-            }
-            else
-            {
-
-                Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
-                isVisible = false;
-            }
-
-        }
-    }
+   
     public void OnTriggerEnter(Collider other)
     {
         //ºÎµúÈù °´Ã¼ÀÇ groundItem ÄÄÆ÷³ÍÆ®¸¦ °¡Á®¿Â´Ù.

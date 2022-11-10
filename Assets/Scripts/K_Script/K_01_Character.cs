@@ -92,13 +92,20 @@ public class K_01_Character : K_Player
     {
         anim.Play(s, layer, normalizedTime);
     }
+    bool isBuildingMode = false;
 
+    //public void ChangeToBuildingState()
+    //{
 
+    //    isBuildingMode = !isBuildingMode;
+    //    camMgr.buildingSystem.SetActive(isBuildingMode);
+    //    camMgr.subBuildCamera.gameObject.SetActive(isBuildingMode);
+    //}
     public void ChangeToBuildingState()
-    {   
-        if(CurrentState ==PlayerStates.Idle)
-        ChangeState(PlayerStates.BuildingMode);
-        else if(CurrentState == PlayerStates.BuildingMode)
+    {
+        if (CurrentState == PlayerStates.Idle)
+            ChangeState(PlayerStates.BuildingMode);
+        else if (CurrentState == PlayerStates.BuildingMode)
             ChangeState(PlayerStates.Idle);
     }
 
