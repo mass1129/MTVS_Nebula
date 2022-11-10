@@ -13,5 +13,6 @@ public enum ItemType
     Pants,
     Shoes,
     Bag,
-    Weapons
+    Weapons,
+    Bundle_Building
 }

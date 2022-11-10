@@ -20,7 +20,8 @@ public abstract class K_UserInterface : MonoBehaviour
 
     public GameObject invenTab;
     bool isShowed = false;
-    
+    bool isAddedEvent = false;
+    public bool onQuickSlot=false;
     public void OnEnable()
     {   
         CreateSlots();
@@ -30,8 +31,13 @@ public abstract class K_UserInterface : MonoBehaviour
             inventory.GetSlots[i].parent = this;
             inventory.GetSlots[i].onAfterUpdated += OnSlotUpdate;
         }
-       
-        
+        if(!isAddedEvent)
+        {
+            AddEvent(gameObject, EventTriggerType.PointerEnter, delegate { OnEnterInterface(gameObject); });
+            AddEvent(gameObject, EventTriggerType.PointerExit, delegate { OnExitInterface(gameObject); });
+        }
+       isAddedEvent = true;
+
     }
    
       
@@ -145,15 +151,26 @@ public abstract class K_UserInterface : MonoBehaviour
     public void OnDragEnd(GameObject obj)
     {
         Destroy(MouseData.tempItemBeingDragged);
-        //if(MouseData.interfaceMouseIsOver == null)
-        //{
-        //    slotsOnInterface[obj].RemoveItem();
-        //    return;
-        //}
-        if(MouseData.slotHoveredOver)
+        if (MouseData.interfaceMouseIsOver == null &&onQuickSlot)
+        {
+            slotsOnInterface[obj].RemoveItem();
+            return;
+        }
+        if (MouseData.slotHoveredOver)
         {
             InventorySlot mouseHoverSlotData = MouseData.interfaceMouseIsOver.slotsOnInterface[MouseData.slotHoveredOver];
-            inventory.SwapItems(slotsOnInterface[obj], mouseHoverSlotData);
+            if (onQuickSlot)
+            {
+                inventory.ItemsToQuickSlot(slotsOnInterface[obj], mouseHoverSlotData);
+                return;
+            }
+
+            else
+            {
+                inventory.SwapItems(slotsOnInterface[obj], mouseHoverSlotData);
+                return;
+            }
+               
         }
 
     }

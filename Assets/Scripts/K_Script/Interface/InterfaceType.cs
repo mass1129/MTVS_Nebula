@@ -5,7 +5,7 @@ public enum InterfaceType
     Inventory_System,
     Inventory_Default,
     Inventory_Vehicle,
-
+    inventory_Bundle_Building,
     Equipment
    
 }

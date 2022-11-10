@@ -11,16 +11,7 @@ public class JsonSerializationOption : ISerializationOption
         try
         {
             var result = JsonConvert.DeserializeObject<T>(text);
-            //JObject jObject = JObject.Parse(jsonResponse);
-            //IList<JToken> results = jObject["results"]["placeObjects"].Children().ToList();
-            //IList<TResultType> searchResults = new List<TResultType>();
-            //foreach(JToken result in results)
-            //{
-            //    var v = result.ToObject<TResultType>();
-            //    searchResults.Add(v);
-            //}
             Debug.Log($"Success: {text}");
-
             return result;
             //SceneManager.LoadScene(1);
         }
@@ -31,4 +22,20 @@ public class JsonSerializationOption : ISerializationOption
             return default;
         }
     }
+    //public string Serialize(object obj, string text)
+    //{
+    //    try
+    //    {
+    //        var result = JsonUtility.ToJson(obj, true);
+    //        Debug.Log($"Success: {text}");
+    //        return result;
+    //        //SceneManager.LoadScene(1);
+    //    }
+
+    //    catch (Exception ex)
+    //    {
+    //        Debug.LogError($"{this}Could not parse response {text}. {ex.Message}");
+    //        return default;
+    //    }
+    //}
 }

@@ -166,27 +166,27 @@ public class Login_Manager : MonoBehaviour
     /// 로그아웃시 가지고 있던 토큰값은 초기화됨.
     /// </summary>
     /// <returns>token = null</returns>
-    IEnumerator API_Logout()
-    {
-        UnityWebRequest request;
-        using (request = UnityWebRequest.Get("http://___/logout"))
-        {   
-            request.SetRequestHeader("Content-Type", "application/json");
-            request.SetRequestHeader("Authorization", "Bearer " + token);
-            yield return request.SendWebRequest();
+    //IEnumerator API_Logout()
+    //{
+    //    UnityWebRequest request;
+    //    using (request = UnityWebRequest.Get("http://___/logout"))
+    //    {   
+    //        request.SetRequestHeader("Content-Type", "application/json");
+    //        request.SetRequestHeader("Authorization", "Bearer " + token);
+    //        yield return request.SendWebRequest();
 
-            if (request.isNetworkError)
-            {
-                Debug.Log(request.error);
-            }
-            else
-            {
-                SetToken(null);
-                if (request.responseCode != 200)
-                    ErrorCheck(-(int)request.responseCode, "API_Logout");
-            }
-        }
-    }
+    //        if (request.isNetworkError)
+    //        {
+    //            Debug.Log(request.error);
+    //        }
+    //        else
+    //        {
+    //            SetToken(null);
+    //            if (request.responseCode != 200)
+    //                ErrorCheck(-(int)request.responseCode, "API_Logout");
+    //        }
+    //    }
+    //}
 
    
 

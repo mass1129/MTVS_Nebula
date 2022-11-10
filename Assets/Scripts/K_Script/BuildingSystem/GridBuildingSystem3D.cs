@@ -18,12 +18,12 @@ public class GridBuildingSystem3D : MonoBehaviourPun
     private List<GridXZ<GridObject>> gridList;
     private GridXZ<GridObject> selectedGrid;
 
-    [SerializeField] private List<PlacedObjectTypeSO> placedObjectTypeSOList = null;
+   
     private PlacedObjectTypeSO placedObjectTypeSO;
     private PlacedObjectTypeSO.Dir dir;
 
     private bool isDemolishActive;
-
+    public InventoryObject quickSlot;
     private void Awake() {
         Instance = this;
         //그리드 세팅
@@ -42,9 +42,10 @@ public class GridBuildingSystem3D : MonoBehaviourPun
         placedObjectTypeSO = null;
         selectedGrid = gridList[0];
     }
+
     private void Start()
     {
-        
+        quickSlot.Clear();
     }
     private void Update()
     {
@@ -127,14 +128,20 @@ public class GridBuildingSystem3D : MonoBehaviourPun
     }
 
     private void HandleTypeSelect() {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) { placedObjectTypeSO = placedObjectTypeSOList[0]; RefreshSelectedObjectType(); }
-        if (Input.GetKeyDown(KeyCode.Alpha2)) { placedObjectTypeSO = placedObjectTypeSOList[1]; RefreshSelectedObjectType(); }
-        if (Input.GetKeyDown(KeyCode.Alpha3)) { placedObjectTypeSO = placedObjectTypeSOList[2]; RefreshSelectedObjectType(); }
-        if (Input.GetKeyDown(KeyCode.Alpha4)) { placedObjectTypeSO = placedObjectTypeSOList[3]; RefreshSelectedObjectType(); }
-        if (Input.GetKeyDown(KeyCode.Alpha5)) { placedObjectTypeSO = placedObjectTypeSOList[4]; RefreshSelectedObjectType(); }
-        if (Input.GetKeyDown(KeyCode.Alpha6)) { placedObjectTypeSO = placedObjectTypeSOList[5]; RefreshSelectedObjectType(); }
+        if (Input.GetKeyDown(KeyCode.Alpha1)) { placedObjectTypeSO = quickSlot.GetSlots[0].GetItemObject().matchToBuildingSO; RefreshSelectedObjectType(); }
+        if (Input.GetKeyDown(KeyCode.Alpha2)) { placedObjectTypeSO = quickSlot.GetSlots[1].GetItemObject().matchToBuildingSO; RefreshSelectedObjectType(); }
+        if (Input.GetKeyDown(KeyCode.Alpha3)) { placedObjectTypeSO = quickSlot.GetSlots[2].GetItemObject().matchToBuildingSO; RefreshSelectedObjectType(); }
+        if (Input.GetKeyDown(KeyCode.Alpha4)) { placedObjectTypeSO = quickSlot.GetSlots[3].GetItemObject().matchToBuildingSO; RefreshSelectedObjectType(); }
+        if (Input.GetKeyDown(KeyCode.Alpha5)) { placedObjectTypeSO = quickSlot.GetSlots[4].GetItemObject().matchToBuildingSO; RefreshSelectedObjectType(); }
+        if (Input.GetKeyDown(KeyCode.Alpha6)) { placedObjectTypeSO = quickSlot.GetSlots[5].GetItemObject().matchToBuildingSO; RefreshSelectedObjectType(); }
+        if (Input.GetKeyDown(KeyCode.Alpha7)) { placedObjectTypeSO = quickSlot.GetSlots[6].GetItemObject().matchToBuildingSO; RefreshSelectedObjectType(); }
+        //if (Input.GetKeyDown(KeyCode.Alpha1)) { placedObjectTypeSO = placedObjectTypeSOList[0]; RefreshSelectedObjectType(); }
+        //if (Input.GetKeyDown(KeyCode.Alpha2)) { placedObjectTypeSO = placedObjectTypeSOList[1]; RefreshSelectedObjectType(); }
+        //if (Input.GetKeyDown(KeyCode.Alpha3)) { placedObjectTypeSO = placedObjectTypeSOList[2]; RefreshSelectedObjectType(); }
+        //if (Input.GetKeyDown(KeyCode.Alpha4)) { placedObjectTypeSO = placedObjectTypeSOList[3]; RefreshSelectedObjectType(); }
+        //if (Input.GetKeyDown(KeyCode.Alpha5)) { placedObjectTypeSO = placedObjectTypeSOList[4]; RefreshSelectedObjectType(); }
+        //if (Input.GetKeyDown(KeyCode.Alpha6)) { placedObjectTypeSO = placedObjectTypeSOList[5]; RefreshSelectedObjectType(); }
 
-        
     }
 
     private void HandleDirRotation() {
@@ -339,7 +346,45 @@ public class GridBuildingSystem3D : MonoBehaviourPun
         string json = JsonUtility.ToJson(saveObject,true);
         PlayerPrefs.SetString("HouseBuildingSystemSave", json);
         K_SaveSystem.Save("HouseBuildingSystemSave", json, true);
-        
+
+    }
+    public async void TestSave()
+    {
+        List<PlacedObjectSaveObjectArray> placedObjectSaveObjectArrayList = new List<PlacedObjectSaveObjectArray>();
+
+        foreach (GridXZ<GridObject> grid in gridList)
+        {
+            List<PlacedObject.SaveObject> saveObjectList = new List<PlacedObject.SaveObject>();
+            List<PlacedObject> savedPlacedObjectList = new List<PlacedObject>();
+
+            for (int x = 0; x < grid.GetWidth(); x++)
+            {
+                for (int y = 0; y < grid.GetHeight(); y++)
+                {
+                    PlacedObject placedObject = grid.GetGridObject(x, y).GetPlacedObject();
+                    if (placedObject != null && !savedPlacedObjectList.Contains(placedObject))
+                    {
+                        // Save object
+                        savedPlacedObjectList.Add(placedObject);
+                        saveObjectList.Add(placedObject.GetSaveObject());
+                    }
+                }
+            }
+
+            PlacedObjectSaveObjectArray placedObjectSaveObjectArray = new PlacedObjectSaveObjectArray { gridPlaceObjectList = saveObjectList.ToArray() };
+            placedObjectSaveObjectArrayList.Add(placedObjectSaveObjectArray);
+        }
+        SaveAllBuilding saveObject = new SaveAllBuilding
+        {
+            islandGridList = placedObjectSaveObjectArrayList.ToArray()
+        };
+
+        string json = JsonUtility.ToJson(saveObject, true);
+        var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/skyisland/1";
+        var httpReq = new HttpRequester(new JsonSerializationOption());
+
+        await httpReq.Post(url,json);
+
     }
     public void Load()
     {
@@ -370,13 +415,13 @@ public class GridBuildingSystem3D : MonoBehaviourPun
         var url = "ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/skyisland/1";
         var httpReq = new HttpRequester(new JsonSerializationOption());
         //PlacedObjectSaveObjectArray result1 = await httpReq.Get<PlacedObjectSaveObjectArray>(url);
-        Root result2 = await httpReq.Get<Root>(url);
+        H_Building_Root result2 = await httpReq.Get<H_Building_Root>(url);
         
-        Debug.Log(JsonUtility.ToJson(result2, true));
+        
         for (int i = 0; i < gridList.Count; i++)
         {
             GridXZ<GridObject> grid = gridList[i];
-            foreach (GridPlaceObjectList placedObjectSaveObject in result2.results.placeObjects.islandGridList[i].gridPlaceObjectList)
+            foreach (H_GridPlaceObjectList placedObjectSaveObject in result2.results.placeObjects.islandGridList[i].gridPlaceObjectList)
             {
                 PlacedObjectTypeSO placedObjectTypeSO = BuildingSystemAssets.Instance.GetPlacedObjectTypeSOFromName(placedObjectSaveObject.placedObjectTypeSOName);
                 TryPlaceObject(placedObjectSaveObject.origin, placedObjectTypeSO, placedObjectSaveObject.dir, out PlacedObject placedObject);
@@ -395,37 +440,37 @@ public class GridBuildingSystem3D : MonoBehaviourPun
         public PlacedObject.SaveObject[] gridPlaceObjectList;
     }
 
-    public class GridPlaceObjectList
+    public class H_GridPlaceObjectList
     {
         public string placedObjectTypeSOName;
         public Vector2Int origin;
         public PlacedObjectTypeSO.Dir dir;
     }
 
-    public class IslandGridList
+    public class H_IslandGridList
     {
-        public List<GridPlaceObjectList> gridPlaceObjectList { get; set; }
+        public List<H_GridPlaceObjectList> gridPlaceObjectList { get; set; }
     }
 
 
-    public class PlaceObjects
+    public class H_PlaceObjects
     {
-        public List<IslandGridList> islandGridList { get; set; }
+        public List<H_IslandGridList> islandGridList { get; set; }
     }
 
-    public class Results
+    public class H_Building_Results
     {
         public int id { get; set; }
         public string owner { get; set; }
-        public PlaceObjects placeObjects { get; set; }
+        public H_PlaceObjects placeObjects { get; set; }
         public object dropItems { get; set; }
     }
 
-    public class Root
+    public class H_Building_Root
     {
         public int httpStatus { get; set; }
         public string message { get; set; }
-        public Results results { get; set; }
+        public H_Building_Results results { get; set; }
     }
 
 }

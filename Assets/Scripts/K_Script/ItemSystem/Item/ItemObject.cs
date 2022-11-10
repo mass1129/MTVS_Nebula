@@ -21,6 +21,7 @@ public class ItemObject : ScriptableObject
     [TextArea(15, 20)]
     public string description;
     public ItemObject[] subItem;
+    public PlacedObjectTypeSO matchToBuildingSO;
     public Item data = new Item();
 
     public Item CreateItem()

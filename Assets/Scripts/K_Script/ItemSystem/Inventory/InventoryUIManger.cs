@@ -5,9 +5,9 @@ using UnityEngine;
 public class InventoryUIManger : MonoBehaviour
 {
     public K_UserInterface[] inventoryArray;
-
+    bool isShowed = false;
     public void ShowSelectWindow(int i)
-    {
+    {   
         for(int j = 0; j < inventoryArray.Length; j++)
         {
             if(j==i)
@@ -19,4 +19,32 @@ public class InventoryUIManger : MonoBehaviour
         }
     }
 
+    public void ShowStart()
+    {
+        isShowed = !isShowed;
+        if(isShowed)
+        {
+           
+            for (int j = 0; j < inventoryArray.Length; j++)
+            {
+                if (j == 1)
+                {
+                    inventoryArray[j].inventoryWindow.SetActive(true);
+                }
+                else
+                    inventoryArray[j].inventoryWindow.SetActive(false);
+            }
+        }
+        else
+        {
+            for (int j = 0; j < inventoryArray.Length; j++)
+            {
+
+                inventoryArray[j].inventoryWindow.SetActive(false);
+            }
+        }
+
+    }
+
+    
 }

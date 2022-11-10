@@ -1,16 +1,12 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
-using UnityEditor;
-using System.Runtime.Serialization;
-using System;
+
 
 [CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory System/Inventory")]
 public class InventoryObject : ScriptableObject
 {
     public string savePath;
+    public string loadPath;
     public ItemDatabaseObject database;
     public InterfaceType type;
 
@@ -110,12 +106,25 @@ public class InventoryObject : ScriptableObject
             InventorySlot temp = new InventorySlot(item2.item, item2.amount);
             item2.UpdateSlot(item1.item, item1.amount);
             item1.UpdateSlot(temp.item, temp.amount);
+            Debug.Log("Swap");
+        }
+
+    }
+    public void ItemsToQuickSlot(InventorySlot item1, InventorySlot item2)
+    {
+        if (item1 == item2)
+            return;
+        if (item2.CanPlaceInSlot(item1.GetItemObject()) && item1.CanPlaceInSlot(item2.GetItemObject()))
+        {
+            
+            item2.UpdateSlot(item1.item, item1.amount);
+            item1.UpdateSlot(item1.item, item1.amount);
+            Debug.Log("Quick" +item2.item.Name + ","+ item1.item.Name);
         }
 
     }
 
 
-  
     [ContextMenu("Save")]
     public void Save()
     {
@@ -143,10 +152,17 @@ public class InventoryObject : ScriptableObject
     }
     public async void TestLoad()
     {
-        var url = "http://localhost:8001/inventory/building-bundle/testAvatar";
+        var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/inventory/" + loadPath + "/testAvatar";
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
-        Inventory result2 = await httpReq.Get<Inventory>(url);
+        H_I_Root result2 = await httpReq.Get<H_I_Root>(url);
+       
+        //string json = JsonUtility.ToJson(array, true);
+        //Debug.Log(json);
+        for (int i = 0; i < Container.Slots.Length; i++)
+        {
+            Container.Slots[i].UpdateSlot(result2.results.slots[i].item, result2.results.slots[i].amount);
+        }
     }
 
     public void UpdateInventory()
@@ -166,5 +182,41 @@ public class InventoryObject : ScriptableObject
     {
         //Debug.Log(GetSlots.item.);
     }
+
+    
+    public class H_I_Item
+    {
+        public int uniqueId { get; set; }
+        public ItemBuff[] buffs { get; set; }
+        public int id { get; set; }
+        public string name { get; set; }
+    }
+
+
+    public class H_I_Slot
+    {
+        public Item item { get; set; }
+        public int amount { get; set; }
+        public ItemType[] allowedItems { get; set; }
+
+    }
+    public class H_I_Results
+    {
+        public H_I_Slot[] slots { get; set; }
+    }
+    [System.Serializable]
+    public class ResultsToArray
+    {
+        public H_I_Slot[] slotArray;
+    }
+    public class H_I_Root
+    {
+        public int httpStatus { get; set; }
+        public string message { get; set; }
+        public H_I_Results results { get; set; }
+    }
+
+   
+
 }
 

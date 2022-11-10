@@ -8,7 +8,6 @@ public class K_PlayerItemSystem : MonoBehaviour
     public bool isVisible = false;
     public InventoryObject inven_Cloths;
     public InventoryObject inven_Building;
-    public InventoryObject inven_System;
     public InventoryObject inven_Default;
     public InventoryObject inven_Vehicle;
     public InventoryObject equipment;
@@ -72,9 +71,6 @@ public class K_PlayerItemSystem : MonoBehaviour
                 case ItemType.Default:
                     _inventory = inven_Default;
                     break;
-                case ItemType.System:
-                    _inventory = inven_System;
-                    break;
                 case ItemType.Vehicle:
                     _inventory = inven_Vehicle;
                     break;
@@ -98,7 +94,6 @@ public class K_PlayerItemSystem : MonoBehaviour
     {
         inven_Cloths.Clear();
         inven_Building.Clear();
-        inven_System.Clear();
         inven_Default.Clear();
         inven_Vehicle.Clear();
         equipment.Clear();

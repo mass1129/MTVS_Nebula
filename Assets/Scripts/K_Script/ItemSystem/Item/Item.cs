@@ -3,11 +3,13 @@ public class Item
 {
     public string Name;
     public int Id = -1;
+    public int uniqueId = -1;
     public ItemBuff[] buffs;
     public Item()
     {
         Name = "";
         Id = -1;
+        uniqueId = -1;
     }
     //new Item(ItemObject)할때 Item클래스를 생성하는 부분
     public Item(ItemObject item)

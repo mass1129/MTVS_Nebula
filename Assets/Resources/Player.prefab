@@ -4784,6 +4784,7 @@ MonoBehaviour:
   inventory: {fileID: 11400000, guid: 128d426c0cfe0f940aa8fd7406a56991, type: 2}
   inventoryWindow: {fileID: 1752280605021983913}
   invenTab: {fileID: 0}
+  onQuickSlot: 0
   inventoryPrefab: {fileID: 6052166822543390096, guid: 6ec917383ad9fbb4187b165251751349, type: 3}
   X_START: -180
   Y_START: 330
@@ -5238,6 +5239,7 @@ MonoBehaviour:
   inventory: {fileID: 11400000, guid: 711bda56d07eec245bfab8e85bc64549, type: 2}
   inventoryWindow: {fileID: 1752280606409922374}
   invenTab: {fileID: 0}
+  onQuickSlot: 0
   inventoryPrefab: {fileID: 6052166822543390096, guid: 62393e2793cbbcc42918d34d71f732fa, type: 3}
   X_START: -180
   Y_START: 330
@@ -6612,6 +6614,7 @@ MonoBehaviour:
   inventory: {fileID: 11400000, guid: 01ccba72d2e8f8140b886ddc5af726d6, type: 2}
   inventoryWindow: {fileID: 1752280605125275020}
   invenTab: {fileID: 0}
+  onQuickSlot: 0
   inventoryPrefab: {fileID: 6052166822543390096, guid: 62393e2793cbbcc42918d34d71f732fa, type: 3}
   X_START: -180
   Y_START: 330
@@ -7618,6 +7621,7 @@ MonoBehaviour:
   inventory: {fileID: 11400000, guid: 03e1d40251a619f4a9f2f3e3ac33a076, type: 2}
   inventoryWindow: {fileID: 1752280604488678096}
   invenTab: {fileID: 0}
+  onQuickSlot: 0
   slots:
   - {fileID: 1226967903322489645}
   - {fileID: 692297151594363160}
@@ -10839,6 +10843,7 @@ MonoBehaviour:
   inventory: {fileID: 11400000, guid: 422cb2658b0d51346a2cf4a932b5bd9e, type: 2}
   inventoryWindow: {fileID: 1752280605421572272}
   invenTab: {fileID: 0}
+  onQuickSlot: 0
   inventoryPrefab: {fileID: 6052166822543390096, guid: 62393e2793cbbcc42918d34d71f732fa, type: 3}
   X_START: -180
   Y_START: 330
@@ -10913,6 +10918,7 @@ MonoBehaviour:
   inventory: {fileID: 11400000, guid: c3cb508365f4b5c46b15784258606b4f, type: 2}
   inventoryWindow: {fileID: 1752280605224693431}
   invenTab: {fileID: 1752280604606760088}
+  onQuickSlot: 0
   inventoryPrefab: {fileID: 6052166822543390096, guid: 62393e2793cbbcc42918d34d71f732fa, type: 3}
   X_START: -180
   Y_START: 330
@@ -19923,12 +19929,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee2add8ca9e982438f567de88399ff0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placedObjectTypeSOList:
-  - {fileID: 11400000, guid: 5ec6991138c607f4798fc4bf13a45fb3, type: 2}
-  - {fileID: 11400000, guid: c18a71191d6ecb942a3be5f6e0c9f2db, type: 2}
-  - {fileID: 11400000, guid: 778dfdc12a5238043be1e0e71ef916b7, type: 2}
-  - {fileID: 11400000, guid: 37fe408c7015ac542aabad5d47518ac8, type: 2}
-  - {fileID: 11400000, guid: 3a63a7931dd6b294e8b12f885e421aa3, type: 2}
+  quickSlot: {fileID: 0}
 --- !u!1 &4970061920073276779
 GameObject:
   m_ObjectHideFlags: 0
@@ -22343,7 +22344,6 @@ MonoBehaviour:
   isVisible: 0
   inven_Cloths: {fileID: 11400000, guid: c3cb508365f4b5c46b15784258606b4f, type: 2}
   inven_Building: {fileID: 11400000, guid: 128d426c0cfe0f940aa8fd7406a56991, type: 2}
-  inven_System: {fileID: 11400000, guid: 01ccba72d2e8f8140b886ddc5af726d6, type: 2}
   inven_Default: {fileID: 11400000, guid: 711bda56d07eec245bfab8e85bc64549, type: 2}
   inven_Vehicle: {fileID: 11400000, guid: 422cb2658b0d51346a2cf4a932b5bd9e, type: 2}
   equipment: {fileID: 11400000, guid: 03e1d40251a619f4a9f2f3e3ac33a076, type: 2}
