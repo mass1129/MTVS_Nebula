@@ -19,6 +19,8 @@ public class JsonInfo
     public string User_NickName;
     // 하늘섬 오브젝트
     public GameObject User_Obj; 
+
+
 }
 
 public class Island_Information :MonoBehaviourPun
@@ -30,7 +32,7 @@ public class Island_Information :MonoBehaviourPun
     }
     void Start()
     {
-        Spawn("subset_30_v3_fin.csv");
+        Spawn("demo");
     }
     public Dictionary<string, JsonInfo> Island_Dic = new Dictionary<string, JsonInfo>();
     // 유저들의 닉네임을 저장할 리스트(Key:닉네임)
@@ -102,9 +104,10 @@ public class Island_Information :MonoBehaviourPun
         }
 
     }
-    void LoadFromJson()
+    // 이것은 테스트 전용 Json Load 함수
+    public async Task LoadFromJson(string fileName)
     {
-        var info = Resources.Load<TextAsset>("DataSet/subset_30_v3");
+        var info = Resources.Load<TextAsset>(fileName);
         string jsonData = info.ToString();
         JObject jObject = JObject.Parse(jsonData);
 
@@ -117,6 +120,7 @@ public class Island_Information :MonoBehaviourPun
             // 임시로 저장할 좌표인자, url
             float x = 0, y = 0, z = 0;
             string url;
+            string keyword1=null, keyword2=null;
             //x,y,z 좌표값 받아온다. 
             for (int j = 0; j < 3; j++)
             {
@@ -133,14 +137,17 @@ public class Island_Information :MonoBehaviourPun
             Vector3 pos = new Vector3(x * dis_multiplier, y * dis_multiplier, z * dis_multiplier);
             // URL 주소 문자열 추출
             url = objPerIndex["image_url"].ToString();
-            InsertData(i, url, pos);
+            keyword1 = objPerIndex["keyword1"].ToString();
+            keyword2 = objPerIndex["keyword2"].ToString();
+            InsertData(i, url, pos,keyword1,keyword2);
+            await Task.Yield();
         }
     }
     // 하늘섬 배치 함수 
     public async void Spawn(string fileName)
     {
-        //LoadFromJson();
-        await LoadFromCSV(fileName);
+        await LoadFromJson(fileName);
+        //await LoadFromCSV(fileName);
         await InsertInfo();
         Done = true;
         if (Done)
@@ -178,7 +185,7 @@ public class Island_Information :MonoBehaviourPun
         for (int i = 0; i < compare_category.Length; i++)
         {
             //만약 카테고리가 일치한다면
-            if (Parsing(s) == compare_category[i])
+            if (s == compare_category[i])
             {
                 s1 = island_category[i];
                 break;
@@ -187,24 +194,24 @@ public class Island_Information :MonoBehaviourPun
         return s1;
     }
     // url 주소에서 카테고리 문자열만 추출하는 코드 
-    string Parsing(string s)
-    {
-        string[] s1 = s.Split('/');
-        string[] s2 = s1[4].Split('-');
-        return s2[1];
+    //string Parsing(string s)
+    //{
+    //    string[] s1 = s.Split('/');
+    //    string[] s2 = s1[4].Split('-');
+    //    return s2[1];
 
-    }
-    void InsertData(int i, string url, Vector3 pos,string nickname="")
+    //}
+    void InsertData(int i, string url, Vector3 pos,string keyword1="",string keyword2="")
     {
         JsonInfo dic = new JsonInfo();
         //딕셔너리 인덱스 생성
         Island_Dic.Add(i.ToString(), dic);
         //딕셔너리에 값들을 모두 넣는다. 
         dic = Island_Dic[i.ToString()];
-        dic.island_Type = Return_IslandType(url);
+        dic.island_Type = Return_IslandType(keyword2);
         dic.island_Pos = pos;
         dic.User_image = url;
-        dic.User_NickName = nickname;
+        dic.User_NickName = keyword1+" "+ keyword2;
     }
 
     // 중간에 새로운 데이터가 들어왔을 때, 어떻게 갱신할지 생각해보자 

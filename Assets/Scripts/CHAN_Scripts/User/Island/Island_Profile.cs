@@ -47,7 +47,7 @@ public class Island_Profile : MonoBehaviourPun
             user_Url = JInfo.User_image;
         }
         GetTexture(user_Url);
-        userName_Text.text = "UserName_" + user_name;
+        userName_Text.text = Island_Information.instance.Island_Dic[user_name].User_NickName;
         userName_Text.enabled = false;
     }
     //void LoadImageByJson()
