@@ -22,20 +22,20 @@ public class JsonSerializationOption : ISerializationOption
             return default;
         }
     }
-    //public string Serialize(object obj, string text)
-    //{
-    //    try
-    //    {
-    //        var result = JsonUtility.ToJson(obj, true);
-    //        Debug.Log($"Success: {text}");
-    //        return result;
-    //        //SceneManager.LoadScene(1);
-    //    }
+    public string Serialize(string text)
+    {
+        try
+        {
+            var result = text;
+            Debug.Log($"Success: {text}");
+            return result;
+            //SceneManager.LoadScene(1);
+        }
 
-    //    catch (Exception ex)
-    //    {
-    //        Debug.LogError($"{this}Could not parse response {text}. {ex.Message}");
-    //        return default;
-    //    }
-    //}
+        catch (Exception ex)
+        {
+            Debug.LogError($"{this}Could not parse response {text}. {ex.Message}");
+            return default;
+        }
+    }
 }

@@ -66,6 +66,7 @@ public class HttpRequester
             byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
             request.uploadHandler = new UploadHandlerRaw(jsonToSend);
             request.SetRequestHeader("Content-Type", _serializionOption.ContentType);
+            if(token != null)
             request.SetRequestHeader("Authorization", "Bearer " + token);
 
 
@@ -80,8 +81,14 @@ public class HttpRequester
             {
                 Debug.LogError($"Failed: {request.error}");
             }
-            //Debug.Log($"Success: {request.downloadHandler.text}");
+            var result = _serializionOption.Serialize(request.downloadHandler.text);
+            
+            SetToken(request.downloadHandler.text);
+                
+              
 
+            
+            
         }
 
         catch (Exception ex)
@@ -92,4 +99,25 @@ public class HttpRequester
         }
 
     }
+   // private string token = null;
+    int SetToken(string _input)
+    {
+        // 로그아웃시 토큰 초기화
+        if (_input == null)
+        {
+            //token = null;
+            return 0;
+        }
+
+        // 로그인시 토큰 설정
+        string[] temp = _input.Split('"');
+
+        if (temp[9] != "token")
+            Debug.Log("ErrorCheck(-1001)"); // 토큰 형식 에러
+
+        //token = temp[11];
+        PlayerPrefs.SetString("PlayerToken", temp[11]);
+        return 0;
+    }
+
 }

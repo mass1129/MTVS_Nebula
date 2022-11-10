@@ -1,13 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.Networking;
-using System.IO;
-using System;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+
 
 [System.Serializable]
 public class LoginInfo
@@ -26,23 +21,18 @@ public class Login_Manager : MonoBehaviour
     public string preUserName;
     public string prePassWord;
 
-    private string token = null;
 
     private void Start()
     {
-        ClickedLogInBtn();
+        API_Login();
     }
     public void ClickedLogInBtn()
     {
-        LoginInfo user = new LoginInfo
-        {
-            username = preUserName,
-            password = prePassWord
-        };
-        string json = JsonUtility.ToJson(user,true);
 
-        
-        API_Login("ec2-43-201-62-61.ap-northeast-2.compute.amazonaws.com:8001/auth/login", json);
+        GetAvatorInfo();
+
+        //API_Login("ec2-43-201-62-61.ap-northeast-2.compute.amazonaws.com:8001/auth/login", json);
+        //SceneManager.LoadScene(1);
         
     }
    
@@ -56,33 +46,57 @@ public class Login_Manager : MonoBehaviour
     /// <returns>token = Gettoken</returns>
 
 
-    //public async void API_LoadBuildingSystem()
+
+
+    public async void API_Login()
+    {
+        LoginInfo user = new LoginInfo
+        {
+            username = preUserName,
+            password = prePassWord
+        };
+        string json = JsonUtility.ToJson(user, true);
+
+        var url = "ec2-43-201-62-61.ap-northeast-2.compute.amazonaws.com:8001/auth/login";
+
+        var httpReq = new HttpRequester(new JsonSerializationOption());
+
+        await httpReq.Post(url, json);
+
+    }
+    public async void GetAvatorInfo()
+    {
+        var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/avatar";
+        var httpReq = new HttpRequester(new JsonSerializationOption());
+
+        H_Av_Root result2 = await httpReq.Get<H_Av_Root>(url);
+    }
+    //public async void API_Login(string URL, string json)
     //{
-        
-    //    using var request = UnityWebRequest.Get("ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/skyisland/1");
+
+    //    using var request = UnityWebRequest.Post(URL, json);
     //    {
+    //        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
+    //        request.uploadHandler = new UploadHandlerRaw(jsonToSend);
     //        request.SetRequestHeader("Content-Type", "application/json");
-    //        request.SetRequestHeader("Authorization", "Bearer " + token);
 
     //        var operation = request.SendWebRequest();
 
     //        while (!operation.isDone)
     //            await Task.Yield();
 
+    //        var jsonResponse = request.downloadHandler.text;
 
     //        if (request.result != UnityWebRequest.Result.Success)
     //        {
     //            Debug.LogError($"Failed: {request.error}");
     //        }
 
-    //        var jsonResponse = request.downloadHandler.text;
-
     //        try
-    //        {   
-    //            //var result = JsonConvert.DeserializeObject<saveall>
+    //        {
     //            Debug.Log($"Success: {request.downloadHandler.text}");
-               
-    //            //SceneManager.LoadScene(1);
+    //            SetToken(request.downloadHandler.text);
+    //            SceneManager.LoadScene(1);
     //        }
 
     //        catch (Exception ex)
@@ -91,76 +105,9 @@ public class Login_Manager : MonoBehaviour
     //        }
 
     //    }
-    //}
-    
-
-    public async void API_Login(string URL, string json)
-    {
-
-        using var request = UnityWebRequest.Post(URL, json);
-        {
-            byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
-            request.uploadHandler = new UploadHandlerRaw(jsonToSend);
-            request.SetRequestHeader("Content-Type", "application/json");
-            
-            var operation = request.SendWebRequest();
-
-            while (!operation.isDone)
-                await Task.Yield();
-
-            var jsonResponse = request.downloadHandler.text;
-
-            if (request.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogError($"Failed: {request.error}");
-            }
-
-            try
-            {
-                Debug.Log($"Success: {request.downloadHandler.text}");
-                SetToken(request.downloadHandler.text);
-                SceneManager.LoadScene(1);
-            }
-
-            catch(Exception ex)
-            {
-                Debug.LogError($"{this}Could not parse response {jsonResponse}. {ex.Message}");
-            }
-            
-        }
-        
-    }
-    //IEnumerator API_Login(string URL, string json)
-    //{
-    //    UnityWebRequest request = null;
-    //    using (request = UnityWebRequest.Post(URL, json))
-    //    {
-    //        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
-    //        Debug.Log(jsonToSend);
-    //        request.uploadHandler = new UploadHandlerRaw(jsonToSend);
-    //        request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
-    //        request.SetRequestHeader("Content-Type", "application/json");
-
-    //        yield return request.SendWebRequest();
-
-    //        if (request.isNetworkError)
-    //        {
-    //            Debug.Log(request.error);
-    //        }
-    //        else
-    //        {
-    //            SetToken(request.downloadHandler.text);
-    //            Debug.Log(token);
-    //            request.Dispose();
-    //            //SceneManager.LoadScene(1);
-    //            //if (request.responseCode != 200)
-    //            // ErrorCheck(-(int)request.responseCode, "API_Login");
-
-    //        }
-
-    //    }
 
     //}
+
     /// <summary>
     /// API로 Logout을 하는 함수.
     /// 로그아웃시 가지고 있던 토큰값은 초기화됨.
@@ -187,29 +134,70 @@ public class Login_Manager : MonoBehaviour
     //        }
     //    }
     //}
+    public class H_Av_Root
+    {
+        public int httpStatus { get; set; }
+        public string message { get; set; }
+        public List<H_Av_Result> results { get; set; }
+    }
+    public class H_Av_Result
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+        public string imageUrl { get; set; }
+        public List<string> hashTags { get; set; }
+        public int skyIslandId { get; set; }
+        public H_Av_Texture texture { get; set; }
+    }
+
+    public class H_Av_Texture
+    {
+        public List<double> TeethColor { get; set; }
+        public List<double> OralCavityColor { get; set; }
+        public H_Av_SelectedElements selectedElements { get; set; }
+        public List<double> HairColor { get; set; }
+        public int MaxLod { get; set; }
+        public int MinLod { get; set; }
+        public List<double> EyeColor { get; set; }
+        public List<double> SkinColor { get; set; }
+        public List<double> UnderpantsColor { get; set; }
+        public string settingsName { get; set; }
+        public double HeadSize { get; set; }
+        public double Height { get; set; }
+        public List<H_Av_Blendshape> blendshapes { get; set; }
+    }
+
+    public class H_Av_Blendshape
+    {
+        public string blendshapeName { get; set; }
+        public int type { get; set; }
+        public double value { get; set; }
+        public int group { get; set; }
+    }
+   
 
    
 
-    int SetToken(string _input)
+    public class H_Av_SelectedElements
     {
-        // 로그아웃시 토큰 초기화
-        if (_input == null)
-        {
-            token = null;
-            return 0;
-        }
-       
-        // 로그인시 토큰 설정
-        string[] temp = _input.Split('"');
-
-        if ( temp[9] != "token")
-            ErrorCheck(-1001); // 토큰 형식 에러
-
-        token = temp[11];
-        PlayerPrefs.SetString("PlayerToken", token);
-        return 0;
+        public int Hair { get; set; }
+        public int Beard { get; set; }
+        public int Accessory { get; set; }
+        public int Shirt { get; set; }
+        public int Item1 { get; set; }
+        public int Pants { get; set; }
+        public int Hat { get; set; }
+        public int Shoes { get; set; }
     }
+
+   
+
+
     #endregion
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.SetString("PlayerToken", null);
+    }
 
     #region Occur Error
     int ErrorCheck(int _code)
