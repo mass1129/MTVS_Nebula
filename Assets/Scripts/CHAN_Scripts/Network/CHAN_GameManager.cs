@@ -43,9 +43,12 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
     public string WhalePrepab;
 
     GameObject player;
+    public GameObject LoadingObject;
     //public GameObject Chat;
     private void Start()
     {
+        //로딩 시작
+        LoadingObject.SetActive(true);
         //처음에는 스카이씬에 바로 들어가도록 함
         roomName = "sky";
         sceneName = name_SkyScene;
