@@ -204,11 +204,7 @@ public class InventoryObject : ScriptableObject
     {
         public H_I_Slot[] slots { get; set; }
     }
-    [System.Serializable]
-    public class ResultsToArray
-    {
-        public H_I_Slot[] slotArray;
-    }
+   
     public class H_I_Root
     {
         public int httpStatus { get; set; }

@@ -80,7 +80,7 @@ public class HttpRequester
             {
                 Debug.LogError($"Failed: {request.error}");
             }
-
+            Debug.Log($"Success: {request.downloadHandler.text}");
 
         }
 
