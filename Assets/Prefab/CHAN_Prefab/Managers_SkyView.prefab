@@ -143,13 +143,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4682749066178887979}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fb8d0cf219d618146b1996cef115d187, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerIcons: []
   Icon_prefab: {fileID: 3032051978186806972, guid: 9debe057b9b5a6f47b0507acca8cc098, type: 3}
+  UserIcons: {fileID: 0}
 --- !u!1 &4682749066259271866
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,6 +247,8 @@ MonoBehaviour:
   User_name: []
   temp_Delete: []
   temp_Add: []
+  Done: 0
+  Islands: {fileID: 0}
 --- !u!1 &4682749067505274815
 GameObject:
   m_ObjectHideFlags: 0
@@ -343,5 +346,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   setDistance: 300
-  forceMultiplier: 100
-  user_name: 
+  forceMultiplier: 500
