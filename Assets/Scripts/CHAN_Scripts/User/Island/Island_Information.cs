@@ -18,8 +18,8 @@ public class JsonInfo
     public string User_image;
     public string User_NickName;
     // 하늘섬 오브젝트
-    public GameObject User_Obj; 
-
+    public GameObject User_Obj;
+    
 
 }
 
@@ -32,17 +32,14 @@ public class Island_Information :MonoBehaviourPun
     }
     void Start()
     {
-        Spawn("alpha_30");
+        Load();
     }
+    Parsing parsing = new Parsing();
     public Dictionary<string, JsonInfo> Island_Dic = new Dictionary<string, JsonInfo>();
     // 유저들의 닉네임을 저장할 리스트(Key:닉네임)
     public List<string> User_name = new List<string>();
-    // islandSpawner에서 생성한 섬 오브젝트를 저장하는딕셔너리(Key: 유저 네임,Value:오브젝트정보)
-    // 카테고리 비교 하는 배열
-    string[] compare_category = { "요리/레시피", "해외여행", "캠핑/등산" };
-    string[] island_category = { "island 1", "island 2", "island 3", "island 4", "island 5" };
-    //섬 사이 간격 구배
-    float dis_multiplier=100;
+    float dis_multiplier = 100;
+
     #region 서버에게 정보를 가져오는 함수 모음
     public void LoadIslandInfo()
     {
@@ -97,7 +94,7 @@ public class Island_Information :MonoBehaviourPun
             }
             Vector3 temp_pos = new Vector3(float.Parse(data_values[0])* dis_multiplier, float.Parse(data_values[1])* dis_multiplier, float.Parse(data_values[2])* dis_multiplier);
             nickname = data_values[4];
-            InsertData(count, data_values[3], temp_pos, nickname);
+            //InsertData(count, data_values[3], temp_pos, nickname);
               //csv의x,y,z값을 받아내고 Vector로 저장하자
             count++;
             await Task.Yield();
@@ -106,129 +103,22 @@ public class Island_Information :MonoBehaviourPun
 
     }
     // 이것은 테스트 전용 Json Load 함수
-    public async Task LoadFromJson(string fileName)
+
+    public async void Load()
     {
-        var info = Resources.Load<TextAsset>(fileName);
-        string jsonData = info.ToString();
-        JObject jObject = JObject.Parse(jsonData);
-
-
-        for (int i = 0; i < jObject.Count; i++)
-        {
-            //json의 하나의 인덱스를 가져왔다.
-            JObject objPerIndex = jObject[i.ToString()].ToObject<JObject>();
-
-            // 임시로 저장할 좌표인자, url
-            float x = 0, y = 0, z = 0;
-            string url;
-            string keyword1=null, keyword2=null;
-            //x,y,z 좌표값 받아온다. 
-            for (int j = 0; j < 3; j++)
-            {
-                string pc = "pc" + (j + 1).ToString();
-                objPerIndex[pc].ToObject<float>();
-                if (j == 0)
-                { x = objPerIndex[pc].ToObject<float>(); }
-                else if (j == 1)
-                { y = objPerIndex[pc].ToObject<float>(); }
-                else
-                { z = objPerIndex[pc].ToObject<float>(); }
-            }
-            //받은 좌표인자값을 통해 Vector3 에 저장한다. 
-            Vector3 pos = new Vector3(x * dis_multiplier, y * dis_multiplier, z * dis_multiplier);
-            // URL 주소 문자열 추출
-            url = objPerIndex["image_url"].ToString();
-            keyword1 = objPerIndex["keyword1"].ToString();
-            keyword2 = objPerIndex["keyword2"].ToString();
-            InsertData(i, url, pos,keyword1,keyword2);
-            await Task.Yield();
-        }
-    }
-    // 하늘섬 배치 함수 
-    //public async void LoadJson()
-    //{
-    //    var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/skyisland";
-    //    var httpRequest = new HttpRequester(new JsonSerializationOption());
-    //    Root result = await httpRequest.Get<Root>(url);
-    //    values = result.results;
-    //    CreateProfile();
-    //}
-    public async void Spawn(string fileName)
-    {
-        await LoadFromJson(fileName);
-        //await LoadFromCSV(fileName);
-        await InsertInfo();
+        var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/skyisland";
+        var httpRequest = new HttpRequester(new JsonSerializationOption());
+        Root result = await httpRequest.Get<Root>(url);
+        await parsing.LoadFromJson(result.results, Island_Dic, dis_multiplier);
+        await parsing.InsertInfo(result.results, Island_Dic, Islands);
         Done = true;
         if (Done)
         {
             CHAN_GameManager.instance.LoadingObject.SetActive(false);
         }
     }
-    public async Task InsertInfo()
-    {
 
-        foreach (string i in Island_Dic.Keys)
-        {
 
-            JsonInfo info = Island_Dic[i];
-            GameObject island = InstantiateIsland(info.island_Type);
-            info.User_Obj = island;
-            island.transform.position = info.island_Pos;
-            //island.transform.GetChild(0).GetChild(0).GetComponent<Island_Profile>().user_name = i;
-            island.transform.GetComponent<Island_Profile>().user_name = i;
-            await Task.Yield();
-        }
-    }
-    // 하늘섬 생성 코드
-    GameObject InstantiateIsland(string IslandType)
-    {
-        float randomScale=UnityEngine.Random.RandomRange(0.3f, 3);
-        GameObject land = Instantiate(Resources.Load<GameObject>("CHAN_Resources/" + IslandType), Islands);
-        land.transform.GetChild(1).gameObject.transform.localScale *= randomScale;
-        return land;
-    }
-    // 하늘섬 타입 결정 코드
-    string Return_IslandType(string s)
-    {
-        string s1 = null;
-        for (int i = 0; i < compare_category.Length; i++)
-        {
-            //만약 카테고리가 일치한다면
-            if (s == compare_category[i])
-            {
-                s1 = island_category[i];
-                break;
-            }
-        }
-        return s1;
-    }
-    // url 주소에서 카테고리 문자열만 추출하는 코드 
-    //string Parsing(string s)
-    //{
-    //    string[] s1 = s.Split('/');
-    //    string[] s2 = s1[4].Split('-');
-    //    return s2[1];
-
-    //}
-    void InsertData(int i, string url, Vector3 pos,string keyword1="",string keyword2="")
-    {
-        JsonInfo dic = new JsonInfo();
-        //딕셔너리 인덱스 생성
-        Island_Dic.Add(i.ToString(), dic);
-        //딕셔너리에 값들을 모두 넣는다. 
-        dic = Island_Dic[i.ToString()];
-        dic.island_Type = Return_IslandType(keyword2);
-        dic.island_Pos = pos;
-        dic.User_image = url;
-        dic.User_NickName = keyword1+" "+ keyword2;
-    }
-
-    // 중간에 새로운 데이터가 들어왔을 때, 어떻게 갱신할지 생각해보자 
-    // 게임은 초기에 서버에게 섬의 좌표를 받아온다. 
-    // 그 좌표를 기반으로 섬은 배치가 된다. 
-
-    //기존에 있는 데이터 정보들을 모두 삭제시키는 함수
-    //하늘섬 오브젝트도 모두 삭제한다.
     public void DeleteData()
     {
             foreach(JsonInfo i in Island_Dic.Values)

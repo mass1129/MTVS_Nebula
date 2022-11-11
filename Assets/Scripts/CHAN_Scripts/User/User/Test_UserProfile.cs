@@ -32,17 +32,6 @@ public class Test_UserProfile : MonoBehaviour
     {
         Load();
     }
-    public void OnClickLoadBtn()
-    {
-        // 서버로부터 받아온다.
-         
-    }
-
-    public void OnClickDeleteBtn()
-    {
-        // 서버로부터 받아온다.
-        
-    }
 
     public async void Load()
     {

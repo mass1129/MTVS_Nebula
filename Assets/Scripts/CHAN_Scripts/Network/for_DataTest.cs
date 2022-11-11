@@ -31,7 +31,7 @@ public class for_DataTest : MonoBehaviourPun
     {
         Island_Information.instance.Done = false;
         Island_Information.instance.DeleteData();
-        Island_Information.instance.Spawn(data);
+        Island_Information.instance.Load();
         print("ภüผÛตส");
     }
 }

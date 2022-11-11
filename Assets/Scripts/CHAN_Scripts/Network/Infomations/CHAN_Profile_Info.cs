@@ -9,7 +9,6 @@ namespace UserProfile
         public double value { get; set; }
         public int group { get; set; }
     }
-
     public class Result
     {
         public int id { get; set; }
@@ -19,14 +18,12 @@ namespace UserProfile
         public int skyIslandId { get; set; }
         public Texture texture { get; set; }
     }
-
     public class Root
     {
         public int httpStatus { get; set; }
         public string message { get; set; }
         public List<Result> results { get; set; }
     }
-
     public class SelectedElements
     {
         public int Hair { get; set; }
