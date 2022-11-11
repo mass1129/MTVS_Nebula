@@ -6,7 +6,7 @@ using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 using Photon.Pun;
 using Photon.Realtime;
-
+using IslandInfo;
 [Serializable]
 public class JsonInfo
 {
@@ -32,14 +32,14 @@ public class Island_Information :MonoBehaviourPun
     }
     void Start()
     {
-        Spawn("demo");
+        Spawn("alpha_30");
     }
     public Dictionary<string, JsonInfo> Island_Dic = new Dictionary<string, JsonInfo>();
     // 유저들의 닉네임을 저장할 리스트(Key:닉네임)
     public List<string> User_name = new List<string>();
     // islandSpawner에서 생성한 섬 오브젝트를 저장하는딕셔너리(Key: 유저 네임,Value:오브젝트정보)
     // 카테고리 비교 하는 배열
-    string[] compare_category = { "cat", "dog", "animation", "celeb", "car" };
+    string[] compare_category = { "요리/레시피", "해외여행", "캠핑/등산" };
     string[] island_category = { "island 1", "island 2", "island 3", "island 4", "island 5" };
     //섬 사이 간격 구배
     float dis_multiplier=100;
@@ -65,6 +65,7 @@ public class Island_Information :MonoBehaviourPun
     //csv파일 정보 로드 함수, 처음 하늘뷰에서 들어왔을 때 발동된다.
     public bool Done;
     public Transform Islands;
+
     public async Task LoadFromCSV(string fileName)
     {
         StreamReader sr = new StreamReader(Application.streamingAssetsPath + "/" + fileName);
@@ -144,6 +145,14 @@ public class Island_Information :MonoBehaviourPun
         }
     }
     // 하늘섬 배치 함수 
+    //public async void LoadJson()
+    //{
+    //    var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/skyisland";
+    //    var httpRequest = new HttpRequester(new JsonSerializationOption());
+    //    Root result = await httpRequest.Get<Root>(url);
+    //    values = result.results;
+    //    CreateProfile();
+    //}
     public async void Spawn(string fileName)
     {
         await LoadFromJson(fileName);

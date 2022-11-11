@@ -16,13 +16,14 @@ public class Profile_Main_Manager : MonoBehaviour
     public Transform List_Profile;
     public GameObject obj;
 
+    public bool hasAvatar;
     void Start()
     {
         //뒤로가기 버튼 활성화
         btn_backToStart.SetActive(true);
         btn_MoveNextScene.SetActive(false);
         List_Profile = GameObject.Find("List_Profile").transform;
-        AddProfileBlock();
+
 
 
     }
@@ -42,7 +43,19 @@ public class Profile_Main_Manager : MonoBehaviour
     //다음씬으로 이동
     public void LoadNextScene()
     {
-        SceneManager.LoadScene(2);
+
+        string s = PlayerPrefs.GetString("AvatarName");
+        string s1 = PlayerPrefs.GetString("Island_ID");
+        print(s + s1);
+        if (!hasAvatar)
+        {
+            // 아바타 생선씬으로 넘어간다.
+            SceneManager.LoadScene(2);
+        }
+        else
+        {
+            //서버 접속할 수 있도록 (서버접속 씬으로 넘어간다.)
+        }
     }
 
 }

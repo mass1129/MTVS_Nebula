@@ -62,11 +62,12 @@ namespace UserProfile
         public string User_Image_Url;
         public List<string> HashTag;
         public int User_Island_ID;
+        public Texture texture_info;
     }
     public class new_ProfileInfo
     {
         public string User_Name;
         public List<string> HashTag=new List<string>();
-        public UnityEngine.Texture ProfileImage;
+        public UnityEngine.Texture2D ProfileImage;
     }
 }

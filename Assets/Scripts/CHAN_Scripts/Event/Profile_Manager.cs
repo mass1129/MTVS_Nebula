@@ -49,6 +49,7 @@ public class Profile_Manager : MonoBehaviour
     //일단 네트워크를 적용하지 않은 상태이므로 임시로 정보를 받을  클래스를 생성시켜서 저장해보자 
     new_ProfileInfo new_profileInfo = new new_ProfileInfo();
     Profile_Info profile = new Profile_Info();
+    public ProfileInfo temp_Info = new ProfileInfo();
     //해로 생성된 프로필 버튼 위치 지정해주는 함수
     public void transfer(GameObject obj)
     {
@@ -71,7 +72,10 @@ public class Profile_Manager : MonoBehaviour
         Text_Nickname = obj.transform.GetChild(6).gameObject.GetComponent<Text>();
     }
     void Start()
-    {}
+    {
+        Btn_ReviceProfile.SetActive(false);
+        Btn_DeleteProfile.SetActive(false);
+    }
 
  
     void Update()
@@ -152,7 +156,7 @@ public class Profile_Manager : MonoBehaviour
         }
         else
         {
-            UnityEngine.Texture myTexture = ((DownloadHandlerTexture)www.downloadHandler).texture;
+            UnityEngine.Texture2D myTexture = ((DownloadHandlerTexture)www.downloadHandler).texture;
             new_profileInfo.ProfileImage = myTexture;
         }
     }
@@ -231,9 +235,10 @@ public class Profile_Manager : MonoBehaviour
         //이미지가 있는가?
         //keyword가 저장되어 있는가?
         if (new_profileInfo.ProfileImage != null&& new_profileInfo.HashTag.Count>0&&new_profileInfo.User_Name!=null)
-        { 
+        {
             //저장 완료!
             //서버에 json으로 해당 정보를 보내자!
+            Test_UserProfile.instance.Post(new_profileInfo.User_Name, new_profileInfo.HashTag,new_profileInfo.ProfileImage);
         }
         //프로필 생성 함수 
         UpdateProfile();
@@ -273,10 +278,35 @@ public class Profile_Manager : MonoBehaviour
     //다음 씬으로 넘어가는 버튼을 킨다.
     public void OnNextSceneBtn()
     {
-        Profile_Main_Manager.instance.btn_MoveNextScene.SetActive(true);
+        Profile_Main_Manager.instance.btn_MoveNextScene.SetActive(!Btn_ReviceProfile.activeSelf);
         Btn_ReviceProfile.SetActive(!Btn_ReviceProfile.activeSelf);
         Btn_DeleteProfile.SetActive(!Btn_DeleteProfile.activeSelf);
     }
+    /// <summary>
+    /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// </summary>
+    public void GoNextScene()
+    {
+        // 만약 해당 프로필에 Texture 정보가 null 이면 아바타 생성씬으로 이동 아니면 바로 하늘씬으로 이동
+        // 다음씬으로 넘어갈 때 저장해야 하는 정보 : 닉네임, 하늘섬 Id
+        PlayerPrefs.SetString("AvatarName", Text_Nickname.text);
+        PlayerPrefs.SetString("Island_ID", temp_Info.User_Island_ID.ToString());
+        if (temp_Info.texture_info == null)
+        {
+            // 아바타 생선씬으로 넘어간다.
+            Profile_Main_Manager.instance.hasAvatar = false;
+            print("아바타 씬");
+        }
+        else
+        {
+            //서버 접속할 수 있도록 (서버접속 씬으로 넘어간다.)
+            Profile_Main_Manager.instance.hasAvatar = true;
+            SceneManager.LoadScene(4);
+        }
+    }
+    /// <summary>
+    /// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// </summary>
     #endregion
     #region 7. 프로필 수정, 삭제 
     bool isRevice;
@@ -288,9 +318,11 @@ public class Profile_Manager : MonoBehaviour
     }
     public void Delate()
     {
-        InitialProfiles();
+        Test_UserProfile.instance.Delete(Text_Nickname.text);
+        Profile_Main_Manager.instance.btn_MoveNextScene.SetActive(false);
         Destroy(transform.parent.gameObject);
     }
+
     #endregion 프로필 수정, 삭제
 
 }
