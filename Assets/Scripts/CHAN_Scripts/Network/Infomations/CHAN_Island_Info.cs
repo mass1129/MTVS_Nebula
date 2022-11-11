@@ -29,7 +29,46 @@ namespace IslandInfo
     }
     public class Parsing
     {
+        // 테스트용 데이터 로드 함수
+        public async Task LoadFromJson_Test(Dictionary<string, JsonInfo> Island_Dic,string fileName, float dis_multiplier)
+        {
+            // 저장된 json을 읽어온다.
+            var info = Resources.Load<TextAsset>(fileName);
+            // json을 문자열 자료형식으로 변환한다.
+            string jsonData = info.ToString();
+            // 커스텀으로 자료형식을 추출하기위한 밑작업
+            JObject jObject = JObject.Parse(jsonData);
+            for (int i = 0; i < jObject.Count; i++)
+            {
+                //json의 하나의 인덱스를 가져왔다.
+                JObject objPerIndex = jObject[i.ToString()].ToObject<JObject>();
 
+                // 임시로 저장할 좌표인자, url
+                float x = 0, y = 0, z = 0;
+                string url;
+                string keyword1 = null, keyword2 = null;
+                //x,y,z 좌표값 받아온다. 
+                for (int j = 0; j < 3; j++)
+                {
+                    string pc = "pc" + (j + 1).ToString();
+                    objPerIndex[pc].ToObject<float>();
+                    if (j == 0)
+                    { x = objPerIndex[pc].ToObject<float>(); }
+                    else if (j == 1)
+                    { y = objPerIndex[pc].ToObject<float>(); }
+                    else
+                    { z = objPerIndex[pc].ToObject<float>(); }
+                }
+                //받은 좌표인자값을 통해 Vector3 에 저장한다. 
+                Vector3 pos = new Vector3(x * dis_multiplier, y * dis_multiplier, z * dis_multiplier);
+                // URL 주소 문자열 추출
+                url = objPerIndex["image_url"].ToString();
+                keyword1 = objPerIndex["keyword1"].ToString();
+                keyword2 = objPerIndex["keyword2"].ToString();
+                InsertData(Island_Dic, i.ToString(), url, pos, keyword1, keyword2);
+                await Task.Yield();
+            }
+        }
         public async Task LoadFromJson(Dictionary<string, Result> results, Dictionary<string, JsonInfo> Island_Dic,float dis_multiplier)
         {
             foreach (KeyValuePair<string, Result> item in results)
@@ -43,36 +82,7 @@ namespace IslandInfo
                 InsertData(Island_Dic, key, url, pos, keyword1, keyword2);
                 await Task.Yield();
             }
-            //for (int i = 0; i < result.Count; i++)
-            //{
-            //    //json의 하나의 인덱스를 가져왔다.
-            //    JObject objPerIndex = jObject[i.ToString()].ToObject<JObject>();
-
-            //    // 임시로 저장할 좌표인자, url
-            //    float x = 0, y = 0, z = 0;
-            //    string url;
-            //    string keyword1 = null, keyword2 = null;
-            //    //x,y,z 좌표값 받아온다. 
-            //    for (int j = 0; j < 3; j++)
-            //    {
-            //        string pc = "pc" + (j + 1).ToString();
-            //        objPerIndex[pc].ToObject<float>();
-            //        if (j == 0)
-            //        { x = objPerIndex[pc].ToObject<float>(); }
-            //        else if (j == 1)
-            //        { y = objPerIndex[pc].ToObject<float>(); }
-            //        else
-            //        { z = objPerIndex[pc].ToObject<float>(); }
-            //    }
-            //    //받은 좌표인자값을 통해 Vector3 에 저장한다. 
-            //    Vector3 pos = new Vector3(x * dis_multiplier, y * dis_multiplier, z * dis_multiplier);
-            //    // URL 주소 문자열 추출
-            //    url = objPerIndex["image_url"].ToString();
-            //    keyword1 = objPerIndex["keyword1"].ToString();
-            //    keyword2 = objPerIndex["keyword2"].ToString();
-            //    InsertData(Island_Dic,i, url, pos, keyword1, keyword2);
-            //    await Task.Yield();
-            //}
+           
         }
         public void InsertData(Dictionary<string,JsonInfo> Island_Dic,string i, string url, Vector3 pos, string keyword1 = "", string keyword2 = "")
         {
