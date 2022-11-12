@@ -19,7 +19,7 @@ public class JsonInfo
     public string User_NickName;
     // 하늘섬 오브젝트
     public GameObject User_Obj;
-    
+
 
 }
 
@@ -33,12 +33,14 @@ public class Island_Information :MonoBehaviourPun
     void Start()
     {
         Load();
+        //LoadTest();
     }
     Parsing parsing = new Parsing();
     public Dictionary<string, JsonInfo> Island_Dic = new Dictionary<string, JsonInfo>();
     // 유저들의 닉네임을 저장할 리스트(Key:닉네임)
     public List<string> User_name = new List<string>();
     float dis_multiplier = 100;
+    public string jsonFile;
 
     #region 서버에게 정보를 가져오는 함수 모음
     public void LoadIslandInfo()
@@ -117,6 +119,18 @@ public class Island_Information :MonoBehaviourPun
             CHAN_GameManager.instance.LoadingObject.SetActive(false);
         }
     }
+    public async void LoadTest()
+    {
+        Parsing parse = new Parsing();
+        await parse.LoadFromJson_Test(Island_Dic, jsonFile, dis_multiplier);
+        await parse.InserInfo_Test(Island_Dic, Islands);
+        Done = true;
+        if (Done)
+        {
+            CHAN_GameManager.instance.LoadingObject.SetActive(false);
+        }
+    }
+
 
 
     public void DeleteData()

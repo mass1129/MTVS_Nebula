@@ -89,11 +89,10 @@ namespace IslandInfo
             JsonInfo dic = new JsonInfo();
             Categories categories = new Categories();
             //µñ¼Å³Ê¸® ÀÎµ¦½º »ý¼º
-            Island_Dic.Add(i.ToString(), dic);
+            Island_Dic.Add(i, dic);
             //µñ¼Å³Ê¸®¿¡ °ªµéÀ» ¸ðµÎ ³Ö´Â´Ù. 
             dic = Island_Dic[i];
-            //dic.island_Type = Return_IslandType(keyword2);
-            dic.island_Type = categories.island_category[0];
+            dic.island_Type = Return_IslandType(keyword2);
             dic.island_Pos = pos;
             dic.User_image = url;
             dic.User_NickName = keyword1 + " " + keyword2;
@@ -123,7 +122,18 @@ namespace IslandInfo
                 GameObject island = InstantiateIsland(info.island_Type, Islands);
                 info.User_Obj = island;
                 island.transform.position = info.island_Pos;
-                //island.transform.GetChild(0).GetChild(0).GetComponent<Island_Profile>().user_name = i;
+                island.transform.GetComponent<Island_Profile>().user_name = i;
+                await Task.Yield();
+            }
+        }
+        public async Task InserInfo_Test(Dictionary<string, JsonInfo> Island_Dic, Transform Islands)
+        {
+            foreach (string i in Island_Dic.Keys)
+            {
+                JsonInfo info = Island_Dic[i];
+                GameObject island = InstantiateIsland(info.island_Type, Islands);
+                info.User_Obj = island;
+                island.transform.position = info.island_Pos;
                 island.transform.GetComponent<Island_Profile>().user_name = i;
                 await Task.Yield();
             }

@@ -19,12 +19,15 @@ public class User_Move : MonoBehaviourPun, IPunObservable
     public float speedMultiplier;
     public GameObject CVCam;
     public GameObject OrcaObj;
+    public ParticleSystem sornar;
+    //public GameObject Audio;
 
     void Start()
     {
         if (!photonView.IsMine)
         {
             CVCam.SetActive(false);
+            //Audio.SetActive(false);
         }
         OrcaObj.SetActive(true);
     }
@@ -80,7 +83,11 @@ public class User_Move : MonoBehaviourPun, IPunObservable
             else
             {
                 totalSpeed = userSpeed;
-                print(totalSpeed);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Do_Shout();
             }
             transform.position += dir * totalSpeed * Time.deltaTime;
             transform.localRotation = Quaternion.EulerAngles(Mathf.Clamp(Rotate_Pitch,-70*Mathf.Deg2Rad, 70 * Mathf.Deg2Rad), Rotate_Yaw, 0);
@@ -107,5 +114,14 @@ public class User_Move : MonoBehaviourPun, IPunObservable
             receivePos=(Vector3)stream.ReceiveNext();
             receiveRot = (Quaternion)stream.ReceiveNext();
         }
+    }
+    void Do_Shout()
+    {
+        photonView.RPC("RPCDo_Shout", RpcTarget.All);
+    }
+    [PunRPC]
+    void RPCDo_Shout()
+    {
+        sornar.Play();
     }
 }
