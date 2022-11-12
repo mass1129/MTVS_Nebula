@@ -12,7 +12,9 @@ public class User_Move : MonoBehaviourPun, IPunObservable
     {
         DontDestroyOnLoad(this);
     }
-    public float userSpeed;
+    float userSpeed;
+    public float accMultipiler;
+    public float MaxSpeed;
     public float rotateSpeed;
     public float speedMultiplier;
 
@@ -42,20 +44,29 @@ public class User_Move : MonoBehaviourPun, IPunObservable
     [System.Obsolete]
     void Update()
     {
-        #region 플레이어 입력기
-        float Input_Forward = Mathf.Clamp(Input.GetAxis("Vertical"),0,1);
-        float Input_Rotate_Yaw = Input.GetAxis("Mouse X");
-        float Input_Rotate_Pitch = Input.GetAxis("Mouse Y");
-        #endregion
-
         if (photonView.IsMine)
         {
+            #region 플레이어 입력기
+            float Input_Forward = Mathf.Clamp(Input.GetAxis("Vertical"), 0, 1);
+            float Input_Rotate_Yaw = Input.GetAxis("Mouse X");
+            float Input_Rotate_Pitch = Input.GetAxis("Mouse Y");
+            #endregion
             // 일단 이동방향은 앞뒤로 갈 수 있도록 만든다. 
-            dir = (Input_Forward * transform.forward).normalized;
+            dir = (transform.forward).normalized;
             Rotate_Pitch -= Input_Rotate_Pitch * rotateSpeed * Time.deltaTime;        
             Rotate_Yaw += Input_Rotate_Yaw * rotateSpeed * Time.deltaTime;
             //쉬프트키를 눌렀을 때 대쉬되도록 만든다.
             float totalSpeed;
+            if (Input.GetKey(KeyCode.W))
+            {
+                userSpeed += Input_Forward *accMultipiler* Time.deltaTime;
+            }
+            else
+            {
+                userSpeed -=  accMultipiler *2* Time.deltaTime;
+            }
+            userSpeed = Mathf.Clamp(userSpeed, 0, MaxSpeed);
+            
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 totalSpeed = userSpeed * speedMultiplier;
@@ -63,6 +74,7 @@ public class User_Move : MonoBehaviourPun, IPunObservable
             else
             {
                 totalSpeed = userSpeed;
+                print(totalSpeed);
             }
             transform.position += dir * totalSpeed * Time.deltaTime;
             transform.localRotation = Quaternion.EulerAngles(Mathf.Clamp(Rotate_Pitch,-70*Mathf.Deg2Rad, 70 * Mathf.Deg2Rad), Rotate_Yaw, 0);
