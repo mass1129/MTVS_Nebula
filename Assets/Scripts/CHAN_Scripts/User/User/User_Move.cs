@@ -1,5 +1,7 @@
 using Photon.Pun;
+using System.Collections;
 using UnityEngine;
+using Cinemachine;
 
 /// <summary>
 /// 유저의 기본 이동 입력기
@@ -20,7 +22,8 @@ public class User_Move : MonoBehaviourPun, IPunObservable
     public GameObject CVCam;
     public GameObject OrcaObj;
     public ParticleSystem sornar;
-    //public GameObject Audio;
+    Animator animator;
+    bool countDone;
 
     void Start()
     {
@@ -30,6 +33,7 @@ public class User_Move : MonoBehaviourPun, IPunObservable
             //Audio.SetActive(false);
         }
         OrcaObj.SetActive(true);
+        animator = transform.GetComponentInChildren<Animator>();
     }
     Vector3 dir;
     float lerpSpeed = 10;
@@ -57,6 +61,7 @@ public class User_Move : MonoBehaviourPun, IPunObservable
         {
             #region 플레이어 입력기
             float Input_Forward = Mathf.Clamp(Input.GetAxis("Vertical"), 0, 1);
+            float x = Input.GetAxis("Horizontal");
             float Input_Rotate_Yaw = Input.GetAxis("Mouse X");
             float Input_Rotate_Pitch = Input.GetAxis("Mouse Y");
             #endregion
@@ -68,7 +73,7 @@ public class User_Move : MonoBehaviourPun, IPunObservable
             float totalSpeed;
             if (Input.GetKey(KeyCode.W))
             {
-                userSpeed += Input_Forward *accMultipiler* Time.deltaTime;
+                userSpeed += (Input_Forward) * accMultipiler* Time.deltaTime;
             }
             else
             {
@@ -101,7 +106,40 @@ public class User_Move : MonoBehaviourPun, IPunObservable
         }
         
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            if (photonView.IsMine)
+            { 
+                DoHappy();
+                Do_Shout();
+                StopAllCoroutines();
+                StartCoroutine(ChangeFOV(80));
+            }
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (photonView.IsMine)
+        {
+            StopAllCoroutines();
+            StartCoroutine(ChangeFOV(60));
+        }
 
+    }
+    void DoHappy()
+    {
+        if (photonView.IsMine)
+        {
+            photonView.RPC("RPCDoHappy", RpcTarget.All);
+        }
+    }
+    [PunRPC]
+    void RPCDoHappy()
+    {
+        animator.SetTrigger("isHappy");
+    }
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)
@@ -124,4 +162,19 @@ public class User_Move : MonoBehaviourPun, IPunObservable
     {
         sornar.Play();
     }
+    IEnumerator ChangeFOV(float setFOV)
+    {
+        float fov = CVCam.transform.GetComponentInChildren<CinemachineVirtualCamera>().m_Lens.FieldOfView;
+        while (true)
+        {
+            fov = Mathf.Lerp(fov, setFOV, 2 * Time.deltaTime);
+            CVCam.transform.GetComponentInChildren<CinemachineVirtualCamera>().m_Lens.FieldOfView = fov;
+            if (fov.AlmostEquals(setFOV,0.1f))
+            {
+                break;
+            }
+            yield return null;
+        }
+    }
+    
 }

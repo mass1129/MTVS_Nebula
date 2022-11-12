@@ -32,8 +32,8 @@ public class Island_Information :MonoBehaviourPun
     }
     void Start()
     {
-        Load();
-        //LoadTest();
+        //Load();
+        LoadTest();
     }
     Parsing parsing = new Parsing();
     public Dictionary<string, JsonInfo> Island_Dic = new Dictionary<string, JsonInfo>();

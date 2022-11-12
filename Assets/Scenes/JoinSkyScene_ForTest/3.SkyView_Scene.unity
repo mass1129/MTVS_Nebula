@@ -20,13 +20,13 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.026241222, g: 0.095307484, b: 0.2874409, a: 1}
-  m_AmbientEquatorColor: {r: 0.9911022, g: 0.7681514, b: 0.5149178, a: 1}
-  m_AmbientGroundColor: {r: 0.98225087, g: 0.89626956, b: 0.5457247, a: 1}
+  m_AmbientSkyColor: {r: 0.035601325, g: 0.29613832, b: 0.5394797, a: 1}
+  m_AmbientEquatorColor: {r: 0.61720675, g: 0.38642952, b: 0.41788515, a: 1}
+  m_AmbientGroundColor: {r: 0.8148468, g: 0.62396055, b: 0.45641106, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 1
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 0923a2373f39f6d4e9b8df1c3f8736bd, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 153ab4bc3f5fd7e4d9ba30a7fdaa721c, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -210,14 +210,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 21468024}
-  m_LocalRotation: {x: 0.85528934, y: -0.38990247, z: 0.21707197, w: 0.2633175}
+  m_LocalRotation: {x: 0.88870186, y: -0.4225865, z: 0.14340378, w: 0.10519038}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 38.294, y: -192.209, z: -135.24}
+  m_LocalEulerAnglesHint: {x: 17.949, y: -190.048, z: -130.728}
 --- !u!114 &21468027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1446,7 +1446,7 @@ PrefabInstance:
       objectReference: {fileID: 1066510161}
     - target: {fileID: 6585576682558793713, guid: ddfc56e64ded4844abe54df0704c6e69, type: 3}
       propertyPath: setDistance
-      value: 150
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 6585576682558793713, guid: ddfc56e64ded4844abe54df0704c6e69, type: 3}
       propertyPath: forceMultiplier
@@ -5686,7 +5686,7 @@ MonoBehaviour:
   - {fileID: 3548151046463569270}
   cloudPos: {fileID: 1591682988}
   randomRange: 800
-  num: 30
+  num: 20
 --- !u!4 &1666965468
 Transform:
   m_ObjectHideFlags: 0

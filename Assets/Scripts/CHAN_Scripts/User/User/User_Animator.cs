@@ -11,11 +11,11 @@ public class User_Animator : MonoBehaviourPun
         anim = GetComponent<Animator>();
     }
 
-    
+
     void Update()
     {
         if (transform.parent.gameObject.GetComponent<PhotonView>().IsMine)
-        { 
+        {
             //플레이어가 이동중이면 isSwiming true 
             if (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
             {
@@ -32,4 +32,5 @@ public class User_Animator : MonoBehaviourPun
             }
         }
     }
+
 }

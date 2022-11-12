@@ -9,7 +9,7 @@ namespace IslandInfo
     class Categories
     {
         public string[] compare_category = { "요리/레시피", "해외여행", "캠핑/등산" };
-        public string[] island_category = { "island 1", "island 2", "island 3", "island 4", "island 5" };
+        public string[] island_category = { "Island_Backyard", "Island_Beach", "Island_Cave", "Island_House", "Island_Pond" };
     }
     public class Result
     {
@@ -142,7 +142,7 @@ namespace IslandInfo
         {
             float randomScale = Random.Range(0.3f, 3);
             GameObject land = GameObject.Instantiate(Resources.Load<GameObject>("CHAN_Resources/" + IslandType), Islands);
-            land.transform.GetChild(1).gameObject.transform.localScale *= randomScale;
+            land.transform.GetChild(0).gameObject.transform.localScale *= randomScale;
             return land;
         }
     }
