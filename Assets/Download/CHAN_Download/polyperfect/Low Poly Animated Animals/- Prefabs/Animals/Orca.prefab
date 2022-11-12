@@ -834,6 +834,7 @@ GameObject:
   - component: {fileID: 114500111453996090}
   - component: {fileID: 195727625980977500}
   - component: {fileID: 6605737014753006932}
+  - component: {fileID: 6431909798087210230}
   m_Layer: 0
   m_Name: Orca
   m_TagString: Untagged
@@ -987,6 +988,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67da6412ffc30d141bab2bea81dcc325, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6431909798087210230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1620520229191870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 1
+    Name: isSwimming
+  - Type: 9
+    SynchronizeType: 0
+    Name: isEating
+  - Type: 9
+    SynchronizeType: 1
+    Name: isAttacking
+  - Type: 9
+    SynchronizeType: 0
+    Name: isDead
+  m_SynchronizeLayers:
+  - SynchronizeType: 1
+    LayerIndex: 0
 --- !u!1 &1651232713049266
 GameObject:
   m_ObjectHideFlags: 0

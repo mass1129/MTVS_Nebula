@@ -210,7 +210,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 2061741490}
-  - {fileID: 6431909798087210230}
+  - {fileID: 1222909022237849896}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -268,6 +268,8 @@ MonoBehaviour:
   MaxSpeed: 40
   rotateSpeed: 2
   speedMultiplier: 2
+  CVCam: {fileID: 5097229243414874570}
+  OrcaObj: {fileID: 5313807259687966090}
   islandSelected: 0
 --- !u!1 &4989768353029664053
 GameObject:
@@ -432,7 +434,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8181686450536788205}
-  m_LocalRotation: {x: 0.039904393, y: 0.0000000021490845, z: -8.582627e-11, w: 0.9992035}
+  m_LocalRotation: {x: 0.039904393, y: -0.0000000021490847, z: 8.582628e-11, w: 0.9992035}
   m_LocalPosition: {x: 0, y: 9, z: -25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -601,7 +603,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8660332917359513253}
-  m_LocalRotation: {x: 0.039904393, y: 0.0000000021490845, z: -8.582627e-11, w: 0.9992035}
+  m_LocalRotation: {x: 0.039904393, y: -0.0000000021490847, z: 8.582628e-11, w: 0.9992035}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -804,6 +806,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3252203795677890439}
     m_Modifications:
+    - target: {fileID: 1250318530320468, guid: 83e5f758f79d148b898ca89e7d3207ce, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1620520229191870, guid: 83e5f758f79d148b898ca89e7d3207ce, type: 3}
       propertyPath: m_Name
       value: Orca
@@ -854,46 +860,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83e5f758f79d148b898ca89e7d3207ce, type: 3}
---- !u!4 &5308510082994644892 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4929589620337218, guid: 83e5f758f79d148b898ca89e7d3207ce, type: 3}
-  m_PrefabInstance: {fileID: 5312592404208733662}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5314211818482175328 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1620520229191870, guid: 83e5f758f79d148b898ca89e7d3207ce, type: 3}
-  m_PrefabInstance: {fileID: 5312592404208733662}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &6431909798087210230
+--- !u!114 &1222909022237849896 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 6431909798087210230, guid: 83e5f758f79d148b898ca89e7d3207ce, type: 3}
+  m_PrefabInstance: {fileID: 5312592404208733662}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5314211818482175328}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShowLayerWeightsInspector: 1
-  ShowParameterInspector: 1
-  m_SynchronizeParameters:
-  - Type: 4
-    SynchronizeType: 1
-    Name: isSwimming
-  - Type: 9
-    SynchronizeType: 0
-    Name: isEating
-  - Type: 9
-    SynchronizeType: 1
-    Name: isAttacking
-  - Type: 9
-    SynchronizeType: 0
-    Name: isDead
-  m_SynchronizeLayers:
-  - SynchronizeType: 1
-    LayerIndex: 0
+--- !u!4 &5308510082994644892 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4929589620337218, guid: 83e5f758f79d148b898ca89e7d3207ce, type: 3}
+  m_PrefabInstance: {fileID: 5312592404208733662}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5313807259687966090 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1250318530320468, guid: 83e5f758f79d148b898ca89e7d3207ce, type: 3}
+  m_PrefabInstance: {fileID: 5312592404208733662}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8816895922424006257
 PrefabInstance:
   m_ObjectHideFlags: 0

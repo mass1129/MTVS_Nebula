@@ -17,10 +17,16 @@ public class User_Move : MonoBehaviourPun, IPunObservable
     public float MaxSpeed;
     public float rotateSpeed;
     public float speedMultiplier;
+    public GameObject CVCam;
+    public GameObject OrcaObj;
 
     void Start()
     {
-
+        if (!photonView.IsMine)
+        {
+            CVCam.SetActive(false);
+        }
+        OrcaObj.SetActive(true);
     }
     Vector3 dir;
     float lerpSpeed = 10;
