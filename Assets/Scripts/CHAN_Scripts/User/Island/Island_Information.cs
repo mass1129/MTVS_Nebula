@@ -100,7 +100,6 @@ public class Island_Information :MonoBehaviourPun
               //csv의x,y,z값을 받아내고 Vector로 저장하자
             count++;
             await Task.Yield();
-
         }
 
     }

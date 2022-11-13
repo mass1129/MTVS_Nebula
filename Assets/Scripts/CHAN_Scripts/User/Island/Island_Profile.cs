@@ -47,13 +47,6 @@ public class Island_Profile : MonoBehaviourPun
         userName_Text.text = user_name;
         userName_Text.enabled = false;
     }
-    //void LoadImageByJson()
-    //{
-    //    JsonInfo JInfo = LoadJson.instance.Island_Dic[user_name];
-    //    StartCoroutine(GetTexture(JInfo.User_image));
-    //    userName_Text.text = "UserName_" + user_name;
-    //    userName_Text.enabled = false;
-    //}
     #endregion
     async void GetTexture(string url)
     {

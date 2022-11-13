@@ -9,11 +9,7 @@ using UnityEngine.UI;
 /// <summary>
 /// 월드의 전반적인 UI를 제어하는 스크립트
 /// </summary>
-class Friend_Info
-{
-    public string friendImage;
-    public string nickName;
-}
+
 public class SkyView_UI_Manager : MonoBehaviour
 {
     public static SkyView_UI_Manager instance;
@@ -32,11 +28,7 @@ public class SkyView_UI_Manager : MonoBehaviour
     public Transform Area_Friend_Profile;
     public GameObject Btn_Obj;
     public Transform Create_Location;
-    Image FriendImage;
 
-    List<string> Friend_Nicknames = new List<string>();
-    //Friend_Info f_info = new Friend_Info();
-    Dictionary<string, Friend_Info> Dic_Friend = new Dictionary<string, Friend_Info>();
     private void Start()
     {
         
@@ -78,15 +70,6 @@ public class SkyView_UI_Manager : MonoBehaviour
     // 친구리스트 목록 나오게 하는 기능
     public void Btn_Menu()
     {
-        //Dic_Friend.Clear();
-        //foreach (string i in Island_Information.instance.Island_Dic.Keys)
-        //{
-        //    Friend_Info f_info=new Friend_Info();
-        //    Dic_Friend.Add(i, f_info);
-        //    f_info.friendImage = Island_Information.instance.Island_Dic[i].User_image;
-        //    f_info.nickName = Island_Information.instance.Island_Dic[i].User_NickName;
-        //    Dic_Friend[i] = f_info;
-        //}
         MakeFriendsBtn();
         //친구 버튼 비활성화
         btn_Freinds.SetActive(false);
@@ -114,9 +97,6 @@ public class SkyView_UI_Manager : MonoBehaviour
     {
         Area_Friend_Profile.gameObject.SetActive(false);
     }
-
-
-
     #endregion
 
 
