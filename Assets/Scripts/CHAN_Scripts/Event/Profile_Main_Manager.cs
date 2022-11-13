@@ -38,6 +38,7 @@ public class Profile_Main_Manager : MonoBehaviour
     }
     public void BackToPreviousScene()
     {
+        // 로그아웃
         SceneManager.LoadScene(0);
     }
     //다음씬으로 이동

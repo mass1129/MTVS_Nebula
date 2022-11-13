@@ -238,7 +238,7 @@ public class Profile_Manager : MonoBehaviour
         {
             //저장 완료!
             //서버에 json으로 해당 정보를 보내자!
-            Test_UserProfile.instance.Post(new_profileInfo.User_Name, new_profileInfo.HashTag,new_profileInfo.ProfileImage);
+            UserProfile_Utility.instance.Post(new_profileInfo.User_Name, new_profileInfo.HashTag,new_profileInfo.ProfileImage);
         }
         //프로필 생성 함수 
         UpdateProfile();
@@ -318,7 +318,7 @@ public class Profile_Manager : MonoBehaviour
     }
     public void Delate()
     {
-        Test_UserProfile.instance.Delete(Text_Nickname.text);
+        UserProfile_Utility.instance.Delete(Text_Nickname.text);
         Profile_Main_Manager.instance.btn_MoveNextScene.SetActive(false);
         Destroy(transform.parent.gameObject);
     }

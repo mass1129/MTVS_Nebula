@@ -131,6 +131,7 @@ public class User_Move : MonoBehaviourPun, IPunObservable
             if (other.gameObject.CompareTag("UserIsland"))
             {
                 btn_EnterRoom.SetActive(true);
+                userName = other.gameObject.GetComponent<Island_Profile>().user_name;
                 MouseVisual(true);
             }
         }
@@ -146,7 +147,6 @@ public class User_Move : MonoBehaviourPun, IPunObservable
         if (photonView.IsMine && other.gameObject.CompareTag("UserIsland"))
         {
             btn_EnterRoom.SetActive(false);
-            userName = other.gameObject.GetComponent<Island_Profile>().user_name;
             MouseVisual(false);
         }
 

@@ -123,6 +123,11 @@ namespace IslandInfo
             {
 
                 JsonInfo info = Island_Dic[i];
+                if (info.island_Type == null)
+                {
+                    Island_Dic.Remove(i);
+                    break;
+                }
                 GameObject island = InstantiateIsland(info.island_Type, Islands);
                 info.User_Obj = island;
                 island.transform.position = info.island_Pos;

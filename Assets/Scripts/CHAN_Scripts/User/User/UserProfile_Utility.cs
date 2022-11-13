@@ -8,9 +8,9 @@ using UnityEngine.UI;
 using UserProfile;
 
 
-public class Test_UserProfile : MonoBehaviour
+public class UserProfile_Utility : MonoBehaviour
 {
-    public static Test_UserProfile instance;
+    public static UserProfile_Utility instance;
     List<Result> values = new List<Result>();
     public GameObject profile_prefab;
     public Transform profile_pos;
