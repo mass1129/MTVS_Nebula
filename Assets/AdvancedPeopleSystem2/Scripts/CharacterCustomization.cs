@@ -738,8 +738,8 @@ namespace AdvancedPeopleSystem
                 feetOffset = yOffset;
             }
 
-            //characterSelectedElements.SetSelectedIndex(type, index);
-            photonView.RPC("RPCSetElementByIndex", RpcTarget.AllBuffered, type, index);  
+            characterSelectedElements.SetSelectedIndex(type, index);
+            //photonView.RPC("RPCSetElementByIndex", RpcTarget.AllBuffered, type, index);  
 
         }
         public void RPCSetElementByIndex(CharacterElementType type, int index)

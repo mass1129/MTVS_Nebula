@@ -89,7 +89,7 @@ namespace AdvancedPeopleSystem
         public CharacterBlendshapeData() { }
     }
     [System.Serializable]
-    public class CharacterSelectedElements: MonoBehaviourPun,ICloneable,IPunObservable
+    public class CharacterSelectedElements: ICloneable,IPunObservable
     {
         public int Hair = -1;
         public int Beard = -1;
