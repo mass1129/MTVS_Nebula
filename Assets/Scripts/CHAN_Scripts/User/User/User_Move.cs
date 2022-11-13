@@ -2,6 +2,7 @@ using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.UI;
 
 /// <summary>
 /// 유저의 기본 이동 입력기
@@ -23,8 +24,8 @@ public class User_Move : MonoBehaviourPun, IPunObservable
     public GameObject OrcaObj;
     public ParticleSystem sornar;
     Animator animator;
-    bool countDone;
-
+    public GameObject btn_EnterRoom; 
+    string userName;
     void Start()
     {
         if (!photonView.IsMine)
@@ -33,6 +34,8 @@ public class User_Move : MonoBehaviourPun, IPunObservable
             //Audio.SetActive(false);
         }
         OrcaObj.SetActive(true);
+        btn_EnterRoom.GetComponentInChildren<Button>().onClick.AddListener(OnClickEnterBtn);
+        btn_EnterRoom.SetActive(false);
         animator = transform.GetComponentInChildren<Animator>();
     }
     Vector3 dir;
@@ -108,16 +111,24 @@ public class User_Move : MonoBehaviourPun, IPunObservable
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (photonView.IsMine)
         {
-            if (photonView.IsMine)
-            { 
+            if (other.gameObject.CompareTag("Player"))
+            {
+
                 DoHappy();
                 Do_Shout();
                 StopAllCoroutines();
                 StartCoroutine(ChangeFOV(80));
+
+            }
+            if (other.gameObject.CompareTag("UserIsland"))
+            {
+                btn_EnterRoom.SetActive(true);
+
             }
         }
+
     }
     private void OnTriggerExit(Collider other)
     {
@@ -125,6 +136,11 @@ public class User_Move : MonoBehaviourPun, IPunObservable
         {
             StopAllCoroutines();
             StartCoroutine(ChangeFOV(60));
+        }
+        if (photonView.IsMine && other.gameObject.CompareTag("UserIsland"))
+        {
+            btn_EnterRoom.SetActive(false);
+            userName = other.gameObject.GetComponent<Island_Profile>().user_name;
         }
 
     }
@@ -176,5 +192,8 @@ public class User_Move : MonoBehaviourPun, IPunObservable
             yield return null;
         }
     }
-    
+    public void OnClickEnterBtn()
+    {
+        CHAN_GameManager.instance.Go_User_Scene(userName);
+    }
 }

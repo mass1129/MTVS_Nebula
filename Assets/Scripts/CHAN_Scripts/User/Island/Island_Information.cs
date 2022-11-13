@@ -32,8 +32,8 @@ public class Island_Information :MonoBehaviourPun
     }
     void Start()
     {
-        //Load();
-        LoadTest();
+        Load();
+        //LoadTest();
     }
     Parsing parsing = new Parsing();
     public Dictionary<string, JsonInfo> Island_Dic = new Dictionary<string, JsonInfo>();
@@ -112,7 +112,7 @@ public class Island_Information :MonoBehaviourPun
         var httpRequest = new HttpRequester(new JsonSerializationOption());
         Root result = await httpRequest.Get<Root>(url);
         await parsing.LoadFromJson(result.results, Island_Dic, dis_multiplier);
-        await parsing.InsertInfo(result.results, Island_Dic, Islands);
+        await parsing.InsertInfo(Island_Dic, Islands);
         Done = true;
         if (Done)
         {

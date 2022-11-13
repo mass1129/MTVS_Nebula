@@ -11,7 +11,7 @@ public class Island_Profile : MonoBehaviourPun
 {
     //이미지 파일을 가져와서  섬에 띄우도록 한다.
     public string user_name;
-    string user_Url;
+    public string user_Url;
     public Image profileImage;
     Text userName_Text;
     Transform playerPos;
@@ -43,13 +43,8 @@ public class Island_Profile : MonoBehaviourPun
         {
             await Task.Yield();
         }
-        if (PhotonNetwork.IsMasterClient)
-        {
-            JsonInfo JInfo = Island_Information.instance.Island_Dic[user_name];
-            user_Url = JInfo.User_image;
-        }
         GetTexture(user_Url);
-        userName_Text.text = Island_Information.instance.Island_Dic[user_name].User_NickName;
+        userName_Text.text = user_name;
         userName_Text.enabled = false;
     }
     //void LoadImageByJson()

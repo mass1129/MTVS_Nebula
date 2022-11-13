@@ -13,11 +13,13 @@ namespace IslandInfo
     }
     public class Result
     {
+        public string avatarName { get; set; }
         public double pc1 { get; set; }
         public double pc2 { get; set; }
         public double pc3 { get; set; }
         public string keyword1 { get; set; }
         public string keyword2 { get; set; }
+        public string image_url { get; set; }
     }
 
 
@@ -65,7 +67,8 @@ namespace IslandInfo
                 url = objPerIndex["image_url"].ToString();
                 keyword1 = objPerIndex["keyword1"].ToString();
                 keyword2 = objPerIndex["keyword2"].ToString();
-                InsertData(Island_Dic, i.ToString(), url, pos, keyword1, keyword2);
+                string NickName = i.ToString();
+                InsertData(Island_Dic, i.ToString(), url, NickName, pos, keyword1, keyword2);
                 await Task.Yield();
             }
         }
@@ -75,16 +78,17 @@ namespace IslandInfo
             {
                 string key = item.Key;
                 Result value = item.Value;
+                string nickName = value.avatarName;
                 Vector3 pos = new Vector3((float)value.pc1 * dis_multiplier, (float)value.pc2 * dis_multiplier, (float)value.pc3 * dis_multiplier);
-                string url = null;
+                string url = value.image_url;
                 string keyword1 = value.keyword1;
                 string keyword2 = value.keyword2;
-                InsertData(Island_Dic, key, url, pos, keyword1, keyword2);
+                InsertData(Island_Dic, key,nickName, url, pos, keyword1, keyword2);
                 await Task.Yield();
             }
            
         }
-        public void InsertData(Dictionary<string,JsonInfo> Island_Dic,string i, string url, Vector3 pos, string keyword1 = "", string keyword2 = "")
+        public void InsertData(Dictionary<string,JsonInfo> Island_Dic,string i,string nickName, string url, Vector3 pos, string keyword1 = "", string keyword2 = "")
         {
             JsonInfo dic = new JsonInfo();
             Categories categories = new Categories();
@@ -95,7 +99,7 @@ namespace IslandInfo
             dic.island_Type = Return_IslandType(keyword2);
             dic.island_Pos = pos;
             dic.User_image = url;
-            dic.User_NickName = keyword1 + " " + keyword2;
+            dic.User_NickName = nickName;
         }
         string Return_IslandType(string s)
         {
@@ -112,17 +116,18 @@ namespace IslandInfo
             }
             return s1;
         }
-        public async Task InsertInfo(Dictionary<string, Result> results, Dictionary<string, JsonInfo> Island_Dic,Transform Islands)
+        public async Task InsertInfo( Dictionary<string, JsonInfo> Island_Dic,Transform Islands)
         {
 
-            foreach (string i in results.Keys)
+            foreach (string i in Island_Dic.Keys)
             {
 
                 JsonInfo info = Island_Dic[i];
                 GameObject island = InstantiateIsland(info.island_Type, Islands);
                 info.User_Obj = island;
                 island.transform.position = info.island_Pos;
-                island.transform.GetComponent<Island_Profile>().user_name = i;
+                island.transform.GetComponent<Island_Profile>().user_name = info.User_NickName;
+                island.transform.GetComponent<Island_Profile>().user_Url = info.User_image;
                 await Task.Yield();
             }
         }
