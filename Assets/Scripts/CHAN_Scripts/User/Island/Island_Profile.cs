@@ -15,11 +15,9 @@ public class Island_Profile : MonoBehaviourPun
     public Image profileImage;
     Text userName_Text;
     Transform playerPos;
-    //Transform player;
     bool turn;
     void Start()
     {
-        //profileImage = transform.GetChild(0).GetComponent<Image>();
         profileImage.enabled = false;
         playerPos = CHAN_PlayerManger.LocalPlayerInstance.transform;
         userName_Text = gameObject.transform.GetComponentInChildren<Text>();

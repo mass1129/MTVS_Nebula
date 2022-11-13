@@ -104,7 +104,7 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
     }
     void SetPlayer(string prefab)
     {
-        player=PN.Instantiate(prefab, Vector3.zero, Quaternion.identity);
+        player= PN.Instantiate(prefab, new Vector3(51, 0, 47), Quaternion.identity);
     }
 
     public void Go_Sky_Scene()

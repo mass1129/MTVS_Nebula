@@ -66,9 +66,6 @@ public class Island_Dynamics : MonoBehaviourPun
                             rb.AddForce(dir * forceMultiplier * Time.deltaTime, ForceMode.Force);
                         }
                     }
-
-                    
-
                 }
                
             }

@@ -3921,6 +3921,7 @@ MonoBehaviour:
   - {fileID: 1752280605323407269}
   - {fileID: 1752280606361052065}
   - {fileID: 1752280604984157940}
+  tabButton: {fileID: 0}
 --- !u!1 &1752280604653170796
 GameObject:
   m_ObjectHideFlags: 0
@@ -4783,6 +4784,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: 128d426c0cfe0f940aa8fd7406a56991, type: 2}
   inventoryWindow: {fileID: 1752280605021983913}
+  quickSlotList: {fileID: 0}
   invenTab: {fileID: 0}
   onQuickSlot: 0
   inventoryPrefab: {fileID: 6052166822543390096, guid: 6ec917383ad9fbb4187b165251751349, type: 3}
@@ -5238,6 +5240,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: 711bda56d07eec245bfab8e85bc64549, type: 2}
   inventoryWindow: {fileID: 1752280606409922374}
+  quickSlotList: {fileID: 0}
   invenTab: {fileID: 0}
   onQuickSlot: 0
   inventoryPrefab: {fileID: 6052166822543390096, guid: 62393e2793cbbcc42918d34d71f732fa, type: 3}
@@ -6613,6 +6616,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: 01ccba72d2e8f8140b886ddc5af726d6, type: 2}
   inventoryWindow: {fileID: 1752280605125275020}
+  quickSlotList: {fileID: 0}
   invenTab: {fileID: 0}
   onQuickSlot: 0
   inventoryPrefab: {fileID: 6052166822543390096, guid: 62393e2793cbbcc42918d34d71f732fa, type: 3}
@@ -7620,6 +7624,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: 03e1d40251a619f4a9f2f3e3ac33a076, type: 2}
   inventoryWindow: {fileID: 1752280604488678096}
+  quickSlotList: {fileID: 0}
   invenTab: {fileID: 0}
   onQuickSlot: 0
   slots:
@@ -10842,6 +10847,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: 422cb2658b0d51346a2cf4a932b5bd9e, type: 2}
   inventoryWindow: {fileID: 1752280605421572272}
+  quickSlotList: {fileID: 0}
   invenTab: {fileID: 0}
   onQuickSlot: 0
   inventoryPrefab: {fileID: 6052166822543390096, guid: 62393e2793cbbcc42918d34d71f732fa, type: 3}
@@ -10917,6 +10923,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: c3cb508365f4b5c46b15784258606b4f, type: 2}
   inventoryWindow: {fileID: 1752280605224693431}
+  quickSlotList: {fileID: 0}
   invenTab: {fileID: 1752280604606760088}
   onQuickSlot: 0
   inventoryPrefab: {fileID: 6052166822543390096, guid: 62393e2793cbbcc42918d34d71f732fa, type: 3}
@@ -22325,10 +22332,12 @@ MonoBehaviour:
       m_LegacyVelocityFilterStrength: 0
   playerCamera: {fileID: 1752280606319894688}
   firstPersonCamera: {fileID: 1752280606606496139}
+  subBuildCamera: {fileID: 0}
   buildCamera: {fileID: 4970061920650977190}
   buildCamOffset: {fileID: 0}
   firstPersonView: 0
   zoomChangeAmount: 100
+  isCursorVisible: 0
 --- !u!114 &5733073701845269106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22341,12 +22350,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9c40c1abf278f741893bb958ef371ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isVisible: 0
   inven_Cloths: {fileID: 11400000, guid: c3cb508365f4b5c46b15784258606b4f, type: 2}
   inven_Building: {fileID: 11400000, guid: 128d426c0cfe0f940aa8fd7406a56991, type: 2}
   inven_Default: {fileID: 11400000, guid: 711bda56d07eec245bfab8e85bc64549, type: 2}
   inven_Vehicle: {fileID: 11400000, guid: 422cb2658b0d51346a2cf4a932b5bd9e, type: 2}
-  equipment: {fileID: 11400000, guid: 03e1d40251a619f4a9f2f3e3ac33a076, type: 2}
+  inven_Equipment: {fileID: 0}
 --- !u!114 &5733073701845269110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22403,6 +22411,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e418d1ddcb6a171449d202bf1d7d6508, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSettingsExpanded: 0
+  selectedsettings: {fileID: 0}
+  _settings: {fileID: 0}
+  characterParts: []
+  prefabPath: 
+  instanceStatus: 0
+  originHip: {fileID: 0}
+  headHip: {fileID: 0}
+  clothesAnchors: []
+  animator: {fileID: 0}
+  characterSelectedElements:
+    Hair: -1
+    Beard: -1
+    Hat: -1
+    Shirt: -1
+    Pants: -1
+    Shoes: -1
+    Accessory: -1
+    Item1: -1
+  heightValue: 0
+  headSizeValue: 0
+  feetOffset: 0
+  characterBlendshapeDatas: []
+  Skin: {r: 0, g: 0, b: 0, a: 0}
+  Eye: {r: 0, g: 0, b: 0, a: 0}
+  Hair: {r: 0, g: 0, b: 0, a: 0}
+  Underpants: {r: 0, g: 0, b: 0, a: 0}
+  OralCavity: {r: 0, g: 0, b: 0, a: 0}
+  Teeth: {r: 0, g: 0, b: 0, a: 0}
+  CurrentCombinerState: 0
+  combinedCharacter: {fileID: 0}
+  ProbesAnchorOverride: {fileID: 0}
+  CharacterGenerator_settings: {fileID: 0}
+  UpdateWhenOffscreenMeshes: 1
+  MinLODLevels: 0
+  MaxLODLevels: 3
+  _transform: {fileID: 0}
+  applyFeetOffset: 1
+  notAPP2Shader: 0
 --- !u!114 &3214773754116892971
 MonoBehaviour:
   m_ObjectHideFlags: 0
