@@ -18,7 +18,7 @@ public class TV_Detect : MonoBehaviour
     // collider 감지하면, 그것이 사람이면 Text 켜지게 한다. 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name == "CustomizableCharacter")
+        if (other.gameObject.CompareTag("Player"))
         {
             Item_TVManager.instance.CanControlTV(true);
             Item_TVManager.instance.done = true;

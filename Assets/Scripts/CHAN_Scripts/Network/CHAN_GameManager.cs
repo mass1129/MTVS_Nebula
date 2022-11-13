@@ -27,7 +27,6 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
     // 지금은 시작하자마자 서버에 접속하는 것으로 만듬
     // 추 후 게임 시작 후, 접속하는 부분에서 해당 기능을 넣을 예정
     //해당 매니저는 싱글톤으로 만든다.
-    public string nick;
     //방을 join, 혹은 create할 때 불러오는 변수  
     [Header("여기에 이동할 씬을 넣으시오")]
     public string name_SkyScene;
@@ -59,7 +58,7 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
     {
         // 마스터 서버에 접속한다.
         PN.ConnectUsingSettings();
-        PN.NickName = nick;
+        PN.NickName = PlayerPrefs.GetString("AvatarName");
     }
     public override void OnConnectedToMaster()
     {

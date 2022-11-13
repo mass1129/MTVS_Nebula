@@ -34,6 +34,7 @@ public class User_Move : MonoBehaviourPun, IPunObservable
     Vector3 receivePos;
     Quaternion receiveRot;
     bool mouseOn;
+    string temp_userIsland_ID;
     //W: 전진
     //S: 후진 
     //A: 반시계방향 회전 
@@ -132,6 +133,7 @@ public class User_Move : MonoBehaviourPun, IPunObservable
             {
                 btn_EnterRoom.SetActive(true);
                 userName = other.gameObject.GetComponent<Island_Profile>().user_name;
+                temp_userIsland_ID = other.gameObject.GetComponent<Island_Profile>().user_IslandID;
                 MouseVisual(true);
             }
         }
@@ -201,6 +203,8 @@ public class User_Move : MonoBehaviourPun, IPunObservable
     }
     public void OnClickEnterBtn()
     {
+        PlayerPrefs.SetString("Island_ID", temp_userIsland_ID);
+        print("섬 ID: "+PlayerPrefs.GetString("Island_ID"));
         CHAN_GameManager.instance.Go_User_Scene(userName);
     }
     void MouseVisual(bool b)
