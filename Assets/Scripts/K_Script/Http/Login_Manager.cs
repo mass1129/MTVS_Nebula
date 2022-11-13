@@ -35,9 +35,6 @@ public class Login_Manager : MonoBehaviour
         SceneManager.LoadScene(1);
         
     }
-   
-
-
     #region API_Func
     /// <summary>
     /// API로 로그인하여 토큰을 가져오는 함수
