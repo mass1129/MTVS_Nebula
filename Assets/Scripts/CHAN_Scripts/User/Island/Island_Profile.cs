@@ -11,7 +11,7 @@ public class Island_Profile : MonoBehaviourPun
 {
     //이미지 파일을 가져와서  섬에 띄우도록 한다.
     public string user_name;
-    string user_Url;
+    public string user_Url;
     public Image profileImage;
     Text userName_Text;
     Transform playerPos;
@@ -23,6 +23,8 @@ public class Island_Profile : MonoBehaviourPun
         profileImage.enabled = false;
         playerPos = CHAN_PlayerManger.LocalPlayerInstance.transform;
         userName_Text = gameObject.transform.GetComponentInChildren<Text>();
+        //섬의 크기에따라 이미지의 위치를 조정한다. 
+        playerPos.transform.GetChild(1).position = new Vector3(0, playerPos.transform.GetChild(1).position.y*playerPos.transform.GetChild(0).localScale.y, 0);
         LoadImage();
     }
     private void Update()
@@ -41,22 +43,10 @@ public class Island_Profile : MonoBehaviourPun
         {
             await Task.Yield();
         }
-        if (PhotonNetwork.IsMasterClient)
-        {
-            JsonInfo JInfo = Island_Information.instance.Island_Dic[user_name];
-            user_Url = JInfo.User_image;
-        }
         GetTexture(user_Url);
-        userName_Text.text = "UserName_" + user_name;
+        userName_Text.text = user_name;
         userName_Text.enabled = false;
     }
-    //void LoadImageByJson()
-    //{
-    //    JsonInfo JInfo = LoadJson.instance.Island_Dic[user_name];
-    //    StartCoroutine(GetTexture(JInfo.User_image));
-    //    userName_Text.text = "UserName_" + user_name;
-    //    userName_Text.enabled = false;
-    //}
     #endregion
     async void GetTexture(string url)
     {

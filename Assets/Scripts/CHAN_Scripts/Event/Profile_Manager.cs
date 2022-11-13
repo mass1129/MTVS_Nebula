@@ -5,18 +5,13 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UserProfile;
 
 // 플레이어 프로필 정보를 저장할 클래스 
-class ProfileInfo
-{
-    public string User_Name;
-    public Texture User_Texture;
-    public List<string> User_Keywords = new List<string>();
-}
+
 public class Profile_Info
 { 
-    //d
-    public Texture rawImage;
+    public UnityEngine.Texture rawImage;
     public List<string> Keywords = new List<string>();
 }
 public class Profile_Manager : MonoBehaviour
@@ -52,8 +47,9 @@ public class Profile_Manager : MonoBehaviour
     public GameObject Btn_DeleteProfile;
     #endregion
     //일단 네트워크를 적용하지 않은 상태이므로 임시로 정보를 받을  클래스를 생성시켜서 저장해보자 
-    ProfileInfo info = new ProfileInfo();
+    new_ProfileInfo new_profileInfo = new new_ProfileInfo();
     Profile_Info profile = new Profile_Info();
+    public ProfileInfo temp_Info = new ProfileInfo();
     //해로 생성된 프로필 버튼 위치 지정해주는 함수
     public void transfer(GameObject obj)
     {
@@ -76,7 +72,10 @@ public class Profile_Manager : MonoBehaviour
         Text_Nickname = obj.transform.GetChild(6).gameObject.GetComponent<Text>();
     }
     void Start()
-    {}
+    {
+        Btn_ReviceProfile.SetActive(false);
+        Btn_DeleteProfile.SetActive(false);
+    }
 
  
     void Update()
@@ -115,7 +114,7 @@ public class Profile_Manager : MonoBehaviour
         }
         else
         { OnMainSelect(false); }
-        if (info.User_Texture != null && info.User_Keywords.Count > 0 && info.User_Name != null)
+        if (new_profileInfo.ProfileImage != null && new_profileInfo.HashTag.Count > 0 && new_profileInfo.User_Name != null)
         {
             btn_Done.SetActive(true);
         }
@@ -157,8 +156,8 @@ public class Profile_Manager : MonoBehaviour
         }
         else
         {
-            Texture myTexture = ((DownloadHandlerTexture)www.downloadHandler).texture;
-            info.User_Texture = myTexture;
+            UnityEngine.Texture2D myTexture = ((DownloadHandlerTexture)www.downloadHandler).texture;
+            new_profileInfo.ProfileImage = myTexture;
         }
     }
     #endregion
@@ -196,7 +195,7 @@ public class Profile_Manager : MonoBehaviour
         }
         for (int i = 0; i < input_keywords.Length; i++)
         {
-            info.User_Keywords.Add(input_keywords[i].GetComponent<InputField>().text);
+            new_profileInfo.HashTag.Add(input_keywords[i].GetComponent<InputField>().text);
         }
         Initialize();
         AddProfile(true);
@@ -219,7 +218,7 @@ public class Profile_Manager : MonoBehaviour
     {
         if (input_NickName.GetComponent<InputField>().text.Length > 0)
         {
-            info.User_Name = input_NickName.GetComponent<InputField>().text;
+            new_profileInfo.User_Name = input_NickName.GetComponent<InputField>().text;
             Text_Nickname.text= input_NickName.GetComponent<InputField>().text;
         }
         else
@@ -235,10 +234,11 @@ public class Profile_Manager : MonoBehaviour
     {
         //이미지가 있는가?
         //keyword가 저장되어 있는가?
-        if (info.User_Texture != null&& info.User_Keywords.Count>0&&info.User_Name!=null)
-        { 
+        if (new_profileInfo.ProfileImage != null&& new_profileInfo.HashTag.Count>0&&new_profileInfo.User_Name!=null)
+        {
             //저장 완료!
             //서버에 json으로 해당 정보를 보내자!
+            UserProfile_Utility.instance.Post(new_profileInfo.User_Name, new_profileInfo.HashTag,new_profileInfo.ProfileImage);
         }
         //프로필 생성 함수 
         UpdateProfile();
@@ -254,14 +254,14 @@ public class Profile_Manager : MonoBehaviour
     void UpdateProfile()
     {
         //클래스에 저장된 정보를 해당  UI에 저장한다. 
-        Area_Load_Profile.GetChild(0).GetComponent<RawImage>().texture = info.User_Texture;
+        Area_Load_Profile.GetChild(0).GetComponent<RawImage>().texture = new_profileInfo.ProfileImage;
        
-        profile.rawImage = info.User_Texture;
+        profile.rawImage = new_profileInfo.ProfileImage;
 
         for (int i = 0; i < Area_Load_Profile.GetChild(1).childCount; i++)
         {
-            Area_Load_Profile.GetChild(1).GetChild(i).GetChild(0).GetComponent<Text>().text = info.User_Keywords[i];
-            profile.Keywords.Add(info.User_Keywords[i]);
+            Area_Load_Profile.GetChild(1).GetChild(i).GetComponentInChildren<Text>().text = new_profileInfo.HashTag[i];
+            profile.Keywords.Add(new_profileInfo.HashTag[i]);
         }
     }
     void InitialProfiles()
@@ -278,10 +278,35 @@ public class Profile_Manager : MonoBehaviour
     //다음 씬으로 넘어가는 버튼을 킨다.
     public void OnNextSceneBtn()
     {
-        Profile_Main_Manager.instance.btn_MoveNextScene.SetActive(true);
+        Profile_Main_Manager.instance.btn_MoveNextScene.SetActive(!Btn_ReviceProfile.activeSelf);
         Btn_ReviceProfile.SetActive(!Btn_ReviceProfile.activeSelf);
         Btn_DeleteProfile.SetActive(!Btn_DeleteProfile.activeSelf);
     }
+    /// <summary>
+    /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// </summary>
+    public void GoNextScene()
+    {
+        // 만약 해당 프로필에 Texture 정보가 null 이면 아바타 생성씬으로 이동 아니면 바로 하늘씬으로 이동
+        // 다음씬으로 넘어갈 때 저장해야 하는 정보 : 닉네임, 하늘섬 Id
+        PlayerPrefs.SetString("AvatarName", Text_Nickname.text);
+        PlayerPrefs.SetString("Island_ID", temp_Info.User_Island_ID.ToString());
+        if (temp_Info.texture_info == null)
+        {
+            // 아바타 생선씬으로 넘어간다.
+            Profile_Main_Manager.instance.hasAvatar = false;
+            print("아바타 씬");
+        }
+        else
+        {
+            //서버 접속할 수 있도록 (서버접속 씬으로 넘어간다.)
+            Profile_Main_Manager.instance.hasAvatar = true;
+            SceneManager.LoadScene(4);
+        }
+    }
+    /// <summary>
+    /// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// </summary>
     #endregion
     #region 7. 프로필 수정, 삭제 
     bool isRevice;
@@ -293,9 +318,11 @@ public class Profile_Manager : MonoBehaviour
     }
     public void Delate()
     {
-        InitialProfiles();
+        UserProfile_Utility.instance.Delete(Text_Nickname.text);
+        Profile_Main_Manager.instance.btn_MoveNextScene.SetActive(false);
         Destroy(transform.parent.gameObject);
     }
+
     #endregion 프로필 수정, 삭제
 
 }

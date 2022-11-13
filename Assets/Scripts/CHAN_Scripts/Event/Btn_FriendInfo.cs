@@ -36,8 +36,8 @@ public class Btn_FriendInfo : MonoBehaviour
     }
     public void ShowProfile()
     {
-        Area_Friend_Profile.transform.GetChild(0).GetComponent<RawImage>().texture = texture;
-        Area_Friend_Profile.transform.GetChild(1).GetChild(0).GetComponent<Text>().text = keyword;
+        Area_Friend_Profile.transform.GetComponentInChildren<RawImage>().texture = texture;
+       // Area_Friend_Profile.transform.GetChild(1).GetChild(0).GetComponent<Text>().text = keyword;
     }
 
     void LoadImage()
