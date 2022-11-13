@@ -1,25 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using System.IO;
 
-public class PlacedObject : MonoBehaviour {
+public class PlacedObject : MonoBehaviourPun
+{
 
-    public static PlacedObject Create(Vector3 worldPosition, Vector2Int origin, PlacedObjectTypeSO.Dir dir, PlacedObjectTypeSO placedObjectTypeSO) 
+    public static PlacedObject Create(Vector3 worldPosition, Vector2Int origin, PlacedObjectTypeSO.Dir dir, PlacedObjectTypeSO placedObjectTypeSO)
     {
-        Transform placedObjectTransform = Instantiate(placedObjectTypeSO.prefab, worldPosition, Quaternion.Euler(0, placedObjectTypeSO.GetRotationAngle(dir), 0));
+        GameObject placedObjectTransform = PhotonNetwork.Instantiate(Path.Combine(placedObjectTypeSO.bundleFolderName, placedObjectTypeSO.prefab.name), worldPosition, Quaternion.Euler(0, placedObjectTypeSO.GetRotationAngle(dir), 0));
 
-        PlacedObject placedObject = placedObjectTransform.GetComponent<PlacedObject>();
+        PlacedObject placedObject = placedObjectTransform.transform.GetComponent<PlacedObject>();
         placedObject.placedObjectTypeSO = placedObjectTypeSO;
         placedObject.origin = origin;
         placedObject.dir = dir;
 
         placedObject.Setup();
-
         return placedObject;
+        //TestCreate(worldPosition, origin, dir, placedObjectTypeSO);
     }
-
-
-
+   
 
     private PlacedObjectTypeSO placedObjectTypeSO;
     private Vector2Int origin;
@@ -48,7 +49,7 @@ public class PlacedObject : MonoBehaviour {
     }
 
     public virtual void DestroySelf() {
-        Destroy(gameObject);
+        PhotonNetwork.Destroy(gameObject);
     }
 
     public override string ToString() {
@@ -65,6 +66,8 @@ public class PlacedObject : MonoBehaviour {
             
         };
     }
+
+ 
 
     [System.Serializable]
     public class SaveObject {

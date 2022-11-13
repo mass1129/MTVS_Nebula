@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using AdvancedPeopleSystem;
+using Photon.Pun;
+public class PlayerEquipment : CharacterCustomization
 
-public class PlayerEquipment : MonoBehaviour
 {
     private InventoryObject _equipment;
 
@@ -14,6 +15,7 @@ public class PlayerEquipment : MonoBehaviour
 
     void Start()
     {
+        //if (!photonView.IsMine) this.enabled = false; ;
         _equipment = GetComponent<K_PlayerItemSystem>().inven_Equipment;
 
         CharacterCustomization = GetComponent<CharacterCustomization>();
@@ -24,8 +26,18 @@ public class PlayerEquipment : MonoBehaviour
             _equipment.GetSlots[i].onAfterUpdated += OnEquipItem;
         }
     }
+    //public override void KSetElementByIndex(CharacterElementType type, int index)
+    //{
+    //    photonView.RPC("RpcSetTrigger", RpcTarget.AllBuffered, );
+    //}
 
-    private void OnEquipItem(InventorySlot slot)
+    //[PunRPC]
+    //public override void RPCSetElementByIndex(CharacterElementType type, int index)
+    //{
+    //    characterSelectedElements.SetSelectedIndex(type, index);
+    //}
+
+    public void OnEquipItem(InventorySlot slot)
     {
         var itemObject = slot.GetItemObject();
         if (itemObject == null)
@@ -37,7 +49,7 @@ public class PlayerEquipment : MonoBehaviour
                     switch (slot.allowedItems[0])
                     {
                         case ItemType.Hat:
-                            CharacterCustomization.SetElementByIndex(CharacterElementType.Hat, itemObject.charCustomIndex);
+                            SetElementByIndex(CharacterElementType.Hat, itemObject.charCustomIndex);
                             break;
 
                         case ItemType.Accessory:
@@ -71,7 +83,7 @@ public class PlayerEquipment : MonoBehaviour
         }
     }
 
-    private void OnRemoveItem(InventorySlot slot)
+    public void OnRemoveItem(InventorySlot slot)
     {
         if (slot.GetItemObject() == null)
             return;
@@ -115,4 +127,14 @@ public class PlayerEquipment : MonoBehaviour
             break;
         }
     }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    //public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    //{
+
+    //}
 }

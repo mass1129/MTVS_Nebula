@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 namespace AdvancedPeopleSystem
 {
@@ -88,7 +89,7 @@ namespace AdvancedPeopleSystem
         public CharacterBlendshapeData() { }
     }
     [System.Serializable]
-    public class CharacterSelectedElements: ICloneable
+    public class CharacterSelectedElements: MonoBehaviourPun,ICloneable,IPunObservable
     {
         public int Hair = -1;
         public int Beard = -1;
@@ -136,6 +137,12 @@ namespace AdvancedPeopleSystem
             }
             return -1;
         }
+
+        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        {
+            throw new NotImplementedException();
+        }
+
         public void SetSelectedIndex(CharacterElementType type, int newIndex)
         {
             switch (type)
@@ -167,7 +174,7 @@ namespace AdvancedPeopleSystem
             }
         }
     }
-
+   
     public enum CharacterBlendShapeGroup
     {
         Body,

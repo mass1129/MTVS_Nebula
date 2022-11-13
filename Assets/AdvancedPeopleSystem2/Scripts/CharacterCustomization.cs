@@ -7,6 +7,7 @@ using UnityEditor;
 using UnityEngine;
 using System.Text.RegularExpressions;
 using System.Globalization;
+using Photon.Pun;
 
 namespace AdvancedPeopleSystem
 {
@@ -15,11 +16,11 @@ namespace AdvancedPeopleSystem
     /// </summary>
     [DisallowMultipleComponent]
     [AddComponentMenu("Advanced People Pack/Character Customizable", -1)]
-    public class CharacterCustomization : MonoBehaviour
+    public class CharacterCustomization : MonoBehaviourPun, IPunObservable
     {
         [SerializeField] public bool isSettingsExpanded = false;
 
-        public CharacterSettings  selectedsettings;
+        public CharacterSettings selectedsettings;
 
         public CharacterSettings Settings => _settings;
 
@@ -44,7 +45,7 @@ namespace AdvancedPeopleSystem
         public float heightValue = 0;
         public float headSizeValue = 0;
         public float feetOffset = 0;
-        
+
         public List<CharacterBlendshapeData> characterBlendshapeDatas = new List<CharacterBlendshapeData>();
 
         public Color Skin,
@@ -83,19 +84,20 @@ namespace AdvancedPeopleSystem
 
         private void Awake()
         {
+            
             this._transform = transform;
             _lodGroup = GetComponent<LODGroup>();
-           // RecalculateLOD();
+            // RecalculateLOD();
             UpdateSkinnedMeshesOffscreenBounds();
         }
         private void Start()
         {
-            
+            //if (!photonView.IsMine) this.enabled = false;
         }
         void LoadLastSaveData()
         {
             var saveDatas = GetSavedCharacterDatas();
-            ApplySavedCharacterData(saveDatas[saveDatas.Count- 1]);
+            ApplySavedCharacterData(saveDatas[saveDatas.Count - 1]);
         }
         private void Update()
         {
@@ -143,9 +145,9 @@ namespace AdvancedPeopleSystem
         /// </summary>
         public void SwitchCharacterSettings(string selectorName)
         {
-            for(int i = 0; i < Settings.settingsSelectors.Count;i++)
+            for (int i = 0; i < Settings.settingsSelectors.Count; i++)
             {
-                if(Settings.settingsSelectors[i].name == selectorName)
+                if (Settings.settingsSelectors[i].name == selectorName)
                 {
                     SwitchCharacterSettings(i);
                     return;
@@ -159,7 +161,7 @@ namespace AdvancedPeopleSystem
         public void InitializeMeshes(CharacterSettings newSettings = null, bool resetAll = true)
         {
             _transform = transform;
-            if(selectedsettings == null && newSettings == null)
+            if (selectedsettings == null && newSettings == null)
             {
                 Debug.LogError("_settings = null, Unable to initialize character");
             }
@@ -181,7 +183,7 @@ namespace AdvancedPeopleSystem
             }
 #if UNITY_EDITOR
             if (prefabPath == string.Empty || prefabPath.Length == 0)
-               prefabPath = UnityEditor.PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(gameObject);
+                prefabPath = UnityEditor.PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(gameObject);
 #endif
             UnlockPrefab();
             List<GameObject> objectsToDelete = new List<GameObject>();
@@ -209,7 +211,7 @@ namespace AdvancedPeopleSystem
 
             List<Transform> childTransforms = new List<Transform>();
             List<Transform> destroyList = new List<Transform>();
-            for (int i = 0; i < characterGO.transform.childCount;i++)
+            for (int i = 0; i < characterGO.transform.childCount; i++)
             {
                 var childObj = characterGO.transform.GetChild(i);
                 childTransforms.Add(childObj);
@@ -218,20 +220,20 @@ namespace AdvancedPeopleSystem
             characterParts.Clear();
             clothesAnchors.Clear();
 
-            foreach(var obj in childTransforms)
+            foreach (var obj in childTransforms)
             {
                 obj.SetParent(_transform);
                 var skinnedMesh = obj.GetComponent<SkinnedMeshRenderer>();
                 var Objparams = obj.name.Split('_');
                 string objType = Objparams[0];
-                string lodLevel = (Objparams.Length==3) ? Objparams[2] : "-";
+                string lodLevel = (Objparams.Length == 3) ? Objparams[2] : "-";
                 int lod = -1;
                 Match match = Regex.Match(lodLevel, @"(\d+)");
                 if (match.Success)
                 {
                     lod = int.Parse(match.Groups[1].Value);
                 }
-                if(lod != -1 && lod < MinLODLevels || lod > MaxLODLevels)
+                if (lod != -1 && lod < MinLODLevels || lod > MaxLODLevels)
                 {
                     DestroyObjects(new GameObject[] { obj.gameObject });
                     continue;
@@ -267,7 +269,7 @@ namespace AdvancedPeopleSystem
                     {
                         characterPart.skinnedMesh.Add(skinnedMesh);
                     }
-                }else if(objType.ToLowerInvariant() == "hips")
+                } else if (objType.ToLowerInvariant() == "hips")
                 {
                     obj.SetSiblingIndex(0);
 
@@ -278,14 +280,14 @@ namespace AdvancedPeopleSystem
                     headHip = allHips.First(f => f.name.ToLowerInvariant() == "head");
 
                 }
-                else if(objType == "HAT" || objType == "SHIRT" || objType == "PANTS" || objType == "SHOES" || objType == "ACCESSORY" || objType == "ITEM1")
+                else if (objType == "HAT" || objType == "SHIRT" || objType == "PANTS" || objType == "SHOES" || objType == "ACCESSORY" || objType == "ITEM1")
                 {
                     if (skinnedMesh == null)
                         continue;
 
                     skinnedMesh.gameObject.SetActive(false);
                     var clothesAnchor = clothesAnchors.Find(f => f.partType.ToString().ToLowerInvariant() == objType.ToLowerInvariant());
-                    if(clothesAnchor == null)
+                    if (clothesAnchor == null)
                     {
                         var newClothesAnchor = new ClothesAnchor();
 
@@ -308,22 +310,22 @@ namespace AdvancedPeopleSystem
             {
                 animator = gameObject.AddComponent<Animator>();
             }
-            if(_lodGroup != null && MinLODLevels == MaxLODLevels)
+            if (_lodGroup != null && MinLODLevels == MaxLODLevels)
             {
                 DestroyImmediate(_lodGroup);
             }
             else
             {
-                if(_lodGroup == null)
-                _lodGroup = gameObject.AddComponent<LODGroup>();
+                if (_lodGroup == null)
+                    _lodGroup = gameObject.AddComponent<LODGroup>();
             }
             animator.avatar = _settings.Avatar;
             animator.runtimeAnimatorController = _settings.Animator;
             animator.Rebind();
 
 
-            if(resetAll)
-            ResetAll(false);
+            if (resetAll)
+                ResetAll(false);
 
             RecalculateLOD();
 
@@ -351,7 +353,7 @@ namespace AdvancedPeopleSystem
             foreach (SkinnedMeshRenderer mesh in allMeshes)
             {
                 mesh.updateWhenOffscreen = UpdateWhenOffscreenMeshes;
-               
+
                 if (!UpdateWhenOffscreenMeshes)
                 {
                     if (GetCharacterInstanceStatus() != CharacterInstanceStatus.PrefabEditingInProjectView && GetCharacterInstanceStatus() != CharacterInstanceStatus.PrefabStageSceneOpened)
@@ -400,7 +402,7 @@ namespace AdvancedPeopleSystem
         public void ResetBodyMaterial()
         {
             foreach (var part in characterParts)
-            {              
+            {
                 foreach (var sm in part.skinnedMesh)
                 {
                     sm.sharedMaterial = _settings.bodyMaterial;
@@ -482,7 +484,7 @@ namespace AdvancedPeopleSystem
         /// </summary>
         public void InitColors()
         {
-            if(Settings == null)
+            if (Settings == null)
             {
                 return;
             }
@@ -505,7 +507,7 @@ namespace AdvancedPeopleSystem
         {
             if (notAPP2Shader)
                 return;
-            if(_settings.bodyMaterial.HasProperty("_SkinColor"))
+            if (_settings.bodyMaterial.HasProperty("_SkinColor"))
                 SetBodyColor(BodyColorPart.Skin, _settings.bodyMaterial.GetColor("_SkinColor"));
             if (_settings.bodyMaterial.HasProperty("_EyeColor"))
                 SetBodyColor(BodyColorPart.Eye, _settings.bodyMaterial.GetColor("_EyeColor"));
@@ -518,7 +520,7 @@ namespace AdvancedPeopleSystem
             if (_settings.bodyMaterial.HasProperty("_TeethColor"))
                 SetBodyColor(BodyColorPart.Teeth, _settings.bodyMaterial.GetColor("_TeethColor"));
         }
-       
+
         /// <summary>
         /// Set body shape (blend shapes)
         /// </summary>
@@ -543,11 +545,11 @@ namespace AdvancedPeopleSystem
                             if (skinnedMesh != null && skinnedMesh.sharedMesh != null)
                             {
                                 for (var i = 0; i < skinnedMesh.sharedMesh.blendShapeCount; i++)
-                                {                                   
+                                {
                                     if (typeName == skinnedMesh.sharedMesh.GetBlendShapeName(i))
                                     {
                                         var bIndex = skinnedMesh.sharedMesh.GetBlendShapeIndex(typeName);
-                                        if(bIndex != -1 && !Settings.DisableBlendshapeModifier)
+                                        if (bIndex != -1 && !Settings.DisableBlendshapeModifier)
                                             skinnedMesh.SetBlendShapeWeight(bIndex, weight);
                                     }
                                 }
@@ -568,7 +570,7 @@ namespace AdvancedPeopleSystem
                                     if (typeName == skinnedMesh.sharedMesh.GetBlendShapeName(i))
                                     {
                                         var bIndex = skinnedMesh.sharedMesh.GetBlendShapeIndex(typeName);
-                                        if(bIndex != -1 && !Settings.DisableBlendshapeModifier)
+                                        if (bIndex != -1 && !Settings.DisableBlendshapeModifier)
                                             skinnedMesh.SetBlendShapeWeight(bIndex, weight);
                                     }
                                 }
@@ -594,7 +596,7 @@ namespace AdvancedPeopleSystem
                     }
                 }
                 GetBlendshapeData(type).value = weight;
-            }catch(Exception ex)
+            } catch (Exception ex)
             {
                 Debug.LogException(ex);
             }
@@ -621,10 +623,17 @@ namespace AdvancedPeopleSystem
         /// </summary>
         /// <param name="type">Type of clothes</param>
         /// <param name="index">Index of element</param>
+        /// 
+        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        {
+
+        }
+        #endregion
         public void SetElementByIndex(CharacterElementType type, int index)
         {
-            
-            if(Settings == null)
+            //if (!photonView.IsMine) return;
+                //photonView.RPC("RPCSetElementByIndex", RpcTarget.AllBuffered, type, index);
+                if (Settings == null)
             {
                 Debug.LogError("settings = null");
                 return;
@@ -635,7 +644,7 @@ namespace AdvancedPeopleSystem
                 RecalculateShapes();
                 return;
             }
-            if(type == CharacterElementType.Beard)
+            if (type == CharacterElementType.Beard)
             {
                 SetBeardByIndex(index);
                 RecalculateShapes();
@@ -729,9 +738,24 @@ namespace AdvancedPeopleSystem
                 feetOffset = yOffset;
             }
 
-            characterSelectedElements.SetSelectedIndex(type,index);
-        }
+            //characterSelectedElements.SetSelectedIndex(type, index);
+            photonView.RPC("RPCSetElementByIndex", RpcTarget.AllBuffered, type, index);  
 
+        }
+        public void RPCSetElementByIndex(CharacterElementType type, int index)
+        {
+            characterSelectedElements.SetSelectedIndex(type, index);
+        }
+        //public virtual void KSetElementByIndex(CharacterElementType type, int index)
+        //{
+        //    /*photonView.RPC("RpcSetTrigger", RpcTarget.All, s);*/
+        //}
+
+        //[PunRPC]
+        //public virtual void RPCSetElementByIndex(CharacterElementType type, int index)
+        //{
+        //    ///*anim.SetTrigger(s);*/
+        //}
         /// <summary>
         /// Clear character element
         /// </summary>
@@ -2165,7 +2189,8 @@ namespace AdvancedPeopleSystem
                 }
             }
         }
-        #endregion 
+
+        
     }
     #region Basic classes and enum
     public enum CharacterElementType : int

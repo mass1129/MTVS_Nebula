@@ -9,6 +9,7 @@ public class K_StaticInterface_bundleList : K_UserInterface
 
     public GameObject[] subSlots;
     bool isAdded = false;
+   
     public override void CreateSlots()
     {
       
@@ -22,13 +23,12 @@ public class K_StaticInterface_bundleList : K_UserInterface
             {
                 AddEvent(obj, EventTriggerType.PointerEnter, delegate { OnEnter(obj); });
             AddEvent(obj, EventTriggerType.PointerExit, delegate { OnExit(obj); });
-            AddEvent(obj, EventTriggerType.BeginDrag, delegate { OnDragStart(obj); });
-            AddEvent(obj, EventTriggerType.EndDrag, delegate { OnDragEnd(obj); });
-            AddEvent(obj, EventTriggerType.Drag, delegate { OnDrag(obj); });
+                //AddEvent(obj, EventTriggerType.Select, delegate { OnSelect(obj); });
+                //AddEvent(obj, EventTriggerType.Deselect, delegate { OnDeselect(obj); });
             }
             
             inventory.GetSlots[i].slotDisplay = obj;
-            inventory.GetSlots[i].parent = this;
+            //inventory.GetSlots[i].parent = this;
             slotsOnInterface.Add(obj, inventory.GetSlots[i]);
 
         }

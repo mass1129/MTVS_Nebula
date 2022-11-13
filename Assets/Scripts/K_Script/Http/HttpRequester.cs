@@ -43,7 +43,7 @@ public class HttpRequester
            
             var result = _serializionOption.Deserialize<TResultType>(request.downloadHandler.text);
 
-
+            request.Dispose();
             return result;
             //SceneManager.LoadScene(1);
         }
@@ -84,11 +84,11 @@ public class HttpRequester
             var result = _serializionOption.Serialize(request.downloadHandler.text);
             
             SetToken(request.downloadHandler.text);
-                
-              
 
-            
-            
+
+            request.Dispose();
+
+
         }
 
         catch (Exception ex)

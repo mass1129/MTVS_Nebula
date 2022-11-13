@@ -5,7 +5,7 @@ using UnityEngine;
 using CodeMonkey.Utils;
 using Photon.Pun;
 
-public class GridBuildingSystem3D : MonoBehaviourPun
+public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
 {
 
     public static GridBuildingSystem3D Instance { get; private set; }
@@ -41,6 +41,7 @@ public class GridBuildingSystem3D : MonoBehaviourPun
        
         placedObjectTypeSO = null;
         selectedGrid = gridList[0];
+        
     }
 
     private void Start()
@@ -49,7 +50,7 @@ public class GridBuildingSystem3D : MonoBehaviourPun
     }
     private void Update()
     {
-        HandleTypeSelect();
+       //HandleTypeSelect();
         HandleNormalObjectPlacement();
         HandleDirRotation();
         HandleDemolish();
@@ -127,20 +128,16 @@ public class GridBuildingSystem3D : MonoBehaviourPun
         }
     }
 
-    private void HandleTypeSelect() {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) { placedObjectTypeSO = quickSlot.GetSlots[0].GetItemObject().matchToBuildingSO; RefreshSelectedObjectType(); }
-        if (Input.GetKeyDown(KeyCode.Alpha2)) { placedObjectTypeSO = quickSlot.GetSlots[1].GetItemObject().matchToBuildingSO; RefreshSelectedObjectType(); }
-        if (Input.GetKeyDown(KeyCode.Alpha3)) { placedObjectTypeSO = quickSlot.GetSlots[2].GetItemObject().matchToBuildingSO; RefreshSelectedObjectType(); }
-        if (Input.GetKeyDown(KeyCode.Alpha4)) { placedObjectTypeSO = quickSlot.GetSlots[3].GetItemObject().matchToBuildingSO; RefreshSelectedObjectType(); }
-        if (Input.GetKeyDown(KeyCode.Alpha5)) { placedObjectTypeSO = quickSlot.GetSlots[4].GetItemObject().matchToBuildingSO; RefreshSelectedObjectType(); }
-        if (Input.GetKeyDown(KeyCode.Alpha6)) { placedObjectTypeSO = quickSlot.GetSlots[5].GetItemObject().matchToBuildingSO; RefreshSelectedObjectType(); }
-        if (Input.GetKeyDown(KeyCode.Alpha7)) { placedObjectTypeSO = quickSlot.GetSlots[6].GetItemObject().matchToBuildingSO; RefreshSelectedObjectType(); }
-        //if (Input.GetKeyDown(KeyCode.Alpha1)) { placedObjectTypeSO = placedObjectTypeSOList[0]; RefreshSelectedObjectType(); }
-        //if (Input.GetKeyDown(KeyCode.Alpha2)) { placedObjectTypeSO = placedObjectTypeSOList[1]; RefreshSelectedObjectType(); }
-        //if (Input.GetKeyDown(KeyCode.Alpha3)) { placedObjectTypeSO = placedObjectTypeSOList[2]; RefreshSelectedObjectType(); }
-        //if (Input.GetKeyDown(KeyCode.Alpha4)) { placedObjectTypeSO = placedObjectTypeSOList[3]; RefreshSelectedObjectType(); }
-        //if (Input.GetKeyDown(KeyCode.Alpha5)) { placedObjectTypeSO = placedObjectTypeSOList[4]; RefreshSelectedObjectType(); }
-        //if (Input.GetKeyDown(KeyCode.Alpha6)) { placedObjectTypeSO = placedObjectTypeSOList[5]; RefreshSelectedObjectType(); }
+    public void HandleTypeSelect(int i) 
+    {
+        //if (Input.GetKeyDown(KeyCode.Alpha1)) { placedObjectTypeSO = quickSlot.GetSlots[0].GetItemObject().matchToBuildingSO; RefreshSelectedObjectType(); }
+        //if (Input.GetKeyDown(KeyCode.Alpha2)) { placedObjectTypeSO = quickSlot.GetSlots[1].GetItemObject().matchToBuildingSO; RefreshSelectedObjectType(); }
+        //if (Input.GetKeyDown(KeyCode.Alpha3)) { placedObjectTypeSO = quickSlot.GetSlots[2].GetItemObject().matchToBuildingSO; RefreshSelectedObjectType(); }
+        //if (Input.GetKeyDown(KeyCode.Alpha4)) { placedObjectTypeSO = quickSlot.GetSlots[3].GetItemObject().matchToBuildingSO; RefreshSelectedObjectType(); }
+        //if (Input.GetKeyDown(KeyCode.Alpha5)) { placedObjectTypeSO = quickSlot.GetSlots[4].GetItemObject().matchToBuildingSO; RefreshSelectedObjectType(); }
+        //if (Input.GetKeyDown(KeyCode.Alpha6)) { placedObjectTypeSO = quickSlot.GetSlots[5].GetItemObject().matchToBuildingSO; RefreshSelectedObjectType(); }
+        //if (Input.GetKeyDown(KeyCode.Alpha7)) { placedObjectTypeSO = quickSlot.GetSlots[6].GetItemObject().matchToBuildingSO; RefreshSelectedObjectType(); }
+        placedObjectTypeSO = quickSlot.GetSlots[i].GetItemObject().matchToBuildingSO; RefreshSelectedObjectType();
 
     }
 
@@ -232,6 +229,10 @@ public class GridBuildingSystem3D : MonoBehaviourPun
             Vector3 placedObjectWorldPosition = selectedGrid.GetWorldPosition(placedObjectOrigin.x, placedObjectOrigin.y) + new Vector3(rotationOffset.x, 0, rotationOffset.y) * selectedGrid.GetCellSize();
 
             placedObject = PlacedObject.Create(placedObjectWorldPosition, placedObjectOrigin, dir, placedObjectTypeSO);
+            //var _placedObject =new PlacedObject();
+            //placedObject = _placedObject.TestCreate(placedObjectWorldPosition, placedObjectOrigin, dir, placedObjectTypeSO);
+
+            //placedObject= photonView.RPC("RPCPlacedObjectCreate", RpcTarget.AllBuffered, placedObjectWorldPosition, placedObjectOrigin, dir, placedObjectTypeSO);
 
             foreach (Vector2Int gridPosition in gridPositionList) {
                 selectedGrid.GetGridObject(gridPosition.x, gridPosition.y).SetPlacedObject(placedObject);
@@ -312,42 +313,7 @@ public class GridBuildingSystem3D : MonoBehaviourPun
         return isDemolishActive;
     }
 
-    public void Save()
-    {
-        List<PlacedObjectSaveObjectArray> placedObjectSaveObjectArrayList = new List<PlacedObjectSaveObjectArray>();
-
-        foreach (GridXZ<GridObject> grid in gridList)
-        {
-            List<PlacedObject.SaveObject> saveObjectList = new List<PlacedObject.SaveObject>();
-            List<PlacedObject> savedPlacedObjectList = new List<PlacedObject>();
-
-            for (int x = 0; x < grid.GetWidth(); x++)
-            {
-                for (int y = 0; y < grid.GetHeight(); y++)
-                {
-                    PlacedObject placedObject = grid.GetGridObject(x, y).GetPlacedObject();
-                    if (placedObject != null && !savedPlacedObjectList.Contains(placedObject))
-                    {
-                        // Save object
-                        savedPlacedObjectList.Add(placedObject);
-                        saveObjectList.Add(placedObject.GetSaveObject());
-                    }
-                }
-            }
-
-            PlacedObjectSaveObjectArray placedObjectSaveObjectArray = new PlacedObjectSaveObjectArray { gridPlaceObjectList = saveObjectList.ToArray() };
-            placedObjectSaveObjectArrayList.Add(placedObjectSaveObjectArray);
-        }
-        SaveAllBuilding saveObject = new SaveAllBuilding
-        {
-            islandGridList = placedObjectSaveObjectArrayList.ToArray()  
-        };
-        
-        string json = JsonUtility.ToJson(saveObject,true);
-        PlayerPrefs.SetString("HouseBuildingSystemSave", json);
-        K_SaveSystem.Save("HouseBuildingSystemSave", json, true);
-
-    }
+    
     public async void TestSave()
     {
         List<PlacedObjectSaveObjectArray> placedObjectSaveObjectArrayList = new List<PlacedObjectSaveObjectArray>();
@@ -386,35 +352,13 @@ public class GridBuildingSystem3D : MonoBehaviourPun
         await httpReq.Post(url,json);
 
     }
-    public void Load()
-    {
-        if (PlayerPrefs.HasKey("HouseBuildingSystemSave"))
-        {
-            string json = PlayerPrefs.GetString("HouseBuildingSystemSave");
-            json = K_SaveSystem.Load("HouseBuildingSystemSave");
-
-            SaveAllBuilding saveObject = JsonUtility.FromJson<SaveAllBuilding>(json);
-            
-
-
-            for (int i = 0; i < gridList.Count; i++)
-            {
-                GridXZ<GridObject> grid = gridList[i];
-                foreach (PlacedObject.SaveObject placedObjectSaveObject in saveObject.islandGridList[i].gridPlaceObjectList)
-                {
-                    PlacedObjectTypeSO placedObjectTypeSO = BuildingSystemAssets.Instance.GetPlacedObjectTypeSOFromName(placedObjectSaveObject.placedObjectTypeSOName);
-                    TryPlaceObject(placedObjectSaveObject.origin, placedObjectTypeSO, placedObjectSaveObject.dir, out PlacedObject placedObject);
-                }
-            }  
-        }
-        Debug.Log("Load!");
-    }
+    
     [ContextMenu("test get")]
     public async void TestLoad()
     {
         var url = "ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/skyisland/1";
         var httpReq = new HttpRequester(new JsonSerializationOption());
-        //PlacedObjectSaveObjectArray result1 = await httpReq.Get<PlacedObjectSaveObjectArray>(url);
+        
         H_Building_Root result2 = await httpReq.Get<H_Building_Root>(url);
         
         
@@ -428,6 +372,12 @@ public class GridBuildingSystem3D : MonoBehaviourPun
             }
         }
     }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        
+    }
+
     [Serializable]
     public class SaveAllBuilding
     {
@@ -472,5 +422,63 @@ public class GridBuildingSystem3D : MonoBehaviourPun
         public string message { get; set; }
         public H_Building_Results results { get; set; }
     }
+    //public void Load()
+    //{
+    //    if (PlayerPrefs.HasKey("HouseBuildingSystemSave"))
+    //    {
+    //        string json = PlayerPrefs.GetString("HouseBuildingSystemSave");
+    //        json = K_SaveSystem.Load("HouseBuildingSystemSave");
 
+    //        SaveAllBuilding saveObject = JsonUtility.FromJson<SaveAllBuilding>(json);
+
+
+
+    //        for (int i = 0; i < gridList.Count; i++)
+    //        {
+    //            GridXZ<GridObject> grid = gridList[i];
+    //            foreach (PlacedObject.SaveObject placedObjectSaveObject in saveObject.islandGridList[i].gridPlaceObjectList)
+    //            {
+    //                PlacedObjectTypeSO placedObjectTypeSO = BuildingSystemAssets.Instance.GetPlacedObjectTypeSOFromName(placedObjectSaveObject.placedObjectTypeSOName);
+    //                TryPlaceObject(placedObjectSaveObject.origin, placedObjectTypeSO, placedObjectSaveObject.dir, out PlacedObject placedObject);
+    //            }
+    //        }
+    //    }
+    //    Debug.Log("Load!");
+    //}
+    //public void Save()
+    //{
+    //    List<PlacedObjectSaveObjectArray> placedObjectSaveObjectArrayList = new List<PlacedObjectSaveObjectArray>();
+
+    //    foreach (GridXZ<GridObject> grid in gridList)
+    //    {
+    //        List<PlacedObject.SaveObject> saveObjectList = new List<PlacedObject.SaveObject>();
+    //        List<PlacedObject> savedPlacedObjectList = new List<PlacedObject>();
+
+    //        for (int x = 0; x < grid.GetWidth(); x++)
+    //        {
+    //            for (int y = 0; y < grid.GetHeight(); y++)
+    //            {
+    //                PlacedObject placedObject = grid.GetGridObject(x, y).GetPlacedObject();
+    //                if (placedObject != null && !savedPlacedObjectList.Contains(placedObject))
+    //                {
+    //                    // Save object
+    //                    savedPlacedObjectList.Add(placedObject);
+    //                    saveObjectList.Add(placedObject.GetSaveObject());
+    //                }
+    //            }
+    //        }
+
+    //        PlacedObjectSaveObjectArray placedObjectSaveObjectArray = new PlacedObjectSaveObjectArray { gridPlaceObjectList = saveObjectList.ToArray() };
+    //        placedObjectSaveObjectArrayList.Add(placedObjectSaveObjectArray);
+    //    }
+    //    SaveAllBuilding saveObject = new SaveAllBuilding
+    //    {
+    //        islandGridList = placedObjectSaveObjectArrayList.ToArray()
+    //    };
+
+    //    string json = JsonUtility.ToJson(saveObject, true);
+    //    PlayerPrefs.SetString("HouseBuildingSystemSave", json);
+    //    K_SaveSystem.Save("HouseBuildingSystemSave", json, true);
+
+    //}
 }

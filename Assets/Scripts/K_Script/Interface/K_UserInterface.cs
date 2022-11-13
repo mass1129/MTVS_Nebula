@@ -17,7 +17,7 @@ public abstract class K_UserInterface : MonoBehaviour
     public Dictionary<GameObject, InventorySlot> slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
 
     public GameObject inventoryWindow;
-
+    public GameObject quickSlotList;
     public GameObject invenTab;
     bool isShowed = false;
     bool isAddedEvent = false;
@@ -48,7 +48,7 @@ public abstract class K_UserInterface : MonoBehaviour
     public void UpdateInventoryLinks()
     {
         int i = 0;
-        foreach (var key in slotsOnInterface.Keys.ToList())
+        foreach (var key in slotsOnInterface.Keys.ToArray())
         {
             slotsOnInterface[key] = inventory.GetSlots[i];
             i++;
@@ -183,20 +183,24 @@ public abstract class K_UserInterface : MonoBehaviour
     }
     public void OnSelect(GameObject obj)
     {
+        
+        var selectInterface = quickSlotList.GetComponent<K_UserInterface>();
+        //if (selectInterface == null) return;
+        //selectInterface.CreateSlots();
+        //for (int i = 0; i < selectInterface.inventory.GetSlots.Length; i++)
+        //{
 
-        var selectInterface = obj.GetComponent<K_UserInterface>();
-        if (selectInterface == null) return;
-        selectInterface.CreateSlots();
+        //    selectInterface.inventory.GetSlots[i].parent = this;
+        //    selectInterface.inventory.GetSlots[i].onAfterUpdated += OnSlotUpdate;
+
+        //}
+        selectInterface.inventory.Clear();
         for (int i = 0; i < selectInterface.inventory.GetSlots.Length; i++)
         {
-
-            selectInterface.inventory.GetSlots[i].parent = this;
-            selectInterface.inventory.GetSlots[i].onAfterUpdated += OnSlotUpdate;
-
+            selectInterface.inventory.GetSlots[i].onAfterUpdated += selectInterface.OnSlotUpdate;
         }
-
-        selectInterface.inventoryWindow.SetActive(true);
-        selectInterface.inventoryWindow.GetComponent<RectTransform>().position = new Vector3(1139.25f, 536.0554f, 0f);
+        //selectInterface.inventoryWindow.SetActive(true);
+        //selectInterface.inventoryWindow.GetComponent<RectTransform>().position = new Vector3(1139.25f, 700.0554f, 0f);
         selectInterface.inventory.AddBundleListToWindow(slotsOnInterface[obj].GetItemObject().subItem);
         for (int i = 0; i < selectInterface.inventory.GetSlots.Length; i++)
         {
@@ -206,7 +210,7 @@ public abstract class K_UserInterface : MonoBehaviour
         
         
 
-        //Debug.Log(obj.GetComponent<K_UserInterface>().inventory.name);
+        Debug.Log(obj.name);
         selectInterface.inventory.UpdateInventory();
         
        
@@ -214,10 +218,14 @@ public abstract class K_UserInterface : MonoBehaviour
     }
     public void OnDeselect(GameObject obj)
     {
-        var deselectInterface = obj.GetComponent<K_UserInterface>();
-        deselectInterface.inventory.Clear();
-     
-        deselectInterface.inventoryWindow.SetActive(false);
+        Debug.Log(" ");
+        //var deselectInterface = quickSlotList.GetComponent<K_UserInterface>();
+        //deselectInterface.inventory.Clear();
+        //for (int i = 0; i < deselectInterface.inventory.GetSlots.Length; i++)
+        //{
+        //    deselectInterface.inventory.GetSlots[i].onAfterUpdated += deselectInterface.OnSlotUpdate;
+        //}
+        //deselectInterface.inventoryWindow.SetActive(false);
     }
 
 

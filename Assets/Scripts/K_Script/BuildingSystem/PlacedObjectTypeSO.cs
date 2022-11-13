@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlacedObjectTypeSO : ScriptableObject
 {
     public string nameString;
+    public string bundleFolderName;
     public Transform prefab;
     public Transform visual;
     public int width;
