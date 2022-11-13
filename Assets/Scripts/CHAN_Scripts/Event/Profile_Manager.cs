@@ -260,7 +260,7 @@ public class Profile_Manager : MonoBehaviour
 
         for (int i = 0; i < Area_Load_Profile.GetChild(1).childCount; i++)
         {
-            Area_Load_Profile.GetChild(1).GetChild(i).GetChild(0).GetComponent<Text>().text = new_profileInfo.HashTag[i];
+            Area_Load_Profile.GetChild(1).GetChild(i).GetComponentInChildren<Text>().text = new_profileInfo.HashTag[i];
             profile.Keywords.Add(new_profileInfo.HashTag[i]);
         }
     }

@@ -26,18 +26,6 @@ public class User_Move : MonoBehaviourPun, IPunObservable
     Animator animator;
     public GameObject btn_EnterRoom; 
     string userName;
-    void Start()
-    {
-        if (!photonView.IsMine)
-        {
-            CVCam.SetActive(false);
-            //Audio.SetActive(false);
-        }
-        OrcaObj.SetActive(true);
-        btn_EnterRoom.GetComponentInChildren<Button>().onClick.AddListener(OnClickEnterBtn);
-        btn_EnterRoom.SetActive(false);
-        animator = transform.GetComponentInChildren<Animator>();
-    }
     Vector3 dir;
     float lerpSpeed = 10;
     public bool islandSelected;
@@ -45,6 +33,7 @@ public class User_Move : MonoBehaviourPun, IPunObservable
     float Rotate_Yaw;
     Vector3 receivePos;
     Quaternion receiveRot;
+    bool mouseOn;
     //W: 전진
     //S: 후진 
     //A: 반시계방향 회전 
@@ -57,33 +46,50 @@ public class User_Move : MonoBehaviourPun, IPunObservable
     //특수효과
     //유저들끼리 가까이 전근해 있을때 이동속도가 증가하게 됨.
 
+    void Start()
+    {
+        if (!photonView.IsMine)
+        {
+            CVCam.SetActive(false);
+        }
+        Cursor.visible = false;
+        OrcaObj.SetActive(true);
+        btn_EnterRoom.GetComponentInChildren<Button>().onClick.AddListener(OnClickEnterBtn);
+        btn_EnterRoom.SetActive(false);
+        animator = transform.GetComponentInChildren<Animator>();
+    }
+
     [System.Obsolete]
     void Update()
     {
         if (photonView.IsMine)
         {
-            #region 플레이어 입력기
+            #region 플레이어 입력기     
             float Input_Forward = Mathf.Clamp(Input.GetAxis("Vertical"), 0, 1);
-            float x = Input.GetAxis("Horizontal");
             float Input_Rotate_Yaw = Input.GetAxis("Mouse X");
             float Input_Rotate_Pitch = Input.GetAxis("Mouse Y");
             #endregion
             // 일단 이동방향은 앞뒤로 갈 수 있도록 만든다. 
-            dir = (transform.forward).normalized;
-            Rotate_Pitch -= Input_Rotate_Pitch * rotateSpeed * Time.deltaTime;        
-            Rotate_Yaw += Input_Rotate_Yaw * rotateSpeed * Time.deltaTime;
-            //쉬프트키를 눌렀을 때 대쉬되도록 만든다.
-            float totalSpeed;
-            if (Input.GetKey(KeyCode.W))
+                //쉬프트키를 눌렀을 때 대쉬되도록 만든다.
+                float totalSpeed;
+            if (!mouseOn)
             {
-                userSpeed += (Input_Forward) * accMultipiler* Time.deltaTime;
+                dir = (transform.forward).normalized;
+                Rotate_Pitch -= Input_Rotate_Pitch * rotateSpeed * Time.deltaTime;
+                Rotate_Yaw += Input_Rotate_Yaw * rotateSpeed * Time.deltaTime;
+
+                if (Input.GetKey(KeyCode.W))
+                {
+                    userSpeed += (Input_Forward) * accMultipiler * Time.deltaTime;
+                }
+                else
+                {
+                    userSpeed -= accMultipiler * 2 * Time.deltaTime;
+                }
             }
-            else
-            {
-                userSpeed -=  accMultipiler *2* Time.deltaTime;
-            }
+
             userSpeed = Mathf.Clamp(userSpeed, 0, MaxSpeed);
-            
+
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 totalSpeed = userSpeed * speedMultiplier;
@@ -92,22 +98,22 @@ public class User_Move : MonoBehaviourPun, IPunObservable
             {
                 totalSpeed = userSpeed;
             }
-
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 Do_Shout();
             }
             transform.position += dir * totalSpeed * Time.deltaTime;
             transform.localRotation = Quaternion.EulerAngles(Mathf.Clamp(Rotate_Pitch,-70*Mathf.Deg2Rad, 70 * Mathf.Deg2Rad), Rotate_Yaw, 0);
-
-
         }
         else
         {
             transform.position = Vector3.Lerp(transform.position, receivePos, lerpSpeed * Time.deltaTime);
             transform.rotation = Quaternion.Lerp(transform.rotation, receiveRot, lerpSpeed * Time.deltaTime);
         }
-        
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            MouseVisual(!Cursor.visible);
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -125,7 +131,7 @@ public class User_Move : MonoBehaviourPun, IPunObservable
             if (other.gameObject.CompareTag("UserIsland"))
             {
                 btn_EnterRoom.SetActive(true);
-
+                MouseVisual(true);
             }
         }
 
@@ -141,6 +147,7 @@ public class User_Move : MonoBehaviourPun, IPunObservable
         {
             btn_EnterRoom.SetActive(false);
             userName = other.gameObject.GetComponent<Island_Profile>().user_name;
+            MouseVisual(false);
         }
 
     }
@@ -195,5 +202,10 @@ public class User_Move : MonoBehaviourPun, IPunObservable
     public void OnClickEnterBtn()
     {
         CHAN_GameManager.instance.Go_User_Scene(userName);
+    }
+    void MouseVisual(bool b)
+    {
+        Cursor.visible = b;
+        mouseOn = b;
     }
 }

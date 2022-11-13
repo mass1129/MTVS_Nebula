@@ -123,7 +123,7 @@ public class Test_UserProfile : MonoBehaviour
             Area_Insert.GetChild(0).GetComponent<RawImage>().texture = image;
             for (int j = 0; j < Area_Insert.GetChild(1).childCount; j++)
             {
-                Area_Insert.GetChild(1).GetChild(j).GetChild(0).GetComponent<Text>().text = info.HashTag[j];
+                Area_Insert.GetChild(1).GetChild(j).GetComponentInChildren<Text>().text = info.HashTag[j];
             }
             profile.transform.GetChild(6).gameObject.GetComponent<Text>().text = info.User_Name;
         }
