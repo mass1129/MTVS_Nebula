@@ -8,8 +8,8 @@ namespace IslandInfo
 {
     class Categories
     {
-        public string[] compare_category = { "요리/레시피", "해외여행", "캠핑/등산" };
-        public string[] island_category = { "Island_Backyard", "Island_Beach", "Island_Cave", "Island_House", "Island_Pond" };
+        public string[] compare_category = { "요리/레시피", "해외여행", "캠핑/등산","국내여행","한달살기" };
+        public string[] island_category = { "Island_Backyard", "Island_Beach", "Island_Cave", "Island_House", "Island_Pond","Island_Port" };
     }
     public class Result
     {

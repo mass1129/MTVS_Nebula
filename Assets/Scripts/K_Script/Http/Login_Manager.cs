@@ -49,8 +49,8 @@ public class Login_Manager : MonoBehaviour
     {
         LoginInfo user = new LoginInfo
         {
-            username = preUserName,
-            password = prePassWord
+            username = Input_Id.text,
+            password = Input_Pass.text
         };
         string json = JsonUtility.ToJson(user, true);
 
