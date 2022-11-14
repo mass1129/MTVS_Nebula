@@ -57,7 +57,7 @@ public class Profile_Main_Manager : MonoBehaviour
         }
         else
         {
-            //서버 접속할 수 있도록 (서버접속 씬으로 넘어간다.)
+            SceneManager.LoadScene(3);
         }
     }
 

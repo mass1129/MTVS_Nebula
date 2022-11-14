@@ -35,6 +35,8 @@ public class User_Move : MonoBehaviourPun, IPunObservable
     Quaternion receiveRot;
     bool mouseOn;
     string temp_userIsland_ID;
+    public AudioSource audio;
+    public AudioClip clip;
     //W: 전진
     //S: 후진 
     //A: 반시계방향 회전 
@@ -58,6 +60,7 @@ public class User_Move : MonoBehaviourPun, IPunObservable
         btn_EnterRoom.GetComponentInChildren<Button>().onClick.AddListener(OnClickEnterBtn);
         btn_EnterRoom.SetActive(false);
         animator = transform.GetComponentInChildren<Animator>();
+        
     }
 
     [System.Obsolete]
@@ -186,6 +189,7 @@ public class User_Move : MonoBehaviourPun, IPunObservable
     void RPCDo_Shout()
     {
         sornar.Play();
+        audio.PlayOneShot(clip);
     }
     IEnumerator ChangeFOV(float setFOV)
     {

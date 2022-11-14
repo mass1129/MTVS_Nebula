@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   user_name: 
+  user_IslandID: 
   user_Url: 
   profileImage: {fileID: 0}
 --- !u!135 &2176954076394352861
@@ -62,7 +63,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 50
+  m_Radius: 10
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &2700063051197186679
 Rigidbody:

@@ -75,11 +75,18 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
     {
         base.OnJoinedRoom();
         SetPlayer(prefab);
+        if (sceneName == name_SkyScene)
+        { 
+            BGMPlayer.instance.GetComponent<AudioSource>().clip = BGMPlayer.instance.audioSources[1];
+            BGMPlayer.instance.GetComponent<AudioSource>().Play();
+        }
+        else if (sceneName == name_UserScene)
+        {
+            BGMPlayer.instance.GetComponent<AudioSource>().clip = BGMPlayer.instance.audioSources[2];
+            BGMPlayer.instance.GetComponent<AudioSource>().Play();
+        }
         PN.LoadLevel(sceneName);
-        //if (sceneName == name_UserScene)
-        //{
-        //    PN.Instantiate("Chatting",Vector3.zero,Quaternion.identity);
-        //}
+
     }
     public override void OnLeftRoom()
     {

@@ -24,7 +24,7 @@ public class Login_Manager : MonoBehaviour
 
     private void Start()
     {
-        ClickedLogInBtn();
+        //ClickedLogInBtn();
     }
     public void ClickedLogInBtn()
     {
@@ -32,7 +32,7 @@ public class Login_Manager : MonoBehaviour
         //GetAvatorInfo();
 
         API_Login();
-        SceneManager.LoadScene(1);
+        
         
     }
     #region API_Func
@@ -59,7 +59,7 @@ public class Login_Manager : MonoBehaviour
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
         await httpReq.Post(url, json);
-
+        SceneManager.LoadScene(1);
     }
     public async void GetAvatorInfo()
     {
