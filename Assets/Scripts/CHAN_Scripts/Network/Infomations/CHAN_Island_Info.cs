@@ -10,7 +10,7 @@ namespace IslandInfo
     {
         public string[] compare_category = { "요리/레시피", "해외여행", "캠핑/등산" };
         public string[] island_category = { "Island_Backyard", "Island_Beach", "Island_Cave", "Island_House", "Island_Pond" };
-        public string[] temp_UserName = {"요희" };
+        public string[] temp_UserName = {"우앙" };
     }
     public class Result
     {

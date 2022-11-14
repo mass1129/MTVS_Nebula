@@ -121,26 +121,23 @@ public class User_Move : MonoBehaviourPun, IPunObservable
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (photonView.IsMine)
+        if (other.gameObject.CompareTag("Player"))
         {
-            if (other.gameObject.CompareTag("Player"))
+            if (photonView.IsMine)
             {
-
                 DoHappy();
                 Do_Shout();
                 StopAllCoroutines();
                 StartCoroutine(ChangeFOV(80));
-
-            }
-            if (other.gameObject.CompareTag("UserIsland"))
-            {
-                btn_EnterRoom.SetActive(true);
-                userName = other.gameObject.GetComponent<Island_Profile>().user_name;
-                temp_userIsland_ID = other.gameObject.GetComponent<Island_Profile>().user_IslandID;
-                MouseVisual(true);
             }
         }
-
+        if (other.gameObject.CompareTag("UserIsland"))
+        {
+            btn_EnterRoom.SetActive(true);
+            userName = other.gameObject.GetComponent<Island_Profile>().user_name;
+            temp_userIsland_ID = other.gameObject.GetComponent<Island_Profile>().user_IslandID;
+            MouseVisual(true);
+        }
     }
     private void OnTriggerExit(Collider other)
     {
@@ -158,10 +155,7 @@ public class User_Move : MonoBehaviourPun, IPunObservable
     }
     void DoHappy()
     {
-        if (photonView.IsMine)
-        {
-            photonView.RPC("RPCDoHappy", RpcTarget.All);
-        }
+            photonView.RPC("RPCDoHappy", RpcTarget.All);  
     }
     [PunRPC]
     void RPCDoHappy()
