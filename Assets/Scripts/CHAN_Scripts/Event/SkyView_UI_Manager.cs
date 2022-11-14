@@ -29,6 +29,7 @@ public class SkyView_UI_Manager : MonoBehaviour
     public GameObject Btn_Obj;
     public Transform Create_Location;
 
+    public string SelectedFriendName;
     private void Start()
     {
         
@@ -73,10 +74,10 @@ public class SkyView_UI_Manager : MonoBehaviour
     {
         MakeFriendsBtn();
         //친구 버튼 비활성화
-        btn_Freinds.SetActive(false);
+        //btn_Freinds.SetActive(false);
         //친구리스트 활성화
         Area_FriendsList.gameObject.SetActive(!Area_FriendsList.gameObject.activeSelf);
-        btn_MyWorld.SetActive(!btn_MyWorld.activeSelf);
+        //btn_MyWorld.SetActive(!btn_MyWorld.activeSelf);
 
     }
     public void Btn_FriendProfile()
@@ -93,13 +94,24 @@ public class SkyView_UI_Manager : MonoBehaviour
         Area_Friend_info.gameObject.SetActive(false);
         Area_Friend_Profile.gameObject.SetActive(false);
     }
-
+    public void Btn_CloseFriendInfo()
+    {
+        Area_Friend_info.gameObject.SetActive(!Area_Friend_info.gameObject.activeSelf);
+    }
     public void Btn_CloseFriendProfile()
     {
         Area_Friend_Profile.gameObject.SetActive(false);
     }
+    public void Btn_GoUserProfile()
+    {
+        CHAN_GameManager.instance.Btn_GoProfile();
+    }
     #endregion
-
+    //친구섬 놀러가기
+    public void Go_FriendIsland()
+    {
+        CHAN_GameManager.instance.Go_User_Scene(SelectedFriendName);
+    }
 
 
 
