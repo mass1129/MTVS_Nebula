@@ -48,7 +48,6 @@ public abstract class K_UserInterface : MonoBehaviour
     public void UpdateInventoryLinks()
     {
         int i = 0;
-        foreach (var key in slotsOnInterface.Keys.ToArray())
         foreach (var key in slotsOnInterface.Keys.ToList())
         {
             slotsOnInterface[key] = inventory.GetSlots[i];
