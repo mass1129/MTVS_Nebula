@@ -698,7 +698,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 10
+  sceneViewId: 990
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &50880598
@@ -1365,7 +1365,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 12
+  sceneViewId: 988
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &105456158
@@ -2302,6 +2302,7 @@ GameObject:
   - component: {fileID: 268873097}
   - component: {fileID: 268873096}
   - component: {fileID: 268873095}
+  - component: {fileID: 268873099}
   m_Layer: 5
   m_Name: Temp_Btns
   m_TagString: Untagged
@@ -2395,6 +2396,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &268873099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 268873094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f65c78fd2145c6043988be5c7611d943, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &281804060
 GameObject:
   m_ObjectHideFlags: 0
@@ -2970,7 +2983,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 1
+  sceneViewId: 998
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &356819351
@@ -5328,7 +5341,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 7
+  sceneViewId: 987
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &655568916
@@ -6795,7 +6808,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 8
+  sceneViewId: 995
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &801176678
@@ -7399,7 +7412,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 13
+  sceneViewId: 986
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &847870359
@@ -8394,7 +8407,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 9
+  sceneViewId: 991
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &1034242974
@@ -8508,7 +8521,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 2
+  sceneViewId: 992
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &1037006014
@@ -12204,7 +12217,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 999
+  sceneViewId: 996
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &1871321907
@@ -12514,7 +12527,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 5
+  sceneViewId: 994
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &1916006353
@@ -13216,7 +13229,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 6
+  sceneViewId: 997
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &2019847372
@@ -13428,7 +13441,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 11
+  sceneViewId: 989
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &2058675019
@@ -52993,7 +53006,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 268873099}
         m_TargetAssemblyTypeName: K_TestSceneMgr, Assembly-CSharp
         m_MethodName: LoadSkyScene
         m_Mode: 1
