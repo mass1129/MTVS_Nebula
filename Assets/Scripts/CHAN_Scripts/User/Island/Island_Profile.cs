@@ -20,7 +20,7 @@ public class Island_Profile : MonoBehaviourPun
     void Start()
     {
         profileImage.enabled = false;
-        playerPos = CHAN_PlayerManger.LocalPlayerInstance.transform;
+        playerPos = CHAN_PlayerManger.LocalPlayerInstance.transform.GetChild(5).gameObject.transform;
         userName_Text = gameObject.transform.GetComponentInChildren<Text>();
         //섬의 크기에따라 이미지의 위치를 조정한다. 
         playerPos.transform.GetChild(1).position = new Vector3(0, playerPos.transform.GetChild(1).position.y*playerPos.transform.GetChild(0).localScale.y, 0);

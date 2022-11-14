@@ -3,6 +3,7 @@ using Photon.Voice.PUN;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Voice_Manager : MonoBehaviour
@@ -22,7 +23,7 @@ public class Voice_Manager : MonoBehaviour
     void Update()
     {
         
-        if (!myPhotonView.IsMine)
+        if (!myPhotonView.IsMine&&SceneManager.GetActiveScene().name==CHAN_GameManager.instance.name_UserScene)
         {
             this.speakerImage.enabled = this.photonVoiceView.IsSpeaking;
         }

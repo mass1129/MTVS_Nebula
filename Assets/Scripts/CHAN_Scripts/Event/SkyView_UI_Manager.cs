@@ -29,6 +29,7 @@ public class SkyView_UI_Manager : MonoBehaviour
     public GameObject Btn_Obj;
     public Transform Create_Location;
 
+    public string SelectedFriendName;
     private void Start()
     {
         
@@ -50,7 +51,7 @@ public class SkyView_UI_Manager : MonoBehaviour
     public void Initialize()
     {
         //하늘섬 돌아가기 버튼 활성화
-        btn_MyWorld.SetActive(true);
+        btn_MyWorld.SetActive(false);
         // 친구 버튼 활성화
         btn_Freinds.SetActive(true);
         // 친구리스트 비활성화
@@ -93,13 +94,20 @@ public class SkyView_UI_Manager : MonoBehaviour
         Area_Friend_info.gameObject.SetActive(false);
         Area_Friend_Profile.gameObject.SetActive(false);
     }
-
+    public void Btn_CloseFriendInfo()
+    {
+        Area_Friend_info.gameObject.SetActive(!Area_Friend_info.gameObject.activeSelf);
+    }
     public void Btn_CloseFriendProfile()
     {
         Area_Friend_Profile.gameObject.SetActive(false);
     }
     #endregion
-
+    //친구섬 놀러가기
+    public void Go_FriendIsland()
+    {
+        CHAN_GameManager.instance.Go_User_Scene(SelectedFriendName);
+    }
 
 
 
