@@ -24,15 +24,15 @@ public class Login_Manager : MonoBehaviour
 
     private void Start()
     {
-        API_Login();
+        //ClickedLogInBtn();
     }
     public void ClickedLogInBtn()
     {
 
-        GetAvatorInfo();
+        //GetAvatorInfo();
 
-        //API_Login("ec2-43-201-62-61.ap-northeast-2.compute.amazonaws.com:8001/auth/login", json);
-        SceneManager.LoadScene(1);
+        API_Login();
+        
         
     }
     #region API_Func
@@ -59,7 +59,7 @@ public class Login_Manager : MonoBehaviour
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
         await httpReq.Post(url, json);
-
+        SceneManager.LoadScene(1);
     }
     public async void GetAvatorInfo()
     {

@@ -34,6 +34,9 @@ public class User_Move : MonoBehaviourPun, IPunObservable
     Vector3 receivePos;
     Quaternion receiveRot;
     bool mouseOn;
+    string temp_userIsland_ID;
+    public AudioSource audio;
+    public AudioClip clip;
     //W: 전진
     //S: 후진 
     //A: 반시계방향 회전 
@@ -57,6 +60,7 @@ public class User_Move : MonoBehaviourPun, IPunObservable
         btn_EnterRoom.GetComponentInChildren<Button>().onClick.AddListener(OnClickEnterBtn);
         btn_EnterRoom.SetActive(false);
         animator = transform.GetComponentInChildren<Animator>();
+        
     }
 
     [System.Obsolete]
@@ -132,6 +136,7 @@ public class User_Move : MonoBehaviourPun, IPunObservable
             {
                 btn_EnterRoom.SetActive(true);
                 userName = other.gameObject.GetComponent<Island_Profile>().user_name;
+                temp_userIsland_ID = other.gameObject.GetComponent<Island_Profile>().user_IslandID;
                 MouseVisual(true);
             }
         }
@@ -184,6 +189,7 @@ public class User_Move : MonoBehaviourPun, IPunObservable
     void RPCDo_Shout()
     {
         sornar.Play();
+        audio.PlayOneShot(clip);
     }
     IEnumerator ChangeFOV(float setFOV)
     {
@@ -201,6 +207,8 @@ public class User_Move : MonoBehaviourPun, IPunObservable
     }
     public void OnClickEnterBtn()
     {
+        PlayerPrefs.SetString("User_Island_ID", temp_userIsland_ID);
+        print("섬 ID: "+PlayerPrefs.GetString("Island_ID"));
         CHAN_GameManager.instance.Go_User_Scene(userName);
     }
     void MouseVisual(bool b)

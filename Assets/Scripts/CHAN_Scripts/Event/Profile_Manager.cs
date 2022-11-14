@@ -281,32 +281,20 @@ public class Profile_Manager : MonoBehaviour
         Profile_Main_Manager.instance.btn_MoveNextScene.SetActive(!Btn_ReviceProfile.activeSelf);
         Btn_ReviceProfile.SetActive(!Btn_ReviceProfile.activeSelf);
         Btn_DeleteProfile.SetActive(!Btn_DeleteProfile.activeSelf);
-    }
-    /// <summary>
-    /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// </summary>
-    public void GoNextScene()
-    {
-        // 만약 해당 프로필에 Texture 정보가 null 이면 아바타 생성씬으로 이동 아니면 바로 하늘씬으로 이동
-        // 다음씬으로 넘어갈 때 저장해야 하는 정보 : 닉네임, 하늘섬 Id
-        PlayerPrefs.SetString("AvatarName", Text_Nickname.text);
-        PlayerPrefs.SetString("Island_ID", temp_Info.User_Island_ID.ToString());
+        Profile_Main_Manager.instance.avatarName=Text_Nickname.text;
+        Profile_Main_Manager.instance.islandID = temp_Info.User_Island_ID.ToString();
         if (temp_Info.texture_info == null)
         {
             // 아바타 생선씬으로 넘어간다.
             Profile_Main_Manager.instance.hasAvatar = false;
-            print("아바타 씬");
         }
         else
         {
             //서버 접속할 수 있도록 (서버접속 씬으로 넘어간다.)
             Profile_Main_Manager.instance.hasAvatar = true;
-            SceneManager.LoadScene(4);
         }
+
     }
-    /// <summary>
-    /// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// </summary>
     #endregion
     #region 7. 프로필 수정, 삭제 
     bool isRevice;

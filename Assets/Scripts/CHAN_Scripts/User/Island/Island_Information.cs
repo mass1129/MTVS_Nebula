@@ -17,6 +17,7 @@ public class JsonInfo
     // 유저 프로필 이미지 
     public string User_image;
     public string User_NickName;
+    public string User_IslandId;
     // 하늘섬 오브젝트
     public GameObject User_Obj;
 

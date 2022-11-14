@@ -11,6 +11,7 @@ public class Island_Profile : MonoBehaviourPun
 {
     //이미지 파일을 가져와서  섬에 띄우도록 한다.
     public string user_name;
+    public string user_IslandID;
     public string user_Url;
     public Image profileImage;
     Text userName_Text;

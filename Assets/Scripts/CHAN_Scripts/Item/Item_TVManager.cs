@@ -73,7 +73,7 @@ public class Item_TVManager : MonoBehaviour
             yield return null;
         }
         prefab_Wall.position = SetPos;
-        window.position -= transform.forward * 0.51f;
+        window.position -= window.transform.forward * 0.51f;
         //버튼을 누르면 y=10 만큼 좌표 lerp하게 이동 
         moving = false;
 

@@ -20,6 +20,7 @@ public class ChattingSet : MonoBehaviourPun
     // ScrollView 의 RectTransform
     public RectTransform trScrollView;
     public GameObject Area_Scroll;
+    public GameObject Area_Chat;
     [Header("버튼 관련 설정들")]
     public Button btn_Enter;
     public Button btn_HideChatMenu;
@@ -46,7 +47,8 @@ public class ChattingSet : MonoBehaviourPun
     // 채팅장을 숨겨줌
     public void HideChat()
     {
-        Area_Scroll.SetActive(!Area_Scroll.activeSelf);
+        //Area_Scroll.SetActive(!Area_Scroll.activeSelf);
+        Area_Chat.SetActive(!Area_Chat.activeSelf);
     }
     // 버튼을 누르면 메세지 보내줌
     public void OnclickedEnter()

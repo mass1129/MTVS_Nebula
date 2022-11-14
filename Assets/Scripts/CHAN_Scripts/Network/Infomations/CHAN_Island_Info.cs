@@ -88,14 +88,14 @@ namespace IslandInfo
             }
            
         }
-        public void InsertData(Dictionary<string,JsonInfo> Island_Dic,string i,string nickName, string url, Vector3 pos, string keyword1 = "", string keyword2 = "")
+        public void InsertData(Dictionary<string,JsonInfo> Island_Dic,string key,string nickName, string url, Vector3 pos, string keyword1 = "", string keyword2 = "")
         {
             JsonInfo dic = new JsonInfo();
-            Categories categories = new Categories();
             //µñ¼Å³Ê¸® ÀÎµ¦½º »ý¼º
-            Island_Dic.Add(i, dic);
+            Island_Dic.Add(key, dic);
             //µñ¼Å³Ê¸®¿¡ °ªµéÀ» ¸ðµÎ ³Ö´Â´Ù. 
-            dic = Island_Dic[i];
+            dic = Island_Dic[key];
+            dic.User_IslandId = key;
             dic.island_Type = Return_IslandType(keyword2);
             dic.island_Pos = pos;
             dic.User_image = url;
@@ -133,6 +133,7 @@ namespace IslandInfo
                 island.transform.position = info.island_Pos;
                 island.transform.GetComponent<Island_Profile>().user_name = info.User_NickName;
                 island.transform.GetComponent<Island_Profile>().user_Url = info.User_image;
+                island.transform.GetComponent<Island_Profile>().user_IslandID = info.User_IslandId;
                 await Task.Yield();
             }
         }
@@ -145,6 +146,7 @@ namespace IslandInfo
                 info.User_Obj = island;
                 island.transform.position = info.island_Pos;
                 island.transform.GetComponent<Island_Profile>().user_name = i;
+                
                 await Task.Yield();
             }
         }

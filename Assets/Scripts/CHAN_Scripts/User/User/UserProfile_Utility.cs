@@ -15,6 +15,7 @@ public class UserProfile_Utility : MonoBehaviour
     public GameObject profile_prefab;
     public Transform profile_pos;
     UnityEngine.Texture image;
+    public GameObject LoadingScene;
 
 
     private void Awake()
@@ -30,6 +31,7 @@ public class UserProfile_Utility : MonoBehaviour
     // 2-4.로드해서 가져온 정보를 생성 프로필 오브젝트의 각 값에 저장한다. 
     private void Start()
     {
+        LoadingScene.SetActive(true);
         Load();
     }
 
@@ -126,6 +128,7 @@ public class UserProfile_Utility : MonoBehaviour
                 Area_Insert.GetChild(1).GetChild(j).GetComponentInChildren<Text>().text = info.HashTag[j];
             }
             profile.transform.GetChild(6).gameObject.GetComponent<Text>().text = info.User_Name;
+            await Task.Yield();
         }
         Create_ProfileArea();
     }
@@ -161,5 +164,6 @@ public class UserProfile_Utility : MonoBehaviour
             profile.SetActive(true);
             profile.GetComponentInChildren<Profile_Manager>().Initialize();
         }
+        LoadingScene.SetActive(false);
     }
 }

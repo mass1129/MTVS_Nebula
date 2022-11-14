@@ -2859,6 +2859,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   user_name: 
+  user_IslandID: 
   user_Url: 
   profileImage: {fileID: 4789588322637781252}
 --- !u!54 &5238959903387211724
@@ -2888,7 +2889,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 50
+  m_Radius: 10
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6133611717591742524
 GameObject:

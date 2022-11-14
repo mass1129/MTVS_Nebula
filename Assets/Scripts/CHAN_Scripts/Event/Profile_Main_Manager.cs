@@ -16,6 +16,8 @@ public class Profile_Main_Manager : MonoBehaviour
     public Transform List_Profile;
     public GameObject obj;
 
+    public string avatarName;
+    public string islandID;
     public bool hasAvatar;
     void Start()
     {
@@ -44,10 +46,10 @@ public class Profile_Main_Manager : MonoBehaviour
     //다음씬으로 이동
     public void LoadNextScene()
     {
-
-        string s = PlayerPrefs.GetString("AvatarName");
-        string s1 = PlayerPrefs.GetString("Island_ID");
-        print(s + s1);
+        PlayerPrefs.SetString("AvatarName", avatarName);
+        PlayerPrefs.SetString("Island_ID", islandID);
+        print("AvatarName: " + PlayerPrefs.GetString("AvatarName"));
+        print("Island_ID: " + PlayerPrefs.GetString("Island_ID"));
         if (!hasAvatar)
         {
             // 아바타 생선씬으로 넘어간다.
@@ -55,7 +57,7 @@ public class Profile_Main_Manager : MonoBehaviour
         }
         else
         {
-            //서버 접속할 수 있도록 (서버접속 씬으로 넘어간다.)
+            SceneManager.LoadScene(3);
         }
     }
 
