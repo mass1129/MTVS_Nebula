@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ede9f2211b6a7a34ab86b34eb3b2c346, type: 3}
   m_Name: PlayerInventory_Cloths
   m_EditorClassIdentifier: 
-  savePath: equipment
-  loadPath: inventory/clothes
+  savePath: equipment/
+  loadPath: inventory/clothes/
   database: {fileID: 11400000, guid: 2ef6ad25b8d7948488dda3b23dc7008b, type: 2}
   type: 0
   Container:
@@ -55,13 +55,6 @@ MonoBehaviour:
       amount: 0
     - allowedItems: 05000000060000000700000008000000090000000a0000000b0000000c0000000d00000003000000
       item:
-        name: Accessory1
-        Id: 0
-        uniqueId: 1
-        buffs: []
-      amount: 1
-    - allowedItems: 05000000060000000700000008000000090000000a0000000b0000000c0000000d00000003000000
-      item:
         name: 
         Id: -1
         uniqueId: -1
@@ -83,11 +76,18 @@ MonoBehaviour:
       amount: 0
     - allowedItems: 05000000060000000700000008000000090000000a0000000b0000000c0000000d00000003000000
       item:
-        name: Pants1
-        Id: 4
-        uniqueId: 4
+        name: 
+        Id: -1
+        uniqueId: -1
         buffs: []
-      amount: 1
+      amount: 0
+    - allowedItems: 05000000060000000700000008000000090000000a0000000b0000000c0000000d00000003000000
+      item:
+        name: 
+        Id: -1
+        uniqueId: -1
+        buffs: []
+      amount: 0
     - allowedItems: 05000000060000000700000008000000090000000a0000000b0000000c0000000d00000003000000
       item:
         name: 

@@ -46,7 +46,7 @@ public class K_CameraMgr : MonoBehaviourPun
         Cursor.lockState = CursorLockMode.Locked;
         
         player = GetComponent<K_Player>();
-        buildingSystem.SetActive(false);
+       
         buildCamOffset = buildCamera.gameObject.GetComponent<CinemachineCameraOffset>();
         
     }

@@ -13,7 +13,7 @@ public class JsonSerializationOption : ISerializationOption
             var result = JsonConvert.DeserializeObject<T>(text);
             Debug.Log($"Success: {text}");
             return result;
-            //SceneManager.LoadScene(1);
+            
         }
 
         catch (Exception ex)

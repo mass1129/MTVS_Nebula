@@ -12,19 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ede9f2211b6a7a34ab86b34eb3b2c346, type: 3}
   m_Name: PlayerEquipment
   m_EditorClassIdentifier: 
-  savePath: equipment
-  loadPath: equipment
+  savePath: equipment/
+  loadPath: equipment/
   database: {fileID: 11400000, guid: 2ef6ad25b8d7948488dda3b23dc7008b, type: 2}
   type: 6
   Container:
     slots:
     - allowedItems: 08000000
       item:
-        name: Hat1
-        Id: 3
-        uniqueId: 3
+        name: 
+        Id: -1
+        uniqueId: -1
         buffs: []
-      amount: 1
+      amount: 0
     - allowedItems: 07000000
       item:
         name: 
@@ -34,11 +34,11 @@ MonoBehaviour:
       amount: 0
     - allowedItems: 09000000
       item:
-        name: Shirt1
-        Id: 5
-        uniqueId: 5
+        name: 
+        Id: -1
+        uniqueId: -1
         buffs: []
-      amount: 1
+      amount: 0
     - allowedItems: 0a000000
       item:
         name: 
@@ -48,11 +48,11 @@ MonoBehaviour:
       amount: 0
     - allowedItems: 0b000000
       item:
-        name: Shoe1
-        Id: 6
-        uniqueId: 6
+        name: 
+        Id: -1
+        uniqueId: -1
         buffs: []
-      amount: 1
+      amount: 0
     - allowedItems: 0c000000
       item:
         name: 

@@ -9,9 +9,10 @@ namespace K_01_OwnedStates
     public class Idle : K_PlayerState<K_Player>
     {
         public override void Enter(K_Player entity)
-        {
+        {   
             entity.input.x = 0;
             entity.input.y = 0;
+            entity.SetTrigger("ThirdMove");
         }
 
         public override void Execute(K_Player entity)
@@ -48,12 +49,20 @@ namespace K_01_OwnedStates
                 
             }
 
-            
-            
-            //if(Input.GetKeyDown(KeyCode.C))
-            //{
-            //    entity.ChangeState(PlayerStates.BuildingMode);
-            //}
+
+
+            if (Input.GetKeyDown(KeyCode.LeftControl))
+            {
+                entity.ChangeState(PlayerStates.Sitting);
+            }
+
+            if (Input.GetButtonDown("Jump"))
+            {
+
+                entity.ResetTrigger("ThirdMove");
+                entity.ChangeState(PlayerStates.Jump);
+
+            }
             //if (Input.GetButtonDown("Jump"))
             //{
             //    entity.ChangeState(PlayerStates.Jump);
@@ -69,10 +78,11 @@ namespace K_01_OwnedStates
 
         public override void Exit(K_Player entity)
         {
-            entity.ResetTrigger("Idle");
+            entity.ResetTrigger("ThirdMove");
         }
     }
 
+ 
     public class ThirdMove : K_PlayerState<K_Player>
     {
         float turnSmoothVelocity;
@@ -86,40 +96,44 @@ namespace K_01_OwnedStates
         public override void Execute(K_Player entity)
         {
 
-            
-                entity.input.x = Input.GetAxis("Horizontal");
-                entity.input.y = Input.GetAxis("Vertical");
-               
-                Vector3 direction = new Vector3(entity.input.x, 0f, entity.input.y).normalized;
 
-                if(direction.magnitude >= 0.1f)
-                {
-                    float targetAngle = Mathf.Atan2(direction.x, direction.z)*Mathf.Rad2Deg+entity.cam.eulerAngles.y;
-                    float angle = Mathf.SmoothDampAngle(entity.transform.eulerAngles.y, 
-                        targetAngle, ref turnSmoothVelocity, entity.turnSmoothTime);
+            entity.input.x = Input.GetAxis("Horizontal");
+            entity.input.y = Input.GetAxis("Vertical");
 
-                    entity.transform.rotation = Quaternion.Euler(0f,angle, 0f);
-                    
-                }
-            
+            Vector3 direction = new Vector3(entity.input.x, 0f, entity.input.y).normalized;
+
+            if (direction.magnitude >= 0.1f)
+            {
+                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + entity.cam.eulerAngles.y;
+                float angle = Mathf.SmoothDampAngle(entity.transform.eulerAngles.y,
+                    targetAngle, ref turnSmoothVelocity, entity.turnSmoothTime);
+
+                entity.transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+            }
+
             // 이동 방향에 따라 ThirdMove BlendTree 값 설정
-                entity.SetFloat("InputX", entity.input.x);
-                entity.SetFloat("InputY", entity.input.y);
+            entity.SetFloat("InputX", entity.input.x);
+            entity.SetFloat("InputY", entity.input.y);
 
-                Vector3 stepForwardAmount = entity.rootMotion * entity.groundSpeed;
-                Vector3 stepDownAmount = Vector3.down * entity.stepDown;
+            Vector3 stepForwardAmount = entity.rootMotion * entity.groundSpeed;
+            Vector3 stepDownAmount = Vector3.down * entity.stepDown;
 
-                entity.cc.Move(stepForwardAmount + stepDownAmount);
-                entity.rootMotion = Vector3.zero;
+            entity.cc.Move(stepForwardAmount + stepDownAmount);
+            entity.rootMotion = Vector3.zero;
 
-                // 이동 중에 떨어지면 Falling으로 상태 전환
-                
-            
-            if(entity.input.magnitude<=0f && !(Input.GetButton("Horizontal") || Input.GetButton("Vertical")))
+            // 이동 중에 떨어지면 Falling으로 상태 전환
+
+
+            if (entity.input.magnitude <= 0f && !(Input.GetButton("Horizontal") || Input.GetButton("Vertical")))
             {
                 entity.ChangeState(PlayerStates.Idle);
             }
 
+            if(Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                entity.ChangeState(PlayerStates.ThirdSprinting);
+            }
             //if (Input.GetButton("Horizontal") || (Input.GetButton("Vertical")))
             //{
             //    if (!entity.camMgr.spaceView&& entity.camMgr.firstPersonView)
@@ -128,12 +142,13 @@ namespace K_01_OwnedStates
             //    }
 
             //}
-            //if (Input.GetButtonDown("Jump"))
-            //{
+            if (Input.GetButtonDown("Jump"))
+            {
 
-            //    entity.ChangeState(PlayerStates.Jump);
-            //    entity.velocity.y = entity.jumpHeight;
-            //}
+                entity.ResetTrigger("ThirdMove");
+                entity.ChangeState(PlayerStates.Jump);
+                
+            }
 
             //if (!entity.Grounded)
             //{
@@ -148,6 +163,80 @@ namespace K_01_OwnedStates
         }
     }
 
+    public class ThirdSprinting : K_PlayerState<K_Player>
+    {
+        float turnSmoothVelocity;
+        public override void Enter(K_Player entity)
+        {
+            entity.input.x = 0.5f;
+            entity.input.y = 0.5f;
+            entity.SetTrigger("Sprinting");
+        }
+
+        public override void Execute(K_Player entity)
+        {
+
+
+            entity.input.x = Input.GetAxis("Horizontal");
+            entity.input.y = Input.GetAxis("Vertical");
+
+            Vector3 direction = new Vector3(entity.input.x, 0f, entity.input.y).normalized;
+
+            if (direction.magnitude >= 0.1f)
+            {
+                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + entity.cam.eulerAngles.y;
+                float angle = Mathf.SmoothDampAngle(entity.transform.eulerAngles.y,
+                    targetAngle, ref turnSmoothVelocity, entity.turnSmoothTime);
+
+                entity.transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+            }
+
+            // 이동 방향에 따라 ThirdMove BlendTree 값 설정
+            entity.SetFloat("InputX", entity.input.x);
+            entity.SetFloat("InputY", entity.input.y);
+
+            Vector3 stepForwardAmount = entity.rootMotion * entity.groundSpeed;
+            Vector3 stepDownAmount = Vector3.down * entity.stepDown;
+
+            entity.cc.Move(stepForwardAmount + stepDownAmount);
+            entity.rootMotion = Vector3.zero;
+
+            // 이동 중에 떨어지면 Falling으로 상태 전환
+
+
+            if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                entity.ChangeState(PlayerStates.ThirdMove);
+            }
+
+            if (Input.GetButtonDown("Jump"))
+            {
+
+                entity.ResetTrigger("Sprinting");
+                entity.ChangeState(PlayerStates.Jump);
+
+            }
+
+            //if (Input.GetButtonDown("Jump"))
+            //{
+
+            //    entity.ChangeState(PlayerStates.Jump);
+            //    entity.velocity.y = entity.jumpHeight;
+            //}
+
+            //if (!entity.Grounded)
+            //{
+            //    entity.ChangeState(PlayerStates.Falling);
+            //}
+
+        }
+
+        public override void Exit(K_Player entity)
+        {
+            entity.ResetTrigger("Sprinting");
+        }
+    }
     public class FirstMove : K_PlayerState<K_Player>
     {
         Vector2 _currentVelocity;
@@ -220,8 +309,7 @@ namespace K_01_OwnedStates
         float zoomAmount;
 
         float turnSmoothVelocity;
-        float scrollY = 0f;
-        float scrollZ = 0f;
+
 
         public override void Enter(K_Player entity)
         {
@@ -231,7 +319,7 @@ namespace K_01_OwnedStates
 
             entity.camMgr.buildingSystem.SetActive(true);
             entity.camMgr.buildCamera.gameObject.SetActive(true);
-
+            entity.itemSystem.inven_Building.TestLoad(entity.avatarName);
             entity.camMgr.buildCamOffset.m_Offset.z = 0f;
             entity.camMgr.buildCamOffset.m_Offset.y = 0f;
             zoomAmount = entity.camMgr.zoomChangeAmount;
@@ -288,51 +376,148 @@ namespace K_01_OwnedStates
 
     public override void Exit(K_Player entity)
         {
+            GridBuildingSystem3D.Instance.TestSave(entity.ownIslandID);
             entity.camMgr.buildingSystem.SetActive(false);
             entity.camMgr.buildCamera.gameObject.SetActive(false);
             entity.ResetTrigger("ThirdMove");
         }
     }
 
+    public class Sitting : K_PlayerState<K_Player>
+    {
+        
+        public override void Enter(K_Player entity)
+        {
+            entity.SetTrigger("Sitting");
+        }
 
-    //public class Jump : K_PlayerState<K_Player>
+        public override void Execute(K_Player entity)
+        {
+
+
+            if (Input.GetKeyDown(KeyCode.LeftControl))
+            {
+                entity.ChangeState(PlayerStates.Idle);
+            }
+
+
+
+        }
+
+        public override void Exit(K_Player entity)
+        {
+            entity.ResetTrigger("Sitting");
+        }
+    }
+
+    //public class Falling : K_PlayerState<K_Player>
     //{
-    //    float jumpVelocity = 0;
+    //    bool isLanding = false;
+
     //    public override void Enter(K_Player entity)
     //    {
-    //        entity.velocity = entity.anim.velocity * entity.jumpDamp * entity.groundSpeed;
-    //        entity.velocity.y = Mathf.Sqrt(2 * entity.gravity * entity.jumpHeight);
-    //        entity.SetTrigger("Jump");
+    //        entity.SetTrigger("Falling");
     //    }
 
     //    public override void Execute(K_Player entity)
     //    {
     //        entity.moveSpeed = 2;
 
-    //        entity.velocity.y += entity.gravity * Time.deltaTime;
-    //        entity.velocity.y = Mathf.Clamp(entity.velocity.y, -6f, 100);
-
-    //        if (Input.GetButton("Horizontal") || (Input.GetButton("Vertical")))
+    //        if (!isLanding)
     //        {
-    //            entity.input.x = Input.GetAxis("Horizontal");
-    //            entity.input.y = Input.GetAxis("Vertical");
+    //            entity.velocity.y += entity.gravity * Time.deltaTime;
+    //            entity.velocity.y = Mathf.Clamp(entity.velocity.y, -6f, 100);
+
+    //            if (Input.GetButton("Horizontal") || (Input.GetButton("Vertical")))
+    //            {
+    //                entity.input.x = Input.GetAxis("Horizontal");
+    //                entity.input.y = Input.GetAxis("Vertical");
+    //            }
+
+    //            entity.dir = entity.transform.right * entity.input.x + entity.transform.forward * entity.input.y;
+    //            entity.dir.Normalize();
+    //            entity.dir.y = entity.velocity.y;
+    //            entity.GetComponent<CharacterController>().ThirdMove(entity.dir * entity.moveSpeed * Time.deltaTime);
+
+    //            // 땅에 닿으면 Landing 애니메이션 재생
+    //            if (entity.GetComponent<CharacterController>().isGrounded)
+    //            {
+    //                entity.SetTrigger("Landing");
+    //                isLanding = true;
+    //            }
     //        }
 
-    //        entity.dir = entity.transform.right * entity.input.x + entity.transform.forward * entity.input.y;
-    //        entity.dir.Normalize();
-    //        entity.dir.y = entity.velocity.y;
-    //        entity.GetComponent<CharacterController>().ThirdMove(entity.dir * entity.moveSpeed * Time.deltaTime);
+    //        if (entity.anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+    //            entity.SetTrigger("Landing");
 
+    //        // Landing 애니메이션 재생 시간 끝난 이후의 입력에 따라 다음 상태로 전이 
+    //        if (entity.anim.GetCurrentAnimatorStateInfo(0).IsName("Landing") && entity.anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
+    //        {
+    //            if (Input.GetButton("Horizontal") || (Input.GetButton("Vertical")))
+    //            {
+    //                entity.ChangeState(PlayerStates.ThirdMove);
+    //            }
+    //            else if (Input.GetButton("Jump"))
+    //            {
+    //                entity.ChangeState(PlayerStates.Jump);
+    //                entity.velocity.y = entity.jumpHeight;
+    //            }
+    //            else
+    //                entity.ChangeState(PlayerStates.Idle);
+    //        }
     //    }
 
     //    public override void Exit(K_Player entity)
     //    {
     //        entity.input.x = 0;
     //        entity.input.y = 0;
-    //        entity.ResetTrigger("Jump");
+    //        entity.ResetTrigger("Falling");
     //        entity.ResetTrigger("Landing");
+    //        isLanding = false;
     //    }
     //}
+    public class Jump : K_PlayerState<K_Player>
+    {
+        float v;
+        Vector3 dir;
+        public override void Enter(K_Player entity)
+        {
+            v=0f;
+            dir = Vector3.zero;
+            entity.SetTrigger("Jump");
+        }
+
+        public override void Execute(K_Player entity)
+        {
+            if (Input.GetKeyDown(KeyCode.W)&& !Input.GetKeyDown(KeyCode.S))
+            {   
+                v= Input.GetAxis("Vertical");
+               
+            }
+            dir = entity.transform.forward * v;
+            dir.Normalize();
+            entity.GetComponent<CharacterController>().Move(dir * entity.groundSpeed * Time.deltaTime);
+           // entity.rootMotion = Vector3.zero;
+
+            if (entity.anim.GetCurrentAnimatorStateInfo(0).IsName("Jumping") && entity.anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
+            {
+                v = 0f;
+                dir = Vector3.zero;
+               
+                    entity.ResetTrigger("Jump");
+                    entity.ChangeState(PlayerStates.ThirdMove);
+               
+            }
+        }
+
+        public override void Exit(K_Player entity)
+        {
+            v = 0f;
+            dir = Vector3.zero;
+            entity.ResetTrigger("Jump");
+
+        }
+    }
 
     //public class Falling : K_PlayerState<K_Player>
     //{

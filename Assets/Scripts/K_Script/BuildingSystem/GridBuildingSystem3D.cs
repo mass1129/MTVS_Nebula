@@ -314,7 +314,7 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
     }
 
     
-    public async void TestSave()
+    public async void TestSave(string s)
     {
         List<PlacedObjectSaveObjectArray> placedObjectSaveObjectArrayList = new List<PlacedObjectSaveObjectArray>();
 
@@ -346,17 +346,17 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
         };
 
         string json = JsonUtility.ToJson(saveObject, true);
-        var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/skyisland/1";
+        var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/skyisland/" + s;
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
         await httpReq.Post(url,json);
 
     }
-    
-    [ContextMenu("test get")]
-    public async void TestLoad()
+
+    bool isLoaded = false;
+    public async void FirstBuildingLoad(string s)
     {
-        var url = "ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/skyisland/1";
+        var url = "ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/skyisland/" +s;
         var httpReq = new HttpRequester(new JsonSerializationOption());
         
         H_Building_Root result2 = await httpReq.Get<H_Building_Root>(url);
@@ -372,7 +372,24 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
             }
         }
     }
+    public async void TestLoad(string s)
+    {
+        var url = "ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/skyisland/" + s;
+        var httpReq = new HttpRequester(new JsonSerializationOption());
 
+        H_Building_Root result2 = await httpReq.Get<H_Building_Root>(url);
+
+
+        for (int i = 0; i < gridList.Count; i++)
+        {
+            GridXZ<GridObject> grid = gridList[i];
+            foreach (H_GridPlaceObjectList placedObjectSaveObject in result2.results.placeObjects.islandGridList[i].gridPlaceObjectList)
+            {
+                PlacedObjectTypeSO placedObjectTypeSO = BuildingSystemAssets.Instance.GetPlacedObjectTypeSOFromName(placedObjectSaveObject.placedObjectTypeSOName);
+                TryPlaceObject(placedObjectSaveObject.origin, placedObjectTypeSO, placedObjectSaveObject.dir, out PlacedObject placedObject);
+            }
+        }
+    }
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         

@@ -6,15 +6,22 @@ using Photon.Realtime;
 
 public class K_NetworkMgr : MonoBehaviourPunCallbacks
 {
+    public GridBuildingSystem3D builder;
     private void Awake()
     {
         PhotonNetwork.ConnectUsingSettings();
     }
 
-    public override void OnConnectedToMaster() => PhotonNetwork.JoinOrCreateRoom("Room", new RoomOptions { MaxPlayers = 6 }, null);
+    public override void OnConnectedToMaster() => PhotonNetwork.JoinOrCreateRoom("ø‰»Ò", new RoomOptions { MaxPlayers = 6 }, null);
 
     public override void OnJoinedRoom()
-    {
-        PhotonNetwork.Instantiate("Player1", new Vector3(51, 0, 47), Quaternion.identity);
+    {   
+        if(builder!=null)
+        {
+            builder.FirstBuildingLoad("11");
+            PhotonNetwork.Destroy(builder.gameObject);
+        }
+       
+        PhotonNetwork.Instantiate("Player1 1", new Vector3(51, 0, 47), Quaternion.identity);
     }
 }

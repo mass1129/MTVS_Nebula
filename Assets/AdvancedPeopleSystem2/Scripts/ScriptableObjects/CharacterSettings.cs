@@ -89,7 +89,7 @@ namespace AdvancedPeopleSystem
         public CharacterBlendshapeData() { }
     }
     [System.Serializable]
-    public class CharacterSelectedElements: ICloneable,IPunObservable
+    public class CharacterSelectedElements: ICloneable//,IPunObservable
     {
         public int Hair = -1;
         public int Beard = -1;
@@ -103,14 +103,14 @@ namespace AdvancedPeopleSystem
         public object Clone()
         {
             CharacterSelectedElements clone = new CharacterSelectedElements();
-            clone.Hair = this.Hair;
-            clone.Beard = this.Beard;
-            clone.Hat = this.Hat;
-            clone.Shirt = this.Shirt;
-            clone.Pants = this.Pants;
-            clone.Shoes = this.Shoes;
+            clone.Hair =       this.Hair;
+            clone.Beard =     this.Beard;
+            clone.Hat =       this.Hat;
+            clone.Shirt =      this.Shirt;
+            clone.Pants =     this.Pants;
+            clone.Shoes =     this.Shoes;
             clone.Accessory = this.Accessory;
-            clone.Item1 = this.Item1;
+            clone.Item1 =     this.Item1;
             return clone;
         }
 
@@ -138,10 +138,32 @@ namespace AdvancedPeopleSystem
             return -1;
         }
 
-        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-        {
-            throw new NotImplementedException();
-        }
+        //public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        //{
+        //    if (stream.IsWriting)
+        //    {
+        //        stream.SendNext(this.Hair);
+        //        stream.SendNext(this.Hat);
+        //        stream.SendNext(this.Shirt);
+        //        stream.SendNext(this.Pants);
+        //        stream.SendNext(this.Shoes);
+        //        stream.SendNext(this.Accessory);
+        //        stream.SendNext(this.Item1);
+
+        //    }
+        //    else
+        //    {
+        //        this.Hair = (int)stream.ReceiveNext();  
+        //        this.Beard = (int)stream.ReceiveNext();
+        //        this.Hat = (int)stream.ReceiveNext();
+        //        this.Shirt = (int)stream.ReceiveNext();
+        //        this.Pants = (int)stream.ReceiveNext();
+        //        this.Shoes = (int)stream.ReceiveNext();
+        //        this.Accessory = (int)stream.ReceiveNext();
+        //        this.Item1 = (int)stream.ReceiveNext();
+        //        Clone();
+        //    }
+        //}
 
         public void SetSelectedIndex(CharacterElementType type, int newIndex)
         {

@@ -19,7 +19,7 @@ public abstract class K_UserInterface : MonoBehaviour
     public GameObject inventoryWindow;
     public GameObject quickSlotList;
     public GameObject invenTab;
-    bool isShowed = false;
+  
     bool isAddedEvent = false;
     public bool onQuickSlot=false;
     public void OnEnable()
@@ -81,10 +81,16 @@ public abstract class K_UserInterface : MonoBehaviour
         _previousInventory = inventory;
 
     }
-
+    bool isShowed = false;
+    string avatarName => PlayerPrefs.GetString("AvatarName");
     public void ShowButtonClicked()
     {
         isShowed = !isShowed;
+        if (isShowed)
+            inventory.TestLoad(avatarName);
+        else
+            inventory.TestSave(avatarName);
+
         inventoryWindow.SetActive(isShowed);
         if(invenTab != null)
         invenTab.SetActive(isShowed);
@@ -218,7 +224,7 @@ public abstract class K_UserInterface : MonoBehaviour
     }
     public void OnDeselect(GameObject obj)
     {
-        Debug.Log(" ");
+       
         //var deselectInterface = quickSlotList.GetComponent<K_UserInterface>();
         //deselectInterface.inventory.Clear();
         //for (int i = 0; i < deselectInterface.inventory.GetSlots.Length; i++)

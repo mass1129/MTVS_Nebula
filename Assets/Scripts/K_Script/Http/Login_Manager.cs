@@ -67,70 +67,79 @@ public class Login_Manager : MonoBehaviour
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
         H_Av_Root result2 = await httpReq.Get<H_Av_Root>(url);
+      
+       PlayerPrefs.SetString("AvatarName", result2.results[0].name);
+        
     }
+    //public async void GetAvatorInfo()
+    //{ 
+        
+    
+    
+    //}
     //public async void API_Login(string URL, string json)
     //{
 
-    //    using var request = UnityWebRequest.Post(URL, json);
-    //    {
-    //        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
-    //        request.uploadHandler = new UploadHandlerRaw(jsonToSend);
-    //        request.SetRequestHeader("Content-Type", "application/json");
+        //    using var request = UnityWebRequest.Post(URL, json);
+        //    {
+        //        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
+        //        request.uploadHandler = new UploadHandlerRaw(jsonToSend);
+        //        request.SetRequestHeader("Content-Type", "application/json");
 
-    //        var operation = request.SendWebRequest();
+        //        var operation = request.SendWebRequest();
 
-    //        while (!operation.isDone)
-    //            await Task.Yield();
+        //        while (!operation.isDone)
+        //            await Task.Yield();
 
-    //        var jsonResponse = request.downloadHandler.text;
+        //        var jsonResponse = request.downloadHandler.text;
 
-    //        if (request.result != UnityWebRequest.Result.Success)
-    //        {
-    //            Debug.LogError($"Failed: {request.error}");
-    //        }
+        //        if (request.result != UnityWebRequest.Result.Success)
+        //        {
+        //            Debug.LogError($"Failed: {request.error}");
+        //        }
 
-    //        try
-    //        {
-    //            Debug.Log($"Success: {request.downloadHandler.text}");
-    //            SetToken(request.downloadHandler.text);
-    //            SceneManager.LoadScene(1);
-    //        }
+        //        try
+        //        {
+        //            Debug.Log($"Success: {request.downloadHandler.text}");
+        //            SetToken(request.downloadHandler.text);
+        //            SceneManager.LoadScene(1);
+        //        }
 
-    //        catch (Exception ex)
-    //        {
-    //            Debug.LogError($"{this}Could not parse response {jsonResponse}. {ex.Message}");
-    //        }
+        //        catch (Exception ex)
+        //        {
+        //            Debug.LogError($"{this}Could not parse response {jsonResponse}. {ex.Message}");
+        //        }
 
-    //    }
+        //    }
 
-    //}
+        //}
 
-    /// <summary>
-    /// API로 Logout을 하는 함수.
-    /// 로그아웃시 가지고 있던 토큰값은 초기화됨.
-    /// </summary>
-    /// <returns>token = null</returns>
-    //IEnumerator API_Logout()
-    //{
-    //    UnityWebRequest request;
-    //    using (request = UnityWebRequest.Get("http://___/logout"))
-    //    {   
-    //        request.SetRequestHeader("Content-Type", "application/json");
-    //        request.SetRequestHeader("Authorization", "Bearer " + token);
-    //        yield return request.SendWebRequest();
+        /// <summary>
+        /// API로 Logout을 하는 함수.
+        /// 로그아웃시 가지고 있던 토큰값은 초기화됨.
+        /// </summary>
+        /// <returns>token = null</returns>
+        //IEnumerator API_Logout()
+        //{
+        //    UnityWebRequest request;
+        //    using (request = UnityWebRequest.Get("http://___/logout"))
+        //    {   
+        //        request.SetRequestHeader("Content-Type", "application/json");
+        //        request.SetRequestHeader("Authorization", "Bearer " + token);
+        //        yield return request.SendWebRequest();
 
-    //        if (request.isNetworkError)
-    //        {
-    //            Debug.Log(request.error);
-    //        }
-    //        else
-    //        {
-    //            SetToken(null);
-    //            if (request.responseCode != 200)
-    //                ErrorCheck(-(int)request.responseCode, "API_Logout");
-    //        }
-    //    }
-    //}
+        //        if (request.isNetworkError)
+        //        {
+        //            Debug.Log(request.error);
+        //        }
+        //        else
+        //        {
+        //            SetToken(null);
+        //            if (request.responseCode != 200)
+        //                ErrorCheck(-(int)request.responseCode, "API_Logout");
+        //        }
+        //    }
+        //}
     public class H_Av_Root
     {
         public int httpStatus { get; set; }

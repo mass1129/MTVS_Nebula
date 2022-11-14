@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class K_PlayerItemSystem : MonoBehaviour
+public class K_PlayerItemSystem : MonoBehaviourPun
 {
 
     
@@ -11,8 +12,14 @@ public class K_PlayerItemSystem : MonoBehaviour
     public InventoryObject inven_Default;
     public InventoryObject inven_Vehicle;
     public InventoryObject inven_Equipment;
-    //
+    public K_Player player;
+    
+    private void Start()
+    {  
+        if(!photonView.IsMine) this.enabled = false;
+       
 
+    }
     private void Update()
     {
       
@@ -21,8 +28,9 @@ public class K_PlayerItemSystem : MonoBehaviour
    
     public void OnTriggerEnter(Collider other)
     {
-        //ºÎµúÈù °´Ã¼ÀÇ groundItem ÄÄÆ÷³ÍÆ®¸¦ °¡Á®¿Â´Ù.
-        var item = other.GetComponent<GroundItem>();
+        if (!photonView.IsMine) return;
+            //ºÎµúÈù °´Ã¼ÀÇ groundItem ÄÄÆ÷³ÍÆ®¸¦ °¡Á®¿Â´Ù.
+            var item = other.GetComponent<GroundItem>();
         InventoryObject _inventory = null;
         //ÄÄÆ÷³ÍÆ®°¡ ÀÖÀ»¶§
         if (item)
@@ -60,7 +68,7 @@ public class K_PlayerItemSystem : MonoBehaviour
             if (_inventory.AddItem(_item, 1))
             {
                 //±×¶ó¿îµå ¾ÆÀÌÅÛ °´Ã¼¸¦ ÆÄ±«ÇÑ´Ù.
-                Destroy(other.gameObject);
+                PhotonNetwork.Destroy(other.gameObject);
             }
 
 
@@ -70,6 +78,7 @@ public class K_PlayerItemSystem : MonoBehaviour
 
     private void OnApplicationQuit()
     {
+        if (!photonView.IsMine) return;
         inven_Cloths.Clear();
         inven_Building.Clear();
         inven_Default.Clear();
@@ -77,9 +86,9 @@ public class K_PlayerItemSystem : MonoBehaviour
         inven_Equipment.Clear();
 
     }
-    public async void TestTwoInvenSave()
+    public async void TwoInvenSave(string s)
     {
-       
+       if(!photonView.IsMine) return;
         SaveTwoInven saveObject = new SaveTwoInven
         {
             equipment = inven_Equipment.GetInventory(),
@@ -87,12 +96,26 @@ public class K_PlayerItemSystem : MonoBehaviour
         };
         string json = JsonUtility.ToJson(saveObject, true);
         Debug.Log(json);
-        var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/" + inven_Equipment.savePath + "/testAvatar";
+        //string s = PlayerPrefs.GetString(" AvatarName");
+        var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/" + inven_Equipment.savePath  + s;
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
         await httpReq.Post(url, json);
+        
+    }
+    public void ItemSave(string s)
+    {
+        TwoInvenSave(s);
+
 
     }
+    public void ItemLoad(string s)
+    {
+        
+        inven_Cloths.TestLoad(s);
+        inven_Equipment.TestLoad(s);
+    }
+    
 
     [System.Serializable]
     public class SaveTwoInven

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using AdvancedPeopleSystem;
 using Photon.Pun;
-public class PlayerEquipment : CharacterCustomization
+public class PlayerEquipment : MonoBehaviourPun
 
 {
     private InventoryObject _equipment;
@@ -15,7 +15,7 @@ public class PlayerEquipment : CharacterCustomization
 
     void Start()
     {
-        //if (!photonView.IsMine) this.enabled = false; ;
+        if (!photonView.IsMine) this.enabled = false; ;
         _equipment = GetComponent<K_PlayerItemSystem>().inven_Equipment;
 
         CharacterCustomization = GetComponent<CharacterCustomization>();
@@ -49,7 +49,7 @@ public class PlayerEquipment : CharacterCustomization
                     switch (slot.allowedItems[0])
                     {
                         case ItemType.Hat:
-                            SetElementByIndex(CharacterElementType.Hat, itemObject.charCustomIndex);
+                        CharacterCustomization.SetElementByIndex(CharacterElementType.Hat, itemObject.charCustomIndex);
                             break;
 
                         case ItemType.Accessory:
@@ -128,10 +128,7 @@ public class PlayerEquipment : CharacterCustomization
         }
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        //throw new System.NotImplementedException();
-    }
+    
 
     //public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     //{

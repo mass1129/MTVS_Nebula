@@ -12,13 +12,16 @@ public class K_01_Character : K_Player
     {
         if (!photonView.IsMine)
             return;
-
+        
         // Assult가 가질 수 있는 상태 개수만큼 메모리 할당, 각 상태에 클래스 메모리 할당. states[(int)PlayerStates.Idle].Execute()와 같은 방식으로 사용.
-        states = new K_PlayerState<K_Player>[4];
+        states = new K_PlayerState<K_Player>[7];
         states[(int)PlayerStates.Idle] = new K_01_OwnedStates.Idle();
         states[(int)PlayerStates.ThirdMove] = new K_01_OwnedStates.ThirdMove();
         states[(int)PlayerStates.FirstMove] = new K_01_OwnedStates.FirstMove();
         states[(int)PlayerStates.BuildingMode] = new K_01_OwnedStates.BuildingMode();
+        states[(int)PlayerStates.ThirdSprinting] = new K_01_OwnedStates.ThirdSprinting();
+        states[(int)PlayerStates.Sitting] = new K_01_OwnedStates.Sitting();
+        states[(int)PlayerStates.Jump] = new K_01_OwnedStates.Jump();
         //states[(int)PlayerStates.Falling] = new K_01_OwnedStates.Falling();
         //states[(int)PlayerStates.Death] = new K_01_OwnedStates.Death();
         //states[(int)PlayerStates.Global] = new K_01_OwnedStates.Global();
@@ -92,21 +95,19 @@ public class K_01_Character : K_Player
     {
         anim.Play(s, layer, normalizedTime);
     }
-    bool isBuildingMode = false;
 
-    //public void ChangeToBuildingState()
-    //{
 
-    //    isBuildingMode = !isBuildingMode;
-    //    camMgr.buildingSystem.SetActive(isBuildingMode);
-    //    camMgr.subBuildCamera.gameObject.SetActive(isBuildingMode);
-    //}
+
     public void ChangeToBuildingState()
-    {
-        if (CurrentState == PlayerStates.Idle)
-            ChangeState(PlayerStates.BuildingMode);
-        else if (CurrentState == PlayerStates.BuildingMode)
-            ChangeState(PlayerStates.Idle);
+    {   
+       if(PhotonNetwork.CurrentRoom.Name == PlayerPrefs.GetString("AvatarName"))
+       {
+            if (CurrentState == PlayerStates.Idle)
+                ChangeState(PlayerStates.BuildingMode);
+            else if (CurrentState == PlayerStates.BuildingMode)
+                ChangeState(PlayerStates.Idle);
+       }
+       
     }
 
 

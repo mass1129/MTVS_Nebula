@@ -9,6 +9,8 @@ public enum PlayerStates // Player의 기본 상태
     ThirdMove,
     FirstMove,
     BuildingMode,
+    ThirdSprinting,
+    Sitting,
     Jump,
     Falling,
     Death,
@@ -25,15 +27,17 @@ public class K_Player : MonoBehaviourPun, IPunObservable
     public CharacterController cc;
     public Transform cam;
     public K_CameraMgr camMgr;
+    public K_PlayerItemSystem itemSystem;
+    [System.NonSerialized]
 
-
-
-
+    public string avatarName = null;
+    [System.NonSerialized]
+    public string ownIslandID = null;
     [HideInInspector] public Vector2 input;
     [HideInInspector] public Vector3 rootMotion;
     [HideInInspector] public Vector3 velocity;
-    
 
+    public float yVelocity = 0;
     public float jumpHeight;
     public float gravity = -15.0f;
     public float stepDown;
@@ -63,10 +67,22 @@ public class K_Player : MonoBehaviourPun, IPunObservable
     public K_PlayerState<K_Player>[] upperBodyStates;
     public K_StateMachine<K_Player> upperBodyStateMachine;
 
-
+    private void Awake()
+    {
+        
+    }
     private void Start()
     {
+        
+    }
+    private void OnEnable()
+    {
+        if (!photonView.IsMine)
+            return;
 
+        avatarName = PlayerPrefs.GetString("AvatarName");
+        ownIslandID = PlayerPrefs.GetString("Island_ID");
+        Debug.Log("AvatarName : " + avatarName + "  Island_ID : " + ownIslandID);
     }
     private void Update()
     {
@@ -75,7 +91,7 @@ public class K_Player : MonoBehaviourPun, IPunObservable
         Updated();
         //Updated_UpperBody();
         GroundedCheck();
-        //Debug.Log(CurrentState.ToString());
+        Debug.Log(CurrentState.ToString() + "," + PhotonNetwork.CurrentRoom.Name + "," + PlayerPrefs.GetString("AvatarName") + "," + avatarName);
         //Debug.Log(cc.isGrounded);
     }
 

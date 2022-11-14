@@ -22,26 +22,40 @@ public class K_BundleInterface : K_UserInterface
     public override void CreateSlots()
     {
         slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
-         
+
+        //for (int i = 0; i < inventory.GetSlots.Length; i++)
+        //{
+        //    var obj = Instantiate(inventoryPrefab, Vector3.zero, Quaternion.identity, inventoryWindow.transform);
+        //    //var obj = Instantiate(inventoryPrefab, inventoryWindow.transform);
+        //    //obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
+        //    if (!isAdded)
+        //    {
+        //        AddEvent(obj, EventTriggerType.PointerEnter, delegate { OnEnter(obj); });
+        //        AddEvent(obj, EventTriggerType.PointerExit, delegate { OnExit(obj); });
+        //        AddEvent(obj, EventTriggerType.Select, delegate { OnSelect(obj); });
+        //        AddEvent(obj, EventTriggerType.Deselect, delegate { OnDeselect(obj); });
+        //    }
+        //    slot.Add(obj);
+        //    inventory.GetSlots[i].slotDisplay = slot[i];
+
+        //    slotsOnInterface.Add(slot[i], inventory.GetSlots[i]);
+
+        //}
+        //isAdded = true;
         for (int i = 0; i < inventory.GetSlots.Length; i++)
         {
             var obj = Instantiate(inventoryPrefab, Vector3.zero, Quaternion.identity, inventoryWindow.transform);
-            //var obj = Instantiate(inventoryPrefab, inventoryWindow.transform);
-            //obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
-            if (!isAdded)
-            {
                 AddEvent(obj, EventTriggerType.PointerEnter, delegate { OnEnter(obj); });
                 AddEvent(obj, EventTriggerType.PointerExit, delegate { OnExit(obj); });
                 AddEvent(obj, EventTriggerType.Select, delegate { OnSelect(obj); });
                 AddEvent(obj, EventTriggerType.Deselect, delegate { OnDeselect(obj); });
-            }
-            slot.Add(obj);
-            inventory.GetSlots[i].slotDisplay = slot[i];
 
-            slotsOnInterface.Add(slot[i], inventory.GetSlots[i]);
-            
+            inventory.GetSlots[i].slotDisplay = obj;
+
+            slotsOnInterface.Add(obj, inventory.GetSlots[i]);
+
         }
-        isAdded = true;
+       
     }
     public override void DistorySlots()
     { }

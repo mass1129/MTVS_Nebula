@@ -626,14 +626,22 @@ namespace AdvancedPeopleSystem
         /// 
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
+            //if (stream.IsWriting)
+            //{
+            //    stream.SendNext(this.characterSelectedElements);
+               
 
+            //}
+            //else if(stream.IsReading)
+            //{
+            //    this.characterSelectedElements = (CharacterSelectedElements)stream.ReceiveNext();
+
+            //}
         }
         #endregion
         public void SetElementByIndex(CharacterElementType type, int index)
         {
-            //if (!photonView.IsMine) return;
-                //photonView.RPC("RPCSetElementByIndex", RpcTarget.AllBuffered, type, index);
-                if (Settings == null)
+            if (Settings == null)
             {
                 Debug.LogError("settings = null");
                 return;
@@ -739,12 +747,13 @@ namespace AdvancedPeopleSystem
             }
 
             characterSelectedElements.SetSelectedIndex(type, index);
-            //photonView.RPC("RPCSetElementByIndex", RpcTarget.AllBuffered, type, index);  
+            // photonView.RPC("RPCSetElementByIndex", RpcTarget.AllBuffered, type, index);  
 
         }
         public void RPCSetElementByIndex(CharacterElementType type, int index)
         {
-            characterSelectedElements.SetSelectedIndex(type, index);
+            //characterSelectedElements.SetSelectedIndex(type, index);
+            
         }
         //public virtual void KSetElementByIndex(CharacterElementType type, int index)
         //{

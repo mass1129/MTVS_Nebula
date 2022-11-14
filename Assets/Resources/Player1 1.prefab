@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3675697453327736184
 Transform:
   m_ObjectHideFlags: 0
@@ -39,7 +39,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 52018547141625944}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -77,7 +77,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300038, guid: 22e96424c8244c94c9e181ff91150a70, type: 3}
   m_Bones:
   - {fileID: 2932736840857133634}
   - {fileID: 2252003905541533672}
@@ -492,7 +492,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8211468188153635632
 Transform:
   m_ObjectHideFlags: 0
@@ -554,7 +554,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300028, guid: 4b3d6be02d496cc4ba6547ed6122d614, type: 3}
   m_Bones:
   - {fileID: 2932736840857133634}
   - {fileID: 2252003905541533672}
@@ -947,14 +947,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5733073701845269106}
         m_TargetAssemblyTypeName: K_PlayerItemSystem, Assembly-CSharp
-        m_MethodName: TestTwoInvenSave
-        m_Mode: 1
+        m_MethodName: TwoInvenSave
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: "\uC694\uD76C"
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &549308635382874747
@@ -1025,9 +1025,9 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &4246967837456530996
 CanvasRenderer:
@@ -1144,7 +1144,7 @@ Transform:
   m_Children:
   - {fileID: 8470005533002493295}
   m_Father: {fileID: 1752280605483343736}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3130961220459845726
 MonoBehaviour:
@@ -1817,7 +1817,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 892524056462589449}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.00006103515}
+  m_LocalPosition: {x: 0, y: 0, z: -0.000060081475}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1828,7 +1828,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -556.99994, y: 2}
+  m_AnchoredPosition: {x: -562.00006, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7074689716686054314
@@ -2107,7 +2107,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3246761818639589603
 Transform:
   m_ObjectHideFlags: 0
@@ -2168,7 +2168,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300008, guid: 22e96424c8244c94c9e181ff91150a70, type: 3}
   m_Bones:
   - {fileID: 2932736840857133634}
   - {fileID: 2252003905541533672}
@@ -2260,7 +2260,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1017903967740094097}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.000060081475}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2271,7 +2271,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -433, y: 6}
+  m_AnchoredPosition: {x: -437.00006, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8866114648613980882
@@ -2455,7 +2455,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1061106740408350173}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.00006103515}
+  m_LocalPosition: {x: 0, y: 0, z: -0.000060081475}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2466,7 +2466,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -314.99994, y: 12}
+  m_AnchoredPosition: {x: -312.00006, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &590476105378801445
@@ -3476,7 +3476,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1366499551302123716}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3878,7 +3878,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &427735394143138368
 Transform:
   m_ObjectHideFlags: 0
@@ -3939,7 +3939,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300002, guid: 182a52564125e7043a9c544a753905ce, type: 3}
   m_Bones:
   - {fileID: 2932736840857133634}
   - {fileID: 2252003905541533672}
@@ -4050,7 +4050,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1563638827082524426}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.00006103515}
+  m_LocalPosition: {x: 0, y: 0, z: -0.000060081475}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4061,7 +4061,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -197.99992, y: 9}
+  m_AnchoredPosition: {x: -187.00006, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8439270654182776108
@@ -4200,7 +4200,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2956721189072280166
 Transform:
   m_ObjectHideFlags: 0
@@ -4261,7 +4261,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300028, guid: 21f4320ca304e9b45b081b38b5be2ea0, type: 3}
   m_Bones:
   - {fileID: 2932736840857133634}
   - {fileID: 2252003905541533672}
@@ -4315,7 +4315,11 @@ SkinnedMeshRenderer:
   - {fileID: 1585651973251646124}
   - {fileID: 65003136082890878}
   - {fileID: 9007764440334317464}
-  m_BlendShapeWeights: []
+  m_BlendShapeWeights:
+  - 0
+  - 0
+  - 0
+  - 100
   m_RootBone: {fileID: 2932736840857133634}
   m_AABB:
     m_Center: {x: 0.000000005122274, y: 0.01935458, z: -0.022495536}
@@ -5257,6 +5261,7 @@ MonoBehaviour:
   - {fileID: 1752280606361052065}
   - {fileID: 1752280604984157940}
   tabButton: {fileID: 1752280604606760088}
+  playerItem: {fileID: 0}
 --- !u!1 &1752280604653170796
 GameObject:
   m_ObjectHideFlags: 0
@@ -5521,7 +5526,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -6111,7 +6116,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 3
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -7261,7 +7266,6 @@ Transform:
   m_Children:
   - {fileID: 1752280606319894689}
   - {fileID: 1752280605368544660}
-  - {fileID: 1752280606524458879}
   - {fileID: 1752280606606496138}
   - {fileID: 8690633258088376531}
   m_Father: {fileID: 5629639970830784066}
@@ -7979,7 +7983,7 @@ MonoBehaviour:
   CameraDistance: 4.74
   CameraCollisionFilter:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8192
   IgnoreTag: 
   CameraRadius: 0.2
   DampingIntoCollision: 0
@@ -11337,13 +11341,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1752280606524458878}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.043, z: 0}
+  m_LocalRotation: {x: 0.048516124, y: 0.00000024847037, z: -0.000000011247858, w: 0.99882245}
+  m_LocalPosition: {x: 0, y: -0.03866928, z: -0.036149304}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1752280605483343736}
-  m_RootOrder: 2
+  m_Father: {fileID: 2252003905541533672}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1752280606533616682
 GameObject:
@@ -11646,7 +11650,7 @@ Transform:
   m_Children:
   - {fileID: 1752280604849016305}
   m_Father: {fileID: 1752280605483343736}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1752280606606496139
 MonoBehaviour:
@@ -11702,7 +11706,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6088034562486336499
 Transform:
   m_ObjectHideFlags: 0
@@ -11763,7 +11767,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300034, guid: 22e96424c8244c94c9e181ff91150a70, type: 3}
   m_Bones:
   - {fileID: 2932736840857133634}
   - {fileID: 2252003905541533672}
@@ -12048,7 +12052,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1518603069967754141
 Transform:
   m_ObjectHideFlags: 0
@@ -12109,7 +12113,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300036, guid: 22e96424c8244c94c9e181ff91150a70, type: 3}
   m_Bones:
   - {fileID: 2932736840857133634}
   - {fileID: 2252003905541533672}
@@ -12468,7 +12472,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1934211204514298886
 Transform:
   m_ObjectHideFlags: 0
@@ -12530,7 +12534,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300016, guid: 4b3d6be02d496cc4ba6547ed6122d614, type: 3}
   m_Bones:
   - {fileID: 2932736840857133634}
   - {fileID: 2252003905541533672}
@@ -12609,7 +12613,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2984641057434788936
 Transform:
   m_ObjectHideFlags: 0
@@ -12670,7 +12674,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300010, guid: 22e96424c8244c94c9e181ff91150a70, type: 3}
   m_Bones:
   - {fileID: 2932736840857133634}
   - {fileID: 2252003905541533672}
@@ -13893,7 +13897,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3877386207207522764
 Transform:
   m_ObjectHideFlags: 0
@@ -13954,7 +13958,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300030, guid: 21f4320ca304e9b45b081b38b5be2ea0, type: 3}
   m_Bones:
   - {fileID: 2932736840857133634}
   - {fileID: 2252003905541533672}
@@ -14008,7 +14012,10 @@ SkinnedMeshRenderer:
   - {fileID: 1585651973251646124}
   - {fileID: 65003136082890878}
   - {fileID: 9007764440334317464}
-  m_BlendShapeWeights: []
+  m_BlendShapeWeights:
+  - 0
+  - 0
+  - 0
   m_RootBone: {fileID: 2932736840857133634}
   m_AABB:
     m_Center: {x: 0.000000005122274, y: 0.01935458, z: -0.022495536}
@@ -14353,7 +14360,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8700153273650883298
 Transform:
   m_ObjectHideFlags: 0
@@ -14414,7 +14421,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300022, guid: 22e96424c8244c94c9e181ff91150a70, type: 3}
   m_Bones:
   - {fileID: 2932736840857133634}
   - {fileID: 2252003905541533672}
@@ -14698,28 +14705,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: c3cb508365f4b5c46b15784258606b4f, type: 2}
-        m_TargetAssemblyTypeName: InventoryObject, Assembly-CSharp
-        m_MethodName: TestLoad
+      - m_Target: {fileID: 5733073701845269106}
+        m_TargetAssemblyTypeName: K_PlayerItemSystem, Assembly-CSharp
+        m_MethodName: ItemLoad
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 11400000, guid: 03e1d40251a619f4a9f2f3e3ac33a076, type: 2}
-        m_TargetAssemblyTypeName: InventoryObject, Assembly-CSharp
-        m_MethodName: TestLoad
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: 50
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &2866220399247568841
@@ -14738,7 +14733,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6389898092776221027
 Transform:
   m_ObjectHideFlags: 0
@@ -14799,7 +14794,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300042, guid: 182a52564125e7043a9c544a753905ce, type: 3}
   m_Bones:
   - {fileID: 2932736840857133634}
   - {fileID: 2252003905541533672}
@@ -14916,7 +14911,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2984826802920430211}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -15033,7 +15028,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4180294304767897540
 Transform:
   m_ObjectHideFlags: 0
@@ -15094,7 +15089,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300032, guid: 21f4320ca304e9b45b081b38b5be2ea0, type: 3}
   m_Bones:
   - {fileID: 2932736840857133634}
   - {fileID: 2252003905541533672}
@@ -15148,7 +15143,11 @@ SkinnedMeshRenderer:
   - {fileID: 1585651973251646124}
   - {fileID: 65003136082890878}
   - {fileID: 9007764440334317464}
-  m_BlendShapeWeights: []
+  m_BlendShapeWeights:
+  - 0
+  - 0
+  - 0
+  - 100
   m_RootBone: {fileID: 2932736840857133634}
   m_AABB:
     m_Center: {x: 0.000000005122274, y: 0.01935458, z: -0.022495536}
@@ -15635,7 +15634,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -16126,13 +16125,13 @@ MonoBehaviour:
       - m_Target: {fileID: 4970061919972252230}
         m_TargetAssemblyTypeName: GridBuildingSystem3D, Assembly-CSharp
         m_MethodName: TestSave
-        m_Mode: 1
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: 11
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &3257494677288917190
@@ -16318,7 +16317,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1959596731675720743
 Transform:
   m_ObjectHideFlags: 0
@@ -16379,7 +16378,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300006, guid: 22e96424c8244c94c9e181ff91150a70, type: 3}
   m_Bones:
   - {fileID: 2932736840857133634}
   - {fileID: 2252003905541533672}
@@ -16729,6 +16728,7 @@ Transform:
   m_LocalScale: {x: 1, y: 0.99999994, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1752280606524458879}
   - {fileID: 8305276263111068163}
   m_Father: {fileID: 2932736840857133634}
   m_RootOrder: 0
@@ -16813,7 +16813,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &9179468663072243136
 Transform:
   m_ObjectHideFlags: 0
@@ -16874,7 +16874,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300004, guid: a5495b0c4720e134a88fda0cccad5d03, type: 3}
   m_Bones:
   - {fileID: 2932736840857133634}
   - {fileID: 2252003905541533672}
@@ -17514,7 +17514,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3909787858537182506}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.00006103515}
+  m_LocalPosition: {x: 0, y: 0, z: -0.000060081475}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -17525,7 +17525,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -674.99994, y: 0}
+  m_AnchoredPosition: {x: -687.00006, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1875803581753032741
@@ -17899,7 +17899,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6764581855906142263
 Transform:
   m_ObjectHideFlags: 0
@@ -17960,7 +17960,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300012, guid: 22e96424c8244c94c9e181ff91150a70, type: 3}
   m_Bones:
   - {fileID: 2932736840857133634}
   - {fileID: 2252003905541533672}
@@ -18053,7 +18053,7 @@ Transform:
   m_Children:
   - {fileID: 7849662519120455066}
   m_Father: {fileID: 2252003905541533672}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4031125870062035699
 GameObject:
@@ -18071,7 +18071,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5851008273476078595
 Transform:
   m_ObjectHideFlags: 0
@@ -18132,7 +18132,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300014, guid: a5495b0c4720e134a88fda0cccad5d03, type: 3}
   m_Bones:
   - {fileID: 2932736840857133634}
   - {fileID: 2252003905541533672}
@@ -18564,7 +18564,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4280642727223674224}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.00006103515}
+  m_LocalPosition: {x: 0, y: 0, z: -0.000060081475}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -18575,7 +18575,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 291.00006, y: 2}
+  m_AnchoredPosition: {x: 312.99994, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4669858258481793908
@@ -19152,7 +19152,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4316143992167895827}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -19345,7 +19345,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2116612576778146874
 Transform:
   m_ObjectHideFlags: 0
@@ -19406,7 +19406,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300032, guid: a5495b0c4720e134a88fda0cccad5d03, type: 3}
   m_Bones:
   - {fileID: 2932736840857133634}
   - {fileID: 2252003905541533672}
@@ -19618,7 +19618,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3783865604939323365
 Transform:
   m_ObjectHideFlags: 0
@@ -19641,7 +19641,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4475833820448075899}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -19679,7 +19679,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300016, guid: 22e96424c8244c94c9e181ff91150a70, type: 3}
   m_Bones:
   - {fileID: 2932736840857133634}
   - {fileID: 2252003905541533672}
@@ -20566,6 +20566,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c18a71191d6ecb942a3be5f6e0c9f2db, type: 2}
   - {fileID: 11400000, guid: 37fe408c7015ac542aabad5d47518ac8, type: 2}
   - {fileID: 11400000, guid: 3a63a7931dd6b294e8b12f885e421aa3, type: 2}
+  - {fileID: 11400000, guid: 882781988d2a0624391ea9a325ed73cd, type: 2}
+  - {fileID: 11400000, guid: 4add6ba3d8160374c8f73a9bf76764b3, type: 2}
+  - {fileID: 11400000, guid: 40931e919fdcbbe44972c4a9c66d1d72, type: 2}
+  - {fileID: 11400000, guid: d8bda5e0679a91746aaf1013eda7fa61, type: 2}
+  - {fileID: 11400000, guid: 74da733b9c717424d9f44ea0f5718386, type: 2}
+  - {fileID: 11400000, guid: 92bf6560323313c40b5050d4da0038e4, type: 2}
+  - {fileID: 11400000, guid: c108d8a9b83516842b0f4813134ad8e2, type: 2}
+  - {fileID: 11400000, guid: dab29d2d5b7b9324297c8f18062d2af0, type: 2}
+  - {fileID: 11400000, guid: 630dd27debc5beb45a98f7c2b7db7231, type: 2}
+  - {fileID: 11400000, guid: f0db44351f86f6747839d982ac1f49aa, type: 2}
+  - {fileID: 11400000, guid: c2f7321520c0fd2449bfe8ae4fa3f7f1, type: 2}
+  - {fileID: 11400000, guid: 71806ef2f3a5768419b656e66892bc14, type: 2}
 --- !u!1 &4970061920155223461
 GameObject:
   m_ObjectHideFlags: 0
@@ -20747,7 +20759,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4970061920664843698
 Transform:
   m_ObjectHideFlags: 0
@@ -21168,7 +21180,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4346510278640164206
 Transform:
   m_ObjectHideFlags: 0
@@ -21229,7 +21241,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300012, guid: 21f4320ca304e9b45b081b38b5be2ea0, type: 3}
   m_Bones:
   - {fileID: 2932736840857133634}
   - {fileID: 2252003905541533672}
@@ -21283,7 +21295,12 @@ SkinnedMeshRenderer:
   - {fileID: 1585651973251646124}
   - {fileID: 65003136082890878}
   - {fileID: 9007764440334317464}
-  m_BlendShapeWeights: []
+  m_BlendShapeWeights:
+  - 0
+  - 0
+  - 0
+  - 100
+  - 100
   m_RootBone: {fileID: 2932736840857133634}
   m_AABB:
     m_Center: {x: 0.000000005122274, y: 0.01935458, z: -0.022495536}
@@ -21318,7 +21335,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5359274501397551968}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.00006103515}
+  m_LocalPosition: {x: 0, y: 0, z: -0.000060081475}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -21329,7 +21346,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 411.00006, y: 2}
+  m_AnchoredPosition: {x: 437.99994, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1222596211563677347
@@ -21858,7 +21875,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5513327144128329892}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -22010,7 +22027,6 @@ GameObject:
   - component: {fileID: 5733073701845269111}
   - component: {fileID: 3214773754116892971}
   - component: {fileID: 842975793188924700}
-  - component: {fileID: -1642934318979576910}
   m_Layer: 0
   m_Name: Player1 1
   m_TagString: Untagged
@@ -22261,14 +22277,14 @@ MonoBehaviour:
     - {fileID: 8740287367709900869}
   animator: {fileID: 4441311022780113700}
   characterSelectedElements:
-    Hair: -1
-    Beard: -1
-    Hat: -1
-    Shirt: -1
-    Pants: -1
-    Shoes: -1
-    Accessory: -1
-    Item1: -1
+    Hair: 2
+    Beard: 1
+    Hat: 1
+    Shirt: 1
+    Pants: 1
+    Shoes: 1
+    Accessory: 1
+    Item1: 3
   heightValue: 0
   headSizeValue: 0
   feetOffset: 0
@@ -22468,7 +22484,7 @@ MonoBehaviour:
   - blendshapeName: BackpackOffset
     type: 50
     group: 2
-    value: 0
+    value: 100
   Skin: {r: 0.8679245, g: 0.5573327, b: 0.45443213, a: 1}
   Eye: {r: 0.22588104, g: 0.26180884, b: 0.3396226, a: 1}
   Hair: {r: 0.3490566, g: 0.3490566, b: 0.3490566, a: 1}
@@ -22646,9 +22662,11 @@ MonoBehaviour:
   cc: {fileID: 5733073701845269105}
   cam: {fileID: 1752280606319894689}
   camMgr: {fileID: 5733073701845269107}
+  itemSystem: {fileID: 5733073701845269106}
   input: {x: 0, y: 0}
   rootMotion: {x: 0, y: 0, z: 0}
   velocity: {x: 0, y: 0, z: 0}
+  yVelocity: 0
   jumpHeight: 3
   gravity: 20
   stepDown: 0.3
@@ -22745,6 +22763,7 @@ MonoBehaviour:
   inven_Default: {fileID: 11400000, guid: 711bda56d07eec245bfab8e85bc64549, type: 2}
   inven_Vehicle: {fileID: 11400000, guid: 422cb2658b0d51346a2cf4a932b5bd9e, type: 2}
   inven_Equipment: {fileID: 11400000, guid: 03e1d40251a619f4a9f2f3e3ac33a076, type: 2}
+  player: {fileID: 0}
 --- !u!114 &5733073701845269110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22801,45 +22820,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e418d1ddcb6a171449d202bf1d7d6508, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSettingsExpanded: 0
-  selectedsettings: {fileID: 0}
-  _settings: {fileID: 0}
-  characterParts: []
-  prefabPath: 
-  instanceStatus: 0
-  originHip: {fileID: 0}
-  headHip: {fileID: 0}
-  clothesAnchors: []
-  animator: {fileID: 0}
-  characterSelectedElements:
-    Hair: -1
-    Beard: -1
-    Hat: -1
-    Shirt: -1
-    Pants: -1
-    Shoes: -1
-    Accessory: -1
-    Item1: -1
-  heightValue: 0
-  headSizeValue: 0
-  feetOffset: 0
-  characterBlendshapeDatas: []
-  Skin: {r: 0, g: 0, b: 0, a: 0}
-  Eye: {r: 0, g: 0, b: 0, a: 0}
-  Hair: {r: 0, g: 0, b: 0, a: 0}
-  Underpants: {r: 0, g: 0, b: 0, a: 0}
-  OralCavity: {r: 0, g: 0, b: 0, a: 0}
-  Teeth: {r: 0, g: 0, b: 0, a: 0}
-  CurrentCombinerState: 0
-  combinedCharacter: {fileID: 0}
-  ProbesAnchorOverride: {fileID: 0}
-  CharacterGenerator_settings: {fileID: 0}
-  UpdateWhenOffscreenMeshes: 1
-  MinLODLevels: 0
-  MaxLODLevels: 3
-  _transform: {fileID: 0}
-  applyFeetOffset: 1
-  notAPP2Shader: 0
 --- !u!114 &3214773754116892971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22861,7 +22841,6 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 5629639970830784067}
   - {fileID: 5733073701845269104}
-  - {fileID: 5733073701845269111}
   - {fileID: 842975793188924700}
   - {fileID: 4970061919972252230}
   sceneViewId: 0
@@ -22883,18 +22862,6 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
---- !u!114 &-1642934318979576910
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5629639970830784068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 126494ae2a10a34499272ed97a6c9f5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5654995178479897341
 GameObject:
   m_ObjectHideFlags: 0
@@ -22924,7 +22891,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5654995178479897341}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.00006103515}
+  m_LocalPosition: {x: 0, y: 0, z: -0.000060081475}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -22935,7 +22902,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 52.000076, y: 2}
+  m_AnchoredPosition: {x: 62.999943, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &515344089208585228
@@ -23074,7 +23041,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7935115834148846517
 Transform:
   m_ObjectHideFlags: 0
@@ -23135,7 +23102,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300004, guid: 22e96424c8244c94c9e181ff91150a70, type: 3}
   m_Bones:
   - {fileID: 2932736840857133634}
   - {fileID: 2252003905541533672}
@@ -23323,13 +23290,13 @@ MonoBehaviour:
       - m_Target: {fileID: 4970061919972252230}
         m_TargetAssemblyTypeName: GridBuildingSystem3D, Assembly-CSharp
         m_MethodName: TestLoad
-        m_Mode: 1
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: 11
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &5850036332403356483
@@ -23536,7 +23503,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5884737986184940665}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.00006103515}
+  m_LocalPosition: {x: 0, y: 0, z: -0.000060081475}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -23547,7 +23514,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 167.00008, y: 2}
+  m_AnchoredPosition: {x: 187.99994, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3044499597109511093
@@ -23686,7 +23653,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3306174328958579060
 Transform:
   m_ObjectHideFlags: 0
@@ -23748,7 +23715,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300002, guid: 4b3d6be02d496cc4ba6547ed6122d614, type: 3}
   m_Bones:
   - {fileID: 2932736840857133634}
   - {fileID: 2252003905541533672}
@@ -23872,7 +23839,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6034487903776562423}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.00006103515}
+  m_LocalPosition: {x: 0, y: 0, z: -0.000060081475}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -23883,7 +23850,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 658.00006, y: 2}
+  m_AnchoredPosition: {x: 687.99994, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &264835292820016941
@@ -24110,7 +24077,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7610105473007005747
 Transform:
   m_ObjectHideFlags: 0
@@ -24171,7 +24138,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300022, guid: 182a52564125e7043a9c544a753905ce, type: 3}
   m_Bones:
   - {fileID: 2932736840857133634}
   - {fileID: 2252003905541533672}
@@ -24813,7 +24780,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2955296708644764579
 Transform:
   m_ObjectHideFlags: 0
@@ -24874,7 +24841,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300020, guid: a5495b0c4720e134a88fda0cccad5d03, type: 3}
   m_Bones:
   - {fileID: 2932736840857133634}
   - {fileID: 2252003905541533672}
@@ -25446,7 +25413,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6746407927359704492}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.00006103515}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -25457,7 +25424,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -70.99992, y: 9}
+  m_AnchoredPosition: {x: -62, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3784290170252484109
@@ -26011,7 +25978,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1400436825980062838
 Transform:
   m_ObjectHideFlags: 0
@@ -26072,7 +26039,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300026, guid: 22e96424c8244c94c9e181ff91150a70, type: 3}
   m_Bones:
   - {fileID: 2932736840857133634}
   - {fileID: 2252003905541533672}
@@ -26712,7 +26679,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8705191589324734699
 Transform:
   m_ObjectHideFlags: 0
@@ -26735,7 +26702,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7209538704385027094}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -26773,7 +26740,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300000, guid: 22e96424c8244c94c9e181ff91150a70, type: 3}
   m_Bones:
   - {fileID: 2932736840857133634}
   - {fileID: 2252003905541533672}
@@ -26850,7 +26817,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8194578257389071285
 Transform:
   m_ObjectHideFlags: 0
@@ -26873,7 +26840,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7294141546015281412}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -26911,7 +26878,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300028, guid: 22e96424c8244c94c9e181ff91150a70, type: 3}
   m_Bones:
   - {fileID: 2932736840857133634}
   - {fileID: 2252003905541533672}
@@ -26988,7 +26955,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4628969914634872271
 Transform:
   m_ObjectHideFlags: 0
@@ -27049,7 +27016,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300014, guid: 22e96424c8244c94c9e181ff91150a70, type: 3}
   m_Bones:
   - {fileID: 2932736840857133634}
   - {fileID: 2252003905541533672}
@@ -27129,7 +27096,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2034230439616341910
 Transform:
   m_ObjectHideFlags: 0
@@ -27190,7 +27157,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300062, guid: 182a52564125e7043a9c544a753905ce, type: 3}
   m_Bones:
   - {fileID: 2932736840857133634}
   - {fileID: 2252003905541533672}
@@ -27428,7 +27395,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7486747365596151378}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -27860,7 +27827,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7799836144616392511}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -28288,7 +28255,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5016046979504310145
 Transform:
   m_ObjectHideFlags: 0
@@ -28350,7 +28317,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300036, guid: 4b3d6be02d496cc4ba6547ed6122d614, type: 3}
   m_Bones:
   - {fileID: 2932736840857133634}
   - {fileID: 2252003905541533672}
@@ -28428,7 +28395,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3884620107319621486
 Transform:
   m_ObjectHideFlags: 0
@@ -28489,7 +28456,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300024, guid: 22e96424c8244c94c9e181ff91150a70, type: 3}
   m_Bones:
   - {fileID: 2932736840857133634}
   - {fileID: 2252003905541533672}
@@ -28807,7 +28774,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8492652621242861361}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -29140,7 +29107,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8688661525116526114}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.00006103515}
+  m_LocalPosition: {x: 0, y: 0, z: -0.000060081475}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -29151,7 +29118,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 526.00006, y: 2}
+  m_AnchoredPosition: {x: 562.99994, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5065559952690978965
@@ -29313,7 +29280,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8726303012650317298}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -29461,7 +29428,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1345941463621362357
 Transform:
   m_ObjectHideFlags: 0
@@ -29522,7 +29489,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300030, guid: 22e96424c8244c94c9e181ff91150a70, type: 3}
   m_Bones:
   - {fileID: 2932736840857133634}
   - {fileID: 2252003905541533672}

@@ -12,26 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ede9f2211b6a7a34ab86b34eb3b2c346, type: 3}
   m_Name: PlayerInventory_BuildingBundleCollection
   m_EditorClassIdentifier: 
-  savePath: Inventory_Building_Save
-  loadPath: inventory/building-bundle
+  savePath: inventory/building-bundle/
+  loadPath: inventory/building-bundle/
   database: {fileID: 11400000, guid: 2ef6ad25b8d7948488dda3b23dc7008b, type: 2}
   type: 5
   Container:
     slots:
     - allowedItems: 0e000000
       item:
-        name: BB_Standard
-        Id: 12
-        uniqueId: 1
+        name: 
+        Id: -1
+        uniqueId: -1
         buffs: []
-      amount: 1
+      amount: 0
     - allowedItems: 0e000000
       item:
-        name: BB_System
-        Id: 14
-        uniqueId: 2
+        name: 
+        Id: -1
+        uniqueId: -1
         buffs: []
-      amount: 1
+      amount: 0
     - allowedItems: 0e000000
       item:
         name: 

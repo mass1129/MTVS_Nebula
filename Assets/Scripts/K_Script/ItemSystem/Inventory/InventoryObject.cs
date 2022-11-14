@@ -158,9 +158,20 @@ public class InventoryObject : ScriptableObject
         }
 
     }
-    public async void TestLoad()
+    public async void TestSave(string s)
     {
-        var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/" + loadPath + "/testAvatar";
+
+        string json = JsonUtility.ToJson(Container, true);
+        Debug.Log(json);
+        //string s = PlayerPrefs.GetString(" AvatarName");
+        var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/" + savePath + s;
+        var httpReq = new HttpRequester(new JsonSerializationOption());
+
+        await httpReq.Post(url, json);
+    }
+    public async void TestLoad(string s)
+    {
+        var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/" + loadPath + s;
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
         H_I_Root result2 = await httpReq.Get<H_I_Root>(url);
@@ -169,8 +180,9 @@ public class InventoryObject : ScriptableObject
         //Debug.Log(json);
         for (int i = 0; i < Container.slots.Length; i++)
         {
-            Container.slots[i].UpdateSlot(result2.results.slots[i].item, result2.results.slots[i].amount);
+           GetSlots[i].UpdateSlot(result2.results.slots[i].item, result2.results.slots[i].amount);
         }
+       
     }
 
     public void UpdateInventory()
