@@ -8,8 +8,9 @@ namespace IslandInfo
 {
     class Categories
     {
-        public string[] compare_category = { "요리/레시피", "해외여행", "캠핑/등산","국내여행","한달살기" };
-        public string[] island_category = { "Island_Backyard", "Island_Beach", "Island_Cave", "Island_House", "Island_Pond","Island_Port" };
+        public string[] compare_category = { "요리/레시피", "해외여행", "캠핑/등산" };
+        public string[] island_category = { "Island_Backyard", "Island_Beach", "Island_Cave", "Island_House", "Island_Pond" };
+        public string[] temp_UserName = {"요희" };
     }
     public class Result
     {
@@ -123,12 +124,13 @@ namespace IslandInfo
             {
 
                 JsonInfo info = Island_Dic[i];
+                string temp_user = info.User_NickName;
                 if (info.island_Type == null)
                 {
                     Island_Dic.Remove(i);
                     break;
                 }
-                GameObject island = InstantiateIsland(info.island_Type, Islands);
+                GameObject island = InstantiateIsland(info.island_Type, Islands, temp_user);
                 info.User_Obj = island;
                 island.transform.position = info.island_Pos;
                 island.transform.GetComponent<Island_Profile>().user_name = info.User_NickName;
@@ -142,7 +144,8 @@ namespace IslandInfo
             foreach (string i in Island_Dic.Keys)
             {
                 JsonInfo info = Island_Dic[i];
-                GameObject island = InstantiateIsland(info.island_Type, Islands);
+                
+                GameObject island = InstantiateIsland(info.island_Type, Islands, "temp_user");
                 info.User_Obj = island;
                 island.transform.position = info.island_Pos;
                 island.transform.GetComponent<Island_Profile>().user_name = i;
@@ -150,11 +153,15 @@ namespace IslandInfo
                 await Task.Yield();
             }
         }
-        GameObject InstantiateIsland(string IslandType,Transform Islands)
+        GameObject InstantiateIsland(string IslandType,Transform Islands,string username)
         {
-            float randomScale = Random.Range(0.3f, 3);
             GameObject land = GameObject.Instantiate(Resources.Load<GameObject>("CHAN_Resources/" + IslandType), Islands);
-            land.transform.GetChild(0).gameObject.transform.localScale *= randomScale;
+            if (username == "요희")
+            {
+                land.transform.gameObject.transform.localScale *= 3;
+            }
+            //float randomScale = Random.Range(0.3f, 3);
+            //land.transform.GetChild(0).gameObject.transform.localScale *= randomScale;
             return land;
         }
     }
