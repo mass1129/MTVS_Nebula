@@ -207,7 +207,7 @@ public class User_Move : MonoBehaviourPun, IPunObservable
     }
     public void OnClickEnterBtn()
     {
-        PlayerPrefs.SetString("Island_ID", temp_userIsland_ID);
+        PlayerPrefs.SetString("User_Island_ID", temp_userIsland_ID);
         print("¼¶ ID: "+PlayerPrefs.GetString("Island_ID"));
         CHAN_GameManager.instance.Go_User_Scene(userName);
     }
