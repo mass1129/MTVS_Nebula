@@ -51,7 +51,7 @@ public class SkyView_UI_Manager : MonoBehaviour
     public void Initialize()
     {
         //하늘섬 돌아가기 버튼 활성화
-        btn_MyWorld.SetActive(false);
+        btn_MyWorld.SetActive(true);
         // 친구 버튼 활성화
         btn_Freinds.SetActive(true);
         // 친구리스트 비활성화
@@ -74,10 +74,10 @@ public class SkyView_UI_Manager : MonoBehaviour
     {
         MakeFriendsBtn();
         //친구 버튼 비활성화
-        btn_Freinds.SetActive(false);
+        //btn_Freinds.SetActive(false);
         //친구리스트 활성화
         Area_FriendsList.gameObject.SetActive(!Area_FriendsList.gameObject.activeSelf);
-        btn_MyWorld.SetActive(!btn_MyWorld.activeSelf);
+        //btn_MyWorld.SetActive(!btn_MyWorld.activeSelf);
 
     }
     public void Btn_FriendProfile()
