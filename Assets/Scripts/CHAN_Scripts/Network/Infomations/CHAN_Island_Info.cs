@@ -156,7 +156,7 @@ namespace IslandInfo
         GameObject InstantiateIsland(string IslandType,Transform Islands,string username)
         {
             GameObject land = GameObject.Instantiate(Resources.Load<GameObject>("CHAN_Resources/" + IslandType), Islands);
-            if (username == "¿äÈñ")
+            if (username == "¿ì¾Ó")
             {
                 land.transform.gameObject.transform.localScale *= 3;
             }
