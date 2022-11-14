@@ -3,6 +3,7 @@ using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using PN=Photon.Pun.PhotonNetwork;
 
@@ -86,6 +87,7 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
             BGMPlayer.instance.GetComponent<AudioSource>().Play();
         }
         PN.LoadLevel(sceneName);
+        LoadingObject.SetActive(false);
 
     }
     public override void OnLeftRoom()
@@ -120,6 +122,7 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
         sceneName = name_SkyScene;
         prefab = WhalePrepab;
         print("Join : " + roomName+"Scene");
+        LoadingObject.SetActive(true);
         PN.LeaveRoom();
     }
     public void Go_User_Scene(string NickName)
@@ -129,6 +132,7 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
         sceneName = name_UserScene;
         prefab = userPrefab;
         print("Join : " + roomName);
+        LoadingObject.SetActive(true);
         PN.LeaveRoom();
     }
     public void Go_User_Custom()
@@ -138,6 +142,7 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
         sceneName = name_UserScene;
         prefab = userPrefab;
         print("Join : " + customName.text);
+        LoadingObject.SetActive(true);
         PN.LeaveRoom();
     }
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -150,5 +155,12 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
         base.OnPlayerLeftRoom(otherPlayer);
         print("플레이어 퇴장");
     }
-
+    public void Btn_GoProfile()
+    {
+        PN.Disconnect();
+        SceneManager.LoadScene(1);
+        GameObject Voice = GameObject.Find("VoiceManager");
+        Destroy(Voice);
+        Destroy(gameObject);
+    }
 }   

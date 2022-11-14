@@ -102,6 +102,10 @@ public class SkyView_UI_Manager : MonoBehaviour
     {
         Area_Friend_Profile.gameObject.SetActive(false);
     }
+    public void Btn_GoUserProfile()
+    {
+        CHAN_GameManager.instance.Btn_GoProfile();
+    }
     #endregion
     //Ä£±¸¼¶ ³î·¯°¡±â
     public void Go_FriendIsland()
