@@ -49,6 +49,7 @@ public abstract class K_UserInterface : MonoBehaviour
     {
         int i = 0;
         foreach (var key in slotsOnInterface.Keys.ToArray())
+        foreach (var key in slotsOnInterface.Keys.ToList())
         {
             slotsOnInterface[key] = inventory.GetSlots[i];
             i++;
@@ -86,10 +87,10 @@ public abstract class K_UserInterface : MonoBehaviour
     public void ShowButtonClicked()
     {
         isShowed = !isShowed;
-        if (isShowed)
-            inventory.TestLoad(avatarName);
-        else
-            inventory.TestSave(avatarName);
+        //if (isShowed)
+        //    inventory.TestLoad(avatarName);
+        //else
+        //    inventory.TestSave(avatarName);
 
         inventoryWindow.SetActive(isShowed);
         if(invenTab != null)
@@ -205,8 +206,7 @@ public abstract class K_UserInterface : MonoBehaviour
         {
             selectInterface.inventory.GetSlots[i].onAfterUpdated += selectInterface.OnSlotUpdate;
         }
-        //selectInterface.inventoryWindow.SetActive(true);
-        //selectInterface.inventoryWindow.GetComponent<RectTransform>().position = new Vector3(1139.25f, 700.0554f, 0f);
+
         selectInterface.inventory.AddBundleListToWindow(slotsOnInterface[obj].GetItemObject().subItem);
         for (int i = 0; i < selectInterface.inventory.GetSlots.Length; i++)
         {

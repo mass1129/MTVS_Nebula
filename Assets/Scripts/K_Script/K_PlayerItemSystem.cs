@@ -22,10 +22,15 @@ public class K_PlayerItemSystem : MonoBehaviourPun
     }
     private void Update()
     {
-      
+        
 
     }
-   
+    private void OnEnable()
+    {
+        inven_Building.TestLoad(player.avatarName);
+        inven_Equipment.TestLoad(player.avatarName);
+        inven_Cloths.TestLoad(player.avatarName);
+    }
     public void OnTriggerEnter(Collider other)
     {
         if (!photonView.IsMine) return;
@@ -71,21 +76,11 @@ public class K_PlayerItemSystem : MonoBehaviourPun
                 PhotonNetwork.Destroy(other.gameObject);
             }
 
-
         }
     }
 
 
-    private void OnApplicationQuit()
-    {
-        if (!photonView.IsMine) return;
-        inven_Cloths.Clear();
-        inven_Building.Clear();
-        inven_Default.Clear();
-        inven_Vehicle.Clear();
-        inven_Equipment.Clear();
-
-    }
+  
     public async void TwoInvenSave(string s)
     {
        if(!photonView.IsMine) return;

@@ -118,7 +118,7 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
 
             if (TryPlaceObject(placedObjectOrigin, placedObjectTypeSO, dir, out PlacedObject placedObject))
             {
-                // Object placed
+                DeselectObjectType();
             } 
             else 
             {
@@ -353,28 +353,10 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
 
     }
 
-    bool isLoaded = false;
-    public async void FirstBuildingLoad(string s)
+   
+    public async void TestLoad()
     {
-        var url = "ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/skyisland/" +s;
-        var httpReq = new HttpRequester(new JsonSerializationOption());
-        
-        H_Building_Root result2 = await httpReq.Get<H_Building_Root>(url);
-        
-        
-        for (int i = 0; i < gridList.Count; i++)
-        {
-            GridXZ<GridObject> grid = gridList[i];
-            foreach (H_GridPlaceObjectList placedObjectSaveObject in result2.results.placeObjects.islandGridList[i].gridPlaceObjectList)
-            {
-                PlacedObjectTypeSO placedObjectTypeSO = BuildingSystemAssets.Instance.GetPlacedObjectTypeSOFromName(placedObjectSaveObject.placedObjectTypeSOName);
-                TryPlaceObject(placedObjectSaveObject.origin, placedObjectTypeSO, placedObjectSaveObject.dir, out PlacedObject placedObject);
-            }
-        }
-    }
-    public async void TestLoad(string s)
-    {
-        var url = "ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/skyisland/" + s;
+        var url = "ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/skyisland/" + PlayerPrefs.GetString("User_Island_ID");
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
         H_Building_Root result2 = await httpReq.Get<H_Building_Root>(url);

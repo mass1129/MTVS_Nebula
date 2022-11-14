@@ -3,66 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+
 public class K_BundleInterface : K_UserInterface
 {
     public GameObject inventoryPrefab;
-    //인벤토리 아이템 배치 시작지점(아닐시 중간부터 배치)
-    public int X_START;
-    public int Y_START;
-    //아이템 슬롯 x,y 간격
-    public int X_SPACE_BETWEEN_ITEM;
-    public int Y_SPACE_BETWEEN_ITEM;
-    //아이템 갯수
-    public int NUMBER_OF_COLUMN;
 
-   // public GameObject quickSlotList;
 
-    List<GameObject> slot = new List<GameObject>();
-    bool isAdded = false;
+    public GameObject[] slots;
+   
     public override void CreateSlots()
     {
         slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
 
-        //for (int i = 0; i < inventory.GetSlots.Length; i++)
-        //{
-        //    var obj = Instantiate(inventoryPrefab, Vector3.zero, Quaternion.identity, inventoryWindow.transform);
-        //    //var obj = Instantiate(inventoryPrefab, inventoryWindow.transform);
-        //    //obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
-        //    if (!isAdded)
-        //    {
-        //        AddEvent(obj, EventTriggerType.PointerEnter, delegate { OnEnter(obj); });
-        //        AddEvent(obj, EventTriggerType.PointerExit, delegate { OnExit(obj); });
-        //        AddEvent(obj, EventTriggerType.Select, delegate { OnSelect(obj); });
-        //        AddEvent(obj, EventTriggerType.Deselect, delegate { OnDeselect(obj); });
-        //    }
-        //    slot.Add(obj);
-        //    inventory.GetSlots[i].slotDisplay = slot[i];
-
-        //    slotsOnInterface.Add(slot[i], inventory.GetSlots[i]);
-
-        //}
-        //isAdded = true;
         for (int i = 0; i < inventory.GetSlots.Length; i++)
         {
-            var obj = Instantiate(inventoryPrefab, Vector3.zero, Quaternion.identity, inventoryWindow.transform);
-                AddEvent(obj, EventTriggerType.PointerEnter, delegate { OnEnter(obj); });
-                AddEvent(obj, EventTriggerType.PointerExit, delegate { OnExit(obj); });
-                AddEvent(obj, EventTriggerType.Select, delegate { OnSelect(obj); });
-                AddEvent(obj, EventTriggerType.Deselect, delegate { OnDeselect(obj); });
-
+            var obj = slots[i];
+            AddEvent(obj, EventTriggerType.PointerEnter, delegate { OnEnter(obj); });
+            AddEvent(obj, EventTriggerType.PointerExit, delegate { OnExit(obj); });
+            AddEvent(obj, EventTriggerType.Select, delegate { OnSelect(obj); });
+            AddEvent(obj, EventTriggerType.Deselect, delegate { OnDeselect(obj); });
             inventory.GetSlots[i].slotDisplay = obj;
-
             slotsOnInterface.Add(obj, inventory.GetSlots[i]);
 
         }
-       
+
     }
     public override void DistorySlots()
     { }
-    private Vector3 GetPosition(int i)
-    {
 
-        return new Vector3(X_START + (X_SPACE_BETWEEN_ITEM * (i % NUMBER_OF_COLUMN)), Y_START + (-Y_SPACE_BETWEEN_ITEM * (i / NUMBER_OF_COLUMN)), 0f);
-    }
 
 }

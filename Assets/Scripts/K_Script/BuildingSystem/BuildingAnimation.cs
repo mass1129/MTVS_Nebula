@@ -21,7 +21,7 @@ public class BuildingAnimation : MonoBehaviourPun {
 
         transform.localScale = new Vector3(1, animationCurve.Evaluate(time), 1);
         if(toRotateObj != null)
-        toRotateObj.eulerAngles = toRotateV3*time;
+        toRotateObj.localEulerAngles = toRotateV3*time;
 
     }
 
@@ -33,7 +33,7 @@ public class BuildingAnimation : MonoBehaviourPun {
     public void RPCFactoryEvent()
     {
         GameObject obj = Instantiate(effect, effectPos.position, Quaternion.identity);
-        Destroy(obj, 3);
+        Destroy(obj, 2);
     }
 
 }

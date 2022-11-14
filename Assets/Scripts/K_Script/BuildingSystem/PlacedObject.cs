@@ -9,6 +9,7 @@ public class PlacedObject : MonoBehaviourPun
 
     public static PlacedObject Create(Vector3 worldPosition, Vector2Int origin, PlacedObjectTypeSO.Dir dir, PlacedObjectTypeSO placedObjectTypeSO)
     {
+        
         GameObject placedObjectTransform = PhotonNetwork.Instantiate(Path.Combine(placedObjectTypeSO.bundleFolderName, placedObjectTypeSO.prefab.name), worldPosition, Quaternion.Euler(0, placedObjectTypeSO.GetRotationAngle(dir), 0));
 
         PlacedObject placedObject = placedObjectTransform.transform.GetComponent<PlacedObject>();

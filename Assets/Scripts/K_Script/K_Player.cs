@@ -28,6 +28,7 @@ public class K_Player : MonoBehaviourPun, IPunObservable
     public Transform cam;
     public K_CameraMgr camMgr;
     public K_PlayerItemSystem itemSystem;
+    public GridBuildingSystem3D gridBuildingSystem;
     [System.NonSerialized]
 
     public string avatarName = null;

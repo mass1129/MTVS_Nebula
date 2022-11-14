@@ -27,7 +27,7 @@ public class InventoryUIManger : MonoBehaviour
         string avatarName = PlayerPrefs.GetString("AvatarName");
         if (isShowed)
         {
-            playerItem.ItemLoad(avatarName);
+            //playerItem.ItemLoad(avatarName);
            tabButton.SetActive(true);
             for (int j = 0; j < inventoryArray.Length; j++)
             {
@@ -46,7 +46,7 @@ public class InventoryUIManger : MonoBehaviour
 
                 inventoryArray[j].inventoryWindow.SetActive(false);
             }
-            playerItem.ItemSave(avatarName);
+            //playerItem.ItemSave(avatarName);
             tabButton.SetActive(false);
         }
 

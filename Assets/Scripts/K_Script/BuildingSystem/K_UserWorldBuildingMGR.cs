@@ -5,7 +5,7 @@ using Photon.Pun;
 public class K_UserWorldBuildingMGR : MonoBehaviourPun
 {
     public GridBuildingSystem3D gridBuildingSystem;
-    
+    bool isDone = false;
     private void Awake()
     {
           
@@ -18,8 +18,13 @@ public class K_UserWorldBuildingMGR : MonoBehaviourPun
     }
     private void OnEnable()
     {
-        string s = PlayerPrefs.GetString("User_Island_ID");
-        gridBuildingSystem.FirstBuildingLoad(s);
-        PhotonNetwork.Destroy(gameObject);
+       
+        if(!isDone)
+        {
+            gridBuildingSystem.TestLoad();
+            isDone = true;
+        }
+       
+        
     }
 }

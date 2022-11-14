@@ -319,7 +319,7 @@ namespace K_01_OwnedStates
 
             entity.camMgr.buildingSystem.SetActive(true);
             entity.camMgr.buildCamera.gameObject.SetActive(true);
-            entity.itemSystem.inven_Building.TestLoad(entity.avatarName);
+            
             entity.camMgr.buildCamOffset.m_Offset.z = 0f;
             entity.camMgr.buildCamOffset.m_Offset.y = 0f;
             zoomAmount = entity.camMgr.zoomChangeAmount;
@@ -376,7 +376,7 @@ namespace K_01_OwnedStates
 
     public override void Exit(K_Player entity)
         {
-            GridBuildingSystem3D.Instance.TestSave(entity.ownIslandID);
+            entity.gridBuildingSystem.TestSave(entity.ownIslandID);
             entity.camMgr.buildingSystem.SetActive(false);
             entity.camMgr.buildCamera.gameObject.SetActive(false);
             entity.ResetTrigger("ThirdMove");
@@ -497,7 +497,7 @@ namespace K_01_OwnedStates
             dir = entity.transform.forward * v;
             dir.Normalize();
             entity.GetComponent<CharacterController>().Move(dir * entity.groundSpeed * Time.deltaTime);
-           // entity.rootMotion = Vector3.zero;
+           entity.rootMotion = Vector3.zero;
 
             if (entity.anim.GetCurrentAnimatorStateInfo(0).IsName("Jumping") && entity.anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
             {

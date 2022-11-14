@@ -18,7 +18,7 @@ public class K_NetworkMgr : MonoBehaviourPunCallbacks
     {   
         if(builder!=null)
         {
-            builder.FirstBuildingLoad("11");
+         
             PhotonNetwork.Destroy(builder.gameObject);
         }
        
