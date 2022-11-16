@@ -85,9 +85,10 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
         {
             BGMPlayer.instance.GetComponent<AudioSource>().clip = BGMPlayer.instance.audioSources[2];
             BGMPlayer.instance.GetComponent<AudioSource>().Play();
+            LoadingObject.SetActive(false);
         }
         PN.LoadLevel(sceneName);
-        LoadingObject.SetActive(false);
+
 
     }
     public override void OnLeftRoom()
@@ -112,7 +113,10 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
     }
     void SetPlayer(string prefab)
     {
-        player= PN.Instantiate(prefab, new Vector3(51, 0, 47), Quaternion.identity);
+        if (prefab == WhalePrepab)
+        { player= PN.Instantiate(prefab, Vector3.zero, Quaternion.identity); }
+        else
+        { player = PN.Instantiate(prefab, new Vector3(51, 0, 47), Quaternion.identity); }
     }
 
     public void Go_Sky_Scene()

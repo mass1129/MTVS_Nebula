@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Photon.Pun;
 using Photon.Realtime;
 using IslandInfo;
+using System.Collections;
+
 [Serializable]
 public class JsonInfo
 {
@@ -34,7 +36,6 @@ public class Island_Information :MonoBehaviourPun
     void Start()
     {
         Load();
-        //LoadTest();
     }
     Parsing parsing = new Parsing();
     public Dictionary<string, JsonInfo> Island_Dic = new Dictionary<string, JsonInfo>();
@@ -43,18 +44,6 @@ public class Island_Information :MonoBehaviourPun
     float dis_multiplier = 100;
     public string jsonFile;
 
-    #region 서버에게 정보를 가져오는 함수 모음
-    public void LoadIslandInfo()
-    {
-        // 서버에게 섬정보를 불러온다.
-    }
-    #endregion
-    #region 서버에게 정보 저장요청시키는 함수 모음
-    public void SaveIslandInfo()
-    {
-        //서버에게 하늘섬 정보를 저장시킨다. 
-    }
-    #endregion
     #region 중간에 정보가 추가되거나 삭제됐을 때, 이용되는 함수모음
     // 임시 배열모음 (삭제 할 정보, 추가 할 정보)
     public string[] temp_Delete;
@@ -113,6 +102,8 @@ public class Island_Information :MonoBehaviourPun
         Root result = await httpRequest.Get<Root>(url);
         await parsing.LoadFromJson(result.results, Island_Dic, dis_multiplier);
         await parsing.InsertInfo(Island_Dic, Islands);
+        CHAN_PlayerManger.LocalPlayerInstance.transform.position = Island_Dic[(PlayerPrefs.GetString("Island_ID"))].island_Pos+(Vector3.up*30);
+        StartCoroutine(Delay_Loading());
         Done = true;
         if (Done)
         {
@@ -130,9 +121,6 @@ public class Island_Information :MonoBehaviourPun
             CHAN_GameManager.instance.LoadingObject.SetActive(false);
         }
     }
-
-
-
     public void DeleteData()
     {
             foreach(JsonInfo i in Island_Dic.Values)
@@ -141,7 +129,11 @@ public class Island_Information :MonoBehaviourPun
         }
         Island_Dic.Clear();
     }
+    IEnumerator Delay_Loading()
+    {
+        yield return new WaitForSeconds(1f);
 
+    }
 }
 
 

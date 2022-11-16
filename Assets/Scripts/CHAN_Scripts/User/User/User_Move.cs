@@ -221,6 +221,7 @@ public class User_Move : MonoBehaviourPun, IPunObservable
     IEnumerator TurnCollider()
     {
         gameObject.GetComponent<SphereCollider>().enabled = false;
+        gameObject.GetComponentInChildren<AudioSource>().enabled = false;
         float time=0;
         while (time < 1)
         {
@@ -228,5 +229,6 @@ public class User_Move : MonoBehaviourPun, IPunObservable
             yield return null;
         }
         gameObject.GetComponent<SphereCollider>().enabled = true;
+        gameObject.GetComponentInChildren<AudioSource>().enabled = true;
     }
 }
