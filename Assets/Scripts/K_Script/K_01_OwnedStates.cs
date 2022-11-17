@@ -61,17 +61,21 @@ namespace K_01_OwnedStates
 
                 entity.ResetTrigger("ThirdMove");
                 entity.ChangeState(PlayerStates.Jump);
-
+                entity.yVelocity = entity.jumpHeight;
+            }
+            if (!entity.Grounded)
+            {
+                entity.ChangeState(PlayerStates.Falling);
             }
             //if (Input.GetButtonDown("Jump"))
             //{
             //    entity.ChangeState(PlayerStates.Jump);
             //    entity.velocity.y = entity.jumpHeight;
             //}
-            //if (!entity.Grounded)
-            //{
-            //    entity.ChangeState(PlayerStates.Falling);
-            //}
+            if (!entity.Grounded)
+            {
+                entity.ChangeState(PlayerStates.Falling);
+            }
 
 
         }
@@ -147,13 +151,13 @@ namespace K_01_OwnedStates
 
                 entity.ResetTrigger("ThirdMove");
                 entity.ChangeState(PlayerStates.Jump);
-                
+                entity.yVelocity = entity.jumpHeight;
             }
 
-            //if (!entity.Grounded)
-            //{
-            //    entity.ChangeState(PlayerStates.Falling);
-            //}
+            if (!entity.Grounded)
+            {
+                entity.ChangeState(PlayerStates.Falling);
+            }
 
         }
 
@@ -215,20 +219,17 @@ namespace K_01_OwnedStates
 
                 entity.ResetTrigger("Sprinting");
                 entity.ChangeState(PlayerStates.Jump);
+                entity.yVelocity = entity.jumpHeight;
+                entity.airControl += entity.jumpDamp;
 
             }
 
-            //if (Input.GetButtonDown("Jump"))
-            //{
+          
 
-            //    entity.ChangeState(PlayerStates.Jump);
-            //    entity.velocity.y = entity.jumpHeight;
-            //}
-
-            //if (!entity.Grounded)
-            //{
-            //    entity.ChangeState(PlayerStates.Falling);
-            //}
+            if (!entity.Grounded)
+            {
+                entity.ChangeState(PlayerStates.Falling);
+            }
 
         }
 
@@ -478,113 +479,121 @@ namespace K_01_OwnedStates
     //}
     public class Jump : K_PlayerState<K_Player>
     {
-        float v;
-        Vector3 dir;
+        
         public override void Enter(K_Player entity)
         {
-            v=0f;
-            dir = Vector3.zero;
+           
             entity.SetTrigger("Jump");
         }
 
         public override void Execute(K_Player entity)
         {
-            if (Input.GetKeyDown(KeyCode.W)&& !Input.GetKeyDown(KeyCode.S))
-            {   
-                v= Input.GetAxis("Vertical");
-               
+            entity.yVelocity += entity.gravity * Time.deltaTime;
+            entity.yVelocity = Mathf.Clamp(entity.yVelocity, -6f, 100);
+
+            if (Input.GetButton("Vertical"))
+            {
+                entity.v = Input.GetAxis("Vertical") >= 0 ? Input.GetAxis("Vertical") : 0;
+
             }
-            dir = entity.transform.forward * v;
-            dir.Normalize();
-            entity.GetComponent<CharacterController>().Move(dir * entity.groundSpeed * Time.deltaTime);
+            entity.dir = entity.transform.forward * entity.v;
+            entity.dir.Normalize();
+            entity.dir.y = entity.yVelocity;
+
+            entity.GetComponent<CharacterController>().Move(entity.dir * entity.airControl * Time.deltaTime);
            entity.rootMotion = Vector3.zero;
 
-            if (entity.anim.GetCurrentAnimatorStateInfo(0).IsName("Jumping") && entity.anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
+            if (entity.yVelocity <= 0.1f)
             {
-                v = 0f;
-                dir = Vector3.zero;
+               
                
                     entity.ResetTrigger("Jump");
-                    entity.ChangeState(PlayerStates.ThirdMove);
+                    entity.ChangeState(PlayerStates.Falling);
                
             }
         }
 
         public override void Exit(K_Player entity)
         {
-            v = 0f;
-            dir = Vector3.zero;
+            entity.v = 0f;
+            entity.dir = Vector3.zero;
             entity.ResetTrigger("Jump");
-
-        }
+            entity.ResetTrigger("Landing");
+        } 
     }
 
-    //public class Falling : K_PlayerState<K_Player>
-    //{
-    //    bool isLanding = false;
+    public class Falling : K_PlayerState<K_Player>
+    {
+        bool isLanding = false;
 
-    //    public override void Enter(K_Player entity)
-    //    {
-    //        entity.SetTrigger("Falling");
-    //    }
+        public override void Enter(K_Player entity)
+        {
+            entity.SetTrigger("Falling");
+        }
 
-    //    public override void Execute(K_Player entity)
-    //    {
-    //        entity.moveSpeed = 2;
+        public override void Execute(K_Player entity)
+        {
+           
 
-    //        if (!isLanding)
-    //        {
-    //            entity.velocity.y += entity.gravity * Time.deltaTime;
-    //            entity.velocity.y = Mathf.Clamp(entity.velocity.y, -6f, 100);
+            if (!isLanding)
+            {
+                entity.yVelocity  += entity.gravity * Time.deltaTime;
+                entity.yVelocity  = Mathf.Clamp(entity.yVelocity, -6f, 100);
 
-    //            if (Input.GetButton("Horizontal") || (Input.GetButton("Vertical")))
-    //            {
-    //                entity.input.x = Input.GetAxis("Horizontal");
-    //                entity.input.y = Input.GetAxis("Vertical");
-    //            }
+                if (Input.GetButton("Vertical"))
+                {
+                   
+                    entity.v = Input.GetAxis("Vertical") >=0 ? Input.GetAxis("Vertical") : 0;
+                }
 
-    //            entity.dir = entity.transform.right * entity.input.x + entity.transform.forward * entity.input.y;
-    //            entity.dir.Normalize();
-    //            entity.dir.y = entity.velocity.y;
-    //            entity.GetComponent<CharacterController>().ThirdMove(entity.dir * entity.moveSpeed * Time.deltaTime);
+                entity.dir = entity.transform.forward * entity.v;
+                entity.dir.Normalize();
+                entity.dir.y = entity.yVelocity;
+                entity.GetComponent<CharacterController>().Move(entity.dir * entity.airControl * Time.deltaTime);
+                entity.rootMotion = Vector3.zero;
 
-    //            // 땅에 닿으면 Landing 애니메이션 재생
-    //            if (entity.GetComponent<CharacterController>().isGrounded)
-    //            {
-    //                entity.SetTrigger("Landing");
-    //                isLanding = true;
-    //            }
-    //        }
+                // 땅에 닿으면 Landing 애니메이션 재생
+                if (entity.Grounded)
+                {
+                    entity.SetTrigger("Landing");
+                    isLanding = true;
+                }
+            }
+            if (entity.Grounded)
+            {
+                entity.SetTrigger("Landing");
+                isLanding = true;
+            }
+                if (entity.anim.GetCurrentAnimatorStateInfo(0).IsName("ThirdMove"))
+                entity.ChangeState(PlayerStates.ThirdMove);
 
-    //        if (entity.anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
-    //            entity.SetTrigger("Landing");
+            // Landing 애니메이션 재생 시간 끝난 이후의 입력에 따라 다음 상태로 전이 
+            if (entity.anim.GetCurrentAnimatorStateInfo(0).IsName("Landing") && entity.anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
+            {
+                if (Input.GetButton("Vertical")&& Input.GetKey(KeyCode.LeftShift))
+                { 
+                  
+                        entity.ChangeState(PlayerStates.ThirdSprinting);
+                    
+                   
+                }
+                else
+                    entity.ChangeState(PlayerStates.ThirdMove);
 
-    //        // Landing 애니메이션 재생 시간 끝난 이후의 입력에 따라 다음 상태로 전이 
-    //        if (entity.anim.GetCurrentAnimatorStateInfo(0).IsName("Landing") && entity.anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
-    //        {
-    //            if (Input.GetButton("Horizontal") || (Input.GetButton("Vertical")))
-    //            {
-    //                entity.ChangeState(PlayerStates.ThirdMove);
-    //            }
-    //            else if (Input.GetButton("Jump"))
-    //            {
-    //                entity.ChangeState(PlayerStates.Jump);
-    //                entity.velocity.y = entity.jumpHeight;
-    //            }
-    //            else
-    //                entity.ChangeState(PlayerStates.Idle);
-    //        }
-    //    }
 
-    //    public override void Exit(K_Player entity)
-    //    {
-    //        entity.input.x = 0;
-    //        entity.input.y = 0;
-    //        entity.ResetTrigger("Falling");
-    //        entity.ResetTrigger("Landing");
-    //        isLanding = false;
-    //    }
-    //}
+            }
+        }
+
+        public override void Exit(K_Player entity)
+        {
+            entity.input.x = 0;
+            entity.input.y = 0;
+            entity.ResetTrigger("Falling");
+            entity.ResetTrigger("Landing");
+            entity.airControl = 5;
+            isLanding = false;
+        }
+    }
 
 
     public class Death : K_PlayerState<K_Player>

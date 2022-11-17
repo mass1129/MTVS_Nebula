@@ -46,6 +46,10 @@ public class K_Player : MonoBehaviourPun, IPunObservable
     public float jumpDamp;
     public float groundSpeed;
     public float AnimBlendSpeed = 11f;
+    [HideInInspector] public float h, v;
+    [HideInInspector] public Vector3 dir;
+
+
 
 
     public float turnSmoothTime = 0.1f;
@@ -92,8 +96,8 @@ public class K_Player : MonoBehaviourPun, IPunObservable
         Updated();
         //Updated_UpperBody();
         GroundedCheck();
-        //Debug.Log(CurrentState.ToString() + "," + PhotonNetwork.CurrentRoom.Name + "," + PlayerPrefs.GetString("AvatarName") + "," + avatarName + "," + ownIslandID+ "," + PlayerPrefs.GetString("User_Island_ID"));
-        //Debug.Log(cc.isGrounded);
+        Debug.Log(CurrentState.ToString() + "," + PhotonNetwork.CurrentRoom.Name + "," + PlayerPrefs.GetString("AvatarName") + "," + avatarName + "," + ownIslandID+ "," + PlayerPrefs.GetString("User_Island_ID"));
+        Debug.Log(cc.isGrounded);
     }
 
     private void OnAnimatorMove()
