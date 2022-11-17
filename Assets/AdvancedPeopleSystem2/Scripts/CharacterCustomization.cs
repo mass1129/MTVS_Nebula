@@ -84,7 +84,8 @@ namespace AdvancedPeopleSystem
 
         private void Awake()
         {
-            
+            if (!photonView.IsMine)
+                this.enabled = false;
             this._transform = transform;
             _lodGroup = GetComponent<LODGroup>();
             // RecalculateLOD();
@@ -685,6 +686,7 @@ namespace AdvancedPeopleSystem
                     var element_index = i + MinLODLevels;
 
                     if (!ca.skinnedMesh[i].gameObject.activeSelf && !IsBaked())
+                        //photonView.RPC("RPCSClothesActive", RpcTarget.AllBuffered, ca, i);
                         ca.skinnedMesh[i].gameObject.SetActive(true);
 
                     ca.skinnedMesh[i].sharedMesh = newPreset.mesh[element_index];
@@ -727,13 +729,15 @@ namespace AdvancedPeopleSystem
                     Debug.LogError(string.Format("Element <{0}> with index {1} not found. Please check Character Presets arrays.", type.ToString(), index));
                     return;
                 }
-
+                //photonView.RPC("RPCSClothesInactive", RpcTarget.AllBuffered, ca);
                 if (ca != null && ca.skinnedMesh != null)
                 {
                     foreach (var sm in ca.skinnedMesh)
                     {
                         if (sm != null)
                         {
+
+                            
                             sm.sharedMesh = null;
                             sm.gameObject.SetActive(false);
                         }
@@ -750,11 +754,26 @@ namespace AdvancedPeopleSystem
             // photonView.RPC("RPCSetElementByIndex", RpcTarget.AllBuffered, type, index);  
 
         }
-        public void RPCSetElementByIndex(CharacterElementType type, int index)
+        public void RPCSClothesActive(ClothesAnchor ca, int i)
         {
-            //characterSelectedElements.SetSelectedIndex(type, index);
-            
+            ca.skinnedMesh[i].gameObject.SetActive(true);
         }
+        public void RPCSClothesInactive(ClothesAnchor ca)
+        {
+            if (ca != null && ca.skinnedMesh != null)
+            {
+                foreach (var sm in ca.skinnedMesh)
+                {
+                    if (sm != null)
+                    {
+                        sm.sharedMesh = null;
+                        sm.gameObject.SetActive(false);
+                    }
+                }
+            }
+        }
+
+
         //public virtual void KSetElementByIndex(CharacterElementType type, int index)
         //{
         //    /*photonView.RPC("RpcSetTrigger", RpcTarget.All, s);*/
@@ -1087,8 +1106,18 @@ namespace AdvancedPeopleSystem
                     if (cp.name.ToLowerInvariant() == p.ToLowerInvariant())
                         foreach (var mesh in cp.skinnedMesh)
                             mesh.enabled = true;
+                    //photonView.RPC("RPCUnHideParts", RpcTarget.AllBuffered, p, cp);
+
                 }
             }
+        }
+
+        [PunRPC]
+        public void RPCUnHideParts(string p, CharacterPart cp)
+        {
+            if (cp.name.ToLowerInvariant() == p.ToLowerInvariant())
+                foreach (var mesh in cp.skinnedMesh)
+                    mesh.enabled = true;
         }
         /// <summary>
         /// Set body color by type

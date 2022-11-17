@@ -6,12 +6,12 @@ using Photon.Pun;
 public class K_01_Character : K_Player
 {
     public GameObject camPos;
-    public GameObject playerUI;
-
+    public List<GameObject> playerUI;
+    
     private void Awake()
     {
         if (!photonView.IsMine)
-            return;
+            this.enabled = false;
         
         // Assult가 가질 수 있는 상태 개수만큼 메모리 할당, 각 상태에 클래스 메모리 할당. states[(int)PlayerStates.Idle].Execute()와 같은 방식으로 사용.
         states = new K_PlayerState<K_Player>[7];
@@ -48,7 +48,12 @@ public class K_01_Character : K_Player
         if (photonView.IsMine)
         {
             camPos.SetActive(true);
-            playerUI.SetActive(true);
+            for(int i=0; i<playerUI.Count; i++)
+            {
+                playerUI[i].SetActive(true);
+            }
+            
+            
         }
     }
 
@@ -100,7 +105,7 @@ public class K_01_Character : K_Player
 
     public void ChangeToBuildingState()
     {   
-       if(PhotonNetwork.CurrentRoom.Name == PlayerPrefs.GetString("AvatarName"))
+       if(PhotonNetwork.CurrentRoom.Name == avatarName)
        {
             if (CurrentState == PlayerStates.Idle)
                 ChangeState(PlayerStates.BuildingMode);

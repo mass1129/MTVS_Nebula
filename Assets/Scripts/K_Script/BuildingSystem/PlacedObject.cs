@@ -58,8 +58,15 @@ public class PlacedObject : MonoBehaviourPun
     }
 
 
+    public PlacedObject(PlacedObjectTypeSO placedObjectTypeSO, Vector2Int origin, PlacedObjectTypeSO.Dir dir)
+    {
+        this.placedObjectTypeSO = placedObjectTypeSO;
+        this.origin = origin;
+        this.dir = dir;
+    }
 
-    public SaveObject GetSaveObject() {
+    public SaveObject GetSaveObject() 
+    {
         return new SaveObject {
             placedObjectTypeSOName = placedObjectTypeSO.name,
             origin = origin,

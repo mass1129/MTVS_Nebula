@@ -317,7 +317,7 @@ namespace K_01_OwnedStates
             entity.input.y = 0;
             entity.SetTrigger("ThirdMove");
 
-            entity.camMgr.buildingSystem.SetActive(true);
+            entity.camMgr.InActiveBuildingSystem(true);
             entity.camMgr.buildCamera.gameObject.SetActive(true);
             
             entity.camMgr.buildCamOffset.m_Offset.z = 0f;
@@ -377,7 +377,7 @@ namespace K_01_OwnedStates
     public override void Exit(K_Player entity)
         {
             entity.gridBuildingSystem.TestSave(entity.ownIslandID);
-            entity.camMgr.buildingSystem.SetActive(false);
+            entity.camMgr.InActiveBuildingSystem(false);
             entity.camMgr.buildCamera.gameObject.SetActive(false);
             entity.ResetTrigger("ThirdMove");
         }

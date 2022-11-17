@@ -46,10 +46,12 @@ public class PlayerEquipment : MonoBehaviourPun
         {
             case InterfaceType.Equipment:
 
+                if (itemObject.uiDisplay != null)
+                {
                     switch (slot.allowedItems[0])
                     {
                         case ItemType.Hat:
-                        CharacterCustomization.SetElementByIndex(CharacterElementType.Hat, itemObject.charCustomIndex);
+                            CharacterCustomization.SetElementByIndex(CharacterElementType.Hat, itemObject.charCustomIndex);
                             break;
 
                         case ItemType.Accessory:
@@ -79,7 +81,9 @@ public class PlayerEquipment : MonoBehaviourPun
 
                     }
 
-                    break;
+                    
+                }
+                break;
         }
     }
 
@@ -90,40 +94,42 @@ public class PlayerEquipment : MonoBehaviourPun
         switch (slot.parent.inventory.type)
         {
             case InterfaceType.Equipment:
-
-                switch (slot.allowedItems[0])
+                if (slot.GetItemObject().uiDisplay != null)
                 {
+                    switch (slot.allowedItems[0])
+                    {
 
-                    case ItemType.Hat:
-                        CharacterCustomization.SetElementByIndex(CharacterElementType.Hat, -1);
-                        break;
+                        case ItemType.Hat:
+                            CharacterCustomization.SetElementByIndex(CharacterElementType.Hat, -1);
+                            break;
 
-                    case ItemType.Accessory:
-                        CharacterCustomization.SetElementByIndex(CharacterElementType.Accessory, -1);
-                        break;
+                        case ItemType.Accessory:
+                            CharacterCustomization.SetElementByIndex(CharacterElementType.Accessory, -1);
+                            break;
 
-                    case ItemType.Hair:
-                        CharacterCustomization.SetElementByIndex(CharacterElementType.Hair, -1);
-                        break;
+                        case ItemType.Hair:
+                            CharacterCustomization.SetElementByIndex(CharacterElementType.Hair, -1);
+                            break;
 
-                    case ItemType.Beard:
-                        CharacterCustomization.SetElementByIndex(CharacterElementType.Beard, -1);
-                        break;
+                        case ItemType.Beard:
+                            CharacterCustomization.SetElementByIndex(CharacterElementType.Beard, -1);
+                            break;
 
-                    case ItemType.Shirt:
-                        CharacterCustomization.SetElementByIndex(CharacterElementType.Shirt, -1);
-                        break;
-                    case ItemType.Pants:
-                        CharacterCustomization.SetElementByIndex(CharacterElementType.Pants, -1);
-                        break;
-                    case ItemType.Shoes:
-                        CharacterCustomization.SetElementByIndex(CharacterElementType.Shoes, -1);
-                        break;
-                    case ItemType.Bag:
-                        CharacterCustomization.SetElementByIndex(CharacterElementType.Item1, -1);
-                        break;
+                        case ItemType.Shirt:
+                            CharacterCustomization.SetElementByIndex(CharacterElementType.Shirt, -1);
+                            break;
+                        case ItemType.Pants:
+                            CharacterCustomization.SetElementByIndex(CharacterElementType.Pants, -1);
+                            break;
+                        case ItemType.Shoes:
+                            CharacterCustomization.SetElementByIndex(CharacterElementType.Shoes, -1);
+                            break;
+                        case ItemType.Bag:
+                            CharacterCustomization.SetElementByIndex(CharacterElementType.Item1, -1);
+                            break;
+                    }
+
                 }
-
             break;
         }
     }

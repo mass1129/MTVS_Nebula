@@ -157,7 +157,7 @@ public abstract class K_UserInterface : MonoBehaviour
     public void OnDragEnd(GameObject obj)
     {
         Destroy(MouseData.tempItemBeingDragged);
-        if (MouseData.interfaceMouseIsOver == null &&onQuickSlot)
+        if (MouseData.interfaceMouseIsOver == null )
         {
             slotsOnInterface[obj].RemoveItem();
             return;
@@ -165,17 +165,11 @@ public abstract class K_UserInterface : MonoBehaviour
         if (MouseData.slotHoveredOver)
         {
             InventorySlot mouseHoverSlotData = MouseData.interfaceMouseIsOver.slotsOnInterface[MouseData.slotHoveredOver];
-            if (onQuickSlot)
-            {
-                inventory.ItemsToQuickSlot(slotsOnInterface[obj], mouseHoverSlotData);
-                return;
-            }
-
-            else
-            {
+            
+            
                 inventory.SwapItems(slotsOnInterface[obj], mouseHoverSlotData);
                 return;
-            }
+            
                
         }
 

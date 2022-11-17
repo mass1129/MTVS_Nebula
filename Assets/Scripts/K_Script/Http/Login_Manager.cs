@@ -36,12 +36,6 @@ public class Login_Manager : MonoBehaviour
         
     }
     #region API_Func
-    /// <summary>
-    /// API로 로그인하여 토큰을 가져오는 함수
-    /// 이때 가져온 토큰은 token 변수에 저장
-    /// </summary>
-    /// <returns>token = Gettoken</returns>
-
 
 
 
@@ -71,75 +65,8 @@ public class Login_Manager : MonoBehaviour
        PlayerPrefs.SetString("AvatarName", result2.results[0].name);
         
     }
-    //public async void GetAvatorInfo()
-    //{ 
-        
-    
-    
-    //}
-    //public async void API_Login(string URL, string json)
-    //{
 
-        //    using var request = UnityWebRequest.Post(URL, json);
-        //    {
-        //        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
-        //        request.uploadHandler = new UploadHandlerRaw(jsonToSend);
-        //        request.SetRequestHeader("Content-Type", "application/json");
 
-        //        var operation = request.SendWebRequest();
-
-        //        while (!operation.isDone)
-        //            await Task.Yield();
-
-        //        var jsonResponse = request.downloadHandler.text;
-
-        //        if (request.result != UnityWebRequest.Result.Success)
-        //        {
-        //            Debug.LogError($"Failed: {request.error}");
-        //        }
-
-        //        try
-        //        {
-        //            Debug.Log($"Success: {request.downloadHandler.text}");
-        //            SetToken(request.downloadHandler.text);
-        //            SceneManager.LoadScene(1);
-        //        }
-
-        //        catch (Exception ex)
-        //        {
-        //            Debug.LogError($"{this}Could not parse response {jsonResponse}. {ex.Message}");
-        //        }
-
-        //    }
-
-        //}
-
-        /// <summary>
-        /// API로 Logout을 하는 함수.
-        /// 로그아웃시 가지고 있던 토큰값은 초기화됨.
-        /// </summary>
-        /// <returns>token = null</returns>
-        //IEnumerator API_Logout()
-        //{
-        //    UnityWebRequest request;
-        //    using (request = UnityWebRequest.Get("http://___/logout"))
-        //    {   
-        //        request.SetRequestHeader("Content-Type", "application/json");
-        //        request.SetRequestHeader("Authorization", "Bearer " + token);
-        //        yield return request.SendWebRequest();
-
-        //        if (request.isNetworkError)
-        //        {
-        //            Debug.Log(request.error);
-        //        }
-        //        else
-        //        {
-        //            SetToken(null);
-        //            if (request.responseCode != 200)
-        //                ErrorCheck(-(int)request.responseCode, "API_Logout");
-        //        }
-        //    }
-        //}
     public class H_Av_Root
     {
         public int httpStatus { get; set; }

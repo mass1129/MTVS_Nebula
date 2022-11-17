@@ -175,12 +175,13 @@ public class InventoryObject : ScriptableObject
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
         H_I_Root result2 = await httpReq.Get<H_I_Root>(url);
-       
+        
         //string json = JsonUtility.ToJson(array, true);
         //Debug.Log(json);
-        for (int i = 0; i < Container.slots.Length; i++)
+        for (int i = 0; i < GetSlots.Length; i++)
         {
-           GetSlots[i].UpdateSlot(result2.results.slots[i].item, result2.results.slots[i].amount);
+          GetSlots[i].UpdateSlot(result2.results.slots[i].item, result2.results.slots[i].amount);
+            //Container.slots[i].UpdateSlot(Container.slots[i].item, Container.slots[i].amount);
         }
        
     }
@@ -203,33 +204,33 @@ public class InventoryObject : ScriptableObject
         //Debug.Log(GetSlots.item.);
     }
 
-    
-    public class H_I_Item
-    {
-        public int uniqueId { get; set; }
-        public ItemBuff[] buffs { get; set; }
-        public int id { get; set; }
-        public string name { get; set; }
-    }
 
+    //public class Item
+    //{
+    //    public int uniqueId { get; set; }
+    //    public ItemBuff[] buffs { get; set; }
+    //    public int id { get; set; }
+    //    public string name { get; set; }
+    //}
 
-    public class H_I_Slot
-    {
-        public Item item { get; set; }
-        public int amount { get; set; }
-        public ItemType[] allowedItems { get; set; }
+    //[SerializeField]
+    //public class H_I_Slot
+    //{
+    //    public Item item { get; set; }
+    //    public int amount { get; set; }
+    //    public ItemType[] allowedItems { get; set; }
 
-    }
-    public class H_I_Results
-    {
-        public H_I_Slot[] slots { get; set; }
-    }
-   
+    //}
+
+ 
+
     public class H_I_Root
     {
         public int httpStatus { get; set; }
         public string message { get; set; }
-        public H_I_Results results { get; set; }
+        
+        public Inventory results { get; set; }
+        //public InventorySlot[] slots => results.slots;
     }
 
    

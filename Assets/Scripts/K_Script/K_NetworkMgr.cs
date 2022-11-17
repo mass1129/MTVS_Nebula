@@ -10,18 +10,23 @@ public class K_NetworkMgr : MonoBehaviourPunCallbacks
     private void Awake()
     {
         PhotonNetwork.ConnectUsingSettings();
+        roomName = PlayerPrefs.GetString("AvatarName");
     }
 
     public override void OnConnectedToMaster() => PhotonNetwork.JoinOrCreateRoom("ø‰»Ò", new RoomOptions { MaxPlayers = 6 }, null);
 
+    public string playerPrefabName;
+    string roomName;
+    public List<GameObject> players;
     public override void OnJoinedRoom()
     {   
-        if(builder!=null)
-        {
-         
-            PhotonNetwork.Destroy(builder.gameObject);
-        }
        
-        PhotonNetwork.Instantiate("Player1 1", new Vector3(51, 0, 47), Quaternion.identity);
+        
+        var player=PhotonNetwork.Instantiate(playerPrefabName, new Vector3(51, 0, 47), Quaternion.identity);
+        //players.Add(player);
+        //for(int i=0; i<players.Count; i++)
+      // players[i].GetComponent<K_PlayerItemSystem>().ItemLoad();
+
+       
     }
 }
