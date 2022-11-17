@@ -56,7 +56,10 @@ public class InventoryObject : ScriptableObject
             for(int i =0; i<GetSlots.Length; i++)
             {
                 if (GetSlots[i].item.Id <=-1)
+                {
                     counter++;
+                }
+                   
             }
             return counter;
         }
@@ -175,9 +178,8 @@ public class InventoryObject : ScriptableObject
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
         H_I_Root result2 = await httpReq.Get<H_I_Root>(url);
-        
-        //string json = JsonUtility.ToJson(array, true);
-        //Debug.Log(json);
+
+        //Inventory newInven = result2.results;
         for (int i = 0; i < GetSlots.Length; i++)
         {
           GetSlots[i].UpdateSlot(result2.results.slots[i].item, result2.results.slots[i].amount);

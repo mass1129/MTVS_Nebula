@@ -21,8 +21,8 @@ public class K_PlayerItemSystem : MonoBehaviourPun
     private void Start()
     {
 
-        //inven_Building.TestLoad(player.avatarName);
-       ItemLoad();
+        inven_Building.TestLoad(player.avatarName);
+      
         //ItemLoad();
 
     }
@@ -33,7 +33,7 @@ public class K_PlayerItemSystem : MonoBehaviourPun
     }
     private void OnEnable()
     {
-       
+        //ItemLoad();
     }
 
     private void OnDisable()

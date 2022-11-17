@@ -685,8 +685,7 @@ namespace AdvancedPeopleSystem
                 {
                     var element_index = i + MinLODLevels;
 
-                    if (!ca.skinnedMesh[i].gameObject.activeSelf && !IsBaked())
-                        //photonView.RPC("RPCSClothesActive", RpcTarget.AllBuffered, ca, i);
+                    if (!ca.skinnedMesh[i].gameObject.activeSelf && !IsBaked() && ca.skinnedMesh[i].gameObject != null)      
                         ca.skinnedMesh[i].gameObject.SetActive(true);
 
                     ca.skinnedMesh[i].sharedMesh = newPreset.mesh[element_index];
@@ -754,24 +753,24 @@ namespace AdvancedPeopleSystem
             // photonView.RPC("RPCSetElementByIndex", RpcTarget.AllBuffered, type, index);  
 
         }
-        public void RPCSClothesActive(ClothesAnchor ca, int i)
-        {
-            ca.skinnedMesh[i].gameObject.SetActive(true);
-        }
-        public void RPCSClothesInactive(ClothesAnchor ca)
-        {
-            if (ca != null && ca.skinnedMesh != null)
-            {
-                foreach (var sm in ca.skinnedMesh)
-                {
-                    if (sm != null)
-                    {
-                        sm.sharedMesh = null;
-                        sm.gameObject.SetActive(false);
-                    }
-                }
-            }
-        }
+        //public void RPCSClothesActive(ClothesAnchor ca, int i)
+        //{
+        //    ca.skinnedMesh[i].gameObject.SetActive(true);
+        //}
+        //public void RPCSClothesInactive(ClothesAnchor ca)
+        //{
+        //    if (ca != null && ca.skinnedMesh != null)
+        //    {
+        //        foreach (var sm in ca.skinnedMesh)
+        //        {
+        //            if (sm != null)
+        //            {
+        //                sm.sharedMesh = null;
+        //                sm.gameObject.SetActive(false);
+        //            }
+        //        }
+        //    }
+        //}
 
 
         //public virtual void KSetElementByIndex(CharacterElementType type, int index)
@@ -1042,7 +1041,11 @@ namespace AdvancedPeopleSystem
                     if (cp.name.ToLowerInvariant() == p.ToLowerInvariant())
                     {
                         foreach (var mesh in cp.skinnedMesh)
-                            mesh.enabled = false;
+                        {
+                            if(mesh.gameObject != null)
+                                mesh.enabled = false;
+                        }    
+                            
                     }
                 }
             }
@@ -1105,7 +1108,11 @@ namespace AdvancedPeopleSystem
                 {
                     if (cp.name.ToLowerInvariant() == p.ToLowerInvariant())
                         foreach (var mesh in cp.skinnedMesh)
+                        {
+                            if(mesh.gameObject != null)
                             mesh.enabled = true;
+                        }
+                            
                     //photonView.RPC("RPCUnHideParts", RpcTarget.AllBuffered, p, cp);
 
                 }
