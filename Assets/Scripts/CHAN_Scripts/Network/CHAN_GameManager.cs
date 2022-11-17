@@ -41,18 +41,15 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
     public string prefab;
     public string userPrefab;
     public string WhalePrepab;
-
     GameObject player;
     public GameObject LoadingObject;
-    //public GameObject Chat;
     private void Start()
     {
         //로딩 시작
         LoadingObject.SetActive(true);
         //처음에는 스카이씬에 바로 들어가도록 함
-        roomName = "sky";
-        sceneName = name_SkyScene;
-        prefab = WhalePrepab;
+        InitialLoadScene(PlayerPrefs.GetString("AvatarName"), name_UserScene, userPrefab);
+        // 서버접속 시작
         Connect();
     }
     public void Connect()
@@ -66,7 +63,6 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
         // 서버에 접속하면 Room으로 바로 입장한다. 
         base.OnConnectedToMaster();
         PN.JoinOrCreateRoom(roomName,roomOption(), TypedLobby.Default);
-
     }
     public override void OnCreatedRoom()
     {
@@ -94,7 +90,6 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         base.OnLeftRoom();
-
     }
     RoomOptions roomOption()
     {
@@ -139,16 +134,16 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
         LoadingObject.SetActive(true);
         PN.LeaveRoom();
     }
-    public void Go_User_Custom()
-    {
-        Destroy(player);
-        roomName = customName.text;
-        sceneName = name_UserScene;
-        prefab = userPrefab;
-        print("Join : " + customName.text);
-        LoadingObject.SetActive(true);
-        PN.LeaveRoom();
-    }
+    //public void Go_User_Custom()
+    //{
+    //    Destroy(player);
+    //    roomName = customName.text;
+    //    sceneName = name_UserScene;
+    //    prefab = userPrefab;
+    //    print("Join : " + customName.text);
+    //    LoadingObject.SetActive(true);
+    //    PN.LeaveRoom();
+    //}
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         base.OnPlayerEnteredRoom(newPlayer);
@@ -159,6 +154,7 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
         base.OnPlayerLeftRoom(otherPlayer);
         print("플레이어 퇴장");
     }
+    // 씬에서 유저 프로필 씬으로 이동하는 함수
     public void Btn_GoProfile()
     {
         PN.Disconnect();
@@ -166,5 +162,11 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
         GameObject Voice = GameObject.Find("VoiceManager");
         Destroy(Voice);
         Destroy(gameObject);
+    }
+    void InitialLoadScene(string _roomName,string _sceneName,string _prefab)
+    {
+        roomName = _roomName;
+        sceneName = _sceneName;
+        prefab = _prefab;
     }
 }   

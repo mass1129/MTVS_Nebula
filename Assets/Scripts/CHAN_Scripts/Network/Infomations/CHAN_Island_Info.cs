@@ -8,8 +8,8 @@ namespace IslandInfo
 {
     class Categories
     {
-        public string[] compare_category = { "요리/레시피", "해외여행", "캠핑/등산" };
-        public string[] island_category = { "Island_Backyard", "Island_Beach", "Island_Cave", "Island_House", "Island_Pond" };
+        public string[] compare_category = { "요리/레시피", "해외여행", "캠핑/등산","게임" };
+        public string[] island_category = { "Island_Backyard", "Island_Beach", "Island_Cave", "Island_House", "Island_Pond"};
         public string[] temp_UserName = {"우앙" };
     }
     public class Result
@@ -114,6 +114,10 @@ namespace IslandInfo
                     s1 = category.island_category[i];
                     break;
                 }
+                else
+                {
+                    s1 = "Island 1";
+                }
             }
             return s1;
         }
@@ -130,6 +134,7 @@ namespace IslandInfo
                     Island_Dic.Remove(i);
                     break;
                 }
+
                 GameObject island = InstantiateIsland(info.island_Type, Islands, temp_user);
                 info.User_Obj = island;
                 island.transform.position = info.island_Pos;
@@ -156,10 +161,6 @@ namespace IslandInfo
         GameObject InstantiateIsland(string IslandType,Transform Islands,string username)
         {
             GameObject land = GameObject.Instantiate(Resources.Load<GameObject>("CHAN_Resources/" + IslandType), Islands);
-            if (username == "요희")
-            {
-                land.transform.gameObject.transform.localScale *= 3;
-            }
             //float randomScale = Random.Range(0.3f, 3);
             //land.transform.GetChild(0).gameObject.transform.localScale *= randomScale;
             return land;

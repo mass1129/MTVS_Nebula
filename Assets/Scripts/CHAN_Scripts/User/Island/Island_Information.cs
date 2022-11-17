@@ -102,7 +102,7 @@ public class Island_Information :MonoBehaviourPun
         Root result = await httpRequest.Get<Root>(url);
         await parsing.LoadFromJson(result.results, Island_Dic, dis_multiplier);
         await parsing.InsertInfo(Island_Dic, Islands);
-        CHAN_PlayerManger.LocalPlayerInstance.transform.position = Island_Dic[(PlayerPrefs.GetString("Island_ID"))].island_Pos+(Vector3.up*30);
+        CHAN_PlayerManger.LocalPlayerInstance.GetComponent<User_Spawn>().Spawn();
         StartCoroutine(Delay_Loading());
         Done = true;
         if (Done)

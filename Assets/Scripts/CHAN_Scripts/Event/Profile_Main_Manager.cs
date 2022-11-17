@@ -48,6 +48,7 @@ public class Profile_Main_Manager : MonoBehaviour
     {
         PlayerPrefs.SetString("AvatarName", avatarName);
         PlayerPrefs.SetString("Island_ID", islandID);
+        PlayerPrefs.SetString("Cur_Island", islandID);
         print("AvatarName: " + PlayerPrefs.GetString("AvatarName"));
         print("Island_ID: " + PlayerPrefs.GetString("Island_ID"));
         if (!hasAvatar)

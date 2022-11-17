@@ -129,6 +129,7 @@ GameObject:
   - component: {fileID: 2061741490}
   - component: {fileID: 1640232147893149682}
   - component: {fileID: 5678775688171336963}
+  - component: {fileID: 6996723994240011100}
   m_Layer: 0
   m_Name: Player_Whale
   m_TagString: Player
@@ -248,6 +249,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &6996723994240011100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3252203795677890440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a015ad787db0e1445a776266194c9a3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4989768353029664053
 GameObject:
   m_ObjectHideFlags: 0

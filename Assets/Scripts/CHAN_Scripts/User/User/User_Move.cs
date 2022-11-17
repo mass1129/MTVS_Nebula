@@ -209,7 +209,10 @@ public class User_Move : MonoBehaviourPun, IPunObservable
     }
     public void OnClickEnterBtn()
     {
+        //유저월드 진입 전에 섬 ID 정보 저장
         PlayerPrefs.SetString("User_Island_ID", temp_userIsland_ID);
+        //유저월드 진입전에 플레이어가 어느 섬을 방문했는지 정보를 저장
+        PlayerPrefs.SetString("Cur_Island", temp_userIsland_ID);
         print("섬 ID: "+PlayerPrefs.GetString("Island_ID"));
         CHAN_GameManager.instance.Go_User_Scene(userName);
     }
