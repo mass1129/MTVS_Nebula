@@ -157,7 +157,10 @@ namespace AdvancedPeopleSystem
                 }
             }
         }
-
+        public void TestInit()
+        {
+            InitializeMeshes(_settings, false);
+        }
         /// <summary>
         /// Init character by settings
         /// </summary>

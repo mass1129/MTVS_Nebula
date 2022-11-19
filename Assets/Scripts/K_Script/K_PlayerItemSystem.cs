@@ -126,9 +126,9 @@ public class K_PlayerItemSystem : MonoBehaviourPun
     }
     private void OnApplicationQuit()
     {
-        //inven_Cloths.Clear();
+        inven_Cloths.Clear();
        
-        //inven_Equipment.Clear();
+        inven_Equipment.Clear();
     }   
 
     [System.Serializable]

@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using AdvancedPeopleSystem;
 using Photon.Pun;
-public class PlayerEquipment : CharacterCustomization
+public class PlayerEquipment : MonoBehaviour
 
 
 {
     public InventoryObject _equipment;
 
 
-   
-
+    
+    private CharacterCustomization CharacterCustomization;
 
 
     void Start()
     {
         //if (!photonView.IsMine) this.enabled = false; 
-        
+
 
        
 
@@ -37,7 +37,10 @@ public class PlayerEquipment : CharacterCustomization
     //{
     //    characterSelectedElements.SetSelectedIndex(type, index);
     //}
-
+    public void cc()
+    {
+        CharacterCustomization = GetComponent<CharacterCustomization>();
+    }
     public void OnEquipItem(InventorySlot slot)
     {
         var itemObject = slot.GetItemObject();
@@ -51,21 +54,13 @@ public class PlayerEquipment : CharacterCustomization
                 {
                     switch (slot.allowedItems[0])
                     {
-                        case ItemType.Hat:
+                        case ItemType.Hat:if (itemObject == null)
                             CharacterCustomization.SetElementByIndex(CharacterElementType.Hat, itemObject.charCustomIndex);
                             break;
 
                         case ItemType.Accessory:
                             CharacterCustomization.SetElementByIndex(CharacterElementType.Accessory, itemObject.charCustomIndex);
-                            break;
-
-                        case ItemType.Hair:
-                            CharacterCustomization.SetElementByIndex(CharacterElementType.Hair, itemObject.charCustomIndex);
-                            break;
-
-                        case ItemType.Beard:
-                            CharacterCustomization.SetElementByIndex(CharacterElementType.Beard, itemObject.charCustomIndex);
-                            break;
+                            break;        
 
                         case ItemType.Shirt:
                             CharacterCustomization.SetElementByIndex(CharacterElementType.Shirt, itemObject.charCustomIndex);
@@ -101,19 +96,11 @@ public class PlayerEquipment : CharacterCustomization
                     {
 
                         case ItemType.Hat:
-                            CharacterCustomization.SetElementByIndex(CharacterElementType.Hat, 0);
+                            CharacterCustomization.SetElementByIndex(CharacterElementType.Hat, -1);
                             break;
 
                         case ItemType.Accessory:
                             CharacterCustomization.SetElementByIndex(CharacterElementType.Accessory, -1);
-                            break;
-
-                        case ItemType.Hair:
-                            CharacterCustomization.SetElementByIndex(CharacterElementType.Hair, -1);
-                            break;
-
-                        case ItemType.Beard:
-                            CharacterCustomization.SetElementByIndex(CharacterElementType.Beard, 0);
                             break;
 
                         case ItemType.Shirt:
