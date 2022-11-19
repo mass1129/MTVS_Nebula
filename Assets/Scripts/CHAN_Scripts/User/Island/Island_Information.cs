@@ -9,6 +9,7 @@ using Photon.Realtime;
 using IslandInfo;
 using System.Collections;
 
+
 [Serializable]
 public class JsonInfo
 {
@@ -29,6 +30,7 @@ public class JsonInfo
 public class Island_Information :MonoBehaviourPun
 {
     public static Island_Information instance;
+
     private void Awake()
     {
         instance = this;

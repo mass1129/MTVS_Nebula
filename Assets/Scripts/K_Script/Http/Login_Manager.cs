@@ -59,6 +59,7 @@ public class Login_Manager : MonoBehaviour
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
         await httpReq.Post(url, json);
+
         SceneManager.LoadScene(1);
     }
     public async void GetAvatorInfo()

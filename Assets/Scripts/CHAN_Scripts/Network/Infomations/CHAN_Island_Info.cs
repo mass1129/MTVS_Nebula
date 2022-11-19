@@ -8,9 +8,11 @@ namespace IslandInfo
 {
     class Categories
     {
+        public Dictionary<string, string[]> keywords;
+
         public string[] compare_category = { "요리/레시피", "해외여행", "캠핑/등산","게임" };
-        public string[] island_category = { "Island_Backyard", "Island_Beach", "Island_Cave", "Island_House", "Island_Pond"};
-        public string[] temp_UserName = {"우앙" };
+        public string[] island_category = { "Island_Backyard", "Island_Beach", "Island_Cave", "Island_House", "Island_Pond", "Island_Port", "Island_River", "Island_Snow" };
+        
     }
     public class Result
     {

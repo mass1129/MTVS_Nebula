@@ -55,6 +55,7 @@ public class UserProfile_Utility : MonoBehaviour
         {
             await Task.Yield();
         }
+        www.Dispose();
         if (www.isNetworkError || www.isHttpError)
         {
             Debug.Log(www.error);
@@ -89,6 +90,7 @@ public class UserProfile_Utility : MonoBehaviour
         {
             await Task.Yield();
         }
+        www.Dispose();
         if (www.isNetworkError || www.isHttpError)
         {
             Debug.Log(www.error);
