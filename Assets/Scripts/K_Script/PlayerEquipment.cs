@@ -3,22 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using AdvancedPeopleSystem;
 using Photon.Pun;
-public class PlayerEquipment : MonoBehaviourPun
+public class PlayerEquipment : CharacterCustomization
+
 
 {
-    private InventoryObject _equipment;
+    public InventoryObject _equipment;
 
 
-    private CharacterCustomization CharacterCustomization;
+   
 
 
 
     void Start()
     {
-        if (!photonView.IsMine) this.enabled = false; ;
-        _equipment = GetComponent<K_PlayerItemSystem>().inven_Equipment;
+        //if (!photonView.IsMine) this.enabled = false; 
+        
 
-        CharacterCustomization = GetComponent<CharacterCustomization>();
+       
 
         for (int i = 0; i < _equipment.GetSlots.Length; i++)
         {
@@ -100,7 +101,7 @@ public class PlayerEquipment : MonoBehaviourPun
                     {
 
                         case ItemType.Hat:
-                            CharacterCustomization.SetElementByIndex(CharacterElementType.Hat, -1);
+                            CharacterCustomization.SetElementByIndex(CharacterElementType.Hat, 0);
                             break;
 
                         case ItemType.Accessory:
@@ -112,7 +113,7 @@ public class PlayerEquipment : MonoBehaviourPun
                             break;
 
                         case ItemType.Beard:
-                            CharacterCustomization.SetElementByIndex(CharacterElementType.Beard, -1);
+                            CharacterCustomization.SetElementByIndex(CharacterElementType.Beard, 0);
                             break;
 
                         case ItemType.Shirt:
@@ -134,7 +135,12 @@ public class PlayerEquipment : MonoBehaviourPun
         }
     }
 
-    
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        throw new System.NotImplementedException();
+    }
+
+
 
     //public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     //{

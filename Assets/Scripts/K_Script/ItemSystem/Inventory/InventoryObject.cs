@@ -21,7 +21,7 @@ public class InventoryObject : ScriptableObject
             return false;
         //
         InventorySlot slot = FindItemOnInventory(item);
-        if (!database.ItemObjects[item.Id].stackable || slot == null)
+        if (!database.ItemObjects[item.id].stackable || slot == null)
         {
             GetEmptySlot().UpdateSlot(item, amount);
             return true;
@@ -55,7 +55,7 @@ public class InventoryObject : ScriptableObject
             int counter = 0;
             for(int i =0; i<GetSlots.Length; i++)
             {
-                if (GetSlots[i].item.Id <=-1)
+                if (GetSlots[i].item.id <= -1)
                 {
                     counter++;
                 }
@@ -71,7 +71,7 @@ public class InventoryObject : ScriptableObject
         //
         for (int i = 0; i < GetSlots.Length; i++)
         {
-            if (GetSlots[i].item.Id == item.Id)
+            if (GetSlots[i].item.id == item.id)
             {
                 return GetSlots[i];
             }
@@ -84,7 +84,7 @@ public class InventoryObject : ScriptableObject
     {
         for (int i = 0; i < GetSlots.Length; i++)
         {
-            if (GetSlots[i].item.Id == item.data.Id)
+            if (GetSlots[i].item.id == item.data.id)
             {
                 return true;
             }
@@ -97,7 +97,7 @@ public class InventoryObject : ScriptableObject
     {
         for (int i = 0; i < GetSlots.Length; i++)
         {
-            if (GetSlots[i].item.Id <= -1)
+            if (GetSlots[i].item.id <= -1)
             {
                 return GetSlots[i];
             }

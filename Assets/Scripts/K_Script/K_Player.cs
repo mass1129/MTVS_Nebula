@@ -96,8 +96,8 @@ public class K_Player : MonoBehaviourPun, IPunObservable
         Updated();
         //Updated_UpperBody();
         GroundedCheck();
-        Debug.Log(CurrentState.ToString() + "," + PhotonNetwork.CurrentRoom.Name + "," + PlayerPrefs.GetString("AvatarName") + "," + avatarName + "," + ownIslandID+ "," + PlayerPrefs.GetString("User_Island_ID"));
-        Debug.Log(cc.isGrounded);
+       // Debug.Log(CurrentState.ToString() + "," + PhotonNetwork.CurrentRoom.Name + "," + PlayerPrefs.GetString("AvatarName") + "," + avatarName + "," + ownIslandID+ "," + PlayerPrefs.GetString("User_Island_ID"));
+        //Debug.Log(cc.isGrounded);
     }
 
     private void OnAnimatorMove()
@@ -201,7 +201,10 @@ public class K_Player : MonoBehaviourPun, IPunObservable
     }
     #endregion
 
-
+    private void OnApplicationQuit()
+    {
+       //PhotonNetwork.Destroy(gameObject);
+    }
 
 
 

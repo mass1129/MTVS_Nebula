@@ -57,7 +57,7 @@ public abstract class K_UserInterface : MonoBehaviour
 
     private void OnSlotUpdate(InventorySlot slot)
     {
-        if (slot.item.Id <= -1)
+        if (slot.item.id <= -1)
         {
             slot.slotDisplay.transform.GetChild(0).GetComponent<Image>().sprite = null;
             slot.slotDisplay.transform.GetChild(0).GetComponent<Image>().color = new Color(1, 1, 1, 0);
@@ -142,7 +142,7 @@ public abstract class K_UserInterface : MonoBehaviour
         private GameObject CreateTempItem(GameObject obj)
     {
         GameObject tempItem = null;
-        if (slotsOnInterface[obj].item.Id >= 0)
+        if (slotsOnInterface[obj].item.id >= 0)
         {
             tempItem = new GameObject();
             var rt = tempItem.AddComponent<RectTransform>();

@@ -4,6 +4,8 @@ using UnityEngine;
 [System.Serializable]
 public class InventorySlot
 {
+    public Item item;
+    public int amount;
     public ItemType[] allowedItems = new ItemType[0];
 
     [System.NonSerialized]
@@ -16,13 +18,13 @@ public class InventorySlot
     [System.NonSerialized]
     public Action<InventorySlot> onBeforeUpdated;
 
-    public Item item;
-    public int amount;
+   
+   
 
     public ItemObject GetItemObject()
     {
         
-        return item.Id >= 0 ? parent.inventory.database.ItemObjects[item.Id] : null;
+        return item.id >= 0 ? parent.inventory.database.ItemObjects[item.id] : null;
     }
     
     public InventorySlot() => UpdateSlot(new Item(), 0);
@@ -46,7 +48,7 @@ public class InventorySlot
 
     public bool CanPlaceInSlot(ItemObject itemObject)
     {
-        if (allowedItems.Length <= 0 || itemObject == null || itemObject.data.Id < 0)
+        if (allowedItems.Length <= 0 || itemObject == null || itemObject.data.id < 0)
             return true;
         for (int i = 0; i < allowedItems.Length; i++)
         {

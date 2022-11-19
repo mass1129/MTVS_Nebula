@@ -80,6 +80,8 @@ namespace AdvancedPeopleSystem
         List<CharacterBlendshapeData> bodyBlendshapes = new List<CharacterBlendshapeData>();
 
         List<CharacterBlendshapeData> extraBlendshapes = new List<CharacterBlendshapeData>();
+
+       
         private void GetColors(CharacterCustomization cc)
         {
             if (bodyColors == null)
@@ -95,6 +97,7 @@ namespace AdvancedPeopleSystem
 
         void OnEnable()
         {
+            
             cc = (CharacterCustomization)target;
             
             EditorApplication.CallbackFunction callback = UpdateCallback;
@@ -284,7 +287,7 @@ namespace AdvancedPeopleSystem
                 cc.MaxLODLevels = 3;
                 if (EditorUtility.DisplayDialog("Initialize character", "Are you sure you want to load new character meshes?\n!! Old meshes and rigs will be destroyed !!", "Yes", "No"))
                 {
-                    cc.InitializeMeshes();
+                    //cc.InitializeMeshes();
                     cc.ApplyPrefab();
                     OnEnable();
                 }

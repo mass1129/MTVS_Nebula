@@ -12,15 +12,15 @@ public class ItemDatabaseObject : ScriptableObject
     {
         for (int i = 0; i < ItemObjects.Length; i++)
         {
-            if (ItemObjects[i].data.Id != i)
-                ItemObjects[i].data.Id = i;
+            if (ItemObjects[i].data.id != i)
+                ItemObjects[i].data.id = i;
         }
     }
     public void OnValidate()
     {
         for (int i = 0; i < ItemObjects.Length; i++)
         {
-            ItemObjects[i].data.Id = i;
+            ItemObjects[i].data.id = i;
         }
     }
 

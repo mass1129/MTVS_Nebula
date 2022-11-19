@@ -16,7 +16,7 @@ namespace AdvancedPeopleSystem
     /// </summary>
     [DisallowMultipleComponent]
     [AddComponentMenu("Advanced People Pack/Character Customizable", -1)]
-    public class CharacterCustomization : MonoBehaviourPun, IPunObservable
+    public class CharacterCustomization : MonoBehaviour
     {
         [SerializeField] public bool isSettingsExpanded = false;
 
@@ -84,21 +84,23 @@ namespace AdvancedPeopleSystem
 
         private void Awake()
         {
-            if (!photonView.IsMine)
-                this.enabled = false;
             this._transform = transform;
             _lodGroup = GetComponent<LODGroup>();
-            // RecalculateLOD();
+            RecalculateLOD();
             UpdateSkinnedMeshesOffscreenBounds();
+
         }
         private void Start()
         {
-            //if (!photonView.IsMine) this.enabled = false;
+            
         }
         void LoadLastSaveData()
         {
-            var saveDatas = GetSavedCharacterDatas();
-            ApplySavedCharacterData(saveDatas[saveDatas.Count - 1]);
+            
+        }
+        private void OnEnable()
+        {
+            
         }
         private void Update()
         {
@@ -685,7 +687,7 @@ namespace AdvancedPeopleSystem
                 {
                     var element_index = i + MinLODLevels;
 
-                    if (!ca.skinnedMesh[i].gameObject.activeSelf && !IsBaked() && ca.skinnedMesh[i].gameObject != null)      
+                    if (ca.skinnedMesh[i] != null && !ca.skinnedMesh[i].gameObject.activeSelf && !IsBaked()  )      
                         ca.skinnedMesh[i].gameObject.SetActive(true);
 
                     ca.skinnedMesh[i].sharedMesh = newPreset.mesh[element_index];
