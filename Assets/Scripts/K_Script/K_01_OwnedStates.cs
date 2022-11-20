@@ -317,7 +317,7 @@ namespace K_01_OwnedStates
             entity.input.x = 0;
             entity.input.y = 0;
             entity.SetTrigger("ThirdMove");
-
+            entity.gridBuildingSystem.TestLoad();
             entity.camMgr.InActiveBuildingSystem(true);
             entity.camMgr.buildCamera.gameObject.SetActive(true);
             

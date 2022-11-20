@@ -104,16 +104,19 @@ public class InventoryObject : ScriptableObject
         }
         return null;
     }
-
+    
     public void SwapItems(InventorySlot item1, InventorySlot item2)
     {
         if (item1 == item2)
             return;
         if (item2.CanPlaceInSlot(item1.GetItemObject()) && item1.CanPlaceInSlot(item2.GetItemObject()))
         {
-            InventorySlot temp = new InventorySlot(item2.item, item2.amount);
-            item2.UpdateSlot(item1.item, item1.amount);
-            item1.UpdateSlot(temp.item, temp.amount);
+            InventorySlot temp = new InventorySlot(item1.item, item1.amount);
+            if (item2 != null)
+                item1.UpdateSlot(item2.item, item2.amount);
+            else
+                item1.RemoveItem();
+            item2.UpdateSlot(temp.item, temp.amount);
             Debug.Log("Swap");
         }
 

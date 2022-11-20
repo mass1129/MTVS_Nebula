@@ -16,14 +16,10 @@ public class K_PlayerItemSystem : MonoBehaviourPun
 
     private void Awake()
     {
-        if (!photonView.IsMine) this.enabled = false;
+        
     }
     private void Start()
     {
-
-        inven_Building.TestLoad(player.avatarName);
-      
-       // ItemLoad();
 
     }
     private void Update()
@@ -33,7 +29,9 @@ public class K_PlayerItemSystem : MonoBehaviourPun
     }
     private void OnEnable()
     {
+        if (!photonView.IsMine) return;
         //ItemLoad();
+        inven_Building.TestLoad(player.avatarName);
     }
 
     private void OnDisable()
@@ -87,7 +85,7 @@ public class K_PlayerItemSystem : MonoBehaviourPun
             if (_inventory.AddItem(_item, 1))
             {
                 //그라운드 아이템 객체를 파괴한다.
-                PhotonNetwork.Destroy(other.gameObject);
+               //Destroy(other.gameObject);
             }
 
         }
@@ -96,7 +94,7 @@ public class K_PlayerItemSystem : MonoBehaviourPun
 
   
     public async void TwoInvenSave()
-    {
+    {   
        if(!photonView.IsMine) return;
         SaveTwoInven saveObject = new SaveTwoInven
         {
@@ -120,9 +118,9 @@ public class K_PlayerItemSystem : MonoBehaviourPun
     }
     public void ItemLoad()
     {
-        
+        if (!photonView.IsMine) return;
         inven_Cloths.TestLoad(player.avatarName);
-        inven_Equipment.TestLoad(player.avatarName);
+        //inven_Equipment.TestLoad(player.avatarName);
     }
     private void OnApplicationQuit()
     {

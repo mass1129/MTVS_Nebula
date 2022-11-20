@@ -16,7 +16,7 @@ namespace AdvancedPeopleSystem
     /// </summary>
     [DisallowMultipleComponent]
     [AddComponentMenu("Advanced People Pack/Character Customizable", -1)]
-    public class CharacterCustomization : MonoBehaviour
+    public class CharacterCustomization : MonoBehaviourPun,IPunObservable
     {
         [SerializeField] public bool isSettingsExpanded = false;
 
@@ -82,18 +82,16 @@ namespace AdvancedPeopleSystem
 
         public bool notAPP2Shader = false;
 
+        public Inventory equipment;
         private void Awake()
         {
-            this._transform = transform;
-            _lodGroup = GetComponent<LODGroup>();
-            RecalculateLOD();
-            UpdateSkinnedMeshesOffscreenBounds();
-
+           
         }
         private void Start()
         {
-            
+           
         }
+        
         void LoadLastSaveData()
         {
             
@@ -101,14 +99,22 @@ namespace AdvancedPeopleSystem
         private void OnEnable()
         {
             
+                this._transform = transform;
+                _lodGroup = GetComponent<LODGroup>();
+                RecalculateLOD();
+                UpdateSkinnedMeshesOffscreenBounds();
+            
+
         }
         private void Update()
         {
+           
             AnimationTick();
         }
 
         private void LateUpdate()
         {
+           
             if (feetOffset != 0 && applyFeetOffset)
                 SetFeetOffset(new Vector3(0, feetOffset, 0));
         }
@@ -630,22 +636,10 @@ namespace AdvancedPeopleSystem
         /// <param name="type">Type of clothes</param>
         /// <param name="index">Index of element</param>
         /// 
-        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-        {
-            //if (stream.IsWriting)
-            //{
-            //    stream.SendNext(this.characterSelectedElements);
-               
 
-            //}
-            //else if(stream.IsReading)
-            //{
-            //    this.characterSelectedElements = (CharacterSelectedElements)stream.ReceiveNext();
-
-            //}
-        }
         #endregion
-        public void SetElementByIndex(CharacterElementType type, int index)
+        [PunRPC]
+        public void RPCSetElementByIndex(CharacterElementType type, int index)
         {
             if (Settings == null)
             {
@@ -690,7 +684,7 @@ namespace AdvancedPeopleSystem
                 {
                     var element_index = i + MinLODLevels;
 
-                    if (ca.skinnedMesh[i] != null && !ca.skinnedMesh[i].gameObject.activeSelf && !IsBaked()  )      
+                    if (!ca.skinnedMesh[i].gameObject.activeSelf && !IsBaked())
                         ca.skinnedMesh[i].gameObject.SetActive(true);
 
                     ca.skinnedMesh[i].sharedMesh = newPreset.mesh[element_index];
@@ -741,7 +735,7 @@ namespace AdvancedPeopleSystem
                         if (sm != null)
                         {
 
-                            
+
                             sm.sharedMesh = null;
                             sm.gameObject.SetActive(false);
                         }
@@ -756,26 +750,14 @@ namespace AdvancedPeopleSystem
 
             characterSelectedElements.SetSelectedIndex(type, index);
             // photonView.RPC("RPCSetElementByIndex", RpcTarget.AllBuffered, type, index);  
+        }
+        public void SetElementByIndex(CharacterElementType type, int index)
+        {
+
+            photonView.RPC("RPCSetElementByIndex", RpcTarget.AllBuffered, type, index);
 
         }
-        //public void RPCSClothesActive(ClothesAnchor ca, int i)
-        //{
-        //    ca.skinnedMesh[i].gameObject.SetActive(true);
-        //}
-        //public void RPCSClothesInactive(ClothesAnchor ca)
-        //{
-        //    if (ca != null && ca.skinnedMesh != null)
-        //    {
-        //        foreach (var sm in ca.skinnedMesh)
-        //        {
-        //            if (sm != null)
-        //            {
-        //                sm.sharedMesh = null;
-        //                sm.gameObject.SetActive(false);
-        //            }
-        //        }
-        //    }
-        //}
+
 
 
         //public virtual void KSetElementByIndex(CharacterElementType type, int index)
@@ -2240,7 +2222,10 @@ namespace AdvancedPeopleSystem
             }
         }
 
-        
+        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        {
+           
+        }
     }
     #region Basic classes and enum
     public enum CharacterElementType : int

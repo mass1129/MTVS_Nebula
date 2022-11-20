@@ -69,8 +69,8 @@ public class K_PlayerStats : MonoBehaviour
         switch (slot.parent.inventory.type)
         {
             case InterfaceType.Inventory_Cloths:
-            //    print("Placed " + slot.GetItemObject() + " on: " + slot.parent.inventory.type + ", Allowed items: " +
-            //          string.Join(", ", slot.AllowedItems));
+                print("Placed " + slot.GetItemObject() + " on: " + slot.parent.inventory.type + ", Allowed items: " +
+                      string.Join(", ", slot.allowedItems));
                 break;
 
             case InterfaceType.Equipment:

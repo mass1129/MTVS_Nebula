@@ -42,8 +42,8 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
        
         placedObjectTypeSO = null;
         selectedGrid = gridList[0];
-        Debug.Log(PhotonNetwork.CountOfPlayers);
-        if (PhotonNetwork.CountOfPlayers <= 1)
+        Debug.Log(PhotonNetwork.CurrentRoom.PlayerCount);
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
             TestLoad();
         //transform.parent.gameObject.SetActive(false);
         if (!photonView.IsMine) this.enabled = false;
@@ -404,6 +404,7 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
     [Serializable]
     public class PlacedObjectSaveObjectArray
     {
+
         public List<PlacedObject.SaveObject> gridPlaceObjectList;
     }
 

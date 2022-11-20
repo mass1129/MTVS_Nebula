@@ -22,7 +22,8 @@ public enum PlayerStates // Player의 기본 상태
 // 모든 Player가 사용하는 에이전트 클래스
 public class K_Player : MonoBehaviourPun, IPunObservable
 {
-  
+    
+
     public Animator anim;
     public CharacterController cc;
     public Transform cam;

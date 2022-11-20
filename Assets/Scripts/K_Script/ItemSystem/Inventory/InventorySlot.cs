@@ -44,7 +44,7 @@ public class InventorySlot
         amount = amountValue;
         onAfterUpdated?.Invoke(this);
     }
-
+   
 
     public bool CanPlaceInSlot(ItemObject itemObject)
     {

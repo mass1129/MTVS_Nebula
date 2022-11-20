@@ -88,7 +88,7 @@ public class K_TestLogin : MonoBehaviour
         PlayerPrefs.SetString("AvatarName", result2.results[0].name);
         PlayerPrefs.SetString("Island_ID", result2.results[0].id.ToString());
         PlayerPrefs.SetString("User_Island_ID", result2.results[0].id.ToString());
-        SceneManager.LoadScene(1);
+        //SceneManager.LoadScene(1);
     
 
 }

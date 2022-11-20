@@ -24771,7 +24771,7 @@ GameObject:
   - component: {fileID: 3214773754116892971}
   - component: {fileID: 842975793188924700}
   m_Layer: 15
-  m_Name: Player2 2
+  m_Name: Player2 4
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24890,7 +24890,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSettingsExpanded: 1
-  selectedsettings: {fileID: 11400000, guid: 0d7b7f5e9b048d24a98d16443e2a2c89, type: 2}
+  selectedsettings: {fileID: 11400000, guid: e9e5494d13890db4e90f7bb6e6ec19c0, type: 2}
   _settings: {fileID: 11400000, guid: e9e5494d13890db4e90f7bb6e6ec19c0, type: 2}
   characterParts:
   - name: ARMS
@@ -25244,176 +25244,6 @@ MonoBehaviour:
   _transform: {fileID: 5629639970830784066}
   applyFeetOffset: 1
   notAPP2Shader: 0
-  equipment:
-    slots:
-    - item:
-        uniqueId: -1
-        buffs: []
-        id: -1
-        name: 
-      amount: 0
-      allowedItems: 
-    - item:
-        uniqueId: -1
-        buffs: []
-        id: -1
-        name: 
-      amount: 0
-      allowedItems: 
-    - item:
-        uniqueId: -1
-        buffs: []
-        id: -1
-        name: 
-      amount: 0
-      allowedItems: 
-    - item:
-        uniqueId: -1
-        buffs: []
-        id: -1
-        name: 
-      amount: 0
-      allowedItems: 
-    - item:
-        uniqueId: -1
-        buffs: []
-        id: -1
-        name: 
-      amount: 0
-      allowedItems: 
-    - item:
-        uniqueId: -1
-        buffs: []
-        id: -1
-        name: 
-      amount: 0
-      allowedItems: 
-    - item:
-        uniqueId: -1
-        buffs: []
-        id: -1
-        name: 
-      amount: 0
-      allowedItems: 
-    - item:
-        uniqueId: -1
-        buffs: []
-        id: -1
-        name: 
-      amount: 0
-      allowedItems: 
-    - item:
-        uniqueId: -1
-        buffs: []
-        id: -1
-        name: 
-      amount: 0
-      allowedItems: 
-    - item:
-        uniqueId: -1
-        buffs: []
-        id: -1
-        name: 
-      amount: 0
-      allowedItems: 
-    - item:
-        uniqueId: -1
-        buffs: []
-        id: -1
-        name: 
-      amount: 0
-      allowedItems: 
-    - item:
-        uniqueId: -1
-        buffs: []
-        id: -1
-        name: 
-      amount: 0
-      allowedItems: 
-    - item:
-        uniqueId: -1
-        buffs: []
-        id: -1
-        name: 
-      amount: 0
-      allowedItems: 
-    - item:
-        uniqueId: -1
-        buffs: []
-        id: -1
-        name: 
-      amount: 0
-      allowedItems: 
-    - item:
-        uniqueId: -1
-        buffs: []
-        id: -1
-        name: 
-      amount: 0
-      allowedItems: 
-    - item:
-        uniqueId: -1
-        buffs: []
-        id: -1
-        name: 
-      amount: 0
-      allowedItems: 
-    - item:
-        uniqueId: -1
-        buffs: []
-        id: -1
-        name: 
-      amount: 0
-      allowedItems: 
-    - item:
-        uniqueId: -1
-        buffs: []
-        id: -1
-        name: 
-      amount: 0
-      allowedItems: 
-    - item:
-        uniqueId: -1
-        buffs: []
-        id: -1
-        name: 
-      amount: 0
-      allowedItems: 
-    - item:
-        uniqueId: -1
-        buffs: []
-        id: -1
-        name: 
-      amount: 0
-      allowedItems: 
-    - item:
-        uniqueId: -1
-        buffs: []
-        id: -1
-        name: 
-      amount: 0
-      allowedItems: 
-    - item:
-        uniqueId: -1
-        buffs: []
-        id: -1
-        name: 
-      amount: 0
-      allowedItems: 
-    - item:
-        uniqueId: -1
-        buffs: []
-        id: -1
-        name: 
-      amount: 0
-      allowedItems: 
-    - item:
-        uniqueId: -1
-        buffs: []
-        id: -1
-        name: 
-      amount: 0
-      allowedItems: 
 --- !u!95 &4441311022780113700
 Animator:
   serializedVersion: 4
@@ -25442,8 +25272,8 @@ LODGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5629639970830784068}
   serializedVersion: 2
-  m_LocalReferencePoint: {x: 0.0023345947, y: -0.03834358, z: 0.9956908}
-  m_Size: 2.551818
+  m_LocalReferencePoint: {x: -0.000045329332, y: 0.8936229, z: 0.0023036748}
+  m_Size: 1.9958425
   m_FadeMode: 0
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
@@ -25746,7 +25576,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e418d1ddcb6a171449d202bf1d7d6508, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _CharacterCustomization: {fileID: 5629639970830784067}
 --- !u!114 &3214773754116892971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25764,11 +25593,9 @@ MonoBehaviour:
   prefixField: -1
   Synchronization: 3
   OwnershipTransfer: 0
-  observableSearch: 1
+  observableSearch: 2
   ObservedComponents:
-  - {fileID: 5629639970830784067}
   - {fileID: 5733073701845269104}
-  - {fileID: 5733073701845269111}
   - {fileID: 842975793188924700}
   - {fileID: 4970061919972252230}
   sceneViewId: 0
@@ -25788,7 +25615,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
-  m_SynchronizeScale: 1
+  m_SynchronizeScale: 0
   m_UseLocal: 1
 --- !u!1 &5658300315629061160
 GameObject:
