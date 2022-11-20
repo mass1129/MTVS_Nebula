@@ -166,6 +166,6 @@ public class UserProfile_Utility : MonoBehaviour
             profile.SetActive(true);
             profile.GetComponentInChildren<Profile_Manager>().Initialize();
         }
-        LoadingScene.SetActive(false);
+        //LoadingScene.SetActive(false);
     }
 }

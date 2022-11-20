@@ -13,7 +13,7 @@ public class TEST_CreateTV : MonoBehaviourPun
     {
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            PN.Instantiate("TV 1", new Vector3(51, 0, 47), Quaternion.identity);
+            PN.Instantiate("TV_Agora", new Vector3(51, 0, 47), Quaternion.identity);
         }
     }
 }
