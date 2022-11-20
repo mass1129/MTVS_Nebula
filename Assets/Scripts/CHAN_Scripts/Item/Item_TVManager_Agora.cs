@@ -10,13 +10,12 @@ public class Item_TVManager_Agora : MonoBehaviourPun
 {
     public static Item_TVManager_Agora instance;
     public Transform prefab_Wall;
-//public Transform window;
+    //public Transform window;
     public GameObject[] prefab_TVScreem;
 
     ScreenShare ss;
     Vector3 InitialPos;
-    public bool done;
-    bool moving;
+    public bool moving;
     public bool hasControl;
 
 
@@ -30,60 +29,26 @@ public class Item_TVManager_Agora : MonoBehaviourPun
     void Start()
     {
         InitialPos = prefab_Wall.position;
-        //window.position = prefab_Wall.position;
         ss = GetComponent<ScreenShare>();
-
     }
-    //public void InsertScreenObject(bool b)
-    //{
-    //    prefab_TVScreem = new GameObject[window.childCount];
-    //    for (int i = 0; i < window.childCount; i++)
-    //    {
-    //        prefab_TVScreem[i] = window.GetChild(i).gameObject;
-    //        prefab_TVScreem[i].SetActive(b);
-    //    }
-    //}
 
-    void Update()
+    #region 화면공유 준비
+    public void ReadyToShare()
     {
-        //if (Input.GetKeyDown(KeyCode.F) && done && !moving)
-        //{
-        //    //'F'키 누른 순간 TV활성화 시작
-
-        //    isTurn = !isTurn;
-        //    OnSpaceBar();
-        //}
-    }
-    //public void OnSpaceBar()
-    //{
-    //        if (isTurn)
-    //        {
-    //            StartShare();
-    //            //Copy_Window_Texture.instance.OnClicked(true);
-    //        }
-    //        else
-    //        {
-    //            EndShare();
-    //            //Copy_Window_Texture.instance.OnClicked(false);
-    //        }
-    //        Move(isTurn);
-
-    //}
-    public void StartShare()
-    {
-        photonView.RPC("RPCStartShare", RpcTarget.All);
-        
+        photonView.RPC("RPCReadyToShare", RpcTarget.All);
         Debug.LogWarning("공유준비 완료");
     }
     [PunRPC]
-    void RPCStartShare()
+    void RPCReadyToShare()
     {
         ss.Initialize();
     }
+    #endregion
+    #region 화면 송출 종료
     public void EndShare()
     {
         photonView.RPC("RPCEndShare", RpcTarget.All);
-        
+
     }
     [PunRPC]
     void RPCEndShare()
@@ -91,6 +56,8 @@ public class Item_TVManager_Agora : MonoBehaviourPun
         ss.EndShare();
         Debug.LogWarning("화면공유 비활성화 시작");
     }
+    #endregion
+    #region 벽을 움직이게 하는 함수 모음
     public void Move(bool isTurn)
     {
         photonView.RPC("RpcMove", RpcTarget.All, isTurn);
@@ -119,40 +86,22 @@ public class Item_TVManager_Agora : MonoBehaviourPun
         moving = false;
 
     }
-    // 티비 킬 수 있는지 없는지 
-    public void CanControlTV(bool b)
+    #endregion
+    #region 유저들에게 화면 송출 시작 
+    public void SendScreen(string id)
     {
-        if (b == true)
-        {
-            if (isTurn)
-            {
-                introduceText.text = "Turn Off Screen";
-            }
-            else
-            {
-                introduceText.text = "Turn On Screen";
-            }
-        }
-        else
-            introduceText.text = null;
-    }
-    //여기서 TV  Text 나온다. 
-
-
-    public void ShareStart(string id)
-    {
-
-        photonView.RPC("RPCShareStart", RpcTarget.All, id);
+        photonView.RPC("RPCSendScreen", RpcTarget.All, id);
         ss.TurnOnMyScreen();
         Debug.Log(id);
     }
     [PunRPC]
-    void RPCShareStart(string id)
+    void RPCSendScreen(string id)
     {
         ss.TurnOnScreen(id);
         Debug.LogWarning(id + " 보내짐");
     }
-
+    #endregion
+    #region 플레이어에게 TV 제어권한 주기 위한 함수
     public void TurnControl()
     { photonView.RPC("RPCTurnControl", RpcTarget.All); }
     [PunRPC]
@@ -160,5 +109,6 @@ public class Item_TVManager_Agora : MonoBehaviourPun
     {
         hasControl = !hasControl;
     }
+    #endregion
 }
 

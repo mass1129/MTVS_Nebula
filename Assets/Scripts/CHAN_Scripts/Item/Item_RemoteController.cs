@@ -12,7 +12,7 @@ public class Item_RemoteController : MonoBehaviourPun
     void Start()
     {
         mgr.Move(true);
-        mgr.StartShare();
+        mgr.ReadyToShare();
         dropDown = GameObject.Find("Dropdown").GetComponent<Dropdown>();
         dropDown.onValueChanged.AddListener(delegate {
             DropdownValueChanged(dropDown);
@@ -28,8 +28,8 @@ public class Item_RemoteController : MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
-            mgr.ShareStart(ScreenShare.myID.ToString());
-            Debug.LogWarning("uid :"+ScreenShare.myID.ToString());
+            mgr.SendScreen(ScreenShare.myID.ToString());
+            Debug.LogWarning("uid :" + ScreenShare.myID.ToString());
             Debug.LogWarning(change.value + "화면 전환");
         }
     }
