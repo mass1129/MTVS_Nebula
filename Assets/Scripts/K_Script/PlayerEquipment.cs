@@ -42,6 +42,21 @@ public class PlayerEquipment :MonoBehaviourPun, IPunObservable
         
 
     }
+
+    private void OnDisable()
+    {
+        if (photonView.IsMine)
+        {
+
+
+            for (int i = 0; i < _equipment.GetSlots.Length; i++)
+            {
+                _equipment.GetSlots[i].onBeforeUpdated -= OnRemoveItem;
+                _equipment.GetSlots[i].onAfterUpdated -= OnEquipItem;
+            }
+            Debug.Log("222");
+        }
+    }
     private void OnApplicationQuit()
     {
         if (photonView.IsMine)
@@ -91,7 +106,6 @@ public class PlayerEquipment :MonoBehaviourPun, IPunObservable
                     {
                         case ItemType.Hat:
                              _CharacterCustomization.SetElementByIndex(CharacterElementType.Hat, itemObject.charCustomIndex);
-                           
                             break;
 
                         case ItemType.Accessory:
@@ -135,13 +149,12 @@ public class PlayerEquipment :MonoBehaviourPun, IPunObservable
 
                         case ItemType.Hat:
                             _CharacterCustomization.SetElementByIndex(CharacterElementType.Hat, -1);
-                            
                             break;
 
                         case ItemType.Accessory:
                             _CharacterCustomization.SetElementByIndex(CharacterElementType.Accessory, -1);
                             var go = PhotonNetwork.Instantiate("item", transform.position, Quaternion.identity);
-                            go.GetComponent<GroundItem>().SetItem(slot.GetItemObject().data.id);
+                            go.GetComponent<GroundItem>().SetItem(slot.item.id, slot.item.uniqueId);
                             break;
 
                         case ItemType.Shirt:

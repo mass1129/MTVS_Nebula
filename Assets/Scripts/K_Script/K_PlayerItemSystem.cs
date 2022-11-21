@@ -30,13 +30,13 @@ public class K_PlayerItemSystem : MonoBehaviourPun
     private void OnEnable()
     {
         if (!photonView.IsMine) return;
-        //ItemLoad();
+        ItemLoad();
         inven_Building.TestLoad(player.avatarName);
     }
 
     private void OnDisable()
     {
-
+        ItemSave();
        
     }
     private void OnDestroy()
@@ -120,13 +120,13 @@ public class K_PlayerItemSystem : MonoBehaviourPun
     {
         if (!photonView.IsMine) return;
         inven_Cloths.TestLoad(player.avatarName);
-        //inven_Equipment.TestLoad(player.avatarName);
+        inven_Equipment.TestLoad(player.avatarName);
     }
     private void OnApplicationQuit()
     {
-        inven_Cloths.Clear();
+        //inven_Cloths.Clear();
        
-        inven_Equipment.Clear();
+        //inven_Equipment.Clear();
     }   
 
     [System.Serializable]

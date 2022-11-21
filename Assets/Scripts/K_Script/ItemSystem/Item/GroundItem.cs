@@ -9,14 +9,15 @@ public class GroundItem : MonoBehaviourPun, IPunObservable
 
     public ItemDatabaseObject database;
 
-    public void SetItem(int i)
+    public void SetItem(int id, int uniqueId)
     {
-        photonView.RPC("RPCSetItem", RpcTarget.AllBuffered, i);
+        photonView.RPC("RPCSetItem", RpcTarget.AllBuffered, id, uniqueId);
     }
     [PunRPC]
-    public void RPCSetItem(int i)
+    public void RPCSetItem(int id, int uniqueId)
     {
-        item = database.ItemObjects[i];
+        item = database.ItemObjects[id];
+        item.data.uniqueId = uniqueId;
     }
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {

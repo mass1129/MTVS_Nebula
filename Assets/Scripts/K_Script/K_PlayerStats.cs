@@ -13,7 +13,8 @@ public class K_PlayerStats : MonoBehaviour
 
     private InventoryObject _equipment;
 
-    private void Start()
+    
+    private void OnEnable()
     {
         _equipment = GetComponent<K_PlayerItemSystem>().inven_Equipment;
 
@@ -29,7 +30,14 @@ public class K_PlayerStats : MonoBehaviour
             _equipment.GetSlots[i].onAfterUpdated += OnEquipItem;
         }
     }
-
+    private void OnDisable()
+    {
+        for (int i = 0; i < _equipment.GetSlots.Length; i++)
+        {
+            _equipment.GetSlots[i].onBeforeUpdated -= OnRemoveItem;
+            _equipment.GetSlots[i].onAfterUpdated -= OnEquipItem;
+        }
+    }
     public void AttributeModified(Attribute attribute)
     {
         attribute.textUI.GetComponentInChildren<TextMeshProUGUI>().text = string.Concat(": ", attribute.value.ModifiedValue);
