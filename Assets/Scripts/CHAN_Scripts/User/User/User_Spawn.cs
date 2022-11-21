@@ -9,7 +9,7 @@ public class User_Spawn : MonoBehaviour
     // 플레이어가 하늘 씬으로 이동할때 불려지는 함수
     public void Spawn()
     {
-        transform.position = Island_Information.instance.Island_Dic[PlayerPrefs.GetString("Cur_Island")].island_Pos + (Vector3.up * 30);
+        transform.position = Island_Information.instance.Island_Dic[PlayerPrefs.GetString("Cur_Island")].island_Pos;
     }
     public void SetIslandID(string islandID)
     {

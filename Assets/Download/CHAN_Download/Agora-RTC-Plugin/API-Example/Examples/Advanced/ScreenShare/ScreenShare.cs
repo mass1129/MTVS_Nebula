@@ -14,8 +14,8 @@ namespace Agora_RTC_Plugin.API_Example.Examples.Advanced.ScreenShare
     public class ScreenShare : MonoBehaviour
     {
         [FormerlySerializedAs("appIdInput")]
-        [SerializeField]
-        private AppIdInput _appIdInput;
+        //[SerializeField]
+        //private AppIdInput _appIdInput;
 
         [Header("_____________Basic Configuration_____________")]
         [FormerlySerializedAs("APP_ID")]
@@ -120,12 +120,14 @@ namespace Agora_RTC_Plugin.API_Example.Examples.Advanced.ScreenShare
         [ContextMenu("ShowAgoraBasicProfileData")]
         private void LoadAssetData()
         {
-            if (_appIdInput == null) return;
-            _appID = _appIdInput.appID;
-            _token = _appIdInput.token;
-            _channelName = _appIdInput.channelName;
+            _appID = PlayerPrefs.GetString("appID_agora");
+            _token = PlayerPrefs.GetString("token");
+            _channelName = PlayerPrefs.GetString("channelName_agora");
+            
+            Debug.LogWarning("ID : " + _appID);
+            Debug.LogWarning("token : " + _appID);
+            Debug.LogWarning("chennelNAme : " + _appID);
         }
-
         private void JoinChannel()
         {
             //RtcEngine.EnableAudio();

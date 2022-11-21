@@ -24,6 +24,12 @@ namespace UserProfile
         public string message { get; set; }
         public List<Result> results { get; set; }
     }
+    public class Root_Agora
+    {
+        public string appId { get; set; }
+        public string channelName { get; set; }
+        public string token { get; set; }
+    }
     public class SelectedElements
     {
         public int Hair { get; set; }

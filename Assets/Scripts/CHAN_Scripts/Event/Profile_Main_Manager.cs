@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UserProfile;
 
 public class Profile_Main_Manager : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class Profile_Main_Manager : MonoBehaviour
     public GameObject Prefab_Profile;
     public Transform List_Profile;
     public GameObject obj;
+
+    public Root_Agora A_Value;
 
     public string avatarName;
     public string islandID;
@@ -49,6 +52,10 @@ public class Profile_Main_Manager : MonoBehaviour
         PlayerPrefs.SetString("AvatarName", avatarName);
         PlayerPrefs.SetString("Island_ID", islandID);
         PlayerPrefs.SetString("Cur_Island", islandID);
+
+        PlayerPrefs.SetString("appID_agora", A_Value.appId);
+        PlayerPrefs.SetString("channelName_agora", A_Value.channelName);
+        PlayerPrefs.SetString("token", A_Value.token);
         print("AvatarName: " + PlayerPrefs.GetString("AvatarName"));
         print("Island_ID: " + PlayerPrefs.GetString("Island_ID"));
         if (!hasAvatar)

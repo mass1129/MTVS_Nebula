@@ -12,10 +12,12 @@ public class UserProfile_Utility : MonoBehaviour
 {
     public static UserProfile_Utility instance;
     List<Result> values = new List<Result>();
+
     public GameObject profile_prefab;
     public Transform profile_pos;
     UnityEngine.Texture image;
     public GameObject LoadingScene;
+
 
 
     private void Awake()
@@ -33,6 +35,7 @@ public class UserProfile_Utility : MonoBehaviour
     {
         LoadingScene.SetActive(true);
         Load();
+        Load_Agora();
     }
 
     public async void Load()
@@ -42,6 +45,13 @@ public class UserProfile_Utility : MonoBehaviour
         Root result = await httpRequest.Get<Root>(url);
         values = result.results;
         CreateProfile();
+    }
+    public async void Load_Agora()
+    {
+        var url = "http://ec2-43-201-5-193.ap-northeast-2.compute.amazonaws.com:8001/token";
+        var httpRequest = new HttpRequester(new JsonSerializationOption());
+        Root_Agora result = await httpRequest.Get<Root_Agora>(url);
+        Profile_Main_Manager.instance.A_Value = result;
     }
 
     public async void Delete(string avatarName)
@@ -156,7 +166,6 @@ public class UserProfile_Utility : MonoBehaviour
 
 
     }
-
     void Create_ProfileArea()
     {
         if (values.Count < 3)
