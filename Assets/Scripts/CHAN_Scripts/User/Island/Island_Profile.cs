@@ -13,6 +13,7 @@ public class Island_Profile : MonoBehaviourPun
     public string user_name;
     public string user_IslandID;
     public string user_Url;
+    public string user_keyword;
     public Image profileImage;
     Text userName_Text;
     Transform playerPos;
@@ -24,6 +25,8 @@ public class Island_Profile : MonoBehaviourPun
         userName_Text = gameObject.transform.GetComponentInChildren<Text>();
         //섬의 크기에따라 이미지의 위치를 조정한다. 
         playerPos.transform.GetChild(1).position = new Vector3(0, playerPos.transform.GetChild(1).position.y*playerPos.transform.GetChild(0).localScale.y, 0);
+        //섬의 아이콘 색을 조정한다.
+        transform.GetComponentInChildren<map_Icon_Controller>().SetIconColor(user_keyword);
         LoadImage();
     }
     private void Update()

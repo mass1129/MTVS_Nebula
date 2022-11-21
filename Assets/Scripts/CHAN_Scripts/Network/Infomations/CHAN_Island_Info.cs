@@ -99,6 +99,7 @@ namespace IslandInfo
             //딕셔너리에 값들을 모두 넣는다. 
             dic = Island_Dic[key];
             dic.User_IslandId = key;
+            dic.User_IslandKeyword = keyword1;
             dic.island_Type = Return_IslandType(keyword2);
             dic.island_Pos = pos;
             dic.User_image = url;
@@ -143,6 +144,7 @@ namespace IslandInfo
                 island.transform.GetComponent<Island_Profile>().user_name = info.User_NickName;
                 island.transform.GetComponent<Island_Profile>().user_Url = info.User_image;
                 island.transform.GetComponent<Island_Profile>().user_IslandID = info.User_IslandId;
+                island.transform.GetComponent<Island_Profile>().user_keyword = info.User_IslandKeyword;
                 await Task.Yield();
             }
         }
