@@ -25,6 +25,7 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
     private bool isDemolishActive;
     public InventoryObject quickSlot;
     private void Awake() {
+        
         Instance = this;
         //그리드 세팅
         int gridWidth = 100;
@@ -41,12 +42,25 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
        
         placedObjectTypeSO = null;
         selectedGrid = gridList[0];
-        
+        Debug.Log(PhotonNetwork.CurrentRoom.PlayerCount);
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
+            TestLoad();
+        //transform.parent.gameObject.SetActive(false);
+        if (!photonView.IsMine) this.enabled = false;
+
+
     }
 
     private void Start()
     {
         quickSlot.Clear();
+        
+        
+       
+    }
+    private void OnEnable()
+    {
+        
     }
     private void Update()
     {
@@ -71,7 +85,8 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
         private int y;
         public PlacedObject placedObject;
 
-        public GridObject(GridXZ<GridObject> grid, int x, int y) {
+        public GridObject(GridXZ<GridObject> grid, int x, int y) 
+        {
             this.grid = grid;
             this.x = x;
             this.y = y;
@@ -337,15 +352,16 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
                 }
             }
 
-            PlacedObjectSaveObjectArray placedObjectSaveObjectArray = new PlacedObjectSaveObjectArray { gridPlaceObjectList = saveObjectList.ToArray() };
+            PlacedObjectSaveObjectArray placedObjectSaveObjectArray = new PlacedObjectSaveObjectArray { gridPlaceObjectList = saveObjectList};
             placedObjectSaveObjectArrayList.Add(placedObjectSaveObjectArray);
         }
         SaveAllBuilding saveObject = new SaveAllBuilding
         {
-            islandGridList = placedObjectSaveObjectArrayList.ToArray()
+            islandGridList = placedObjectSaveObjectArrayList
         };
 
         string json = JsonUtility.ToJson(saveObject, true);
+        Debug.Log(json);
         var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/skyisland/" + s;
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
@@ -365,9 +381,11 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
         for (int i = 0; i < gridList.Count; i++)
         {
             GridXZ<GridObject> grid = gridList[i];
-            foreach (H_GridPlaceObjectList placedObjectSaveObject in result2.results.placeObjects.islandGridList[i].gridPlaceObjectList)
-            {
+            foreach (PlacedObject.SaveObject  placedObjectSaveObject in result2.results.placeObjects.islandGridList[i].gridPlaceObjectList)
+            {   
+                
                 PlacedObjectTypeSO placedObjectTypeSO = BuildingSystemAssets.Instance.GetPlacedObjectTypeSOFromName(placedObjectSaveObject.placedObjectTypeSOName);
+              
                 TryPlaceObject(placedObjectSaveObject.origin, placedObjectTypeSO, placedObjectSaveObject.dir, out PlacedObject placedObject);
             }
         }
@@ -380,25 +398,22 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
     [Serializable]
     public class SaveAllBuilding
     {
-        public PlacedObjectSaveObjectArray[] islandGridList;
+        public List<PlacedObjectSaveObjectArray> islandGridList;
     }
 
     [Serializable]
     public class PlacedObjectSaveObjectArray
     {
-        public PlacedObject.SaveObject[] gridPlaceObjectList;
+
+        public List<PlacedObject.SaveObject> gridPlaceObjectList;
     }
 
-    public class H_GridPlaceObjectList
-    {
-        public string placedObjectTypeSOName;
-        public Vector2Int origin;
-        public PlacedObjectTypeSO.Dir dir;
-    }
 
+
+ 
     public class H_IslandGridList
     {
-        public List<H_GridPlaceObjectList> gridPlaceObjectList { get; set; }
+        public List<PlacedObject.SaveObject> gridPlaceObjectList { get; set; }
     }
 
 
@@ -406,6 +421,9 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
     {
         public List<H_IslandGridList> islandGridList { get; set; }
     }
+
+
+
 
     public class H_Building_Results
     {
@@ -421,63 +439,8 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
         public string message { get; set; }
         public H_Building_Results results { get; set; }
     }
-    //public void Load()
-    //{
-    //    if (PlayerPrefs.HasKey("HouseBuildingSystemSave"))
-    //    {
-    //        string json = PlayerPrefs.GetString("HouseBuildingSystemSave");
-    //        json = K_SaveSystem.Load("HouseBuildingSystemSave");
-
-    //        SaveAllBuilding saveObject = JsonUtility.FromJson<SaveAllBuilding>(json);
 
 
 
-    //        for (int i = 0; i < gridList.Count; i++)
-    //        {
-    //            GridXZ<GridObject> grid = gridList[i];
-    //            foreach (PlacedObject.SaveObject placedObjectSaveObject in saveObject.islandGridList[i].gridPlaceObjectList)
-    //            {
-    //                PlacedObjectTypeSO placedObjectTypeSO = BuildingSystemAssets.Instance.GetPlacedObjectTypeSOFromName(placedObjectSaveObject.placedObjectTypeSOName);
-    //                TryPlaceObject(placedObjectSaveObject.origin, placedObjectTypeSO, placedObjectSaveObject.dir, out PlacedObject placedObject);
-    //            }
-    //        }
-    //    }
-    //    Debug.Log("Load!");
-    //}
-    //public void Save()
-    //{
-    //    List<PlacedObjectSaveObjectArray> placedObjectSaveObjectArrayList = new List<PlacedObjectSaveObjectArray>();
-
-    //    foreach (GridXZ<GridObject> grid in gridList)
-    //    {
-    //        List<PlacedObject.SaveObject> saveObjectList = new List<PlacedObject.SaveObject>();
-    //        List<PlacedObject> savedPlacedObjectList = new List<PlacedObject>();
-
-    //        for (int x = 0; x < grid.GetWidth(); x++)
-    //        {
-    //            for (int y = 0; y < grid.GetHeight(); y++)
-    //            {
-    //                PlacedObject placedObject = grid.GetGridObject(x, y).GetPlacedObject();
-    //                if (placedObject != null && !savedPlacedObjectList.Contains(placedObject))
-    //                {
-    //                    // Save object
-    //                    savedPlacedObjectList.Add(placedObject);
-    //                    saveObjectList.Add(placedObject.GetSaveObject());
-    //                }
-    //            }
-    //        }
-
-    //        PlacedObjectSaveObjectArray placedObjectSaveObjectArray = new PlacedObjectSaveObjectArray { gridPlaceObjectList = saveObjectList.ToArray() };
-    //        placedObjectSaveObjectArrayList.Add(placedObjectSaveObjectArray);
-    //    }
-    //    SaveAllBuilding saveObject = new SaveAllBuilding
-    //    {
-    //        islandGridList = placedObjectSaveObjectArrayList.ToArray()
-    //    };
-
-    //    string json = JsonUtility.ToJson(saveObject, true);
-    //    PlayerPrefs.SetString("HouseBuildingSystemSave", json);
-    //    K_SaveSystem.Save("HouseBuildingSystemSave", json, true);
-
-    //}
+    
 }

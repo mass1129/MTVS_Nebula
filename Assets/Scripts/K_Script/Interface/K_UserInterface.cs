@@ -7,9 +7,10 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
 using System.Linq;
+using Photon.Pun;
 
 [RequireComponent(typeof(EventTrigger))]
-public abstract class K_UserInterface : MonoBehaviour
+public abstract class K_UserInterface : MonoBehaviourPun
 {
     //public K_PlayerItemSystem player;
     public InventoryObject inventory;
@@ -24,6 +25,7 @@ public abstract class K_UserInterface : MonoBehaviour
     public bool onQuickSlot=false;
     public void OnEnable()
     {   
+        if(!photonView.IsMine) this.enabled = false;
         CreateSlots();
         for (int i = 0; i < inventory.GetSlots.Length; i++)
         {
@@ -31,12 +33,10 @@ public abstract class K_UserInterface : MonoBehaviour
             inventory.GetSlots[i].parent = this;
             inventory.GetSlots[i].onAfterUpdated += OnSlotUpdate;
         }
-        if(!isAddedEvent)
-        {
+       
             AddEvent(gameObject, EventTriggerType.PointerEnter, delegate { OnEnterInterface(gameObject); });
             AddEvent(gameObject, EventTriggerType.PointerExit, delegate { OnExitInterface(gameObject); });
-        }
-       isAddedEvent = true;
+       
 
     }
    
@@ -57,7 +57,7 @@ public abstract class K_UserInterface : MonoBehaviour
 
     private void OnSlotUpdate(InventorySlot slot)
     {
-        if (slot.item.Id <= -1)
+        if (slot.item.id <= -1)
         {
             slot.slotDisplay.transform.GetChild(0).GetComponent<Image>().sprite = null;
             slot.slotDisplay.transform.GetChild(0).GetComponent<Image>().color = new Color(1, 1, 1, 0);
@@ -71,7 +71,11 @@ public abstract class K_UserInterface : MonoBehaviour
                 = slot.amount == 1 ? string.Empty : slot.amount.ToString("n0");
         }
     }
-
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
+        CancelInvoke();
+    }
     public void Update()
     {
         if (_previousInventory != inventory)
@@ -142,7 +146,7 @@ public abstract class K_UserInterface : MonoBehaviour
         private GameObject CreateTempItem(GameObject obj)
     {
         GameObject tempItem = null;
-        if (slotsOnInterface[obj].item.Id >= 0)
+        if (slotsOnInterface[obj].item.id >= 0)
         {
             tempItem = new GameObject();
             var rt = tempItem.AddComponent<RectTransform>();
@@ -157,7 +161,7 @@ public abstract class K_UserInterface : MonoBehaviour
     public void OnDragEnd(GameObject obj)
     {
         Destroy(MouseData.tempItemBeingDragged);
-        if (MouseData.interfaceMouseIsOver == null &&onQuickSlot)
+        if (MouseData.interfaceMouseIsOver == null )
         {
             slotsOnInterface[obj].RemoveItem();
             return;
@@ -165,17 +169,11 @@ public abstract class K_UserInterface : MonoBehaviour
         if (MouseData.slotHoveredOver)
         {
             InventorySlot mouseHoverSlotData = MouseData.interfaceMouseIsOver.slotsOnInterface[MouseData.slotHoveredOver];
-            if (onQuickSlot)
-            {
-                inventory.ItemsToQuickSlot(slotsOnInterface[obj], mouseHoverSlotData);
-                return;
-            }
-
-            else
-            {
+            
+            
                 inventory.SwapItems(slotsOnInterface[obj], mouseHoverSlotData);
-                return;
-            }
+                
+            
                
         }
 

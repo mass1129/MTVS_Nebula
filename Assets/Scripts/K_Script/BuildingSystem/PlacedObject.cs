@@ -10,7 +10,7 @@ public class PlacedObject : MonoBehaviourPun
     public static PlacedObject Create(Vector3 worldPosition, Vector2Int origin, PlacedObjectTypeSO.Dir dir, PlacedObjectTypeSO placedObjectTypeSO)
     {
         
-        GameObject placedObjectTransform = PhotonNetwork.Instantiate(Path.Combine(placedObjectTypeSO.bundleFolderName, placedObjectTypeSO.prefab.name), worldPosition, Quaternion.Euler(0, placedObjectTypeSO.GetRotationAngle(dir), 0));
+        GameObject placedObjectTransform = PhotonNetwork.InstantiateRoomObject(Path.Combine(placedObjectTypeSO.bundleFolderName, placedObjectTypeSO.prefab.name), worldPosition, Quaternion.Euler(0, placedObjectTypeSO.GetRotationAngle(dir), 0));
 
         PlacedObject placedObject = placedObjectTransform.transform.GetComponent<PlacedObject>();
         placedObject.placedObjectTypeSO = placedObjectTypeSO;
@@ -58,8 +58,15 @@ public class PlacedObject : MonoBehaviourPun
     }
 
 
+    public PlacedObject(PlacedObjectTypeSO placedObjectTypeSO, Vector2Int origin, PlacedObjectTypeSO.Dir dir)
+    {
+        this.placedObjectTypeSO = placedObjectTypeSO;
+        this.origin = origin;
+        this.dir = dir;
+    }
 
-    public SaveObject GetSaveObject() {
+    public SaveObject GetSaveObject() 
+    {
         return new SaveObject {
             placedObjectTypeSOName = placedObjectTypeSO.name,
             origin = origin,

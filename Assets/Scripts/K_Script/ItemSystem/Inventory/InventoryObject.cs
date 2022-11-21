@@ -21,7 +21,7 @@ public class InventoryObject : ScriptableObject
             return false;
         //
         InventorySlot slot = FindItemOnInventory(item);
-        if (!database.ItemObjects[item.Id].stackable || slot == null)
+        if (!database.ItemObjects[item.id].stackable || slot == null)
         {
             GetEmptySlot().UpdateSlot(item, amount);
             return true;
@@ -55,8 +55,11 @@ public class InventoryObject : ScriptableObject
             int counter = 0;
             for(int i =0; i<GetSlots.Length; i++)
             {
-                if (GetSlots[i].item.Id <=-1)
+                if (GetSlots[i].item.id <= -1)
+                {
                     counter++;
+                }
+                   
             }
             return counter;
         }
@@ -68,7 +71,7 @@ public class InventoryObject : ScriptableObject
         //
         for (int i = 0; i < GetSlots.Length; i++)
         {
-            if (GetSlots[i].item.Id == item.Id)
+            if (GetSlots[i].item.id == item.id)
             {
                 return GetSlots[i];
             }
@@ -81,7 +84,7 @@ public class InventoryObject : ScriptableObject
     {
         for (int i = 0; i < GetSlots.Length; i++)
         {
-            if (GetSlots[i].item.Id == item.data.Id)
+            if (GetSlots[i].item.id == item.data.id)
             {
                 return true;
             }
@@ -94,23 +97,26 @@ public class InventoryObject : ScriptableObject
     {
         for (int i = 0; i < GetSlots.Length; i++)
         {
-            if (GetSlots[i].item.Id <= -1)
+            if (GetSlots[i].item.id <= -1)
             {
                 return GetSlots[i];
             }
         }
         return null;
     }
-
+    
     public void SwapItems(InventorySlot item1, InventorySlot item2)
     {
         if (item1 == item2)
             return;
         if (item2.CanPlaceInSlot(item1.GetItemObject()) && item1.CanPlaceInSlot(item2.GetItemObject()))
         {
-            InventorySlot temp = new InventorySlot(item2.item, item2.amount);
-            item2.UpdateSlot(item1.item, item1.amount);
-            item1.UpdateSlot(temp.item, temp.amount);
+            InventorySlot temp = new InventorySlot(item1.item, item1.amount);
+            if (item2 != null)
+                item1.UpdateSlot(item2.item, item2.amount);
+            else
+                item1.RemoveItem();
+            item2.UpdateSlot(temp.item, temp.amount);
             Debug.Log("Swap");
         }
 
@@ -175,12 +181,12 @@ public class InventoryObject : ScriptableObject
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
         H_I_Root result2 = await httpReq.Get<H_I_Root>(url);
-       
-        //string json = JsonUtility.ToJson(array, true);
-        //Debug.Log(json);
-        for (int i = 0; i < Container.slots.Length; i++)
+
+        //Inventory newInven = result2.results;
+        for (int i = 0; i < GetSlots.Length; i++)
         {
-           GetSlots[i].UpdateSlot(result2.results.slots[i].item, result2.results.slots[i].amount);
+          GetSlots[i].UpdateSlot(result2.results.slots[i].item, result2.results.slots[i].amount);
+            //Container.slots[i].UpdateSlot(Container.slots[i].item, Container.slots[i].amount);
         }
        
     }
@@ -203,33 +209,33 @@ public class InventoryObject : ScriptableObject
         //Debug.Log(GetSlots.item.);
     }
 
-    
-    public class H_I_Item
-    {
-        public int uniqueId { get; set; }
-        public ItemBuff[] buffs { get; set; }
-        public int id { get; set; }
-        public string name { get; set; }
-    }
 
+    //public class Item
+    //{
+    //    public int uniqueId { get; set; }
+    //    public ItemBuff[] buffs { get; set; }
+    //    public int id { get; set; }
+    //    public string name { get; set; }
+    //}
 
-    public class H_I_Slot
-    {
-        public Item item { get; set; }
-        public int amount { get; set; }
-        public ItemType[] allowedItems { get; set; }
+    //[SerializeField]
+    //public class H_I_Slot
+    //{
+    //    public Item item { get; set; }
+    //    public int amount { get; set; }
+    //    public ItemType[] allowedItems { get; set; }
 
-    }
-    public class H_I_Results
-    {
-        public H_I_Slot[] slots { get; set; }
-    }
-   
+    //}
+
+ 
+
     public class H_I_Root
     {
         public int httpStatus { get; set; }
         public string message { get; set; }
-        public H_I_Results results { get; set; }
+        
+        public Inventory results { get; set; }
+        //public InventorySlot[] slots => results.slots;
     }
 
    

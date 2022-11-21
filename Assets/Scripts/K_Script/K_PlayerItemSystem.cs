@@ -13,11 +13,13 @@ public class K_PlayerItemSystem : MonoBehaviourPun
     public InventoryObject inven_Vehicle;
     public InventoryObject inven_Equipment;
     public K_Player player;
-    
+
+    private void Awake()
+    {
+        
+    }
     private void Start()
-    {  
-        if(!photonView.IsMine) this.enabled = false;
-       
+    {
 
     }
     private void Update()
@@ -27,9 +29,19 @@ public class K_PlayerItemSystem : MonoBehaviourPun
     }
     private void OnEnable()
     {
+        if (!photonView.IsMine) return;
+        ItemLoad();
         inven_Building.TestLoad(player.avatarName);
-        inven_Equipment.TestLoad(player.avatarName);
-        inven_Cloths.TestLoad(player.avatarName);
+    }
+
+    private void OnDisable()
+    {
+        ItemSave();
+       
+    }
+    private void OnDestroy()
+    {
+        //TwoInvenSave();
     }
     public void OnTriggerEnter(Collider other)
     {
@@ -73,7 +85,7 @@ public class K_PlayerItemSystem : MonoBehaviourPun
             if (_inventory.AddItem(_item, 1))
             {
                 //그라운드 아이템 객체를 파괴한다.
-                PhotonNetwork.Destroy(other.gameObject);
+               //Destroy(other.gameObject);
             }
 
         }
@@ -81,8 +93,8 @@ public class K_PlayerItemSystem : MonoBehaviourPun
 
 
   
-    public async void TwoInvenSave(string s)
-    {
+    public async void TwoInvenSave()
+    {   
        if(!photonView.IsMine) return;
         SaveTwoInven saveObject = new SaveTwoInven
         {
@@ -92,25 +104,30 @@ public class K_PlayerItemSystem : MonoBehaviourPun
         string json = JsonUtility.ToJson(saveObject, true);
         Debug.Log(json);
         //string s = PlayerPrefs.GetString(" AvatarName");
-        var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/" + inven_Equipment.savePath  + s;
+        var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/" + inven_Equipment.savePath  +player.avatarName;
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
         await httpReq.Post(url, json);
         
     }
-    public void ItemSave(string s)
+    public void ItemSave()
     {
-        TwoInvenSave(s);
+        TwoInvenSave();
 
 
     }
-    public void ItemLoad(string s)
+    public void ItemLoad()
     {
-        
-        inven_Cloths.TestLoad(s);
-        inven_Equipment.TestLoad(s);
+        if (!photonView.IsMine) return;
+        inven_Cloths.TestLoad(player.avatarName);
+        inven_Equipment.TestLoad(player.avatarName);
     }
-    
+    private void OnApplicationQuit()
+    {
+        //inven_Cloths.Clear();
+       
+        //inven_Equipment.Clear();
+    }   
 
     [System.Serializable]
     public class SaveTwoInven

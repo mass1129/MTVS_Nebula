@@ -16,7 +16,7 @@ namespace AdvancedPeopleSystem
     /// </summary>
     [DisallowMultipleComponent]
     [AddComponentMenu("Advanced People Pack/Character Customizable", -1)]
-    public class CharacterCustomization : MonoBehaviourPun, IPunObservable
+    public class CharacterCustomization : MonoBehaviourPun,IPunObservable
     {
         [SerializeField] public bool isSettingsExpanded = false;
 
@@ -82,30 +82,39 @@ namespace AdvancedPeopleSystem
 
         public bool notAPP2Shader = false;
 
+        public Inventory equipment;
         private void Awake()
         {
-            
-            this._transform = transform;
-            _lodGroup = GetComponent<LODGroup>();
-            // RecalculateLOD();
-            UpdateSkinnedMeshesOffscreenBounds();
+           
         }
         private void Start()
         {
-            //if (!photonView.IsMine) this.enabled = false;
+           
         }
+        
         void LoadLastSaveData()
         {
-            var saveDatas = GetSavedCharacterDatas();
-            ApplySavedCharacterData(saveDatas[saveDatas.Count - 1]);
+            
+        }
+        private void OnEnable()
+        {
+            
+                this._transform = transform;
+                _lodGroup = GetComponent<LODGroup>();
+                RecalculateLOD();
+                UpdateSkinnedMeshesOffscreenBounds();
+            
+
         }
         private void Update()
         {
+           
             AnimationTick();
         }
 
         private void LateUpdate()
         {
+           
             if (feetOffset != 0 && applyFeetOffset)
                 SetFeetOffset(new Vector3(0, feetOffset, 0));
         }
@@ -154,7 +163,10 @@ namespace AdvancedPeopleSystem
                 }
             }
         }
-
+        public void TestInit()
+        {
+            InitializeMeshes(_settings, false);
+        }
         /// <summary>
         /// Init character by settings
         /// </summary>
@@ -624,22 +636,10 @@ namespace AdvancedPeopleSystem
         /// <param name="type">Type of clothes</param>
         /// <param name="index">Index of element</param>
         /// 
-        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-        {
-            //if (stream.IsWriting)
-            //{
-            //    stream.SendNext(this.characterSelectedElements);
-               
 
-            //}
-            //else if(stream.IsReading)
-            //{
-            //    this.characterSelectedElements = (CharacterSelectedElements)stream.ReceiveNext();
-
-            //}
-        }
         #endregion
-        public void SetElementByIndex(CharacterElementType type, int index)
+        [PunRPC]
+        public void RPCSetElementByIndex(CharacterElementType type, int index)
         {
             if (Settings == null)
             {
@@ -727,13 +727,15 @@ namespace AdvancedPeopleSystem
                     Debug.LogError(string.Format("Element <{0}> with index {1} not found. Please check Character Presets arrays.", type.ToString(), index));
                     return;
                 }
-
+                //photonView.RPC("RPCSClothesInactive", RpcTarget.AllBuffered, ca);
                 if (ca != null && ca.skinnedMesh != null)
                 {
                     foreach (var sm in ca.skinnedMesh)
                     {
                         if (sm != null)
                         {
+
+
                             sm.sharedMesh = null;
                             sm.gameObject.SetActive(false);
                         }
@@ -748,13 +750,16 @@ namespace AdvancedPeopleSystem
 
             characterSelectedElements.SetSelectedIndex(type, index);
             // photonView.RPC("RPCSetElementByIndex", RpcTarget.AllBuffered, type, index);  
+        }
+        public void SetElementByIndex(CharacterElementType type, int index)
+        {
+
+            photonView.RPC("RPCSetElementByIndex", RpcTarget.AllBuffered, type, index);
 
         }
-        public void RPCSetElementByIndex(CharacterElementType type, int index)
-        {
-            //characterSelectedElements.SetSelectedIndex(type, index);
-            
-        }
+
+
+
         //public virtual void KSetElementByIndex(CharacterElementType type, int index)
         //{
         //    /*photonView.RPC("RpcSetTrigger", RpcTarget.All, s);*/
@@ -1023,7 +1028,11 @@ namespace AdvancedPeopleSystem
                     if (cp.name.ToLowerInvariant() == p.ToLowerInvariant())
                     {
                         foreach (var mesh in cp.skinnedMesh)
-                            mesh.enabled = false;
+                        {
+                            if(mesh.gameObject != null)
+                                mesh.enabled = false;
+                        }    
+                            
                     }
                 }
             }
@@ -1086,9 +1095,23 @@ namespace AdvancedPeopleSystem
                 {
                     if (cp.name.ToLowerInvariant() == p.ToLowerInvariant())
                         foreach (var mesh in cp.skinnedMesh)
+                        {
+                            if(mesh.gameObject != null)
                             mesh.enabled = true;
+                        }
+                            
+                    //photonView.RPC("RPCUnHideParts", RpcTarget.AllBuffered, p, cp);
+
                 }
             }
+        }
+
+        [PunRPC]
+        public void RPCUnHideParts(string p, CharacterPart cp)
+        {
+            if (cp.name.ToLowerInvariant() == p.ToLowerInvariant())
+                foreach (var mesh in cp.skinnedMesh)
+                    mesh.enabled = true;
         }
         /// <summary>
         /// Set body color by type
@@ -2199,7 +2222,10 @@ namespace AdvancedPeopleSystem
             }
         }
 
-        
+        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        {
+           
+        }
     }
     #region Basic classes and enum
     public enum CharacterElementType : int

@@ -19,12 +19,10 @@ public class K_UserWorldBuildingMGR : MonoBehaviourPun
     private void OnEnable()
     {
        
-        if(!isDone)
-        {
-            gridBuildingSystem.TestLoad();
-            isDone = true;
-        }
        
+            gridBuildingSystem.TestLoad();
+         
+        PhotonNetwork.Destroy(gameObject);
         
     }
 }
