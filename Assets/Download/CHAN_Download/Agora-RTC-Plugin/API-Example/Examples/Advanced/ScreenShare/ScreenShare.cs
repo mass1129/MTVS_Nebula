@@ -7,6 +7,7 @@ using Agora.Util;
 using UnityEngine.Serialization;
 using Logger = Agora.Util.Logger;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace Agora_RTC_Plugin.API_Example.Examples.Advanced.ScreenShare
 {
@@ -34,6 +35,7 @@ namespace Agora_RTC_Plugin.API_Example.Examples.Advanced.ScreenShare
         internal IRtcEngine RtcEngine = null;
 
         private Dropdown _winIdSelect;
+        private Dropdown temp_widIdSelection;
         private Button _updateShareBtn;
         private Button _startShareBtn;
         private Button _stopShareBtn;
@@ -41,10 +43,12 @@ namespace Agora_RTC_Plugin.API_Example.Examples.Advanced.ScreenShare
         public static bool callBack_mine;
         public static bool callBack_others;
         public GameObject VideoCanvas;
+        
 
         // Use this for initialization
          void Start()
         {
+            
             LoadAssetData();
             if (CheckAppId())
             {
@@ -166,11 +170,12 @@ namespace Agora_RTC_Plugin.API_Example.Examples.Advanced.ScreenShare
         public void PrepareScreenCapture()
         {
             _winIdSelect = GameObject.Find("Dropdown").GetComponent<Dropdown>();
+            temp_widIdSelection = GameObject.Find("Temp_Dropdown").GetComponent<Dropdown>();
 
             if (_winIdSelect == null || RtcEngine == null) return;
 
             _winIdSelect.ClearOptions();
-
+            temp_widIdSelection.ClearOptions();
             SIZE t = new SIZE();
             t.width = 360;
             t.height = 240;
@@ -178,13 +183,17 @@ namespace Agora_RTC_Plugin.API_Example.Examples.Advanced.ScreenShare
             s.width = 360;
             s.height = 240;
             var info = RtcEngine.GetScreenCaptureSources(t, s, true);
-
+            temp_widIdSelection.AddOptions(info.Select(w =>
+                    new Dropdown.OptionData(
+                        string.Format("{0}: {1}-{2} | {3}", w.type, w.sourceName, w.sourceTitle, w.sourceId)))
+                .ToList());
             _winIdSelect.AddOptions(info.Select(w =>
                     new Dropdown.OptionData(
-                        string.Format("{0}| {1}", w.sourceName, w.sourceId)))
-                .ToList());
-        }
+                        string.Format("{0}", w.sourceTitle))).ToList());
 
+                
+
+        }
 
         public void EnableUI()
         {
@@ -219,8 +228,8 @@ namespace Agora_RTC_Plugin.API_Example.Examples.Advanced.ScreenShare
             this.Log.UpdateLog("StartScreenCapture :" + nRet);
 #else
             RtcEngine.StopScreenCapture();
-            if (_winIdSelect == null) return;
-            var option = _winIdSelect.options[_winIdSelect.value].text;
+            if (temp_widIdSelection == null) return;
+            var option = temp_widIdSelection.options[_winIdSelect.value].text;
             if (string.IsNullOrEmpty(option)) return;
 
             if (option.Contains("ScreenCaptureSourceType_Window"))
