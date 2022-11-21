@@ -20803,6 +20803,176 @@ MonoBehaviour:
   _transform: {fileID: 5629639970830784066}
   applyFeetOffset: 1
   notAPP2Shader: 0
+  equipment:
+    slots:
+    - item:
+        uniqueId: -1
+        buffs: []
+        id: -1
+        name: 
+      amount: 0
+      allowedItems: 
+    - item:
+        uniqueId: -1
+        buffs: []
+        id: -1
+        name: 
+      amount: 0
+      allowedItems: 
+    - item:
+        uniqueId: -1
+        buffs: []
+        id: -1
+        name: 
+      amount: 0
+      allowedItems: 
+    - item:
+        uniqueId: -1
+        buffs: []
+        id: -1
+        name: 
+      amount: 0
+      allowedItems: 
+    - item:
+        uniqueId: -1
+        buffs: []
+        id: -1
+        name: 
+      amount: 0
+      allowedItems: 
+    - item:
+        uniqueId: -1
+        buffs: []
+        id: -1
+        name: 
+      amount: 0
+      allowedItems: 
+    - item:
+        uniqueId: -1
+        buffs: []
+        id: -1
+        name: 
+      amount: 0
+      allowedItems: 
+    - item:
+        uniqueId: -1
+        buffs: []
+        id: -1
+        name: 
+      amount: 0
+      allowedItems: 
+    - item:
+        uniqueId: -1
+        buffs: []
+        id: -1
+        name: 
+      amount: 0
+      allowedItems: 
+    - item:
+        uniqueId: -1
+        buffs: []
+        id: -1
+        name: 
+      amount: 0
+      allowedItems: 
+    - item:
+        uniqueId: -1
+        buffs: []
+        id: -1
+        name: 
+      amount: 0
+      allowedItems: 
+    - item:
+        uniqueId: -1
+        buffs: []
+        id: -1
+        name: 
+      amount: 0
+      allowedItems: 
+    - item:
+        uniqueId: -1
+        buffs: []
+        id: -1
+        name: 
+      amount: 0
+      allowedItems: 
+    - item:
+        uniqueId: -1
+        buffs: []
+        id: -1
+        name: 
+      amount: 0
+      allowedItems: 
+    - item:
+        uniqueId: -1
+        buffs: []
+        id: -1
+        name: 
+      amount: 0
+      allowedItems: 
+    - item:
+        uniqueId: -1
+        buffs: []
+        id: -1
+        name: 
+      amount: 0
+      allowedItems: 
+    - item:
+        uniqueId: -1
+        buffs: []
+        id: -1
+        name: 
+      amount: 0
+      allowedItems: 
+    - item:
+        uniqueId: -1
+        buffs: []
+        id: -1
+        name: 
+      amount: 0
+      allowedItems: 
+    - item:
+        uniqueId: -1
+        buffs: []
+        id: -1
+        name: 
+      amount: 0
+      allowedItems: 
+    - item:
+        uniqueId: -1
+        buffs: []
+        id: -1
+        name: 
+      amount: 0
+      allowedItems: 
+    - item:
+        uniqueId: -1
+        buffs: []
+        id: -1
+        name: 
+      amount: 0
+      allowedItems: 
+    - item:
+        uniqueId: -1
+        buffs: []
+        id: -1
+        name: 
+      amount: 0
+      allowedItems: 
+    - item:
+        uniqueId: -1
+        buffs: []
+        id: -1
+        name: 
+      amount: 0
+      allowedItems: 
+    - item:
+        uniqueId: -1
+        buffs: []
+        id: -1
+        name: 
+      amount: 0
+      allowedItems: 
 --- !u!95 &4441311022780113700
 Animator:
   serializedVersion: 4
@@ -20977,6 +21147,9 @@ MonoBehaviour:
   jumpDamp: 0.5
   groundSpeed: 1.2
   AnimBlendSpeed: 10
+  h: 0
+  v: 0
+  dir: {x: 0, y: 0, z: 0}
   turnSmoothTime: 0.1
   turnSpeed: 15
   SpceCamSpeed: 15
@@ -20987,7 +21160,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   camPos: {fileID: 1752280605483343739}
-  playerUI: {fileID: 1752280606396279190}
+  playerUI:
+  - {fileID: 0}
 --- !u!114 &5733073701845269107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21002,9 +21176,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraLookAt: {fileID: 1752280606524458879}
   camModeRoot: {fileID: 1752280605608389635}
-  buildingSystem: {fileID: 4970061920664843699}
-  buildCamTarget: {fileID: 4970061919292123622}
-  buildTargetStartPos: {fileID: 4970061920155223460}
+  buildingSystemSet: []
   xAxis:
     Value: 0
     m_SpeedMode: 0
@@ -21123,6 +21295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e418d1ddcb6a171449d202bf1d7d6508, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dataBase: {fileID: 0}
 --- !u!114 &3214773754116892971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21144,6 +21317,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 5629639970830784067}
   - {fileID: 5733073701845269104}
+  - {fileID: 5733073701845269111}
   - {fileID: 842975793188924700}
   - {fileID: 4970061919972252230}
   sceneViewId: 0
