@@ -39,9 +39,17 @@ public abstract class K_UserInterface : MonoBehaviourPun
        
 
     }
-   
-      
-    
+
+    private void OnDisable()
+    {
+        for (int i = 0; i < inventory.GetSlots.Length; i++)
+        {
+
+           
+            inventory.GetSlots[i].onAfterUpdated -= OnSlotUpdate;
+        }
+    }
+
     public abstract void CreateSlots();
 
     public abstract void DistorySlots();
