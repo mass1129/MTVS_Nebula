@@ -43,10 +43,7 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
         placedObjectTypeSO = null;
         selectedGrid = gridList[0];
         Debug.Log(PhotonNetwork.CurrentRoom.PlayerCount);
-        if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
-            TestLoad();
-        //transform.parent.gameObject.SetActive(false);
-        if (!photonView.IsMine) this.enabled = false;
+       
 
 
     }
@@ -60,12 +57,16 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
     }
     private void OnEnable()
     {
-        
+        if (PhotonNetwork.CurrentRoom.PlayerCount <= 1)
+            TestLoad();
+       
+       
     }
     private void Update()
     {
-       //HandleTypeSelect();
-        HandleNormalObjectPlacement();
+        if (!photonView.IsMine) return;
+            //HandleTypeSelect();
+            HandleNormalObjectPlacement();
         HandleDirRotation();
         HandleDemolish();
         
