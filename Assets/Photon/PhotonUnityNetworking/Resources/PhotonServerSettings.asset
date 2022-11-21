@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PhotonServerSettings
   m_EditorClassIdentifier: 
   AppSettings:
-    AppIdRealtime: c7da48ad-4a27-43fb-b47b-62012f55fc4a
+    AppIdRealtime: 2b231ab2-c90c-4a97-bb99-786992bdbb19
     AppIdFusion: 
     AppIdChat: 
     AppIdVoice: 0b94bafe-d875-47d2-9816-8c7d1ff4140a
@@ -52,10 +52,15 @@ MonoBehaviour:
   - RPCFactoryEvent
   - RPCDo_Shout
   - RPCDoHappy
-  - RPCUnHideParts
-  - RPCSClothesActive
-  - RPCSetElementByIndex
-  - RPCSetItem
+  - RPCEndShare
+  - RPCStartShare
+  - RpcMove
+  - RPCShareStart
+  - RPCHasControl
+  - RPCTurnControl
+  - RPCOffOthers
+  - RPCReadyToShare
+  - RPCSendScreen
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

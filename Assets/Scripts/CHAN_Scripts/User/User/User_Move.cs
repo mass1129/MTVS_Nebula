@@ -55,6 +55,11 @@ public class User_Move : MonoBehaviourPun, IPunObservable
         {
             CVCam.SetActive(false);
         }
+        else
+        {
+            //만약 포톤뷰가 있는 개체라면 콜라이더를 일시적으로 끄자
+            StartCoroutine(TurnCollider());
+        }
         Cursor.visible = false;
         OrcaObj.SetActive(true);
         btn_EnterRoom.GetComponentInChildren<Button>().onClick.AddListener(OnClickEnterBtn);
@@ -76,7 +81,7 @@ public class User_Move : MonoBehaviourPun, IPunObservable
             // 일단 이동방향은 앞뒤로 갈 수 있도록 만든다. 
                 //쉬프트키를 눌렀을 때 대쉬되도록 만든다.
                 float totalSpeed;
-            if (!mouseOn)
+           // if (!mouseOn)
             {
                 dir = (transform.forward).normalized;
                 Rotate_Pitch -= Input_Rotate_Pitch * rotateSpeed * Time.deltaTime;
@@ -108,16 +113,19 @@ public class User_Move : MonoBehaviourPun, IPunObservable
             }
             transform.position += dir * totalSpeed * Time.deltaTime;
             transform.localRotation = Quaternion.EulerAngles(Mathf.Clamp(Rotate_Pitch,-70*Mathf.Deg2Rad, 70 * Mathf.Deg2Rad), Rotate_Yaw, 0);
+
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                MouseVisual(!Cursor.visible);
+            }
         }
         else
         {
             transform.position = Vector3.Lerp(transform.position, receivePos, lerpSpeed * Time.deltaTime);
             transform.rotation = Quaternion.Lerp(transform.rotation, receiveRot, lerpSpeed * Time.deltaTime);
         }
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            MouseVisual(!Cursor.visible);
-        }
+
+
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -201,7 +209,10 @@ public class User_Move : MonoBehaviourPun, IPunObservable
     }
     public void OnClickEnterBtn()
     {
+        //유저월드 진입 전에 섬 ID 정보 저장
         PlayerPrefs.SetString("User_Island_ID", temp_userIsland_ID);
+        //유저월드 진입전에 플레이어가 어느 섬을 방문했는지 정보를 저장
+        PlayerPrefs.SetString("Cur_Island", temp_userIsland_ID);
         print("섬 ID: "+PlayerPrefs.GetString("Island_ID"));
         CHAN_GameManager.instance.Go_User_Scene(userName);
     }
@@ -209,5 +220,18 @@ public class User_Move : MonoBehaviourPun, IPunObservable
     {
         Cursor.visible = b;
         mouseOn = b;
+    }
+    IEnumerator TurnCollider()
+    {
+        gameObject.GetComponent<SphereCollider>().enabled = false;
+        gameObject.GetComponentInChildren<AudioSource>().enabled = false;
+        float time=0;
+        while (time < 1)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+        gameObject.GetComponent<SphereCollider>().enabled = true;
+        gameObject.GetComponentInChildren<AudioSource>().enabled = true;
     }
 }
