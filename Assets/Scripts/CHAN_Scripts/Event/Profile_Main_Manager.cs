@@ -51,8 +51,8 @@ public class Profile_Main_Manager : MonoBehaviour
     {
         PlayerPrefs.SetString("AvatarName", avatarName);
         PlayerPrefs.SetString("Island_ID", islandID);
-        PlayerPrefs.SetString("Cur_Island", islandID);
-
+        PlayerPrefs.SetString("User_Island_ID", islandID);
+        
         PlayerPrefs.SetString("appID_agora", A_Value.appId);
         PlayerPrefs.SetString("channelName_agora", A_Value.channelName);
         PlayerPrefs.SetString("token", A_Value.token);
