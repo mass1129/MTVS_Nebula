@@ -56,6 +56,7 @@ public class Profile_Main_Manager : MonoBehaviour
         PlayerPrefs.SetString("appID_agora", A_Value.appId);
         PlayerPrefs.SetString("channelName_agora", A_Value.channelName);
         PlayerPrefs.SetString("token", A_Value.token);
+
         print("AvatarName: " + PlayerPrefs.GetString("AvatarName"));
         print("Island_ID: " + PlayerPrefs.GetString("Island_ID"));
         if (!hasAvatar)
