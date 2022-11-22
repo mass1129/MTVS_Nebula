@@ -21,6 +21,7 @@ public class JsonInfo
     public string User_image;
     public string User_NickName;
     public string User_IslandId;
+    public string User_IslandKeyword;
     // 하늘섬 오브젝트
     public GameObject User_Obj;
 
@@ -109,7 +110,7 @@ public class Island_Information :MonoBehaviourPun
         Done = true;
         if (Done)
         {
-            CHAN_GameManager.instance.LoadingObject.SetActive(false);
+            //CHAN_GameManager.instance.LoadingObject.SetActive(false);
         }
     }
     public async void LoadTest()
@@ -120,7 +121,7 @@ public class Island_Information :MonoBehaviourPun
         Done = true;
         if (Done)
         {
-            CHAN_GameManager.instance.LoadingObject.SetActive(false);
+            //CHAN_GameManager.instance.LoadingObject.SetActive(false);
         }
     }
     public void DeleteData()
