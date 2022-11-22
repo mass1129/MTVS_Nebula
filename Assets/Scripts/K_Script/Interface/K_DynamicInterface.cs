@@ -22,7 +22,7 @@ public class K_DynamicInterface : K_UserInterface
         slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
         for (int i = 0; i < inventory.GetSlots.Length; i++)
         {
-            var obj = Instantiate(inventoryPrefab, Vector3.zero, Quaternion.identity, inventoryWindow.transform);
+            var obj = Instantiate(inventoryPrefab, Vector3.zero, Quaternion.identity);
             obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
 
             AddEvent(obj, EventTriggerType.PointerEnter, delegate { OnEnter(obj); });

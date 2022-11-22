@@ -121,12 +121,14 @@ public class K_PlayerItemSystem : MonoBehaviourPun
         if (!photonView.IsMine) return;
         inven_Cloths.TestLoad(player.avatarName);
         inven_Equipment.TestLoad(player.avatarName);
+        
     }
     private void OnApplicationQuit()
     {
-        //inven_Cloths.Clear();
+        inven_Cloths.Clear();
        
-        //inven_Equipment.Clear();
+        inven_Equipment.Clear();
+        inven_Building.Clear();
     }   
 
     [System.Serializable]

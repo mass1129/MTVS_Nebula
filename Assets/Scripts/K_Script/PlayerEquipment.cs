@@ -153,8 +153,8 @@ public class PlayerEquipment :MonoBehaviourPun, IPunObservable
 
                         case ItemType.Accessory:
                             _CharacterCustomization.SetElementByIndex(CharacterElementType.Accessory, -1);
-                            var go = PhotonNetwork.Instantiate("item", transform.position, Quaternion.identity);
-                            go.GetComponent<GroundItem>().SetItem(slot.item.id, slot.item.uniqueId);
+                            //var go = PhotonNetwork.Instantiate("item", transform.position, Quaternion.identity);
+                            //go.GetComponent<GroundItem>().SetItem(slot.item.id, slot.item.uniqueId);
                             break;
 
                         case ItemType.Shirt:

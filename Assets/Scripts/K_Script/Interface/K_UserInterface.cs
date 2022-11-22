@@ -17,7 +17,7 @@ public abstract class K_UserInterface : MonoBehaviourPun
     private InventoryObject _previousInventory;
     public Dictionary<GameObject, InventorySlot> slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
 
-    public GameObject inventoryWindow;
+
     public GameObject quickSlotList;
     public GameObject invenTab;
   
@@ -25,31 +25,41 @@ public abstract class K_UserInterface : MonoBehaviourPun
     public bool onQuickSlot=false;
     public void OnEnable()
     {   
-        if(!photonView.IsMine) this.enabled = false;
-        CreateSlots();
-        for (int i = 0; i < inventory.GetSlots.Length; i++)
-        {
-            
-            inventory.GetSlots[i].parent = this;
-            inventory.GetSlots[i].onAfterUpdated += OnSlotUpdate;
-        }
-       
+      
+           
+         if(!isAddedEvent)
+         {
+            CreateSlots();
+
+            for (int i = 0; i < inventory.GetSlots.Length; i++)
+            {
+
+                inventory.GetSlots[i].parent = this;
+                inventory.GetSlots[i].onAfterUpdated += OnSlotUpdate;
+            }
+
             AddEvent(gameObject, EventTriggerType.PointerEnter, delegate { OnEnterInterface(gameObject); });
             AddEvent(gameObject, EventTriggerType.PointerExit, delegate { OnExitInterface(gameObject); });
+
+            inventory.UpdateInventory();
+        }
+            
+           
+        
        
+        isAddedEvent = true;
 
     }
-
-    private void OnDisable()
+    private void OnDestroy()
     {
         for (int i = 0; i < inventory.GetSlots.Length; i++)
         {
 
-           
+
             inventory.GetSlots[i].onAfterUpdated -= OnSlotUpdate;
         }
     }
-
+   
     public abstract void CreateSlots();
 
     public abstract void DistorySlots();
@@ -69,21 +79,17 @@ public abstract class K_UserInterface : MonoBehaviourPun
         {
             slot.slotDisplay.transform.GetChild(0).GetComponent<Image>().sprite = null;
             slot.slotDisplay.transform.GetChild(0).GetComponent<Image>().color = new Color(1, 1, 1, 0);
-            slot.slotDisplay.GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
+            //slot.slotDisplay.GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
         }
        else        
         {
             slot.slotDisplay.transform.GetChild(0).GetComponent<Image>().sprite = slot.GetItemObject().uiDisplay;
             slot.slotDisplay.transform.GetChild(0).GetComponent<Image>().color = new Color(1, 1, 1, 1);
-            slot.slotDisplay.GetComponentInChildren<TextMeshProUGUI>().text
-                = slot.amount == 1 ? string.Empty : slot.amount.ToString("n0");
+           //slot.slotDisplay.GetComponentInChildren<TextMeshProUGUI>().text
+           //    = slot.amount == 1 ? string.Empty : slot.amount.ToString("n0");
         }
     }
-    private void OnDestroy()
-    {
-        StopAllCoroutines();
-        CancelInvoke();
-    }
+
     public void Update()
     {
         if (_previousInventory != inventory)
@@ -95,19 +101,7 @@ public abstract class K_UserInterface : MonoBehaviourPun
     }
     bool isShowed = false;
     string avatarName => PlayerPrefs.GetString("AvatarName");
-    public void ShowButtonClicked()
-    {
-        isShowed = !isShowed;
-        //if (isShowed)
-        //    inventory.TestLoad(avatarName);
-        //else
-        //    inventory.TestSave(avatarName);
-
-        inventoryWindow.SetActive(isShowed);
-        if(invenTab != null)
-        invenTab.SetActive(isShowed);
-
-    }
+   
 
    
 
@@ -146,6 +140,8 @@ public abstract class K_UserInterface : MonoBehaviourPun
     }
     public void OnDragStart(GameObject obj)
     {
+        Debug.Log(slotsOnInterface[obj].item.name);
+        //slotsOnInterface[obj].UpdateSlot(slotsOnInterface[obj].item, slotsOnInterface[obj].amount);
         MouseData.tempItemBeingDragged = CreateTempItem(obj);
     }
     
@@ -159,7 +155,7 @@ public abstract class K_UserInterface : MonoBehaviourPun
             tempItem = new GameObject();
             var rt = tempItem.AddComponent<RectTransform>();
             rt.sizeDelta = new Vector2(50, 50);
-            tempItem.transform.SetParent(inventoryWindow.transform.parent.parent);
+            tempItem.transform.SetParent(transform.parent.parent);
             var img = tempItem.AddComponent<Image>();
             img.sprite = slotsOnInterface[obj].GetItemObject().uiDisplay;
             img.raycastTarget = false;
@@ -169,11 +165,7 @@ public abstract class K_UserInterface : MonoBehaviourPun
     public void OnDragEnd(GameObject obj)
     {
         Destroy(MouseData.tempItemBeingDragged);
-        if (MouseData.interfaceMouseIsOver == null )
-        {
-            slotsOnInterface[obj].RemoveItem();
-            return;
-        }
+        
         if (MouseData.slotHoveredOver)
         {
             InventorySlot mouseHoverSlotData = MouseData.interfaceMouseIsOver.slotsOnInterface[MouseData.slotHoveredOver];

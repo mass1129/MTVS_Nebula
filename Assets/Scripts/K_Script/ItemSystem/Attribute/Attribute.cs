@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using UltimateClean;
 [System.Serializable]
 public class Attribute
 {
@@ -7,6 +7,8 @@ public class Attribute
     public K_PlayerStats parent;
     [System.NonSerialized]
     public GameObject textUI;
+    [System.NonSerialized]
+    public SlicedFilledImage fillImg;
     public Attributes type;
     public ModifiableInt value;
     public void SetParent(K_PlayerStats _parent)
