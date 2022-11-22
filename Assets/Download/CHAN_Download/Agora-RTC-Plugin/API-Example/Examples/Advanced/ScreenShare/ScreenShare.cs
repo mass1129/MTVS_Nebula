@@ -48,7 +48,7 @@ namespace Agora_RTC_Plugin.API_Example.Examples.Advanced.ScreenShare
         // Use this for initialization
          void Start()
         {
-            
+            Debug.LogWarning("Ready");
             LoadAssetData();
             if (CheckAppId())
             {
@@ -125,8 +125,8 @@ namespace Agora_RTC_Plugin.API_Example.Examples.Advanced.ScreenShare
             _channelName = PlayerPrefs.GetString("channelName_agora");
             
             Debug.LogWarning("ID : " + _appID);
-            Debug.LogWarning("token : " + _appID);
-            Debug.LogWarning("chennelNAme : " + _appID);
+            Debug.LogWarning("token : " + _token);
+            Debug.LogWarning("chennelNAme : " + _channelName);
         }
         private void JoinChannel()
         {
