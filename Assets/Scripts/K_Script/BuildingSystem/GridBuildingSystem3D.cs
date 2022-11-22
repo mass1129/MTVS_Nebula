@@ -57,7 +57,7 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
     }
     private void OnEnable()
     {
-        if (PhotonNetwork.CurrentRoom.PlayerCount <= 1)
+        if (PhotonNetwork.IsMasterClient)
             TestLoad();
        
        

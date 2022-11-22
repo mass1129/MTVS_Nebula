@@ -62,9 +62,9 @@ namespace UltimateClean
             optionLabel.text = Options[currentIndex];
             optionNumberLabel.text = $"{currentIndex + 1}/{Options.Count}";
             var slot = inventory.GetSlots[currentIndex];
-            icon.sprite = slot.GetItemObject().uiDisplay;
+            icon.sprite = inventory.database.ItemObjects[slot.item.id].uiDisplay;
             quickSlot.inventory.Clear();
-            quickSlot.inventory.AddBundleListToWindow(slot.GetItemObject().subItem);
+            quickSlot.inventory.AddBundleListToWindow(inventory.database.ItemObjects[slot.item.id].subItem);
             quickSlot.inventory.UpdateInventory();
         }
 
