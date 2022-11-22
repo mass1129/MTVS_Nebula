@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class map_Icon_Controller : MonoBehaviour
 {
     [SerializeField]
-    List<Material> Icon_Colors;
+    List<Color> Icon_Colors;
     [SerializeField]
     List<string> categories;
     //섬 아이콘 색정보를 받아온다. 
@@ -23,8 +24,12 @@ public class map_Icon_Controller : MonoBehaviour
     {
         //profileIsland에서 1차카테고리 정보를 가져오면 1차카테고리내용과 지정된 카테고리 리스트와 비교한다.
         for (int i = 0; i < categories.Count; i++)
-        { 
-            
+        {
+            if (category == categories[i])
+            {
+                gameObject.GetComponentInChildren<Image>().color = Icon_Colors[i];
+            }
         }
+
     }
 }
