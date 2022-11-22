@@ -3,20 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class map_Icon_Controller : MonoBehaviour
 {
     [SerializeField]
     List<Color> Icon_Colors;
     [SerializeField]
     List<string> categories;
+    public GameObject IslandText;
     //섬 아이콘 색정보를 받아온다. 
     //섬이 생성될 때 1차 카테고리를 비교한다.
 
     // 아이콘이 바라볼 카메라 위치
-    GameObject cam_Lookup;
     void Start()
     {
-        cam_Lookup = GameObject.Find("SkyMap_Camera");
+        IslandText.SetActive(false);
+
     }
 
     // Update is called once per frame
@@ -31,7 +33,7 @@ public class map_Icon_Controller : MonoBehaviour
         // 하늘맵 상태일 때 아이콘을 sky카메라로 바라보도록
         else if (Map_UIManager.instance.state_View == "skymap")
         {
-            transform.LookAt(cam_Lookup.transform);
+            transform.LookAt(Map_UIManager.instance.skyCam.transform);
         }
     }
 
@@ -51,4 +53,14 @@ public class map_Icon_Controller : MonoBehaviour
         }
 
     }
+
+    /// <summary>
+    /// 마우스를 해당 아이콘에 갖다댔을 때, 유저의 이름이 나옴.
+    /// </summary>
+    public void VisualText(bool b)
+    {
+        IslandText.SetActive(b);
+        IslandText.GetComponent<Text>().text = GetComponentInParent<Island_Profile>().user_name + " 의 섬";
+    }
+
 }

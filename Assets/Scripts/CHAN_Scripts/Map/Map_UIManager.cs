@@ -16,6 +16,10 @@ public class Map_UIManager : MonoBehaviour
     Button btn_Toggle_CloseTab;
     Button btn_ShowSkyMap;
     #endregion
+    //스카이맵 UI 오브젝트
+    public GameObject UI_Skymap;
+    //미니맵 UI 오브젝트
+    public GameObject UI_Miinimap;
     // 하늘뷰 캠
     public GameObject skyCam;
     //미니맵뷰 캠
@@ -24,7 +28,18 @@ public class Map_UIManager : MonoBehaviour
     public string state_View;
     void Start()
     {
-        // 초기에 버튼기능 설정을 한다.
+        #region 각 버튼의 위치를 찾는다. 
+        btn_Toggle_Island = GameObject.Find("Btn_Toggle_Island").GetComponent<Button>();
+        btn_Toggle_Users = GameObject.Find("Btn_Toggle_Users").GetComponent<Button>();
+        btn_Toggle_CloseTab = GameObject.Find("Btn_CloseTab").GetComponent<Button>();
+        btn_ShowSkyMap = GameObject.Find("Btn_ShowSkyMap").GetComponent<Button>();
+        #endregion
+        #region 각 버튼에 기능을 삽입한다.
+        btn_Toggle_Island.onClick.AddListener(Toggle_Filter_Island);
+        btn_Toggle_Users.onClick.AddListener(Toggle_Filter_User);
+        btn_Toggle_CloseTab.onClick.AddListener(OnMinimapView);
+        btn_ShowSkyMap.onClick.AddListener(OnSkyView);
+        #endregion
         // 초기에는 미니맵 뷰로 바로 전환한다.
         OnMinimapView();
     }
@@ -34,6 +49,8 @@ public class Map_UIManager : MonoBehaviour
     /// </summary>
     public void OnSkyView()
     {
+        UI_Skymap.SetActive(true);
+        UI_Miinimap.SetActive(false);
         state_View = "skymap";
         skyCam.SetActive(true);
         minimapCam.SetActive(false);
@@ -45,6 +62,8 @@ public class Map_UIManager : MonoBehaviour
     /// </summary>
     public void OnMinimapView()
     {
+        UI_Skymap.SetActive(false);
+        UI_Miinimap.SetActive(true);
         state_View = "minimap";
         skyCam.SetActive(false);
         minimapCam.SetActive(true);
@@ -58,7 +77,7 @@ public class Map_UIManager : MonoBehaviour
     {
         // 선택 시 해당 아이콘 박스 밝게 한다. 
         // 상태를 하늘섬으로 전환
-        state_View = "Island";
+        Debug.Log("하늘섬만 보이도록 전환");
     }
     /// <summary>
     /// 유저만 필터링 해주는 함수
@@ -67,7 +86,8 @@ public class Map_UIManager : MonoBehaviour
     {
         // 선택 시 해당 아이콘 박스 밝게 한다.
         // 상태를 유저로 전환
-        state_View = "User";
+        Debug.Log("유저만 보이도록 전환");
+
     }
 
 }

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.Networking;
 using System.Threading.Tasks;
 using Photon.Pun;
+using UnityEngine.EventSystems;
 
 public class Island_Profile : MonoBehaviourPun
 {
@@ -35,7 +36,6 @@ public class Island_Profile : MonoBehaviourPun
         if (!turn)
             return;
         ShowImage();
-
     }
 
     #region 이것은 CSV타입
@@ -103,5 +103,17 @@ public class Island_Profile : MonoBehaviourPun
     void ShowImage()
     {
         profileImage.transform.LookAt(playerPos);
+    }
+
+}
+public class Trigger : EventTrigger
+{
+    public void OnHover()
+    {
+        Debug.LogWarning("마우스 접근");
+    }
+    public void OnClicked()
+    {
+        Debug.LogWarning("마우스 클릭");
     }
 }
