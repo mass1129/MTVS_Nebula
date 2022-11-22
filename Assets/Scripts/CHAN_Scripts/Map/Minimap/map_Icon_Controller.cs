@@ -19,6 +19,7 @@ public class map_Icon_Controller : MonoBehaviour
     void Update()
     {
         // 여기서는 아이콘이 바라보는 방향을 업데이트 해주는 함수가 들어간다. 
+        //이이콘이 바라보는 방향은 항상 
     }
     public void SetIconColor(string category)
     {
