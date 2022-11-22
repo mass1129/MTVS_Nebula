@@ -6,8 +6,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using PN=Photon.Pun.PhotonNetwork;
-//using User_Info;
-//using CUI=User_Info.CHAN_Users_Info;
+using User_Info;
+using CUI=User_Info.CHAN_Users_Info;
 
 public class CHAN_GameManager : MonoBehaviourPunCallbacks
 {
@@ -57,8 +57,8 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
     public void Connect()
     {
         //유저 아이디를 커스텀으로 설정
-        //AuthenticationValues authValues = new AuthenticationValues(PlayerPrefs.GetString("AvatarName"));
-        //PN.AuthValues = authValues;
+        AuthenticationValues authValues = new AuthenticationValues(PlayerPrefs.GetString("AvatarName"));
+        PN.AuthValues = authValues;
         PN.NickName = PlayerPrefs.GetString("AvatarName");
         // 마스터 서버에 접속한다.
         PN.ConnectUsingSettings();
@@ -68,25 +68,25 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
         // 서버에 접속하면 Room으로 바로 입장한다. 
         base.OnConnectedToMaster();
         //유저 정보 조회는 마스터 서버시점부터 시작된다.
-        //PN.FindFriends(CUI.userLists.ToArray());
+        PN.FindFriends(CUI.userLists.ToArray());
         PN.JoinOrCreateRoom(roomName, roomOption(), TypedLobby.Default);
 
     }
-    //public override void OnFriendListUpdate(List<FriendInfo> friendList)
-    //{
-    //    if (CUI.onlineUsers.Count > 0) CUI.onlineUsers.Clear();
-    //    foreach (FriendInfo info in friendList)
-    //    {
-    //        Debug.LogWarning("유저정보 받음 :" + info.UserId + "지금 온라인?" + info.IsOnline);
-    //        if (info.IsOnline)
-    //        {
-    //            CUI.onlineUsers[info.UserId] = info.Room;
-    //        }
-    //    }
-    //    Debug.LogWarning(CUI.onlineUsers.Keys);
-    //    Debug.LogWarning(CUI.onlineUsers.Values);
+    public override void OnFriendListUpdate(List<FriendInfo> friendList)
+    {
+        if (CUI.onlineUsers.Count > 0) CUI.onlineUsers.Clear();
+        foreach (FriendInfo info in friendList)
+        {
+            Debug.LogWarning("유저정보 받음 :" + info.UserId + "지금 온라인?" + info.IsOnline);
+            if (info.IsOnline)
+            {
+                CUI.onlineUsers[info.UserId] = info.Room;
+            }
+        }
+        Debug.LogWarning(CUI.onlineUsers.Keys.ToString());
+        Debug.LogWarning(CUI.onlineUsers.Values.ToString());
 
-    //}
+    }
     public override void OnJoinedRoom()
     {
         SetPlayer(prefab);
