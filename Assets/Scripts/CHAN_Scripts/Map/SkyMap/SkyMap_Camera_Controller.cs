@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 [System.Serializable]
 public class SphericalCoordinates
@@ -86,7 +86,7 @@ public class SkyMap_Camera_Controller : MonoBehaviour
     public SphericalCoordinates sphericalCoordinates;
     float camRadius;
     public Camera cam;
-
+    public Transform Text_Island;
     public float width;
     public float height;
     public float ratio;
@@ -98,6 +98,7 @@ public class SkyMap_Camera_Controller : MonoBehaviour
         camRadius = targetCamPos.z;
         sphericalCoordinates = new SphericalCoordinates(targetCamPos, Mathf.Abs(camRadius));
         transform.position = sphericalCoordinates.toCartesian + originPos;
+        Text_Island.gameObject.SetActive(false);
     }
 
     void Update()
@@ -143,15 +144,23 @@ public class SkyMap_Camera_Controller : MonoBehaviour
         
         mousePosition.x = ((mousePosition.x - (width * (1 - ratio))/2) * (2 - ratio));
         mousePosition.y= ((mousePosition.y - (height * (1 - ratio))/2) * (2 - ratio));
-        Debug.Log("Rendor Pos"+mousePosition);
+        Debug.Log("Render Pos"+mousePosition);
 
         var WorldPos = cam.ScreenPointToRay(mousePosition);
 
         RaycastHit hit;
-        if(Physics.Raycast(WorldPos, out hit))
+        if (Physics.Raycast(WorldPos, out hit))
         {
+            //만약 hit가 섬이면 그섬의 유저 이름을 가져와서 Texture에 위치시킨다. 
             var info = hit.transform.GetComponent<Island_Profile>().user_name;
-            Debug.Log(info); 
+            Text_Island.gameObject.SetActive(true);
+            Text_Island.position = Input.mousePosition+new Vector3(100,0,0);
+            Text_Island.GetComponentInChildren<Text>().text = info+" 의 섬";
+            
+        }
+        else
+        {
+            Text_Island.gameObject.SetActive(false);
         }
         
     }

@@ -106,14 +106,3 @@ public class Island_Profile : MonoBehaviourPun
     }
 
 }
-public class Trigger : EventTrigger
-{
-    public void OnHover()
-    {
-        Debug.LogWarning("마우스 접근");
-    }
-    public void OnClicked()
-    {
-        Debug.LogWarning("마우스 클릭");
-    }
-}
