@@ -23,6 +23,32 @@ public abstract class K_UserInterface : MonoBehaviourPun
   
     bool isAddedEvent = false;
     public bool onQuickSlot=false;
+    public void Awake()
+    {
+        if (!isAddedEvent)
+        {
+            CreateSlots();
+
+            for (int i = 0; i < inventory.GetSlots.Length; i++)
+            {
+
+                inventory.GetSlots[i].parent = this;
+                inventory.GetSlots[i].onAfterUpdated += OnSlotUpdate;
+            }
+           
+                AddEvent(gameObject, EventTriggerType.PointerEnter, delegate { OnEnterInterface(gameObject); });
+                AddEvent(gameObject, EventTriggerType.PointerExit, delegate { OnExitInterface(gameObject); });
+            
+            
+
+            inventory.UpdateInventory();
+        }
+
+
+
+
+        isAddedEvent = true;
+    }
     public void OnEnable()
     {   
       

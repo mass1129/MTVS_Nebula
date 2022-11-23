@@ -42,6 +42,8 @@ public class ChattingSet : MonoBehaviourPun
             (byte)Random.Range(0, 256),
             255
             );
+
+
     }
     #region 버튼 설정 
     // 채팅장을 숨겨줌

@@ -110,13 +110,14 @@ namespace AdvancedPeopleSystem
         {
            
             AnimationTick();
+            if (feetOffset != 0 && applyFeetOffset)
+                SetFeetOffset(new Vector3(0, feetOffset, 0));
         }
 
         private void LateUpdate()
         {
            
-            if (feetOffset != 0 && applyFeetOffset)
-                SetFeetOffset(new Vector3(0, feetOffset, 0));
+           
         }
 
         public void AnimationTick()
@@ -381,7 +382,7 @@ namespace AdvancedPeopleSystem
                         if (Application.isPlaying)
                             yield return new WaitForEndOfFrame();
                         else
-                            yield return new WaitForSeconds(0.1f);
+                            yield return new WaitForEndOfFrame();
 
                         Bounds bounds = new Bounds();
                         Vector3 center = mesh.localBounds.center;

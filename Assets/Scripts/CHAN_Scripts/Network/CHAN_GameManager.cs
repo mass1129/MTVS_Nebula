@@ -109,9 +109,13 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
     void SetPlayer(string prefab)
     {
         if (prefab == WhalePrepab)
-        { player= PN.Instantiate(prefab, Vector3.zero, Quaternion.identity); }
+        { player = PN.Instantiate(prefab, Vector3.zero, Quaternion.identity); }
         else
-        { player = PN.Instantiate(prefab, new Vector3(51, 0, 47), Quaternion.identity); }
+        {
+            player = PN.Instantiate(prefab, new Vector3(51, 0, 47), Quaternion.identity);
+            if (photonView.IsMine)
+            CHAN_ClientManager.instance.myCharacter = player.GetComponent<K_01_Character>();
+        }
     }
 
     public void Go_Sky_Scene()

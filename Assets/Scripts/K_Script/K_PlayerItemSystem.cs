@@ -30,8 +30,9 @@ public class K_PlayerItemSystem : MonoBehaviourPun
     private void OnEnable()
     {
         if (!photonView.IsMine) return;
-        ItemLoad();
-        inven_Building.TestLoad(player.avatarName);
+        inven_Cloths.TestLoad();
+        inven_Equipment.TestLoad();
+        inven_Building.TestLoad();
     }
 
     private void OnDisable()
@@ -104,11 +105,12 @@ public class K_PlayerItemSystem : MonoBehaviourPun
         string json = JsonUtility.ToJson(saveObject, true);
         Debug.Log(json);
         //string s = PlayerPrefs.GetString(" AvatarName");
-        var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/" + inven_Equipment.savePath  +player.avatarName;
+        var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/" + inven_Equipment.savePath  + PlayerPrefs.GetString("AvatarName");
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
         await httpReq.Post(url, json);
-        
+        inven_Equipment.Clear();
+        inven_Cloths.Clear();
     }
     public void ItemSave()
     {
@@ -118,17 +120,13 @@ public class K_PlayerItemSystem : MonoBehaviourPun
     }
     public void ItemLoad()
     {
-        if (!photonView.IsMine) return;
-        inven_Cloths.TestLoad(player.avatarName);
-        inven_Equipment.TestLoad(player.avatarName);
+        
+       
         
     }
     private void OnApplicationQuit()
     {
-        inven_Cloths.Clear();
-       
-        inven_Equipment.Clear();
-        inven_Building.Clear();
+      
     }   
 
     [System.Serializable]

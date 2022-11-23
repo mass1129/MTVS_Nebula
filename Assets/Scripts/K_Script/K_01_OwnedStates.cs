@@ -72,10 +72,7 @@ namespace K_01_OwnedStates
             //    entity.ChangeState(PlayerStates.Jump);
             //    entity.velocity.y = entity.jumpHeight;
             //}
-            if (!entity.Grounded)
-            {
-                entity.ChangeState(PlayerStates.Falling);
-            }
+           
 
 
         }
@@ -174,6 +171,7 @@ namespace K_01_OwnedStates
         {
             entity.input.x = 0.5f;
             entity.input.y = 0.5f;
+            
             entity.SetTrigger("Sprinting");
         }
 

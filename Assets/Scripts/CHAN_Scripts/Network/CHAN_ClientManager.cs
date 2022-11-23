@@ -7,6 +7,7 @@ public class CHAN_ClientManager : MonoBehaviour
 {
     public static CHAN_ClientManager instance;
     public static List<PhotonView> players = new List<PhotonView>();
+    public K_01_Character myCharacter;
     private void Awake()
     {
         if (instance == null)

@@ -19,7 +19,7 @@ public class K_StaticInterface_bundleList : K_UserInterface
         {
             var obj = subSlots[i];
 
-            if (!isAdded)
+            if (!isAdded&&!onQuickSlot)
             {
                 AddEvent(obj, EventTriggerType.PointerEnter, delegate { OnEnter(obj); });
             AddEvent(obj, EventTriggerType.PointerExit, delegate { OnExit(obj); });

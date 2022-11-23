@@ -24,7 +24,7 @@ public class InventorySlot
     public ItemObject GetItemObject()
     {
         
-        return item.id >= 0 ? parent.inventory.database.ItemObjects[item.id] : null;
+        return item.id >= 0 && parent != null  ? parent.inventory.database.ItemObjects[item.id] : null;
     }
     
     public InventorySlot() => UpdateSlot(new Item(), 0);

@@ -164,20 +164,20 @@ public class InventoryObject : ScriptableObject
         }
 
     }
-    public async void TestSave(string s)
+    public async void TestSave()
     {
 
         string json = JsonUtility.ToJson(Container, true);
         Debug.Log(json);
         //string s = PlayerPrefs.GetString(" AvatarName");
-        var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/" + savePath + s;
+        var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/" + savePath + PlayerPrefs.GetString("AvatarName");
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
         await httpReq.Post(url, json);
     }
-    public async void TestLoad(string s)
+    public async void TestLoad()
     {
-        var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/" + loadPath + s;
+        var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/" + loadPath + PlayerPrefs.GetString("AvatarName");
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
         H_I_Root result2 = await httpReq.Get<H_I_Root>(url);

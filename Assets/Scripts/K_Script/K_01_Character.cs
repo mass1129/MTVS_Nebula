@@ -7,7 +7,7 @@ public class K_01_Character : K_Player
 {
     public GameObject camPos;
     public List<GameObject> playerUI;
-    
+    public List<GameObject> inActiveObj;
     private void Awake()
     {
         if (!photonView.IsMine)
@@ -45,18 +45,32 @@ public class K_01_Character : K_Player
     }
     private void Start()
     {
+        
+    }
+
+    public void SetActiveObj()
+    {
         if (photonView.IsMine)
         {
             camPos.SetActive(true);
-            for(int i=0; i<playerUI.Count; i++)
+            for (int i = 0; i < playerUI.Count; i++)
             {
                 playerUI[i].SetActive(true);
             }
-            
-            
+            for (int i = 0; i < inActiveObj.Count; i++)
+            {
+                inActiveObj[i].SetActive(false);
+            }
+
         }
     }
+   
+    
 
+    private void OnEnable()
+    {
+        
+    }
     public override void SetTrigger(string s)
     {
         photonView.RPC("RpcSetTrigger", RpcTarget.AllBuffered, s);
@@ -105,7 +119,7 @@ public class K_01_Character : K_Player
 
     public void ChangeToBuildingState()
     {   
-       if(PhotonNetwork.CurrentRoom.Name == avatarName)
+       if(PhotonNetwork.CurrentRoom.Name == PlayerPrefs.GetString("AvatarName"))
        {
             if (CurrentState == PlayerStates.Idle)
                 ChangeState(PlayerStates.BuildingMode);
