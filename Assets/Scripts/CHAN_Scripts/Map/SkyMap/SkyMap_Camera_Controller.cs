@@ -86,7 +86,7 @@ public class SkyMap_Camera_Controller : MonoBehaviour
     public SphericalCoordinates sphericalCoordinates;
     float camRadius;
     public Camera cam;
-    public Transform Text_Island;
+    public Transform Image_ToolTip;
     public float width;
     public float height;
     public float ratio;
@@ -98,7 +98,7 @@ public class SkyMap_Camera_Controller : MonoBehaviour
         camRadius = targetCamPos.z;
         sphericalCoordinates = new SphericalCoordinates(targetCamPos, Mathf.Abs(camRadius));
         transform.position = sphericalCoordinates.toCartesian + originPos;
-        Text_Island.gameObject.SetActive(false);
+        Image_ToolTip.gameObject.SetActive(false);
     }
 
     void Update()
@@ -151,16 +151,31 @@ public class SkyMap_Camera_Controller : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(WorldPos, out hit))
         {
+            // 감지되는 오브젝트의 태그를 분류하자 
             //만약 hit가 섬이면 그섬의 유저 이름을 가져와서 Texture에 위치시킨다. 
-            var info = hit.transform.GetComponent<Island_Profile>().user_name;
-            Text_Island.gameObject.SetActive(true);
-            Text_Island.position = Input.mousePosition+new Vector3(100,0,0);
-            Text_Island.GetComponentInChildren<Text>().text = info+" 의 섬";
-            
+            if (hit.collider.CompareTag("UserIsland"))
+            {
+                var info_name = hit.transform.GetComponent<Island_Profile>().user_name;
+                var info_keyword1 = hit.transform.GetComponent<Island_Profile>().user_keyword1;
+                var info_keyword2 = hit.transform.GetComponent<Island_Profile>().user_keyword2;
+                Image_ToolTip.gameObject.SetActive(true);
+                Image_ToolTip.position = Input.mousePosition + new Vector3(130, -50, 0);
+                // 유저 섬ToolTip 생성부
+                Image_ToolTip.GetChild(0).GetComponent<Text>().text = info_name + " 의 섬";
+                Image_ToolTip.GetChild(1).GetComponent<Text>().text = info_keyword1;
+                Image_ToolTip.GetChild(2).GetComponent<Text>().text = info_keyword2;
+                Image_ToolTip.GetChild(3).GetComponent<Text>().text = "'F' 를 눌러서 섬에 놀러가기 ";
+            }
+            else if (hit.collider.CompareTag("Player"))
+            { 
+                
+            }
+
+
         }
         else
         {
-            Text_Island.gameObject.SetActive(false);
+            Image_ToolTip.gameObject.SetActive(false);
         }
         
     }

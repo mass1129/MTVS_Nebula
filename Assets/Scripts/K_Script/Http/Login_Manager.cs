@@ -26,6 +26,14 @@ public class Login_Manager : MonoBehaviour
     {
         //ClickedLogInBtn();
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            Input_Id.text = "choigwuhyung2";
+            Input_Pass.text = "pwd";
+        }
+    }
     public void ClickedLogInBtn()
     {
 

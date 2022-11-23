@@ -11,6 +11,8 @@ public class map_Icon_Controller : MonoBehaviour
     [SerializeField]
     List<string> categories;
     public GameObject IslandText;
+    public GameObject Image_Online;
+    public GameObject Image_Offine;
     //섬 아이콘 색정보를 받아온다. 
     //섬이 생성될 때 1차 카테고리를 비교한다.
 
@@ -18,7 +20,6 @@ public class map_Icon_Controller : MonoBehaviour
     void Start()
     {
         IslandText.SetActive(false);
-
     }
 
     // Update is called once per frame
@@ -61,6 +62,12 @@ public class map_Icon_Controller : MonoBehaviour
     {
         IslandText.SetActive(b);
         IslandText.GetComponent<Text>().text = GetComponentInParent<Island_Profile>().user_name + " 의 섬";
+    }
+
+    public void SetOnlineIcon(bool b)
+    {
+        Image_Online.SetActive(b);
+        Image_Offine.SetActive(!b);
     }
 
 }

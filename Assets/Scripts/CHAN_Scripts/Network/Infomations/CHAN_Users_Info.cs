@@ -5,7 +5,7 @@ using Photon.Realtime;
 
 namespace User_Info
 {
-    public class CHAN_Users_Info:MonoBehaviour
+    public class CHAN_Users_Info
     {
         public static List<string> userLists = new List<string>();
 

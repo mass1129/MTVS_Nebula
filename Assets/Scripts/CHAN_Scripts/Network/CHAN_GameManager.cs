@@ -83,8 +83,6 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
                 CUI.onlineUsers[info.UserId] = info.Room;
             }
         }
-        Debug.LogWarning(CUI.onlineUsers.Keys.ToString());
-        Debug.LogWarning(CUI.onlineUsers.Values.ToString());
 
     }
     public override void OnJoinedRoom()

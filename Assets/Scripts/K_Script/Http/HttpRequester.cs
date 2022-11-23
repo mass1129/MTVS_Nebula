@@ -80,6 +80,7 @@ public class HttpRequester
             if (request.result != UnityWebRequest.Result.Success)
             {
                 Debug.LogError($"Failed: {request.error}");
+                Debug.LogError($"Failed: {request.downloadHandler.text}");
             }
             var result = _serializionOption.Serialize(request.downloadHandler.text);
             if (token != null)
