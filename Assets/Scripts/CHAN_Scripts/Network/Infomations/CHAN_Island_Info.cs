@@ -155,12 +155,18 @@ namespace IslandInfo
                     island.GetComponentInChildren<map_Icon_Controller>().SetOnlineIcon(true);
                     Debug.LogWarning($"{info.User_NickName} :온라인");
                 }
-                else
+                else if (info.User_NickName==PlayerPrefs.GetString("AvatarName"))
+                {
+                    island.GetComponentInChildren<map_Icon_Controller>().SetOnlineIcon(true);
+                    island.GetComponentInChildren<map_Icon_Controller>().gameObject.transform.localScale *= 1.2f;
+                }
+                else 
                 {
                     island.GetComponentInChildren<map_Icon_Controller>().SetOnlineIcon(false);
                     island.GetComponentInChildren<map_Icon_Controller>().SetIconColor(info.User_IslandKeyword1);
                     Debug.LogWarning($"{info.User_NickName} :오프라인");
                 }
+                
                 await Task.Yield();
             }
         }
