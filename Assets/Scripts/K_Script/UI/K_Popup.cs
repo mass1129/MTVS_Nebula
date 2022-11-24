@@ -12,22 +12,28 @@ namespace UltimateClean
         public float destroyTime = 0.5f;
 
         private GameObject m_background;
+        bool isOpened = false;
+        bool isClosed = false;
 
         public void Open()
-        {
+        {   if(!isOpened)
             AddBackground();
         }
 
         public void Close()
-        {
-            var animator = GetComponent<Animator>();
-            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Open"))
+        {   
+            if(isOpened)
             {
-                animator.Play("Close");
-            }
+                var animator = GetComponent<Animator>();
+                if (animator.GetCurrentAnimatorStateInfo(0).IsName("Open"))
+                {
+                    animator.Play("Close");
+                }
 
-            RemoveBackground();
-            StartCoroutine(RunPopupDestroy());
+                RemoveBackground();
+                StartCoroutine(RunPopupDestroy());
+            }
+           
         }
 
         // We destroy the popup automatically 0.5 seconds after closing it.
@@ -39,6 +45,7 @@ namespace UltimateClean
             yield return new WaitForSeconds(destroyTime);
             Destroy(m_background);
             gameObject.SetActive(false);
+            isOpened = false;
         }
 
         private void AddBackground()
@@ -57,12 +64,14 @@ namespace UltimateClean
             image.color = newColor;
             image.canvasRenderer.SetAlpha(0.0f);
             image.CrossFadeAlpha(1.0f, 0.4f, false);
+            image.raycastTarget = true;
 
             var canvas = GameObject.Find("----PlayerUI----");
             m_background.transform.localScale = new Vector3(1, 1, 1);
             m_background.GetComponent<RectTransform>().sizeDelta = canvas.GetComponent<RectTransform>().sizeDelta;
             m_background.transform.SetParent(canvas.transform, false);
             m_background.transform.SetSiblingIndex(transform.GetSiblingIndex());
+            isOpened = true;
         }
 
         private void RemoveBackground()

@@ -50,7 +50,7 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
         //로딩 시작
         //LoadingObject.SetActive(true);
         //처음에는 스카이씬에 바로 들어가도록 함
-        InitialLoadScene(PlayerPrefs.GetString("AvatarName"), name_UserScene, userPrefab);
+        InitialLoadScene("요희", name_UserScene, userPrefab);
         // 서버접속 시작
         Connect();
     }
@@ -131,7 +131,7 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
         else
         {
             player = PN.Instantiate(prefab, new Vector3(51, 0, 47), Quaternion.identity);
-            if (photonView.IsMine)
+            
             CHAN_ClientManager.instance.myCharacter = player.GetComponent<K_01_Character>();
         }
     }

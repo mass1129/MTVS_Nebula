@@ -44,7 +44,7 @@ public class K_CameraMgr : MonoBehaviourPun
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (!photonView.IsMine) return;
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -59,6 +59,8 @@ public class K_CameraMgr : MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
+        if (!photonView.IsMine) return;
+
         if (Input.GetKeyDown(KeyCode.I))
         {
            

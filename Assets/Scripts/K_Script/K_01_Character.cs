@@ -57,15 +57,27 @@ public class K_01_Character : K_Player
             {
                 playerUI[i].SetActive(true);
             }
-            for (int i = 0; i < inActiveObj.Count; i++)
-            {
-                inActiveObj[i].SetActive(false);
-            }
+            InActiveObj();
+        }
 
+
+
+
+
+    }
+    public void InActiveObj()
+    {
+        photonView.RPC("RpcInActiveTrigger", RpcTarget.AllBuffered);
+    }
+    [PunRPC]
+    public void RpcInActiveTrigger()
+    {
+        for (int i = 0; i < inActiveObj.Count; i++)
+        {
+            inActiveObj[i].SetActive(false);
         }
     }
-   
-    
+
 
     private void OnEnable()
     {

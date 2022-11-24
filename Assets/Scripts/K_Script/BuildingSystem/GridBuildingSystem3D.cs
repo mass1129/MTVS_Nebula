@@ -61,6 +61,8 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
         if (PhotonNetwork.CurrentRoom.PlayerCount <= 1)
             TestLoad();
 
+        gameObject.SetActive(false);
+
     }
     private void Update()
     {

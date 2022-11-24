@@ -5,11 +5,14 @@ using UnityEngine;
 public class K_UserWorldMgr : MonoBehaviour
 {
     // Start is called before the first frame update
+    bool isBuildingLoaded = false;
     void Start()
     {   
-       if (CHAN_ClientManager.instance.myCharacter.photonView.IsMine)
+
         CHAN_ClientManager.instance.myCharacter.SetActiveObj();
- 
+        CHAN_ClientManager.instance.myCharacter.GetComponent<>
+
+
     }
 
     // Update is called once per frame

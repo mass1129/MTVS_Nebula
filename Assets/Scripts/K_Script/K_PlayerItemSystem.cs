@@ -14,6 +14,9 @@ public class K_PlayerItemSystem : MonoBehaviourPun
     public InventoryObject inven_Equipment;
     public K_Player player;
 
+
+
+
     private void Awake()
     {
         
@@ -33,6 +36,7 @@ public class K_PlayerItemSystem : MonoBehaviourPun
         inven_Cloths.TestLoad();
         inven_Equipment.TestLoad();
         inven_Building.TestLoad();
+
     }
 
     private void OnDisable()

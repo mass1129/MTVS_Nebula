@@ -7174,7 +7174,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: 711bda56d07eec245bfab8e85bc64549, type: 2}
-  inventoryWindow: {fileID: 1752280606409922374}
   quickSlotList: {fileID: 0}
   invenTab: {fileID: 0}
   onQuickSlot: 0
@@ -8668,7 +8667,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: 03e1d40251a619f4a9f2f3e3ac33a076, type: 2}
-  inventoryWindow: {fileID: 1752280604488678096}
   quickSlotList: {fileID: 0}
   invenTab: {fileID: 0}
   onQuickSlot: 0
@@ -11032,7 +11030,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: 422cb2658b0d51346a2cf4a932b5bd9e, type: 2}
-  inventoryWindow: {fileID: 1752280605421572272}
   quickSlotList: {fileID: 0}
   invenTab: {fileID: 0}
   onQuickSlot: 0
@@ -11108,7 +11105,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: c3cb508365f4b5c46b15784258606b4f, type: 2}
-  inventoryWindow: {fileID: 1752280605224693431}
   quickSlotList: {fileID: 0}
   invenTab: {fileID: 0}
   onQuickSlot: 0
@@ -24891,7 +24887,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4549fe22a66a4b46934ceadea79b736, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSettingsExpanded: 0
+  isSettingsExpanded: 1
   selectedsettings: {fileID: 11400000, guid: 0d7b7f5e9b048d24a98d16443e2a2c89, type: 2}
   _settings: {fileID: 11400000, guid: e9e5494d13890db4e90f7bb6e6ec19c0, type: 2}
   characterParts:
@@ -25612,6 +25608,7 @@ MonoBehaviour:
   - {fileID: 1752280604984157942}
   - {fileID: 1752280605222055249}
   - {fileID: 1752280605588614108}
+  inActiveObj: []
 --- !u!114 &5733073701845269107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25736,6 +25733,7 @@ MonoBehaviour:
   - {fileID: 1752280606030262626}
   - {fileID: 1752280605273848638}
   - {fileID: 1752280605726968795}
+  _fillImg: []
 --- !u!114 &5733073701845269111
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25748,6 +25746,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e418d1ddcb6a171449d202bf1d7d6508, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _equipment: {fileID: 0}
   dataBase: {fileID: 11400000, guid: 2ef6ad25b8d7948488dda3b23dc7008b, type: 2}
 --- !u!114 &3214773754116892971
 MonoBehaviour:
@@ -31829,7 +31828,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: 9a99fbbd4b3ab624d8bc9b0211d64736, type: 2}
-  inventoryWindow: {fileID: 6075910528512193807}
   quickSlotList: {fileID: 0}
   invenTab: {fileID: 0}
   onQuickSlot: 1
@@ -36153,7 +36151,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: 128d426c0cfe0f940aa8fd7406a56991, type: 2}
-  inventoryWindow: {fileID: 1216883324124252636}
   quickSlotList: {fileID: 7190273671157026432}
   invenTab: {fileID: 0}
   onQuickSlot: 1
