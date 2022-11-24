@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 
 [System.Serializable]
@@ -15,16 +16,20 @@ public class LoginInfo
 public class Login_Manager : MonoBehaviour
 {
 
-    public InputField Input_Id;
-    public InputField Input_Pass;
+    public TMP_InputField Input_Id;
+    public TMP_InputField Input_Pass;
     public Text errorMassage;
     public string preUserName;
     public string prePassWord;
-
+    InputFieldTabManager inputFieldTabMrg;
 
     private void Start()
     {
-        //ClickedLogInBtn();
+        inputFieldTabMrg = new InputFieldTabManager();
+        inputFieldTabMrg.Add(Input_Id);
+        inputFieldTabMrg.Add(Input_Pass);
+        Input_Id.Select();
+        inputFieldTabMrg.SetFocus(0);
     }
     private void Update()
     {
@@ -33,6 +38,7 @@ public class Login_Manager : MonoBehaviour
             Input_Id.text = "choigwuhyung2";
             Input_Pass.text = "pwd";
         }
+        inputFieldTabMrg.CheckFocus();
     }
     public void ClickedLogInBtn()
     {
