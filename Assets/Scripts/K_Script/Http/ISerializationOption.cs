@@ -4,4 +4,6 @@ public interface ISerializationOption
     T Deserialize<T>(string text);
 
     string Serialize(string text);
+
+
 }

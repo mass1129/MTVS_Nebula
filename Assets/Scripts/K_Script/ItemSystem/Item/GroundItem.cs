@@ -8,7 +8,10 @@ public class GroundItem : MonoBehaviourPun, IPunObservable
     public ItemObject item;
 
     public ItemDatabaseObject database;
-
+    private void Start()
+    {
+        
+    }
     public void SetItem(int id, int uniqueId)
     {
         photonView.RPC("RPCSetItem", RpcTarget.AllBuffered, id, uniqueId);

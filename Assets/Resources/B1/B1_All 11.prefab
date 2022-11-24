@@ -32,6 +32,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2751123502690247840}
   - {fileID: 2598858671915214497}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -86,9 +87,11 @@ MonoBehaviour:
     m_RotationOrder: 4
   toRotateObj: {fileID: 0}
   toRotateV3: {x: 0, y: 0, z: 0}
-  effect: {fileID: 1530339630390668, guid: e6412bc258abd2b4cb0553b84c9ed60a, type: 3}
+  winEffect: {fileID: 1530339630390668, guid: e6412bc258abd2b4cb0553b84c9ed60a, type: 3}
+  loseEffect: {fileID: 1792092052645256, guid: 27ec34c76b42aac46a11d91d9577f6af, type: 3}
   effectPos: {fileID: 4515395148369782379}
-  effectPath: B1
+  textPos: {fileID: 2751123502690247840}
+  moneyFactory: 1
 --- !u!95 &4770088083557559196
 Animator:
   serializedVersion: 4
@@ -131,6 +134,37 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!1 &5396777247920604343
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2751123502690247840}
+  m_Layer: 14
+  m_Name: textPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2751123502690247840
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5396777247920604343}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4.0777473, y: 1.17, z: 3.954997}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5116308597853357191}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &3434066819781528434
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -140,7 +174,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 844778583526976979, guid: ee414084cedc0774aa4e4407c4b334cf, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 844778583526976979, guid: ee414084cedc0774aa4e4407c4b334cf, type: 3}
       propertyPath: m_LocalPosition.x

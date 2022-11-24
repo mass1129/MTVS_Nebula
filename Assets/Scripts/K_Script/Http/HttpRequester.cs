@@ -84,7 +84,7 @@ public class HttpRequester
             var result = _serializionOption.Serialize(request.downloadHandler.text);
             if (token != null)
                 SetToken(request.downloadHandler.text);
-
+    
 
            
 
@@ -98,7 +98,50 @@ public class HttpRequester
         }
 
     }
-   // private string token = null;
+    public async Task<TResultType> Post1<TResultType>(string url, string json) //<TResultType> Get<TResultType>(string url)
+    {
+        try
+        {
+            string token = PlayerPrefs.GetString("PlayerToken");
+            using var request = UnityWebRequest.Post(url, json);
+
+            byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
+            request.uploadHandler = new UploadHandlerRaw(jsonToSend);
+            request.SetRequestHeader("Content-Type", _serializionOption.ContentType);
+            if (token != null)
+                request.SetRequestHeader("Authorization", "Bearer " + token);
+
+
+            var operation = request.SendWebRequest();
+
+            while (!operation.isDone)
+                await Task.Yield();
+
+
+
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError($"Failed: {request.error}");
+            }
+            var result = _serializionOption.Deserialize<TResultType>(request.downloadHandler.text);
+            return result;
+
+            if (token != null)
+                SetToken(request.downloadHandler.text);
+
+
+
+
+        }
+
+        catch (Exception ex)
+        {
+            Debug.LogError($"{nameof(Get)} failed: {ex.Message}");
+            return default;
+
+        }
+
+    }
     int SetToken(string _input)
     {
         // 로그아웃시 토큰 초기화

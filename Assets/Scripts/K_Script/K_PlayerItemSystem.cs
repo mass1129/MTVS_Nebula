@@ -55,6 +55,7 @@ public class K_PlayerItemSystem : MonoBehaviourPun
         {
             //_item을 grounditem컴포넌트의 item변수의 아이템으로 만든다.
             Item _item = new Item(item.item);
+            Debug.Log(_item.name);
             switch (item.item.type)
             {
                 case ItemType.Hair:

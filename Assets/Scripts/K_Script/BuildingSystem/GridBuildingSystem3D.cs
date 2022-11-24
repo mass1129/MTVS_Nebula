@@ -139,7 +139,7 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
             else 
             {
                 // Error!
-                UtilsClass.CreateWorldTextPopup("Cannot Build Here!", mousePosition);
+                UtilsClass.CreateWorldTextPopup("자리가 없습니다!", mousePosition);
             }
         }
     }

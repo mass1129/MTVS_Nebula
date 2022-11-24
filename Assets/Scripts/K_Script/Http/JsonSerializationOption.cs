@@ -38,4 +38,5 @@ public class JsonSerializationOption : ISerializationOption
             return default;
         }
     }
+   
 }
