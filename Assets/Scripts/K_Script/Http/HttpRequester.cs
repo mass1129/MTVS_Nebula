@@ -5,6 +5,8 @@ using UnityEngine.Networking;
 
 public class HttpRequester
 {
+    public Action onComplete;
+    public Action onError;
     //
     private readonly ISerializationOption _serializionOption;
 
@@ -75,16 +77,22 @@ public class HttpRequester
             while (!operation.isDone)
                 await Task.Yield();
 
-
+            
 
             if (request.result != UnityWebRequest.Result.Success)
             {
                 Debug.LogError($"Failed: {request.error}");
                 Debug.LogError($"Failed: {request.downloadHandler.text}");
+                onError();
             }
-            var result = _serializionOption.Serialize(request.downloadHandler.text);
-            if (token != null)
-                SetToken(request.downloadHandler.text);
+            else
+            {
+                var result = _serializionOption.Serialize(request.downloadHandler.text);
+                if (token != null)
+                    SetToken(request.downloadHandler.text);
+                onComplete();
+            }
+
 
 
            

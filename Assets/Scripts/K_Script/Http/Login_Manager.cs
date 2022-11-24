@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
-
+using UnityEngine.Networking;
 
 [System.Serializable]
 public class LoginInfo
@@ -65,10 +65,17 @@ public class Login_Manager : MonoBehaviour
         var url = "ec2-43-201-62-61.ap-northeast-2.compute.amazonaws.com:8001/auth/login";
 
         var httpReq = new HttpRequester(new JsonSerializationOption());
-
+        httpReq.onError = () =>
+        {
+            //여기서 오류 팝업 나오도록 설정
+            Debug.Log("로그인 실패");
+        };
+        httpReq.onComplete = () =>
+        {
+            SceneManager.LoadScene(1);
+        };
         await httpReq.Post(url, json);
-
-        SceneManager.LoadScene(1);
+        
     }
     public async void GetAvatorInfo()
     {
