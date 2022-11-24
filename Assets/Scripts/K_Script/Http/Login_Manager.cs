@@ -35,8 +35,8 @@ public class Login_Manager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            Input_Id.text = "choigwuhyung2";
-            Input_Pass.text = "pwd";
+            Input_Id.text = preUserName;
+            Input_Pass.text = prePassWord;
         }
         inputFieldTabMrg.CheckFocus();
     }
