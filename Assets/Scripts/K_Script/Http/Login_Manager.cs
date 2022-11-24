@@ -69,6 +69,10 @@ public class Login_Manager : MonoBehaviour
         {
             //여기서 오류 팝업 나오도록 설정
             Debug.Log("로그인 실패");
+            errorMassage.text = "아이디/비밀번호 입력이 틀립니다. 다시 입력해 주십시오.";
+            Input_Id.text = "";
+            Input_Pass.text = "";
+
         };
         httpReq.onComplete = () =>
         {

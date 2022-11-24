@@ -350,8 +350,9 @@ namespace Agora_RTC_Plugin.API_Example.Examples.Advanced.ScreenShare
             go.name = goName;
             // to be renderered onto
             go.AddComponent<RawImage>();
+            go.GetComponent<RawImage>().raycastTarget = false;
             // make the object draggable
-            go.AddComponent<UIElementDrag>();
+            //go.AddComponent<UIElementDrag>();
             var canvas = GameObject.Find("VideoCanvas");
             if (canvas != null)
             {
