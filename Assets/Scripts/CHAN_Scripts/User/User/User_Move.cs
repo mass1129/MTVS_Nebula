@@ -33,10 +33,10 @@ public class User_Move : MonoBehaviourPun, IPunObservable
     float Rotate_Yaw;
     Vector3 receivePos;
     Quaternion receiveRot;
-    bool mouseOn;
     string temp_userIsland_ID;
     public AudioSource audio;
     public AudioClip clip;
+    public string my_Nickname;
     //W: 전진
     //S: 후진 
     //A: 반시계방향 회전 
@@ -65,27 +65,35 @@ public class User_Move : MonoBehaviourPun, IPunObservable
         btn_EnterRoom.GetComponentInChildren<Button>().onClick.AddListener(OnClickEnterBtn);
         btn_EnterRoom.SetActive(false);
         animator = transform.GetComponentInChildren<Animator>();
+        my_Nickname = photonView.Owner.NickName;
         
     }
 
     [System.Obsolete]
     void Update()
     {
+
         if (photonView.IsMine)
         {
             #region 플레이어 입력기     
             float Input_Forward = Mathf.Clamp(Input.GetAxis("Vertical"), 0, 1);
-            float Input_Rotate_Yaw = Input.GetAxis("Mouse X");
-            float Input_Rotate_Pitch = Input.GetAxis("Mouse Y");
-            #endregion
-            // 일단 이동방향은 앞뒤로 갈 수 있도록 만든다. 
-                //쉬프트키를 눌렀을 때 대쉬되도록 만든다.
-                float totalSpeed;
-           // if (!mouseOn)
+            if (Input.GetMouseButton(1))
             {
-                dir = (transform.forward).normalized;
+                float Input_Rotate_Yaw = Input.GetAxis("Mouse X");
+                float Input_Rotate_Pitch = Input.GetAxis("Mouse Y");
                 Rotate_Pitch -= Input_Rotate_Pitch * rotateSpeed * Time.deltaTime;
                 Rotate_Yaw += Input_Rotate_Yaw * rotateSpeed * Time.deltaTime;
+                MouseVisual(false);
+            }
+            MouseVisual(true);
+            #endregion
+            // 일단 이동방향은 앞뒤로 갈 수 있도록 만든다. 
+            //쉬프트키를 눌렀을 때 대쉬되도록 만든다.
+            float totalSpeed;
+
+
+                dir = (transform.forward).normalized;
+
 
                 if (Input.GetKey(KeyCode.W))
                 {
@@ -95,7 +103,7 @@ public class User_Move : MonoBehaviourPun, IPunObservable
                 {
                     userSpeed -= accMultipiler * 2 * Time.deltaTime;
                 }
-            }
+
 
             userSpeed = Mathf.Clamp(userSpeed, 0, MaxSpeed);
 
@@ -116,7 +124,7 @@ public class User_Move : MonoBehaviourPun, IPunObservable
 
             if (Input.GetKeyDown(KeyCode.I))
             {
-                MouseVisual(!Cursor.visible);
+                //MouseVisual(!Cursor.visible);
             }
         }
         else
@@ -144,7 +152,7 @@ public class User_Move : MonoBehaviourPun, IPunObservable
             btn_EnterRoom.SetActive(true);
             userName = other.gameObject.GetComponent<Island_Profile>().user_name;
             temp_userIsland_ID = other.gameObject.GetComponent<Island_Profile>().user_IslandID;
-            MouseVisual(true);
+            //MouseVisual(true);
         }
     }
     private void OnTriggerExit(Collider other)
@@ -157,7 +165,7 @@ public class User_Move : MonoBehaviourPun, IPunObservable
         if (photonView.IsMine && other.gameObject.CompareTag("UserIsland"))
         {
             btn_EnterRoom.SetActive(false);
-            MouseVisual(false);
+            //MouseVisual(false);
         }
 
     }
@@ -216,7 +224,6 @@ public class User_Move : MonoBehaviourPun, IPunObservable
     void MouseVisual(bool b)
     {
         Cursor.visible = b;
-        mouseOn = b;
     }
     IEnumerator TurnCollider()
     {

@@ -4005,7 +4005,8 @@ MonoBehaviour:
   user_name: 
   user_IslandID: 
   user_Url: 
-  user_keyword: 
+  user_keyword1: 
+  user_keyword2: 
   profileImage: {fileID: 5694321688245231140}
 --- !u!135 &7658294906305149312
 SphereCollider:
@@ -7320,10 +7321,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3406483297750594212}
     m_Modifications:
-    - target: {fileID: 1290315084184994136, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
-      propertyPath: m_Name
-      value: map_Icon
-      objectReference: {fileID: 0}
     - target: {fileID: 2154560426521832657, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -7368,65 +7365,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2583243629603197087, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
-      propertyPath: m_Color.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2583243629603197087, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
-      propertyPath: m_Color.g
-      value: 0.51682967
-      objectReference: {fileID: 0}
-    - target: {fileID: 2583243629603197087, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4257239604550530057, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
       propertyPath: m_Name
       value: IslandImage
-      objectReference: {fileID: 0}
-    - target: {fileID: 5538840230095038574, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
-      propertyPath: Icon_Colors.Array.data[0].a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5538840230095038574, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
-      propertyPath: Icon_Colors.Array.data[1].a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5538840230095038574, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
-      propertyPath: Icon_Colors.Array.data[2].a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5538840230095038574, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
-      propertyPath: Icon_Colors.Array.data[3].a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5538840230095038574, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
-      propertyPath: Icon_Colors.Array.data[4].a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6425589532122016927, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6425589532122016927, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6425589532122016927, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6425589532122016927, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 187
-      objectReference: {fileID: 0}
-    - target: {fileID: 6425589532122016927, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8107845150500001936, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}

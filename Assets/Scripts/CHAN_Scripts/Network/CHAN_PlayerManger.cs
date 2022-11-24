@@ -17,13 +17,13 @@ public class CHAN_PlayerManger : MonoBehaviourPun
             {
                 //오브젝트 자식에 있는 플레이어 아이콘을 활성화하고 다른 유저 아이콘은 비활성화 한다.
                 CHAN_PlayerManger.LocalPlayerInstance = this.gameObject;
-                transform.GetChild(1).GetComponent<IconMove>().OnPlayerIcon();
+                transform.GetChild(1).GetComponent<User_IconMove>().OnPlayerIcon();
             }
             else
             {
                 //플레이어 아이콘 비활성화하고 유저 아이콘을 활성화한다.
                 gameObject.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
-                transform.GetChild(1).GetComponent<IconMove>().OnUserIcon();
+                transform.GetChild(1).GetComponent<User_IconMove>().OnUserIcon();
             }
         }
         //JoinRoom 전에 플레이어가 생성되므로 로드시, 오브젝트가 없어지면 안된다. 

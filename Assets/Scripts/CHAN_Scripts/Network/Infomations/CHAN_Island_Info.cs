@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using User_Info;
+using CUI = User_Info.CHAN_Users_Info;
 
 namespace IslandInfo
 {
@@ -99,7 +101,8 @@ namespace IslandInfo
             //딕셔너리에 값들을 모두 넣는다. 
             dic = Island_Dic[key];
             dic.User_IslandId = key;
-            dic.User_IslandKeyword = keyword1;
+            dic.User_IslandKeyword1 = keyword1;
+            dic.User_IslandKeyword2 = keyword2;
             dic.island_Type = Return_IslandType(keyword2);
             dic.island_Pos = pos;
             dic.User_image = url;
@@ -144,10 +147,35 @@ namespace IslandInfo
                 island.transform.GetComponent<Island_Profile>().user_name = info.User_NickName;
                 island.transform.GetComponent<Island_Profile>().user_Url = info.User_image;
                 island.transform.GetComponent<Island_Profile>().user_IslandID = info.User_IslandId;
-                island.transform.GetComponent<Island_Profile>().user_keyword = info.User_IslandKeyword;
+                island.transform.GetComponent<Island_Profile>().user_keyword1 = info.User_IslandKeyword1;
+                island.transform.GetComponent<Island_Profile>().user_keyword2 = info.User_IslandKeyword2;
+                //만약 생성한 유저가 온라인일 경우 아이콘 형태를 교체한다.
+                if (CUI.onlineUsers.ContainsKey(info.User_NickName))
+                {
+                    island.GetComponentInChildren<map_Icon_Controller>().SetOnlineIcon(true);
+                    Debug.LogWarning($"{info.User_NickName} :온라인");
+                }
+                else if (info.User_NickName==PlayerPrefs.GetString("AvatarName"))
+                {
+                    island.GetComponentInChildren<map_Icon_Controller>().SetOnlineIcon(true);
+                    island.GetComponentInChildren<map_Icon_Controller>().gameObject.transform.localScale *= 1.2f;
+                }
+                else 
+                {
+                    island.GetComponentInChildren<map_Icon_Controller>().SetOnlineIcon(false);
+                    island.GetComponentInChildren<map_Icon_Controller>().SetIconColor(info.User_IslandKeyword1);
+                    Debug.LogWarning($"{info.User_NickName} :오프라인");
+                }
+                
                 await Task.Yield();
             }
         }
+        /// <summary>
+        /// 테스트용 섬 생성 함수
+        /// </summary>
+        /// <param name="Island_Dic">섬정보 저장을 위한 딕셔너리</param>
+        /// <param name="Islands"> 섬을 넣을 Transform 좌표</param>
+        /// <returns></returns>
         public async Task InserInfo_Test(Dictionary<string, JsonInfo> Island_Dic, Transform Islands)
         {
             foreach (string i in Island_Dic.Keys)

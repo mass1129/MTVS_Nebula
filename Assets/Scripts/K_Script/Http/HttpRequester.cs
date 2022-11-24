@@ -5,6 +5,8 @@ using UnityEngine.Networking;
 
 public class HttpRequester
 {
+    public Action onComplete;
+    public Action onError;
     //
     private readonly ISerializationOption _serializionOption;
 
@@ -75,16 +77,23 @@ public class HttpRequester
             while (!operation.isDone)
                 await Task.Yield();
 
-
+            
 
             if (request.result != UnityWebRequest.Result.Success)
             {
                 Debug.LogError($"Failed: {request.error}");
+                Debug.LogError($"Failed: {request.downloadHandler.text}");
+                onError();
             }
-            var result = _serializionOption.Serialize(request.downloadHandler.text);
-            if (token != null)
-                SetToken(request.downloadHandler.text);
-    
+            else
+            {
+                var result = _serializionOption.Serialize(request.downloadHandler.text);
+                if (token != null)
+                    SetToken(request.downloadHandler.text);
+                onComplete();
+            }
+
+
 
            
 
@@ -144,18 +153,18 @@ public class HttpRequester
     }
     int SetToken(string _input)
     {
-        // ·Î±×¾Æ¿ô½Ã ÅäÅ« ÃÊ±âÈ­
+        // ï¿½Î±×¾Æ¿ï¿½ï¿½ï¿½ ï¿½ï¿½Å« ï¿½Ê±ï¿½È­
         if (_input == null)
         {
             //token = null;
             return 0;
         }
 
-        // ·Î±×ÀÎ½Ã ÅäÅ« ¼³Á¤
+        // ï¿½Î±ï¿½ï¿½Î½ï¿½ ï¿½ï¿½Å« ï¿½ï¿½ï¿½ï¿½
         string[] temp = _input.Split('"');
 
         if (temp[9] != "token")
-            Debug.Log("ErrorCheck(-1001)"); // ÅäÅ« Çü½Ä ¿¡·¯
+            Debug.Log("ErrorCheck(-1001)"); // ï¿½ï¿½Å« ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
         //token = temp[11];
         PlayerPrefs.SetString("PlayerToken", temp[11]);

@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using User_Info;
+using CUI = User_Info.CHAN_Users_Info;
 
 /// <summary>
 /// 월드의 전반적인 UI를 제어하는 스크립트
@@ -27,21 +29,32 @@ public class SkyView_UI_Manager : MonoBehaviour
     public Transform  Area_Friend_info;
     public Transform Area_Friend_Profile;
     public GameObject Btn_Obj;
-    public Transform Create_Location;
+    public Transform online_Location;
+    public Transform offline_Location;
 
     public string SelectedFriendName;
     private void Start()
     {
-        
         Initialize();
     }
     // 처음에 친구정보를 서버에 모두 가져온다고 가정 
     // 버튼을 만드는 함수를 만들자 
     void MakeFriendsBtn()
     {
+        //서버내 모든 유저수 만큼 반복
         foreach(string key in Island_Information.instance.Island_Dic.Keys)
         {
-            GameObject btn = Instantiate(Btn_Obj, Create_Location);
+            GameObject btn = null;
+            //만약 key값의 유저이름이 온라인 리스트에 있을 경우
+                if (CUI.onlineUsers.ContainsKey(Island_Information.instance.Island_Dic[key].User_NickName))
+                { 
+                    btn = Instantiate(Btn_Obj, online_Location); 
+                }
+                else
+                { 
+                    btn = Instantiate(Btn_Obj, offline_Location); 
+                }
+
             //버튼의 텍스트를 바꾼다. 
             btn.GetComponent<Btn_FriendInfo>().image = Island_Information.instance.Island_Dic[key].User_image;
             btn.GetComponent<Btn_FriendInfo>().NickName = Island_Information.instance.Island_Dic[key].User_NickName;

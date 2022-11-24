@@ -6,6 +6,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using PN=Photon.Pun.PhotonNetwork;
+using User_Info;
+using CUI=User_Info.CHAN_Users_Info;
 
 public class CHAN_GameManager : MonoBehaviourPunCallbacks
 {
@@ -54,23 +56,37 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
     }
     public void Connect()
     {
+        //유저 아이디를 커스텀으로 설정
+        AuthenticationValues authValues = new AuthenticationValues(PlayerPrefs.GetString("AvatarName"));
+        PN.AuthValues = authValues;
+        PN.NickName = PlayerPrefs.GetString("AvatarName");
         // 마스터 서버에 접속한다.
         PN.ConnectUsingSettings();
-        PN.NickName = PlayerPrefs.GetString("AvatarName");
     }
     public override void OnConnectedToMaster()
     {
         // 서버에 접속하면 Room으로 바로 입장한다. 
         base.OnConnectedToMaster();
-        PN.JoinOrCreateRoom(roomName,roomOption(), TypedLobby.Default);
+        //유저 정보 조회는 마스터 서버시점부터 시작된다.
+        PN.FindFriends(CUI.userLists.ToArray());
+        PN.JoinOrCreateRoom(roomName, roomOption(), TypedLobby.Default);
+
     }
-    public override void OnCreatedRoom()
+    public override void OnFriendListUpdate(List<FriendInfo> friendList)
     {
-        base.OnCreatedRoom();
+        if (CUI.onlineUsers.Count > 0) CUI.onlineUsers.Clear();
+        foreach (FriendInfo info in friendList)
+        {
+            Debug.LogWarning("유저정보 받음 :" + info.UserId + "지금 온라인?" + info.IsOnline);
+            if (info.IsOnline)
+            {
+                CUI.onlineUsers[info.UserId] = info.Room;
+            }
+        }
+
     }
     public override void OnJoinedRoom()
     {
-        base.OnJoinedRoom();
         SetPlayer(prefab);
         if (sceneName == name_SkyScene)
         { 
@@ -93,7 +109,9 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
     }
     RoomOptions roomOption()
     {
-        RoomOptions roomOps = new RoomOptions();
+        RoomOptions roomOps = new();
+        //플레이어 유저ID 공유 가능하도록 설정
+        //roomOps.PublishUserId = true;
         //하늘씬 뷰는 일단 20명 제한
         if (roomName == "sky")
         {

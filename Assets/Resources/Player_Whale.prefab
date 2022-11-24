@@ -220,6 +220,7 @@ MonoBehaviour:
   islandSelected: 0
   audio: {fileID: 7221736026810180726}
   clip: {fileID: 8300000, guid: 819474214d16b9343bb3fa616d0a3a60, type: 3}
+  my_Nickname: 
 --- !u!135 &1640232147893149682
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -968,6 +969,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3252203795677890439}
     m_Modifications:
+    - target: {fileID: 3032051977622538910, guid: 9debe057b9b5a6f47b0507acca8cc098, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3032051977622538910, guid: 9debe057b9b5a6f47b0507acca8cc098, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3032051977622538910, guid: 9debe057b9b5a6f47b0507acca8cc098, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3032051977622538910, guid: 9debe057b9b5a6f47b0507acca8cc098, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3032051978186806972, guid: 9debe057b9b5a6f47b0507acca8cc098, type: 3}
       propertyPath: m_Name
       value: PlayerIcon
@@ -1016,9 +1033,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8912125008718193207, guid: 9debe057b9b5a6f47b0507acca8cc098, type: 3}
-      propertyPath: posY
-      value: 300
+    - target: {fileID: 3032051979005057551, guid: 9debe057b9b5a6f47b0507acca8cc098, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3032051979005057551, guid: 9debe057b9b5a6f47b0507acca8cc098, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3032051979005057551, guid: 9debe057b9b5a6f47b0507acca8cc098, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3032051979005057551, guid: 9debe057b9b5a6f47b0507acca8cc098, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5051584331055777029, guid: 9debe057b9b5a6f47b0507acca8cc098, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9debe057b9b5a6f47b0507acca8cc098, type: 3}
