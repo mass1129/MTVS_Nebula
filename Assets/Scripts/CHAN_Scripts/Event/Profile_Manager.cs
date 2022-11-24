@@ -51,7 +51,7 @@ public class Profile_Manager : MonoBehaviour
     new_ProfileInfo new_profileInfo = new new_ProfileInfo();
     Profile_Info profile = new Profile_Info();
     public ProfileInfo temp_Info = new ProfileInfo();
-    //해로 생성된 프로필 버튼 위치 지정해주는 함수
+    //새로 생성된 프로필 버튼 위치 지정해주는 함수
     public void transfer(GameObject obj)
     {
         btn_create = obj.transform.GetChild(0).gameObject;

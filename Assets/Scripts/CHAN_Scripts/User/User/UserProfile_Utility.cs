@@ -44,7 +44,8 @@ public class UserProfile_Utility : MonoBehaviour
         var httpRequest = new HttpRequester(new JsonSerializationOption());
         Root result = await httpRequest.Get<Root>(url);
         values = result.results;
-        CreateProfile();
+        //CreateProfile();
+        CreateProfile_New();
     }
     public async void Load_Agora()
     {
@@ -135,24 +136,68 @@ public class UserProfile_Utility : MonoBehaviour
             info.User_Image_Url = i.imageUrl;
             info.User_Island_ID = i.skyIslandId;
             info.texture_info = i.texture;
+            //프로필 오브젝트 생성 부분
             GameObject profile = Instantiate(profile_prefab, profile_pos);
             profile.GetComponentInChildren<Profile_Manager>().transfer(profile);
             profile.GetComponentInChildren<Profile_Manager>().temp_Info.texture_info = info.texture_info;
             profile.GetComponentInChildren<Profile_Manager>().temp_Info.User_Island_ID = info.User_Island_ID;
             Transform Area_Insert =profile.transform.GetChild(4);
+            //이미지 불러오는 함수 
             GetTexture(info.User_Image_Url);
+            //이미지가 불러올 때 까지 잠깐 쉬기
             while(image==null)
             {
                 await Task.Yield();
             }
+            //이미지 불러왔으면 이미지 삽입란에 삽입
             Area_Insert.GetChild(0).GetComponent<RawImage>().texture = image;
+            //키워드 넣는 코드
             for (int j = 0; j < Area_Insert.GetChild(1).childCount; j++)
             {
                 Area_Insert.GetChild(1).GetChild(j).GetComponentInChildren<Text>().text = info.HashTag[j];
             }
             profile.transform.GetChild(6).gameObject.GetComponent<Text>().text = info.User_Name;
+
             await Task.Yield();
         }
+        // 새로운 프로필 아이콘 생성
+        Create_ProfileArea();
+    }
+    async void CreateProfile_New()
+    {
+        foreach (Result i in values)
+        {
+            image = null;
+            ProfileInfo info = new ProfileInfo();
+            info.User_Name = i.name;
+            info.HashTag = i.hashTags;
+            info.User_Image_Url = i.imageUrl;
+            info.User_Island_ID = i.skyIslandId;
+            info.texture_info = i.texture;
+            //프로필 오브젝트 생성 부분
+            GameObject profile = Instantiate(profile_prefab, profile_pos);
+            Profile_Manager_New mgr = profile.GetComponentInChildren<Profile_Manager_New>();
+            mgr.temp_Info.texture_info = info.texture_info;
+            mgr.temp_Info.User_Island_ID = info.User_Island_ID;
+            //이미지 불러오는 함수 
+            GetTexture(info.User_Image_Url);
+            //이미지가 불러올 때 까지 잠깐 쉬기
+            while (image == null)
+            {
+                await Task.Yield();
+            }
+            //이미지 불러왔으면 이미지 삽입란에 삽입
+            profile.transform.GetChild(0).GetChild(3).GetChild(0).GetComponent<RawImage>().texture = image;
+            //mgr.user_Image = image;
+            //키워드 넣는 코드
+            for (int j = 0; j < mgr.keywords.Length; j++)
+            {
+                mgr.keywords[j].text= info.HashTag[j];
+            }
+            mgr.user_Nickname.text = info.User_Name;
+            await Task.Yield();
+        }
+        // 새로운 프로필 아이콘 생성
         Create_ProfileArea();
     }
 
@@ -182,10 +227,11 @@ public class UserProfile_Utility : MonoBehaviour
         if (values.Count < 3)
         { 
             GameObject profile = Instantiate(profile_prefab, profile_pos);
-            profile.GetComponentInChildren<Profile_Manager>().transfer(profile);
-            profile.SetActive(true);
-            profile.GetComponentInChildren<Profile_Manager>().Initialize();
+            //profile.GetComponentInChildren<Profile_Manager>().transfer(profile);
+            //profile.SetActive(true);
+            //profile.GetComponentInChildren<Profile_Manager>().Initialize();
         }
+        
         //LoadingScene.SetActive(false);
     }
 }

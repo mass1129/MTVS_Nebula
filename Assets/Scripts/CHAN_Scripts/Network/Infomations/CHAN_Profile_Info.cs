@@ -16,7 +16,7 @@ namespace UserProfile
         public string imageUrl { get; set; }
         public List<string> hashTags { get; set; }
         public int skyIslandId { get; set; }
-        public Texture texture { get; set; }
+        public profile_Texture texture { get; set; }
     }
     public class Root
     {
@@ -42,7 +42,7 @@ namespace UserProfile
         public int Shoes { get; set; }
     }
 
-    public class Texture
+    public class profile_Texture
     {
         public List<double> TeethColor { get; set; }
         public List<double> OralCavityColor { get; set; }
@@ -65,7 +65,7 @@ namespace UserProfile
         public string User_Image_Url;
         public List<string> HashTag;
         public int User_Island_ID;
-        public Texture texture_info;
+        public profile_Texture texture_info;
     }
     public class new_ProfileInfo
     {
