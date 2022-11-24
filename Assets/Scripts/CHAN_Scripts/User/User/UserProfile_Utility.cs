@@ -65,7 +65,6 @@ public class UserProfile_Utility : MonoBehaviour
         {
             await Task.Yield();
         }
-        www.Dispose();
         if (www.isNetworkError || www.isHttpError)
         {
             Debug.Log(www.error);
@@ -74,6 +73,7 @@ public class UserProfile_Utility : MonoBehaviour
         {
             Debug.Log("프로필 삭제 성공");
         }
+        www.Dispose();
     }
     public async void Post(string avatarName,List<string> hashTag, UnityEngine.Texture2D Image )
     {
@@ -87,8 +87,19 @@ public class UserProfile_Utility : MonoBehaviour
             string tagName = "tag" + (i+1).ToString();
             formData.AddField(tagName, hashTag[i]);
         }
-        byte[] bytes = Image.EncodeToPNG(); ;
-        formData.AddBinaryData("image", bytes , "avatarName.png", "image/png");
+        if (PlayerPrefs.GetString("extension") == ".png")
+        {
+            byte[] bytes = Image.EncodeToPNG();
+            formData.AddBinaryData("image", bytes, avatarName+".png", "image/png");
+            Debug.Log("PNG 엔코딩");
+        }
+        else if (PlayerPrefs.GetString("extension") == ".jpg")
+        {
+            byte[] bytes = Image.EncodeToJPG();
+            formData.AddBinaryData("image", bytes, avatarName + ".jpg", "image/jpg");
+            Debug.Log("jpg 엔코딩");
+        }
+        
 
 
 

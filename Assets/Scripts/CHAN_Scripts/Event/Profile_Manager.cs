@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UserProfile;
+using System.IO;
 
 // 플레이어 프로필 정보를 저장할 클래스 
 
@@ -140,7 +141,18 @@ public class Profile_Manager : MonoBehaviour
     [System.Obsolete]
     public void AddImage()
     {
-        paths = StandaloneFileBrowser.OpenFilePanel("Open File", "", "png", true);
+        var extensions = new[] {
+        new ExtensionFilter("Image Files", "png", "jpg", "jpeg" ),
+            };
+        paths = StandaloneFileBrowser.OpenFilePanel("Open File","", extensions, true);
+        if (paths.Length <= 0)
+        {
+            Debug.Log("안골라짐");
+            return;
+        }
+        
+        PlayerPrefs.SetString("extension", Path.GetExtension(paths[0]));
+        Debug.Log("이미지 불러옴, 확장자: " + Path.GetExtension(paths[0]));
         StartCoroutine(GetTexture());
     }
 
@@ -157,7 +169,28 @@ public class Profile_Manager : MonoBehaviour
         else
         {
             UnityEngine.Texture2D myTexture = ((DownloadHandlerTexture)www.downloadHandler).texture;
-            new_profileInfo.ProfileImage = myTexture;
+            // 만약 이미지의 용량이 허용용량 이상으로 업로드 됐으면 오류 메세지 팝업 시키는 메세지 송출시킨다.
+            if (PlayerPrefs.GetString("extension") == ".jpg")
+            {
+                byte[] image = myTexture.EncodeToJPG();
+                if (image.Length >= 14000)
+                {
+                    //오류 팝업창 나오도록
+                }
+            }
+            else if (PlayerPrefs.GetString("extension") == ".png")
+            {
+                byte[] image = myTexture.EncodeToPNG();
+                if (image.Length >= 14000)
+                {
+                    //오류 팝업창 나오도록
+                }
+            }
+            else
+            { 
+                new_profileInfo.ProfileImage = myTexture;
+            }
+            
         }
     }
     #endregion

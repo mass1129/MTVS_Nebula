@@ -12,7 +12,7 @@ namespace IslandInfo
     {
         public Dictionary<string, string[]> keywords;
 
-        public string[] compare_category = { "요리/레시피", "해외여행", "캠핑/등산","게임" };
+        public string[] compare_category = { "엔터테인먼트/예술", "라이프스타일/취미", "여행/맛집","스포츠","지식/동향" };
         public string[] island_category = { "Island_Backyard", "Island_Beach", "Island_Cave", "Island_House", "Island_Pond", "Island_Port", "Island_River", "Island_Snow" };
         
     }
@@ -103,7 +103,7 @@ namespace IslandInfo
             dic.User_IslandId = key;
             dic.User_IslandKeyword1 = keyword1;
             dic.User_IslandKeyword2 = keyword2;
-            dic.island_Type = Return_IslandType(keyword2);
+            dic.island_Type = Return_IslandType(keyword1);
             dic.island_Pos = pos;
             dic.User_image = url;
             dic.User_NickName = nickName;
