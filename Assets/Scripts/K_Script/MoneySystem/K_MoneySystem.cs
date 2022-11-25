@@ -1,32 +1,39 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 
-public class K_MoneySystem : MonoBehaviour, IShopCustomer
+public class K_MoneySystem : MonoBehaviourPun, IShopCustomer
 {
     public event EventHandler OnGoldAmountChanged;
     [SerializeField]
     private int goldAmount;
-
-    void Start()
+    public K_01_Character player;
+    void Awake()
     {
-        
+        if(!photonView.IsMine) this.enabled = false;
     }
 
     public void AddGoldAmount(int addGoldAmount)
     {
-        goldAmount += addGoldAmount;
+        if (!photonView.IsMine) return;
+            goldAmount += addGoldAmount;
         OnGoldAmountChanged?.Invoke(this, EventArgs.Empty);
         Debug.Log("currentGold :" + goldAmount);
     }
     public int GetGoldAmount()
-    {   Debug.Log("currentGold :" + goldAmount);
-        return goldAmount;
+    {
+       
+            Debug.Log("currentGold :" + goldAmount);
+            return goldAmount;
+        
+        
     }
     public void UpdateMoney()
     {
+        if (!photonView.IsMine) return;
         MoneyLoad();
         OnGoldAmountChanged?.Invoke(this, EventArgs.Empty);
         Debug.Log("currentGold :" + goldAmount);
@@ -34,6 +41,7 @@ public class K_MoneySystem : MonoBehaviour, IShopCustomer
 
     public bool TrySpendGoldAmount(int spendGoldAmount)
     {
+        
         if (GetGoldAmount() >= spendGoldAmount)
         {
             goldAmount -= spendGoldAmount;
@@ -55,7 +63,8 @@ public class K_MoneySystem : MonoBehaviour, IShopCustomer
 
     public async void MoneyLoad()
     {
-        var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/inventory/money/" + PlayerPrefs.GetString("AvatarName");
+        if (!photonView.IsMine) return;
+        var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/inventory/money/" + player.avatarName;
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
         H_Money_Root result2 = await httpReq.Get<H_Money_Root>(url);

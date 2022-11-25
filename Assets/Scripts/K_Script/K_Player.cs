@@ -50,7 +50,7 @@ public class K_Player : MonoBehaviourPun, IPunObservable
     [HideInInspector] public float h, v;
     [HideInInspector] public Vector3 dir;
 
-
+    public bool canMove = true;
 
 
     public float turnSmoothTime = 0.1f;
@@ -75,7 +75,7 @@ public class K_Player : MonoBehaviourPun, IPunObservable
 
     private void Awake()
     {
-        
+        canMove = true;
     }
     private void Start()
     {
@@ -84,13 +84,9 @@ public class K_Player : MonoBehaviourPun, IPunObservable
     }
     private void OnEnable()
     {
-        if (photonView.IsMine)
-        {
-            avatarName = PlayerPrefs.GetString("AvatarName");
-            ownIslandID = PlayerPrefs.GetString("Island_ID");
-            Debug.Log("AvatarName : " + avatarName + "  Island_ID : " + ownIslandID);
-        }
+        
     }
+    
     private void Update()
     {
         if (!photonView.IsMine)
@@ -98,6 +94,8 @@ public class K_Player : MonoBehaviourPun, IPunObservable
         Updated();
         //Updated_UpperBody();
         GroundedCheck();
+        
+       
         Debug.Log(CurrentState.ToString() + "," + PhotonNetwork.CurrentRoom.Name + "," + PlayerPrefs.GetString("AvatarName") + "," + avatarName + "," + ownIslandID+ "," + PlayerPrefs.GetString("User_Island_ID"));
         //Debug.Log(cc.isGrounded);
     }

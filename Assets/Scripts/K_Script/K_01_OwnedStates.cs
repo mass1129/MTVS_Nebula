@@ -19,6 +19,7 @@ namespace K_01_OwnedStates
         {
             //entity.velocity.y += entity.gravity * Time.deltaTime;
             //entity.velocity.y = Mathf.Clamp(entity.velocity.y, -6f, 100);
+            if (!entity.canMove) return;
 
             if (Input.GetButton("Horizontal") || (Input.GetButton("Vertical")))
             {   
@@ -315,7 +316,7 @@ namespace K_01_OwnedStates
             entity.input.x = 0;
             entity.input.y = 0;
             entity.SetTrigger("ThirdMove");
-            entity.gridBuildingSystem.TestLoad();
+            entity.gridBuildingSystem.TestLoad(entity.ownIslandID);
             entity.camMgr.InActiveBuildingSystem(true);
             entity.camMgr.buildCamera.gameObject.SetActive(true);
             

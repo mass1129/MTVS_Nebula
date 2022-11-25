@@ -54,15 +54,19 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
 
 
     }
-    private void OnEnable()
-    {
 
-        
+    public void FirstLoadBuilding()
+    {   
+        if(photonView.IsMine)
+        photonView.RPC("RPCFirstLoadBuilding", RpcTarget.AllBuffered);
+    }
+    [PunRPC]
+    public void RPCFirstLoadBuilding()
+    {
         if (PhotonNetwork.CurrentRoom.PlayerCount <= 1)
-            TestLoad();
+            TestLoad(PlayerPrefs.GetString("User_Island_ID"));
 
         gameObject.SetActive(false);
-
     }
     private void Update()
     {
@@ -365,7 +369,7 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
 
         string json = JsonUtility.ToJson(saveObject, true);
         Debug.Log(json);
-        var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/skyisland/" + PlayerPrefs.GetString("Island_ID");
+        var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/skyisland/" + s;
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
         await httpReq.Post(url,json);
@@ -373,9 +377,9 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
     }
 
    
-    public async void TestLoad()
+    public async void TestLoad(string s)
     {
-        var url = "ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/skyisland/" + PlayerPrefs.GetString("User_Island_ID");
+        var url = "ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/skyisland/" + s;
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
         H_Building_Root result2 = await httpReq.Get<H_Building_Root>(url);

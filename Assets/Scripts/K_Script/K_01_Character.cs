@@ -60,10 +60,15 @@ public class K_01_Character : K_Player
             InActiveObj();
         }
 
-
-
-
-
+    }
+    public void PlayerInfoSetting()
+    {
+        if (photonView.IsMine)
+        {
+            avatarName = PlayerPrefs.GetString("AvatarName");
+            ownIslandID = PlayerPrefs.GetString("Island_ID");
+            Debug.Log("AvatarName : " + avatarName + "  Island_ID : " + ownIslandID);
+        }
     }
     public void InActiveObj()
     {
@@ -131,7 +136,7 @@ public class K_01_Character : K_Player
 
     public void ChangeToBuildingState()
     {   
-       if(PhotonNetwork.CurrentRoom.Name == PlayerPrefs.GetString("AvatarName"))
+       if(PhotonNetwork.CurrentRoom.Name == avatarName)
        {
             if (CurrentState == PlayerStates.Idle)
                 ChangeState(PlayerStates.BuildingMode);

@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Photon.Pun;
 
-public class K_MoneyUI : MonoBehaviour
+public class K_MoneyUI : MonoBehaviourPun
 {
     public TextMeshProUGUI goldText;
     public K_MoneySystem player; 
@@ -12,6 +13,7 @@ public class K_MoneyUI : MonoBehaviour
 
     private void OnEnable()
     {
+        if (!player.photonView.IsMine) return;
         StartCoroutine(MoneyCoroutine());
         UpdateText();
         player.OnGoldAmountChanged += Instance_OnGoldAmountChanged;
@@ -27,6 +29,7 @@ public class K_MoneyUI : MonoBehaviour
     }
     private void OnDestroy()
     {
+        if (!player.photonView.IsMine) return;
         player.OnGoldAmountChanged -= Instance_OnGoldAmountChanged;
     }
     private void UpdateText()

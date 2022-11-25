@@ -13,7 +13,7 @@ namespace UltimateClean
 
         private GameObject m_background;
         bool isOpened = false;
-        bool isClosed = false;
+        public GameObject canvas;
 
         public void Open()
         {   if(!isOpened)
@@ -66,7 +66,7 @@ namespace UltimateClean
             image.CrossFadeAlpha(1.0f, 0.4f, false);
             image.raycastTarget = true;
 
-            var canvas = GameObject.Find("----PlayerUI----");
+            
             m_background.transform.localScale = new Vector3(1, 1, 1);
             m_background.GetComponent<RectTransform>().sizeDelta = canvas.GetComponent<RectTransform>().sizeDelta;
             m_background.transform.SetParent(canvas.transform, false);

@@ -20,7 +20,7 @@ public class K_UserWorldBuildingMGR : MonoBehaviourPun
     {
        
        
-            gridBuildingSystem.TestLoad();
+           
          
         PhotonNetwork.Destroy(gameObject);
         

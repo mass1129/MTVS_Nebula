@@ -4,14 +4,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using UltimateClean;
 
 public class ChattingSet : MonoBehaviourPun
 {
     
     //인풋 필드의 값을 가져온다.
     [Header("입력부")]
-    public InputField chats;
- 
+    public TMP_InputField chats;
+    
     public GameObject chatItem;
     [Header("채팅영역 관련 설정들")]
     // 이전 Content 의 H
@@ -22,8 +24,8 @@ public class ChattingSet : MonoBehaviourPun
     public GameObject Area_Scroll;
     public GameObject Area_Chat;
     [Header("버튼 관련 설정들")]
-    public Button btn_Enter;
-    public Button btn_HideChatMenu;
+    public CleanButton btn_Enter;
+    public CleanButton btn_HideChatMenu;
     [Header("기타")]
     Color32 idColor;
 
