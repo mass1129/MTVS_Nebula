@@ -102,7 +102,8 @@ public class Island_Profile : MonoBehaviourPun
     }
     void ShowImage()
     {
-        profileImage.transform.LookAt(playerPos);
+        //profileImage.transform.LookAt(playerPos);
+        profileImage.transform.forward = playerPos.forward;
     }
 
 }
