@@ -23,6 +23,9 @@ public class JsonInfo
     public string User_IslandId;
     public string User_IslandKeyword1;
     public string User_IslandKeyword2;
+    public string User_IslandKeyword3;
+    public string User_IslandKeyword4;
+    public int User_followers;
     // 하늘섬 오브젝트
     public GameObject User_Obj;
 
@@ -45,7 +48,7 @@ public class Island_Information :MonoBehaviourPun
     public Dictionary<string, JsonInfo> Island_Dic = new Dictionary<string, JsonInfo>();
     // 유저들의 닉네임을 저장할 리스트(Key:닉네임)
     public List<string> User_name = new List<string>();
-    float dis_multiplier = 300;
+    float dis_multiplier = 350;
     public string jsonFile;
 
     #region 중간에 정보가 추가되거나 삭제됐을 때, 이용되는 함수모음
@@ -101,7 +104,7 @@ public class Island_Information :MonoBehaviourPun
 
     public async void Load()
     {
-        var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/skyisland";
+        var url = "https://resource.mtvs-nebula.com/skyisland";
         var httpRequest = new HttpRequester(new JsonSerializationOption());
         Root result = await httpRequest.Get<Root>(url);
         await parsing.LoadFromJson(result.results, Island_Dic, dis_multiplier);

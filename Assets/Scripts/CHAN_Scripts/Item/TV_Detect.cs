@@ -9,9 +9,10 @@ public class TV_Detect : MonoBehaviour
     GameObject detectPlayer;
     //readonly Item_TVManager_Agora _mgr = Item_TVManager_Agora.instance;
     public Text message;
+    public GameObject DropDown;
     void Start()
     {
-
+        ManageDropdown(false);
     }
 
     // Update is called once per frame
@@ -28,6 +29,7 @@ public class TV_Detect : MonoBehaviour
             detectPlayer.AddComponent<Item_RemoteController>();
             // 다른플레이어에게 리모콘을 못주도록 막는다.
             Item_TVManager_Agora.instance.TurnControl();
+            ManageDropdown(true);
             Debug.LogWarning("리모콘 권한 부여됨");
         }
         else if (Input.GetKeyDown(KeyCode.F) && Item_TVManager_Agora.instance.hasControl == true && detectPlayer.transform.GetComponent<Item_RemoteController>() && !Item_TVManager_Agora.instance.moving)
@@ -36,6 +38,7 @@ public class TV_Detect : MonoBehaviour
             Destroy(detectPlayer.GetComponent<Item_RemoteController>());
             // 리모콘 권한을 다시 부여한다.
             Item_TVManager_Agora.instance.TurnControl();
+            ManageDropdown(false);
             Debug.LogWarning("리모콘 권한 초기화");
         }
     }
@@ -66,5 +69,10 @@ public class TV_Detect : MonoBehaviour
             message.text = "TV";
 
         }
+    }
+    void ManageDropdown(bool b)
+    {
+         DropDown.GetComponent<Image>().enabled = b;
+        DropDown.transform.GetChild(0).GetComponent<Text>().enabled = b;
     }
 }

@@ -63,8 +63,7 @@ public class K_MoneySystem : MonoBehaviourPun, IShopCustomer
 
     public async void MoneyLoad()
     {
-        if (!photonView.IsMine) return;
-        var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/inventory/money/" + player.avatarName;
+        var url = "https://resource.mtvs-nebula.com/inventory/money/" + player.avatarName;
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
         H_Money_Root result2 = await httpReq.Get<H_Money_Root>(url);

@@ -62,13 +62,17 @@ public class Login_Manager : MonoBehaviour
         };
         string json = JsonUtility.ToJson(user, true);
 
-        var url = "ec2-43-201-62-61.ap-northeast-2.compute.amazonaws.com:8001/auth/login";
+        var url = "https://auth.mtvs-nebula.com/auth/login";
 
         var httpReq = new HttpRequester(new JsonSerializationOption());
         httpReq.onError = () =>
         {
             //여기서 오류 팝업 나오도록 설정
             Debug.Log("로그인 실패");
+            errorMassage.text = "아이디/비밀번호 입력이 틀립니다. 다시 입력해 주십시오.";
+            Input_Id.text = "";
+            Input_Pass.text = "";
+
         };
         httpReq.onComplete = () =>
         {
@@ -79,7 +83,7 @@ public class Login_Manager : MonoBehaviour
     }
     public async void GetAvatorInfo()
     {
-        var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/avatar";
+        var url = "https://resource.mtvs-nebula.com/avatar";
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
         H_Av_Root result2 = await httpReq.Get<H_Av_Root>(url);

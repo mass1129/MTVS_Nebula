@@ -14,6 +14,7 @@ public class UserProfile_Utility : MonoBehaviour
     List<Result> values = new List<Result>();
 
     public GameObject profile_prefab;
+    public GameObject new_profile_prefab;
     public Transform profile_pos;
     UnityEngine.Texture image;
     public GameObject LoadingScene;
@@ -40,11 +41,12 @@ public class UserProfile_Utility : MonoBehaviour
 
     public async void Load()
     {
-        var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/avatar";
+        var url = "https://resource.mtvs-nebula.com/avatar";
         var httpRequest = new HttpRequester(new JsonSerializationOption());
         Root result = await httpRequest.Get<Root>(url);
         values = result.results;
-        CreateProfile();
+        //CreateProfile();
+        CreateProfile_New();
     }
     public async void Load_Agora()
     {
@@ -56,7 +58,7 @@ public class UserProfile_Utility : MonoBehaviour
 
     public async void Delete(string avatarName)
     {
-        var uri ="http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/avatar/delete/"+avatarName;
+        var uri ="https://resource.mtvs-nebula.com/avatar/delete/"+avatarName;
         UnityWebRequest www = UnityWebRequest.Delete(uri);
         string token = PlayerPrefs.GetString("PlayerToken");
         www.SetRequestHeader("Authorization", "Bearer " + token);
@@ -65,7 +67,6 @@ public class UserProfile_Utility : MonoBehaviour
         {
             await Task.Yield();
         }
-        www.Dispose();
         if (www.isNetworkError || www.isHttpError)
         {
             Debug.Log(www.error);
@@ -74,10 +75,11 @@ public class UserProfile_Utility : MonoBehaviour
         {
             Debug.Log("프로필 삭제 성공");
         }
+        www.Dispose();
     }
     public async void Post(string avatarName,List<string> hashTag, UnityEngine.Texture2D Image )
     {
-        var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/avatar";
+        var url = "https://resource.mtvs-nebula.com/avatar";
         WWWForm formData = new WWWForm();
         // 아바타 닉네임 입력부
         formData.AddField("AvatarName", avatarName);
@@ -87,8 +89,19 @@ public class UserProfile_Utility : MonoBehaviour
             string tagName = "tag" + (i+1).ToString();
             formData.AddField(tagName, hashTag[i]);
         }
-        byte[] bytes = Image.EncodeToPNG(); ;
-        formData.AddBinaryData("image", bytes , "avatarName.png", "image/png");
+        if (PlayerPrefs.GetString("extension") == ".png")
+        {
+            byte[] bytes = Image.EncodeToPNG();
+            formData.AddBinaryData("image", bytes, avatarName+".png", "image/png");
+            Debug.Log("PNG 엔코딩");
+        }
+        else if (PlayerPrefs.GetString("extension") == ".jpg")
+        {
+            byte[] bytes = Image.EncodeToJPG();
+            formData.AddBinaryData("image", bytes, avatarName + ".jpg", "image/jpg");
+            Debug.Log("jpg 엔코딩");
+        }
+        
 
 
 
@@ -100,7 +113,6 @@ public class UserProfile_Utility : MonoBehaviour
         {
             await Task.Yield();
         }
-        www.Dispose();
         if (www.isNetworkError || www.isHttpError)
         {
             Debug.Log(www.error);
@@ -110,6 +122,7 @@ public class UserProfile_Utility : MonoBehaviour
             Debug.Log("Form 양식 업로드 성공");
             Debug.Log(formData);
         }
+        www.Dispose();
 
     }
 
@@ -124,27 +137,84 @@ public class UserProfile_Utility : MonoBehaviour
             info.User_Image_Url = i.imageUrl;
             info.User_Island_ID = i.skyIslandId;
             info.texture_info = i.texture;
+            //프로필 오브젝트 생성 부분
             GameObject profile = Instantiate(profile_prefab, profile_pos);
             profile.GetComponentInChildren<Profile_Manager>().transfer(profile);
             profile.GetComponentInChildren<Profile_Manager>().temp_Info.texture_info = info.texture_info;
             profile.GetComponentInChildren<Profile_Manager>().temp_Info.User_Island_ID = info.User_Island_ID;
             Transform Area_Insert =profile.transform.GetChild(4);
+            //이미지 불러오는 함수 
             GetTexture(info.User_Image_Url);
+            //이미지가 불러올 때 까지 잠깐 쉬기
             while(image==null)
             {
                 await Task.Yield();
             }
+            //이미지 불러왔으면 이미지 삽입란에 삽입
             Area_Insert.GetChild(0).GetComponent<RawImage>().texture = image;
+            //키워드 넣는 코드
             for (int j = 0; j < Area_Insert.GetChild(1).childCount; j++)
             {
                 Area_Insert.GetChild(1).GetChild(j).GetComponentInChildren<Text>().text = info.HashTag[j];
             }
             profile.transform.GetChild(6).gameObject.GetComponent<Text>().text = info.User_Name;
+
             await Task.Yield();
         }
+        // 새로운 프로필 아이콘 생성
         Create_ProfileArea();
     }
-
+    async void CreateProfile_New()
+    {
+        foreach (Result i in values)
+        {
+            image = null;
+            ProfileInfo info = new ProfileInfo();
+            info.User_Name = i.name;
+            info.HashTag = i.hashTags;
+            info.User_Image_Url = i.imageUrl;
+            info.User_Island_ID = i.skyIslandId;
+            info.texture_info = i.texture;
+            //프로필 오브젝트 생성 부분
+            GameObject profile = Instantiate(profile_prefab, profile_pos);
+            Profile_Manager_New mgr = profile.GetComponentInChildren<Profile_Manager_New>();
+            mgr.temp_Info.texture_info = info.texture_info;
+            mgr.temp_Info.User_Island_ID = info.User_Island_ID;
+            //이미지 불러오는 함수 
+            GetTexture(info.User_Image_Url);
+            //이미지가 불러올 때 까지 잠깐 쉬기
+            while (image == null)
+            {
+                await Task.Yield();
+            }
+            //이미지 불러왔으면 이미지 삽입란에 삽입
+            profile.transform.GetChild(0).GetChild(3).GetChild(0).GetComponent<RawImage>().texture = image;
+            //mgr.user_Image = image;
+            //키워드 넣는 코드
+            for (int j = 0; j < mgr.keywords.Length; j++)
+            {
+                mgr.keywords[j].text= info.HashTag[j];
+            }
+            mgr.user_Nickname.text = info.User_Name;
+            await Task.Yield();
+        }
+        // 새로운 프로필 아이콘 생성
+        Create_ProfileArea();
+    }
+    public void UpdateProfile(string userName, Texture texture, string[] _keywords)
+    {
+        GameObject profile = Instantiate(profile_prefab, profile_pos);
+        Profile_Manager_New info = profile.GetComponent<Profile_Manager_New>();
+        //오브젝트 만들고 
+        // 오브젝트의 각 부분에 edit에서 생성한정보를 삽닙
+        //클래스에 저장된 정보를 해당  UI에 저장한다. 
+        info.user_Nickname.text = userName;
+        profile.transform.GetChild(0).GetChild(3).GetChild(0).GetComponent<RawImage>().texture = texture;
+        for (int i = 0; i < info.keywords.Length; i++)
+        {
+            info.keywords[i].text = _keywords[i];
+        }
+    }
     async void GetTexture(string url)
     {
 
@@ -166,15 +236,18 @@ public class UserProfile_Utility : MonoBehaviour
 
 
     }
-    void Create_ProfileArea()
+    public void Create_ProfileArea()
     {
         if (values.Count < 3)
         { 
-            GameObject profile = Instantiate(profile_prefab, profile_pos);
-            profile.GetComponentInChildren<Profile_Manager>().transfer(profile);
-            profile.SetActive(true);
-            profile.GetComponentInChildren<Profile_Manager>().Initialize();
+            // 프로필 추가 아이콘을 생성한다. (구름 아이콘)
+          
+            GameObject profile = Instantiate(new_profile_prefab, profile_pos);
+            //profile.GetComponentInChildren<Profile_Manager>().transfer(profile);
+            //profile.SetActive(true);
+            //profile.GetComponentInChildren<Profile_Manager>().Initialize();
         }
+        
         //LoadingScene.SetActive(false);
     }
 }

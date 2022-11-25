@@ -226,7 +226,6 @@ GameObject:
   - component: {fileID: 457696435}
   - component: {fileID: 457696434}
   - component: {fileID: 457696433}
-  - component: {fileID: 1646323741591140022}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -318,21 +317,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &1646323741591140022
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 457696431}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84f2608497d073943923f760f143a28e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  btn_Switch: {fileID: 1439882549540754}
-  image1: {fileID: 741875998}
-  image2: {fileID: 8698999564771355746}
 --- !u!1 &741875998
 GameObject:
   m_ObjectHideFlags: 0
@@ -1867,7 +1851,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba81d7983e5bf754a9a35c4cf90ea755, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nick: user
   name_SkyScene: 5.SkyView_Scene
   name_UserScene: 6.Join_UserWorld-night
   customName: {fileID: 5456851349495891707}
