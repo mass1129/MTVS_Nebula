@@ -20,7 +20,7 @@ public class Profile_Manager_New : MonoBehaviour
     private void Awake()
     {
         user_Nickname = transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<TMP_Text>();
-        //user_Image = transform.GetChild(0).GetChild(4).GetChild(0).GetComponent<RawImage>().texture;
+        user_Image = transform.GetChild(0).GetChild(3).GetChild(0).GetComponent<RawImage>().texture;
         for (int i = 0; i < keywords.Length; i++)
         {
             keywords[i] = transform.GetChild(0).GetChild(1).GetChild(i).GetChild(0).GetComponent<TMP_Text>();
@@ -48,8 +48,17 @@ public class Profile_Manager_New : MonoBehaviour
     {
         UserProfile_Utility.instance.Delete(user_Nickname.text);
         Profile_Main_Manager.instance.btn_MoveNextScene.SetActive(false);
-        Destroy(transform.parent.gameObject);
+        Destroy(transform.gameObject);
     }
     // 해당 프로필의 close 버튼을 누를때 프로필 정보가 삭제되는 함수
-
+    public void UpdateProfile(string userName, Texture2D texture,string[] _keywords)
+    {
+        //클래스에 저장된 정보를 해당  UI에 저장한다. 
+        user_Nickname.text = userName;
+        user_Image = texture;
+        for (int i = 0; i < keywords.Length; i++)
+        {
+            keywords[i].text = _keywords[i];
+        }
+    }
 }

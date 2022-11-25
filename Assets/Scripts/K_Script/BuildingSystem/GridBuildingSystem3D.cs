@@ -363,7 +363,7 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
 
         string json = JsonUtility.ToJson(saveObject, true);
         Debug.Log(json);
-        var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/skyisland/" + PlayerPrefs.GetString("Island_ID");
+        var url = "https://resource.mtvs-nebula.com/skyisland/" + PlayerPrefs.GetString("Island_ID");
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
         await httpReq.Post(url,json);
@@ -373,7 +373,7 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
    
     public async void TestLoad()
     {
-        var url = "ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/skyisland/" + PlayerPrefs.GetString("User_Island_ID");
+        var url = "https://resource.mtvs-nebula.com/skyisland/" + PlayerPrefs.GetString("User_Island_ID");
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
         H_Building_Root result2 = await httpReq.Get<H_Building_Root>(url);

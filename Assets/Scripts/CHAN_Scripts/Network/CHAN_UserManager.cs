@@ -20,7 +20,7 @@ public class CHAN_UserManager : MonoBehaviour
     async void Load()
     {
 
-        var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/skyisland";
+        var url = "https://resource.mtvs-nebula.com/skyisland";
         var httpRequest = new HttpRequester(new JsonSerializationOption());
         Root result = await httpRequest.Get<Root>(url);
         // 받아온 정보를 토대로 친구리스트에 저장하자 .

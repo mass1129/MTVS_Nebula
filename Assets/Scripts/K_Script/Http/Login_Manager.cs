@@ -62,7 +62,7 @@ public class Login_Manager : MonoBehaviour
         };
         string json = JsonUtility.ToJson(user, true);
 
-        var url = "ec2-43-201-62-61.ap-northeast-2.compute.amazonaws.com:8001/auth/login";
+        var url = "https://auth.mtvs-nebula.com/auth/login";
 
         var httpReq = new HttpRequester(new JsonSerializationOption());
         httpReq.onError = () =>
@@ -83,7 +83,7 @@ public class Login_Manager : MonoBehaviour
     }
     public async void GetAvatorInfo()
     {
-        var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/avatar";
+        var url = "https://resource.mtvs-nebula.com/avatar";
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
         H_Av_Root result2 = await httpReq.Get<H_Av_Root>(url);

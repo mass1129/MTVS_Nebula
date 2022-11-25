@@ -164,7 +164,6 @@ namespace IslandInfo
                 {
                     island.GetComponentInChildren<map_Icon_Controller>().SetOnlineIcon(false);
                     island.GetComponentInChildren<map_Icon_Controller>().SetIconColor(info.User_IslandKeyword1);
-                    Debug.LogWarning($"{info.User_NickName} :오프라인");
                 }
                 
                 await Task.Yield();

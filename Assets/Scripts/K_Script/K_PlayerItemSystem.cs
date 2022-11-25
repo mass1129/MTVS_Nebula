@@ -106,7 +106,7 @@ public class K_PlayerItemSystem : MonoBehaviourPun
         string json = JsonUtility.ToJson(saveObject, true);
         Debug.Log(json);
         //string s = PlayerPrefs.GetString(" AvatarName");
-        var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/" + inven_Equipment.savePath  + PlayerPrefs.GetString("AvatarName");
+        var url = "https://resource.mtvs-nebula.com/" + inven_Equipment.savePath  + PlayerPrefs.GetString("AvatarName");
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
         await httpReq.Post(url, json);

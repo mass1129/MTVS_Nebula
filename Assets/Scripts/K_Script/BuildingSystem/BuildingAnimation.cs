@@ -45,7 +45,7 @@ public class BuildingAnimation : MonoBehaviourPun {
 
         string json = JsonUtility.ToJson(money, true);
         Debug.Log(json);
-        var url = "http://ec2-43-201-55-120.ap-northeast-2.compute.amazonaws.com:8001/money/" + PlayerPrefs.GetString("AvatarName");
+        var url = "https://resource.mtvs-nebula.com/money/" + PlayerPrefs.GetString("AvatarName");
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
         H_BM_Root result = await httpReq.Post1<H_BM_Root>(url, json);
