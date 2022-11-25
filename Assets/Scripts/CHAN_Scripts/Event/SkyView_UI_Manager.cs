@@ -28,7 +28,9 @@ public class SkyView_UI_Manager : MonoBehaviour
     // 친구 정보 리스트 
     public Transform  Area_Friend_info;
     public Transform Area_Friend_Profile;
-    public GameObject Btn_Obj;
+    public GameObject Btn_Obj_Online;
+    public GameObject Btn_Obj_Offline;
+
     public Transform online_Location;
     public Transform offline_Location;
 
@@ -41,23 +43,33 @@ public class SkyView_UI_Manager : MonoBehaviour
     // 버튼을 만드는 함수를 만들자 
     void MakeFriendsBtn()
     {
+
+        Island_Information iInfo = Island_Information.instance;
         //서버내 모든 유저수 만큼 반복
-        foreach(string key in Island_Information.instance.Island_Dic.Keys)
+        foreach (string key in iInfo.Island_Dic.Keys)
         {
             GameObject btn = null;
             //만약 key값의 유저이름이 온라인 리스트에 있을 경우
                 if (CUI.onlineUsers.ContainsKey(Island_Information.instance.Island_Dic[key].User_NickName))
                 { 
-                    btn = Instantiate(Btn_Obj, online_Location); 
+                    btn = Instantiate(Btn_Obj_Online, online_Location); 
                 }
                 else
                 { 
-                    btn = Instantiate(Btn_Obj, offline_Location); 
+                    btn = Instantiate(Btn_Obj_Offline, offline_Location); 
                 }
+            Btn_FriendInfo fInfo = btn.GetComponent<Btn_FriendInfo>();
 
             //버튼의 텍스트를 바꾼다. 
-            btn.GetComponent<Btn_FriendInfo>().image = Island_Information.instance.Island_Dic[key].User_image;
-            btn.GetComponent<Btn_FriendInfo>().NickName = Island_Information.instance.Island_Dic[key].User_NickName;
+            fInfo.image = iInfo.Island_Dic[key].User_image;
+            fInfo.NickName = iInfo.Island_Dic[key].User_NickName;
+            fInfo.keyword1 = iInfo.Island_Dic[key].User_IslandKeyword1;
+            fInfo.keyword2 = iInfo.Island_Dic[key].User_IslandKeyword2;
+            fInfo.keyword3 = iInfo.Island_Dic[key].User_IslandKeyword3;
+            fInfo.keyword4 = iInfo.Island_Dic[key].User_IslandKeyword4;
+            fInfo.followers = iInfo.Island_Dic[key].User_followers;
+
+            //--------------------------------> 여기에 유저 키워드값 추가 해야 함.
         }
     }
     // 초기화 기능

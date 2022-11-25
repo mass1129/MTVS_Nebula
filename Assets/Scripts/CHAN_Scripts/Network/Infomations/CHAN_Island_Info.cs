@@ -24,7 +24,10 @@ namespace IslandInfo
         public double pc3 { get; set; }
         public string keyword1 { get; set; }
         public string keyword2 { get; set; }
+        public string keyword3 { get; set; }
+        public string keyword4 { get; set; }
         public string image_url { get; set; }
+        public int follower { get; set; }
     }
 
 
@@ -86,14 +89,18 @@ namespace IslandInfo
                 string nickName = value.avatarName;
                 Vector3 pos = new Vector3((float)value.pc1 * dis_multiplier, (float)value.pc2 * dis_multiplier, (float)value.pc3 * dis_multiplier);
                 string url = value.image_url;
+                // 이부분은 나중에 리팩토링할 때 리스트 형식으로 바꾸자.
                 string keyword1 = value.keyword1;
                 string keyword2 = value.keyword2;
-                InsertData(Island_Dic, key,nickName, url, pos, keyword1, keyword2);
+                string keyword3 = value.keyword3;
+                string keyword4 = value.keyword4;
+                int followers = value.follower;
+                InsertData(Island_Dic, key,nickName, url, pos, keyword1, keyword2, keyword3, keyword4, followers);
                 await Task.Yield();
             }
            
         }
-        public void InsertData(Dictionary<string,JsonInfo> Island_Dic,string key,string nickName, string url, Vector3 pos, string keyword1 = "", string keyword2 = "")
+        public void InsertData(Dictionary<string, JsonInfo> Island_Dic, string key, string nickName, string url, Vector3 pos, string keyword1 = "", string keyword2 = "", string keyword3 = "", string keyword4 = "", int followers = 0)
         {
             JsonInfo dic = new JsonInfo();
             //딕셔너리 인덱스 생성
@@ -103,6 +110,10 @@ namespace IslandInfo
             dic.User_IslandId = key;
             dic.User_IslandKeyword1 = keyword1;
             dic.User_IslandKeyword2 = keyword2;
+            dic.User_IslandKeyword3 = keyword3;
+            dic.User_IslandKeyword4 = keyword4;
+            dic.User_followers = followers;
+
             dic.island_Type = Return_IslandType(keyword1);
             dic.island_Pos = pos;
             dic.User_image = url;

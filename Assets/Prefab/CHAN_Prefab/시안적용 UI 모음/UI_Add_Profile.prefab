@@ -4837,6 +4837,7 @@ GameObject:
   - component: {fileID: 8054465065404514433}
   - component: {fileID: 8054465065404514463}
   - component: {fileID: 8054465065404514462}
+  - component: {fileID: 11166859893185918}
   m_Layer: 0
   m_Name: UI_Add_Profile
   m_TagString: Untagged
@@ -4910,6 +4911,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &11166859893185918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8054465065404514432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2d1bfb24f91f194e867ae310149e77c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: 
+  keyword: 
+  NickName: 
 --- !u!1 &8054465065422359663
 GameObject:
   m_ObjectHideFlags: 0

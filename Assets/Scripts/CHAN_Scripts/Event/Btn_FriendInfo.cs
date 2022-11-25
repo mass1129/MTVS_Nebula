@@ -3,20 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using TMPro;
+using User_Info;
+using CUI = User_Info.CHAN_Users_Info;
 
 public class Btn_FriendInfo : MonoBehaviour
 {
     public string image;
-    public string keyword;
+    public string keyword1;
+    public string keyword2;
+    public string keyword3;
+    public string keyword4;
+    public int followers;
     public string NickName;
     Texture texture;
     GameObject Area_Friend_Profile;
     void Start()
     {
-        transform.GetChild(0).GetComponent<Text>().text = NickName;
+        //이름을 입력한다. 
+        transform.GetChild(1).GetChild(0).GetChild(1).GetComponent<TMP_Text>().text = NickName;
+        //해당 버튼 기능을 활성화 한다.
         GetComponent<Button>().onClick.AddListener(Btn_OnClickFriend);
         SkyView_UI_Manager.instance.Area_Friend_Profile.gameObject.SetActive(true);
-        Area_Friend_Profile = GameObject.Find("Area_Friend_Profile");
+        Area_Friend_Profile = GameObject.Find("Nebula_Profile");
         SkyView_UI_Manager.instance.Area_Friend_Profile.gameObject.SetActive(false);
         LoadImage();
     }
@@ -28,17 +37,45 @@ public class Btn_FriendInfo : MonoBehaviour
     }
     public void Btn_OnClickFriend()
     {
-        //친구 버튼 클릭하면 친구 정보 나오도록 한다. 
+        //Friend_info: 친구의 현재 섬의 위치 
         SkyView_UI_Manager.instance.Area_Friend_info.gameObject.SetActive(true);
-        
+        // 친구정보에는 그 친구가 현재 어느 섬에 있는지
+        if (CUI.onlineUsers.ContainsKey(NickName))
+        {
+            SkyView_UI_Manager.instance.Area_Friend_info.gameObject.transform.GetChild(2).GetChild(0).GetComponent<TMP_Text>().text = CUI.onlineUsers[NickName]+"의 섬";
+        }
+        else
+        {
+            SkyView_UI_Manager.instance.Area_Friend_info.gameObject.transform.GetChild(2).GetChild(0).GetComponent<TMP_Text>().text = "오프라인";
+        }
+        // 팔로워가 몇명인지 
+        SkyView_UI_Manager.instance.Area_Friend_info.gameObject.transform.GetChild(3).GetChild(2).GetComponent<TMP_Text>().text = followers.ToString() + "명";
         ShowProfile();
         SkyView_UI_Manager.instance.Area_Friend_Profile.gameObject.SetActive(false);
     }
+    /// <summary>
+    /// 유저 프로필 정보를 저장하는 함수
+    /// </summary>
     public void ShowProfile()
     {
-        Area_Friend_Profile.transform.GetComponentInChildren<RawImage>().texture = texture;
+        //Area_Friend_Profile.transform.GetComponentInChildren<RawImage>().texture = texture;
+        // 현재 클릭한 유저이름을 UI매니저에 전달(그 유저의 섬에 놀러가기 위한 목적)
         SkyView_UI_Manager.instance.SelectedFriendName = NickName;
-        Area_Friend_Profile.transform.GetChild(1).GetChild(0).GetComponent<Text>().text = NickName+"의 월드";
+        Debug.Log("check:" + NickName);
+        //프로필 정보를 삽입한다.
+        Area_Friend_Profile.GetComponent<Profile_Manager_New>().user_Nickname.text = NickName;
+        Area_Friend_Profile.transform.GetChild(0).GetChild(3).GetChild(0).GetComponent<RawImage>().texture = texture;
+        Area_Friend_Profile.transform.GetChild(0).GetChild(1).GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = keyword1;
+        Area_Friend_Profile.transform.GetChild(0).GetChild(1).GetChild(1).GetChild(0).GetComponent<TMP_Text>().text = keyword2;
+        Area_Friend_Profile.transform.GetChild(0).GetChild(1).GetChild(2).GetChild(0).GetComponent<TMP_Text>().text = keyword3;
+        Area_Friend_Profile.transform.GetChild(0).GetChild(1).GetChild(3).GetChild(0).GetComponent<TMP_Text>().text = keyword4;
+
+        //----------> 유저 키워드 추가 부분
+        //for (int i = 0; i < 2; i++)
+        //{
+        //    Area_Friend_Profile.GetComponent<Profile_Manager_New>().keywords[i]=
+        //}
+        //Area_Friend_Profile.transform.GetChild(1).GetChild(0).GetComponent<Text>().text = NickName+"의 월드";
     }
 
     void LoadImage()
