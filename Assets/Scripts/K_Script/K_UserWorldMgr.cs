@@ -9,6 +9,7 @@ public class K_UserWorldMgr : MonoBehaviourPun
     K_01_Character _character;
     private void Awake()
     {
+        CHAN_GameManager.instance.SetPlayer(CHAN_GameManager.instance.prefab);
         _character = CHAN_ClientManager.instance.myCharacter;
     }
     void Start()
