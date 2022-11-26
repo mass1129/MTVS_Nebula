@@ -34,7 +34,6 @@ public class UserProfile_Utility : MonoBehaviour
     // 2-4.로드해서 가져온 정보를 생성 프로필 오브젝트의 각 값에 저장한다. 
     private void Start()
     {
-        LoadingScene.SetActive(true);
         Load();
         Load_Agora();
     }
@@ -198,6 +197,7 @@ public class UserProfile_Utility : MonoBehaviour
             mgr.user_Nickname.text = info.User_Name;
             await Task.Yield();
         }
+       // LoadingManager.instance.LodingOff();
         // 새로운 프로필 아이콘 생성
         Create_ProfileArea();
     }
