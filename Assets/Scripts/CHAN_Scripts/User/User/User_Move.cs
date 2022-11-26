@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using Cinemachine;
 using UnityEngine.UI;
+using TMPro;
 
 /// <summary>
 /// 유저의 기본 이동 입력기
@@ -24,7 +25,7 @@ public class User_Move : MonoBehaviourPun, IPunObservable
     public GameObject OrcaObj;
     public ParticleSystem sornar;
     Animator animator;
-    public GameObject btn_EnterRoom; 
+    public GameObject text_EnterRoom; 
     string userName;
     Vector3 dir;
     float lerpSpeed = 10;
@@ -62,8 +63,8 @@ public class User_Move : MonoBehaviourPun, IPunObservable
         }
         Cursor.visible = false;
         OrcaObj.SetActive(true);
-        btn_EnterRoom.GetComponentInChildren<Button>().onClick.AddListener(OnClickEnterBtn);
-        btn_EnterRoom.SetActive(false);
+        text_EnterRoom.GetComponentInChildren<TMP_Text>();
+        text_EnterRoom.SetActive(false);
         animator = transform.GetComponentInChildren<Animator>();
         my_Nickname = photonView.Owner.NickName;
         
@@ -121,6 +122,13 @@ public class User_Move : MonoBehaviourPun, IPunObservable
             {
                 MouseVisual(!Cursor.visible);
             }
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                if (islandSelected)
+                {
+                    OnClickEnterBtn();
+                }
+            }
         }
         else
         {
@@ -144,9 +152,10 @@ public class User_Move : MonoBehaviourPun, IPunObservable
         }
         if (other.gameObject.CompareTag("UserIsland"))
         {
-            btn_EnterRoom.SetActive(true);
+            text_EnterRoom.SetActive(true);
             userName = other.gameObject.GetComponent<Island_Profile>().user_name;
             temp_userIsland_ID = other.gameObject.GetComponent<Island_Profile>().user_IslandID;
+            islandSelected = true;
             //MouseVisual(true);
         }
     }
@@ -159,7 +168,8 @@ public class User_Move : MonoBehaviourPun, IPunObservable
         }
         if (photonView.IsMine && other.gameObject.CompareTag("UserIsland"))
         {
-            btn_EnterRoom.SetActive(false);
+            text_EnterRoom.SetActive(false);
+            islandSelected = false;
             //MouseVisual(false);
         }
 

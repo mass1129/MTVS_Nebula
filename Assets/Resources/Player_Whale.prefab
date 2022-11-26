@@ -216,7 +216,7 @@ MonoBehaviour:
   CVCam: {fileID: 2141709175}
   OrcaObj: {fileID: 5313807259687966090}
   sornar: {fileID: 1817123281412697222}
-  btn_EnterRoom: {fileID: 3793980445990870596}
+  text_EnterRoom: {fileID: 1715381401216208216}
   islandSelected: 0
   audio: {fileID: 7221736026810180726}
   clip: {fileID: 8300000, guid: 819474214d16b9343bb3fa616d0a3a60, type: 3}
@@ -572,22 +572,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3252203795677890439}
     m_Modifications:
-    - target: {fileID: 23667739808195071, guid: 495abc1edcaa98743826e5267c644176, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1710707764311538737, guid: 495abc1edcaa98743826e5267c644176, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2609891631929807264, guid: 495abc1edcaa98743826e5267c644176, type: 3}
-      propertyPath: m_FontData.m_MinSize
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2609891631929807264, guid: 495abc1edcaa98743826e5267c644176, type: 3}
-      propertyPath: m_FontData.m_FontSize
-      value: 20
-      objectReference: {fileID: 0}
     - target: {fileID: 2714717377774499479, guid: 495abc1edcaa98743826e5267c644176, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -672,22 +656,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3100131136634200131, guid: 495abc1edcaa98743826e5267c644176, type: 3}
-      propertyPath: m_Colors.m_HighlightedColor.b
-      value: 0.764151
-      objectReference: {fileID: 0}
-    - target: {fileID: 3100131136634200131, guid: 495abc1edcaa98743826e5267c644176, type: 3}
-      propertyPath: m_Colors.m_HighlightedColor.g
-      value: 0.764151
-      objectReference: {fileID: 0}
-    - target: {fileID: 3100131136634200131, guid: 495abc1edcaa98743826e5267c644176, type: 3}
-      propertyPath: m_Colors.m_HighlightedColor.r
-      value: 0.764151
-      objectReference: {fileID: 0}
-    - target: {fileID: 4846897894090143760, guid: 495abc1edcaa98743826e5267c644176, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5497286591684894520, guid: 495abc1edcaa98743826e5267c644176, type: 3}
       propertyPath: m_Name
       value: Canvas
@@ -699,9 +667,9 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2714717377774499479, guid: 495abc1edcaa98743826e5267c644176, type: 3}
   m_PrefabInstance: {fileID: 2642296112474406623}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &3793980445990870596 stripped
+--- !u!1 &1715381401216208216 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 1156791020352888987, guid: 495abc1edcaa98743826e5267c644176, type: 3}
+  m_CorrespondingSourceObject: {fileID: 3703383978185814919, guid: 495abc1edcaa98743826e5267c644176, type: 3}
   m_PrefabInstance: {fileID: 2642296112474406623}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3988327743384304203
