@@ -32,7 +32,7 @@ public class Map_UIManager : MonoBehaviour
         btn_ShowSkyMap = GameObject.Find("Btn_ShowSkyMap").GetComponent<Button>();
         #endregion
         #region 각 버튼에 기능을 삽입한다.
-         btn_Toggle_CloseTab.onClick.AddListener(OnMinimapView);
+        btn_Toggle_CloseTab.onClick.AddListener(OnMinimapView);
         btn_ShowSkyMap.onClick.AddListener(OnSkyView);
         #endregion
         // 초기에는 미니맵 뷰로 바로 전환한다.
@@ -45,11 +45,12 @@ public class Map_UIManager : MonoBehaviour
     public void OnSkyView()
     {
         UI_Skymap.SetActive(true);
-        UI_Miinimap.SetActive(false);
+        //UI_Miinimap.SetActive(false);
         state_View = "skymap";
         skyCam.SetActive(true);
         minimapCam.SetActive(false);
         Debug.Log("스카이 뷰로 전환");
+        GameObject.Find("SkyMap_Camera").GetComponent<SkyMap_Camera_Controller>().onClicked = false;
     }
     /// <summary>
     /// 미니맵 전환 버튼

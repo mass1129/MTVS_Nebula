@@ -9,6 +9,7 @@ using CUI = User_Info.CHAN_Users_Info;
 
 public class Btn_FriendInfo : MonoBehaviour
 {
+    public string islandId;
     public string image;
     public string keyword1;
     public string keyword2;
@@ -61,6 +62,7 @@ public class Btn_FriendInfo : MonoBehaviour
         //Area_Friend_Profile.transform.GetComponentInChildren<RawImage>().texture = texture;
         // 현재 클릭한 유저이름을 UI매니저에 전달(그 유저의 섬에 놀러가기 위한 목적)
         SkyView_UI_Manager.instance.SelectedFriendName = NickName;
+        SkyView_UI_Manager.instance.SelectedFriendIslandId = islandId;
         Debug.Log("check:" + NickName);
         //프로필 정보를 삽입한다.
         Area_Friend_Profile.GetComponent<Profile_Manager_New>().user_Nickname.text = NickName;

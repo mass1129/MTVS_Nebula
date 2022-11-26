@@ -48,7 +48,7 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
     private void Start()
     {
         //로딩 시작
-        //LoadingObject.SetActive(true);
+        LoadingObject.SetActive(true);
         //처음에는 스카이씬에 바로 들어가도록 함
         InitialLoadScene(PlayerPrefs.GetString("AvatarName"), name_UserScene, userPrefab);
         // 서버접속 시작
@@ -97,7 +97,7 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
         {
             BGMPlayer.instance.GetComponent<AudioSource>().clip = BGMPlayer.instance.audioSources[2];
             BGMPlayer.instance.GetComponent<AudioSource>().Play();
-            //LoadingObject.SetActive(false);
+            LoadingObject.SetActive(false);
         }
         PN.LoadLevel(sceneName);
         if(prefab==WhalePrepab)
@@ -144,7 +144,7 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
         sceneName = name_SkyScene;
         prefab = WhalePrepab;
         print("Join : " + roomName+"Scene");
-        //LoadingObject.SetActive(true);
+        LoadingObject.SetActive(true);
         PN.LeaveRoom();
     }
     public void Go_User_Scene(string NickName)
@@ -154,7 +154,7 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
         sceneName = name_UserScene;
         prefab = userPrefab;
         print("Join : " + roomName);
-        //LoadingObject.SetActive(true);
+        LoadingObject.SetActive(true);
         PN.LeaveRoom();
     }
     //public void Go_User_Custom()

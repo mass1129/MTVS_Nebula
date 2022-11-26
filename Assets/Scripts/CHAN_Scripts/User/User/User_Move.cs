@@ -77,15 +77,10 @@ public class User_Move : MonoBehaviourPun, IPunObservable
         {
             #region 플레이어 입력기     
             float Input_Forward = Mathf.Clamp(Input.GetAxis("Vertical"), 0, 1);
-            if (Input.GetMouseButton(1))
-            {
-                float Input_Rotate_Yaw = Input.GetAxis("Mouse X");
-                float Input_Rotate_Pitch = Input.GetAxis("Mouse Y");
-                Rotate_Pitch -= Input_Rotate_Pitch * rotateSpeed * Time.deltaTime;
-                Rotate_Yaw += Input_Rotate_Yaw * rotateSpeed * Time.deltaTime;
-                MouseVisual(false);
-            }
-            MouseVisual(true);
+            float Input_Rotate_Yaw = Input.GetAxis("Mouse X");
+            float Input_Rotate_Pitch = Input.GetAxis("Mouse Y");
+            Rotate_Pitch -= Input_Rotate_Pitch * rotateSpeed * Time.deltaTime;
+            Rotate_Yaw += Input_Rotate_Yaw * rotateSpeed * Time.deltaTime;
             #endregion
             // 일단 이동방향은 앞뒤로 갈 수 있도록 만든다. 
             //쉬프트키를 눌렀을 때 대쉬되도록 만든다.
@@ -124,7 +119,7 @@ public class User_Move : MonoBehaviourPun, IPunObservable
 
             if (Input.GetKeyDown(KeyCode.I))
             {
-                //MouseVisual(!Cursor.visible);
+                MouseVisual(!Cursor.visible);
             }
         }
         else

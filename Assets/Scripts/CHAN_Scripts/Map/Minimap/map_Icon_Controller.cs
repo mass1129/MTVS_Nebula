@@ -29,7 +29,8 @@ public class map_Icon_Controller : MonoBehaviour
         // 미니맵 상태일 때 아이콘을 위로 바라보도록
         if (Map_UIManager.instance.state_View == "minimap")
         {
-            transform.forward = Vector3.up;
+            transform.forward = Vector3.down;
+            
         }
         // 하늘맵 상태일 때 아이콘을 sky카메라로 바라보도록
         else if (Map_UIManager.instance.state_View == "skymap")
