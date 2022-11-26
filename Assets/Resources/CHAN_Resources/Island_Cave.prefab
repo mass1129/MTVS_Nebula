@@ -7073,8 +7073,9 @@ MonoBehaviour:
   user_name: 
   user_IslandID: 
   user_Url: 
-  user_keyword: 
-  profileImage: {fileID: 3751712570622035009}
+  user_keyword1: 
+  user_keyword2: 
+  areaImage: {fileID: 3751712570622035009}
 --- !u!135 &241083202303798688
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -12354,19 +12355,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2154560426521832657, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2154560426521832657, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2154560426521832657, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2154560426521832657, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2154560426521832657, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -12374,15 +12375,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2154560426521832657, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 2154560426521832657, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2154560426521832657, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4257239604550530057, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
       propertyPath: m_Name
       value: IslandImage
+      objectReference: {fileID: 0}
+    - target: {fileID: 6425589532122016927, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 169.8
       objectReference: {fileID: 0}
     - target: {fileID: 7520144800185246344, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.size

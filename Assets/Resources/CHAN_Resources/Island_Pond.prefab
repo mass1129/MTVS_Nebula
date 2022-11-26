@@ -1162,8 +1162,9 @@ MonoBehaviour:
   user_name: 
   user_IslandID: 
   user_Url: 
-  user_keyword: 
-  profileImage: {fileID: 3103494784931136214}
+  user_keyword1: 
+  user_keyword2: 
+  areaImage: {fileID: 3103494784931136214}
 --- !u!54 &-3326573853247978457
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8386,19 +8387,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2154560426521832657, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2154560426521832657, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2154560426521832657, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2154560426521832657, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2154560426521832657, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -8406,7 +8407,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2154560426521832657, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 2154560426521832657, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z

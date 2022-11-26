@@ -169,7 +169,16 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
     //}
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        base.OnPlayerEnteredRoom(newPlayer);
+        //현재 유저월드에 있다면
+        if (sceneName == name_UserScene)
+        { 
+            //만약 유저중에 리모콘을 가진자가 있다면
+            if(CHAN_PlayerManger.LocalPlayerInstance.GetComponent<Item_RemoteController>())
+            {
+                Item_TVManager_Agora.instance.UpdateUId();
+                Debug.Log("유저 난입");
+            }
+        }
         
     }
     public override void OnPlayerLeftRoom(Player otherPlayer)

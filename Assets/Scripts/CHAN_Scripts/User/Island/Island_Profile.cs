@@ -16,27 +16,21 @@ public class Island_Profile : MonoBehaviourPun
     public string user_Url;
     public string user_keyword1;
     public string user_keyword2;
-    public Image profileImage;
+    public Image areaImage;
     Text userName_Text;
     Transform playerPos;
-    bool turn;
+    public bool turn;
     void Start()
     {
-        profileImage.enabled = false;
-        playerPos = CHAN_PlayerManger.LocalPlayerInstance.transform.GetChild(5).gameObject.transform;
         userName_Text = gameObject.transform.GetComponentInChildren<Text>();
+        playerPos = CHAN_PlayerManger.LocalPlayerInstance.transform.GetChild(5).gameObject.transform;
+        areaImage.enabled=false;
         //섬의 크기에따라 이미지의 위치를 조정한다. 
         playerPos.transform.GetChild(1).position = new Vector3(0, playerPos.transform.GetChild(1).position.y*playerPos.transform.GetChild(0).localScale.y, 0);
         //섬의 아이콘 색을 조정한다.
         LoadImage();
     }
-    private void Update()
-    {
-        //트리거 발동됐을 때 이미지 보이게 하는 부분
-        if (!turn)
-            return;
-        ShowImage();
-    }
+
 
     #region 이것은 CSV타입
     async void LoadImage()
@@ -62,7 +56,7 @@ public class Island_Profile : MonoBehaviourPun
         try
         {
             Texture2D myTexture = ((DownloadHandlerTexture)www.downloadHandler).texture;
-            profileImage.sprite = Sprite.Create(myTexture, new Rect(0f, 0f, myTexture.width, myTexture.height), Vector2.zero);
+            areaImage.GetComponentInChildren<Image>().sprite = Sprite.Create(myTexture, new Rect(0f, 0f, myTexture.width, myTexture.height), Vector2.zero);
         }
         catch
         {
@@ -78,7 +72,7 @@ public class Island_Profile : MonoBehaviourPun
             if (other.gameObject.GetComponent<PhotonView>().IsMine)
             { 
                 print("감지");
-                profileImage.enabled = true;
+                areaImage.enabled = true;
                 userName_Text.enabled = true;
                 turn = true;
             }
@@ -91,19 +85,13 @@ public class Island_Profile : MonoBehaviourPun
         if (other.gameObject.CompareTag("Player"))
         {
             if (other.gameObject.GetComponent<PhotonView>().IsMine)
-            { 
-            profileImage.enabled = false;
-            userName_Text.enabled = false;
+            {
+                areaImage.enabled = false;
+                userName_Text.enabled = false;
             turn = false;
-               
-            
             }
         }
     }
-    void ShowImage()
-    {
-        //profileImage.transform.LookAt(playerPos);
-        profileImage.transform.forward = playerPos.forward;
-    }
+
 
 }
