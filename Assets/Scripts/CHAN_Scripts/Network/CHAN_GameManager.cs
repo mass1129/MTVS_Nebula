@@ -50,7 +50,7 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
         //로딩 시작
         //LoadingObject.SetActive(true);
         //처음에는 스카이씬에 바로 들어가도록 함
-        InitialLoadScene("요희", name_UserScene, userPrefab);
+        InitialLoadScene(PlayerPrefs.GetString("AvatarName"), name_UserScene, userPrefab);
         // 서버접속 시작
         Connect();
     }

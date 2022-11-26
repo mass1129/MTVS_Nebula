@@ -22,6 +22,7 @@ public class Login_Manager : MonoBehaviour
     public string preUserName;
     public string prePassWord;
     InputFieldTabManager inputFieldTabMrg;
+    bool isLoaing;
 
     private void Start()
     {
