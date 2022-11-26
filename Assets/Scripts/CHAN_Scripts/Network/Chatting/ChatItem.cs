@@ -7,7 +7,7 @@ using TMPro;
 public class ChatItem : MonoBehaviour
 {
     // 텍스트 
-    Text chatText;
+    public Text chatText;
     //텍스트 위치
     RectTransform rt;
     float preferredH;
@@ -17,6 +17,7 @@ public class ChatItem : MonoBehaviour
     {
         chatText = GetComponent<Text>();
         rt = GetComponent<RectTransform>();
+        
     }
     private void Update()
     {
@@ -29,9 +30,7 @@ public class ChatItem : MonoBehaviour
             preferredH = chatText.preferredHeight;
         }
     }
-    public void SetText(string s)
-    {
-        chatText.text = s;
-    }
+     
+    
 
 }

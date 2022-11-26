@@ -6,15 +6,20 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UltimateClean;
-
+using System;
+using Random = UnityEngine.Random;
 public class ChattingSet : MonoBehaviourPun
 {
     
     //인풋 필드의 값을 가져온다.
     [Header("입력부")]
     public TMP_InputField chats;
-    
+
+    public TMP_Text chatsAmount;
+    [HideInInspector]public int _chatAmount;
     public GameObject chatItem;
+
+
     [Header("채팅영역 관련 설정들")]
     // 이전 Content 의 H
     float previousContentH;
@@ -28,7 +33,7 @@ public class ChattingSet : MonoBehaviourPun
     public CleanButton btn_HideChatMenu;
     [Header("기타")]
     Color32 idColor;
-
+    [HideInInspector]public bool isOpened= false;
 
     void Start()
     {
@@ -37,14 +42,16 @@ public class ChattingSet : MonoBehaviourPun
         btn_Enter.onClick.AddListener(OnclickedEnter);
         //엔터키를 눌렀을 때 함수가 발동되도록 설정한다.
         chats.onSubmit.AddListener(PostText);
+        isOpened = false;
         // 유저 닉네임 색을 설정하기위한 색깔정의
-        idColor = new Color32(
+            idColor = new Color32(
             (byte)Random.Range(0, 256),
             (byte)Random.Range(0, 256),
             (byte)Random.Range(0, 256),
             255
             );
-
+        Area_Chat.GetComponent<CanvasGroup>().alpha = 0;
+        Area_Chat.GetComponent<CanvasGroup>().blocksRaycasts = false;
 
     }
     #region 버튼 설정 
@@ -52,7 +59,10 @@ public class ChattingSet : MonoBehaviourPun
     public void HideChat()
     {
         //Area_Scroll.SetActive(!Area_Scroll.activeSelf);
-        Area_Chat.SetActive(!Area_Chat.activeSelf);
+        Area_Chat.GetComponent<CanvasGroup>().alpha = 0;
+        Area_Chat.GetComponent<CanvasGroup>().blocksRaycasts = false;
+        _chatAmount = 0;
+        isOpened = false;
     }
     // 버튼을 누르면 메세지 보내줌
     public void OnclickedEnter()
@@ -68,6 +78,8 @@ public class ChattingSet : MonoBehaviourPun
         string chatText = "<color=#"+ColorUtility.ToHtmlStringRGB(idColor)+ ">" +PhotonNetwork.NickName +"</color>" +": " + s;
         //string chatText = PhotonNetwork.NickName + ": " + s;
         photonView.RPC("RPCPostText", RpcTarget.All, chatText);
+        photonView.RPC("RPCPostCount", RpcTarget.Others);
+        
         chats.text = "";
         //InputField를 재 활성화 한다.
         chats.ActivateInputField();
@@ -82,14 +94,21 @@ public class ChattingSet : MonoBehaviourPun
         //텍스트 오브젝트 생성
         GameObject text_Obj = Instantiate(chatItem, trContent);
         //오브젝트의 컴포넌트 가져옴
-        ChatItem chat=text_Obj.GetComponent<ChatItem>();
+        ChatItem chat = text_Obj.GetComponent<ChatItem>();
         // 해당 컴포넌트에 정의된 함수를 발동시킨다.
-        chat.SetText(chatText);
-
+        chat.chatText.text = chatText;
+        
         //텍스트좌표가가 기존 스크롤 높이를 초과했을 경우
         //스크롤의 위치를 아래로 위치시킨다.
         //코루틴 시작
         StartCoroutine(AutoScrollBottom());
+    }
+    [PunRPC]
+    void RPCPostCount()
+    {
+        if (isOpened ) return;
+        _chatAmount++;
+        chatsAmount.text = _chatAmount.ToString();
     }
     IEnumerator AutoScrollBottom()
     {
@@ -107,5 +126,7 @@ public class ChattingSet : MonoBehaviourPun
         
         }
     }
+
+
     #endregion
 }
