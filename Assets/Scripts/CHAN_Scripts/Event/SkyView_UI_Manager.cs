@@ -135,6 +135,7 @@ public class SkyView_UI_Manager : MonoBehaviour
     //Ä£±¸¼¶ ³î·¯°¡±â
     public void Go_FriendIsland()
     {
+        PlayerPrefs.SetString("User_Island_ID", Island_Information.instance.Island_Dic[SelectedFriendName].User_IslandId);
         CHAN_GameManager.instance.Go_User_Scene(SelectedFriendName);
     }
 
