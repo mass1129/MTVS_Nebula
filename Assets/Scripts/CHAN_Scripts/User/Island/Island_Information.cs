@@ -114,7 +114,7 @@ public class Island_Information :MonoBehaviourPun
         Done = true;
         if (Done)
         {
-            //CHAN_GameManager.instance.LoadingObject.SetActive(false);
+            CHAN_GameManager.instance.LoadingObject.SetActive(false);
         }
     }
     public async void LoadTest()
