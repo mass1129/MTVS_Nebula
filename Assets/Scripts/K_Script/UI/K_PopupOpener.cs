@@ -36,6 +36,12 @@ namespace UltimateClean
             chat.isOpened = true;
             chat._chatAmount = 0;
             chat.chatsAmount.text = chat._chatAmount.ToString();
+           
+            chat.imgAnim.enabled = false;
+
+            chat.waveImg.SetActive(false);
+            
+
         }
     }
 }
