@@ -380,7 +380,7 @@ public class UIControllerDEMO : MonoBehaviour
     }
     public void SaveToFile()
     {
-        CharacterCustomization.ClearSavedData();
+
         CharacterCustomization.SaveCharacterToFile(CharacterCustomizationSetup.CharacterFileSaveFormat.Json);
         // 씬 로드
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);

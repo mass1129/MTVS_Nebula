@@ -319,7 +319,7 @@ namespace AdvancedPeopleSystem
                 var path = EditorUtility.OpenFilePanel("Open saved character file", "C:/", "");
                 if(path != string.Empty)
                 {
-                    cc.LoadCharacterFromFile(path);
+                   // cc.LoadCharacterFromFile(path);
                 }
             }
             if (GUILayout.Button("Delete All Saved Characters"))

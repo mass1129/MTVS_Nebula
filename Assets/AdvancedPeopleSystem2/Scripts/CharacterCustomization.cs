@@ -8,7 +8,7 @@ using UnityEngine;
 using System.Text.RegularExpressions;
 using System.Globalization;
 using Photon.Pun;
-
+using UnityEngine.SceneManagement;
 namespace AdvancedPeopleSystem
 {
     /// <summary>
@@ -85,7 +85,11 @@ namespace AdvancedPeopleSystem
         public Inventory equipment;
         private void Awake()
         {
-           
+            this._transform = transform;
+            _lodGroup = GetComponent<LODGroup>();
+            RecalculateLOD();
+            UpdateSkinnedMeshesOffscreenBounds();
+
         }
         private void Start()
         {
@@ -99,11 +103,11 @@ namespace AdvancedPeopleSystem
         private void OnEnable()
         {
             
-                this._transform = transform;
-                _lodGroup = GetComponent<LODGroup>();
-                RecalculateLOD();
-                UpdateSkinnedMeshesOffscreenBounds();
+                
+
             
+            
+
 
         }
         private void Update()
@@ -754,8 +758,120 @@ namespace AdvancedPeopleSystem
         }
         public void SetElementByIndex(CharacterElementType type, int index)
         {
-
+            if(PhotonNetwork.IsConnected)
             photonView.RPC("RPCSetElementByIndex", RpcTarget.AllBuffered, type, index);
+            else
+            {
+                if (Settings == null)
+            {
+                Debug.LogError("settings = null");
+                return;
+            }
+            if (type == CharacterElementType.Hair)
+            {
+                SetHairByIndex(index);
+                RecalculateShapes();
+                return;
+            }
+            if (type == CharacterElementType.Beard)
+            {
+                SetBeardByIndex(index);
+                RecalculateShapes();
+                return;
+            }
+            ClothesAnchor ca = GetClothesAnchor(type);
+            CharacterElementsPreset clothPreset = GetElementsPreset(type, characterSelectedElements.GetSelectedIndex(type));
+            CharacterElementsPreset newPreset = GetElementsPreset(type, index);
+            float yOffset = 0f;
+
+            if (clothPreset != null && (newPreset != null || index == -1))
+                UnHideParts(clothPreset.hideParts, type);
+
+            if (newPreset != null)
+            {
+                if (newPreset.mesh.Length == 0)
+                {
+                    Debug.LogErrorFormat(string.Format("Not found meshes for <{0}> element", newPreset.name));
+                    return;
+                }
+                if (type == CharacterElementType.Shirt)
+                {
+                    GetBlendshapeData(CharacterBlendShapeType.BackpackOffset).value = 100;
+                    if (characterSelectedElements.GetSelectedIndex(CharacterElementType.Item1) != -1)
+                        SetBlendshapeValue(CharacterBlendShapeType.BackpackOffset, 100);
+                }
+                yOffset = newPreset.yOffset;
+                for (var i = 0; i < (MaxLODLevels - MinLODLevels) + 1; i++)
+                {
+                    var element_index = i + MinLODLevels;
+
+                    if (!ca.skinnedMesh[i].gameObject.activeSelf && !IsBaked())
+                        ca.skinnedMesh[i].gameObject.SetActive(true);
+
+                    ca.skinnedMesh[i].sharedMesh = newPreset.mesh[element_index];
+                    if (newPreset.mats != null && newPreset.mats.Length > 0)
+                    {
+                        var mats = newPreset.mats.ToList();
+
+                        ca.skinnedMesh[i].sharedMaterials = mats.ToArray();
+
+                        for (var m = 0; m < mats.Count; m++)
+                            if (mats[m].name == _settings.bodyMaterial.name)
+                                ca.skinnedMesh[i].SetPropertyBlock(bodyPropertyBlock, m);
+                    }
+
+                    for (var blendIndex = 0; blendIndex < ca.skinnedMesh[i].sharedMesh.blendShapeCount; blendIndex++)
+                    {
+                        if (ca.skinnedMesh[i] != null && ca.skinnedMesh[i].sharedMesh != null)
+                        {
+                            var blendName = ca.skinnedMesh[i].sharedMesh.GetBlendShapeName(blendIndex);
+
+                            var blendshapeData = GetBlendshapeData(blendName);
+
+                            if (blendshapeData != null && !Settings.DisableBlendshapeModifier)
+                                ca.skinnedMesh[i].SetBlendShapeWeight(blendIndex, blendshapeData.value);
+                        }
+                    }
+                }
+                HideParts(newPreset.hideParts);
+            }
+            else
+            {
+                if (type == CharacterElementType.Shirt)
+                {
+                    GetBlendshapeData(CharacterBlendShapeType.BackpackOffset).value = 0;
+                    if (characterSelectedElements.GetSelectedIndex(CharacterElementType.Item1) != -1)
+                        SetBlendshapeValue(CharacterBlendShapeType.BackpackOffset, 0);
+                }
+                if (index != -1)
+                {
+                    Debug.LogError(string.Format("Element <{0}> with index {1} not found. Please check Character Presets arrays.", type.ToString(), index));
+                    return;
+                }
+                //photonView.RPC("RPCSClothesInactive", RpcTarget.AllBuffered, ca);
+                if (ca != null && ca.skinnedMesh != null)
+                {
+                    foreach (var sm in ca.skinnedMesh)
+                    {
+                        if (sm != null)
+                        {
+
+
+                            sm.sharedMesh = null;
+                            sm.gameObject.SetActive(false);
+                        }
+                    }
+                }
+            }
+            if (type == CharacterElementType.Shoes)
+            {
+                SetFeetOffset(new Vector3(0, yOffset, 0));
+                feetOffset = yOffset;
+            }
+
+            characterSelectedElements.SetSelectedIndex(type, index);
+            // photonView.RPC("RPCSetElementByIndex", RpcTarget.AllBuffered, type, index);  
+            }
 
         }
 
@@ -1107,13 +1223,7 @@ namespace AdvancedPeopleSystem
             }
         }
 
-        [PunRPC]
-        public void RPCUnHideParts(string p, CharacterPart cp)
-        {
-            if (cp.name.ToLowerInvariant() == p.ToLowerInvariant())
-                foreach (var mesh in cp.skinnedMesh)
-                    mesh.enabled = true;
-        }
+        
         /// <summary>
         /// Set body color by type
         /// </summary>
@@ -1215,6 +1325,7 @@ namespace AdvancedPeopleSystem
         {
             characterCustomizationSetup.ApplyToCharacter(this);
         }
+       
         /// <summary>
         /// Generate setup class from current character
         /// </summary>
@@ -1256,45 +1367,107 @@ namespace AdvancedPeopleSystem
         /// </summary>
         public void ApplySavedCharacterData(SavedCharacterData data)
         {
-            LoadCharacterFromFile(data.path);
+            LoadCharacterCustomScene(data.path);
         }
 
         /// <summary>
         /// Load character from file
         /// </summary>
-        public void LoadCharacterFromFile(string path)
+        
+        public async void SaveCharacterToFile(CharacterCustomizationSetup.CharacterFileSaveFormat format, string path = "", string name = "")
         {
-            if (File.Exists(path))
+            #region 기존
+            //var savepath = path;
+            //string formatString = "json";
+            //switch (format)
+            //{
+            //    case CharacterCustomizationSetup.CharacterFileSaveFormat.Json:
+            //        formatString = "json";
+            //        break;
+            //    case CharacterCustomizationSetup.CharacterFileSaveFormat.Xml:
+            //        formatString = "xml";
+            //        break;
+            //    case CharacterCustomizationSetup.CharacterFileSaveFormat.Binary:
+            //        formatString = "bin";
+            //        break;
+            //}
+            //if (path.Length == 0)
+            //{
+            //    string[] formatExt = new string[] { "json", "xml", "bin" };
+
+            //    var dataPath = Application.persistentDataPath;              
+            //    var folderPath = string.Format("{0}/{1}", dataPath, "apack_characters_data");
+
+            //    folderPath = string.Format("{0}/{1}", folderPath, Settings.name);
+            //    if (!Directory.Exists(folderPath))
+            //    {
+            //        Directory.CreateDirectory(folderPath);
+            //    }
+            //    string savedFileName = gameObject.name;
+
+            //    savepath = string.Format("{0}/appack25_{1}_{2}.{3}", folderPath, savedFileName, DateTimeOffset.Now.ToUnixTimeSeconds(), formatString);
+            //}
+            //else
+            //{
+            //    savepath = string.Format("{0}/{1}_{2}.{3}", path, name, DateTimeOffset.Now.ToUnixTimeSeconds(), formatString);
+            //}
+            #endregion
+
+            var data = GetSetup().Serialize(format);
+            Debug.Log(data);
+            var url = "https://resource.mtvs-nebula.com/avatar/texture/" + PlayerPrefs.GetString("AvatarName");
+            var httpReq = new HttpRequester(new JsonSerializationOption());
+
+            await httpReq.Post(url, data);
+
+        }
+        public void LoadCharacterFromFile(string s)
+        {   
+            if(photonView.IsMine)
+            photonView.RPC("RPCLoadCharacterFromFile", RpcTarget.AllBuffered, s);
+            
+        }
+        [PunRPC]
+        public async void RPCLoadCharacterFromFile(string s)
+        {
+            var url = "https://resource.mtvs-nebula.com/avatar/texture/" + s;//PlayerPrefs.GetString("AvatarName");
+            var httpReq = new HttpRequester(new JsonSerializationOption());
+
+            H_CCC_Root result2 = await httpReq.Get<H_CCC_Root>(url);
+
+            //var setup = CharacterCustomizationSetup.Deserialize(result2.results, CharacterCustomizationSetup.CharacterFileSaveFormat.Json);
+            var setup = result2.results;
+            if (setup != null)
             {
-                var ext = Path.GetExtension(path);
-                var data = File.ReadAllText(path);
-                
-                if(data.Length > 0)
-                {
-                    CharacterCustomizationSetup.CharacterFileSaveFormat format = CharacterCustomizationSetup.CharacterFileSaveFormat.Binary;
-                    if (ext == ".json")
-                    {
-                        format = CharacterCustomizationSetup.CharacterFileSaveFormat.Json;
-                    }else if(ext == ".xml")
-                    {
-                        format = CharacterCustomizationSetup.CharacterFileSaveFormat.Xml;
-                    }else if (ext == ".bin")
-                    {
-                        format = CharacterCustomizationSetup.CharacterFileSaveFormat.Binary;
-                    }
-                    else
-                    {
-                        Debug.LogError("File format not supported - " + ext);
-                        return;
-                    }
-                    var setup = CharacterCustomizationSetup.Deserialize(data, format);
-                    if(setup != null)
-                    {
-                        SetCharacterSetup(setup);
-                        Debug.Log(string.Format("Loaded {0} save", path));
-                    }
-                }
+                 SetCharacterSetup(setup);
             }
+        }
+
+        public async void LoadCharacterCustomScene(string path)
+        {
+            var url = "https://resource.mtvs-nebula.com/avatar/texture/" + path;
+            var httpReq = new HttpRequester(new JsonSerializationOption());
+
+            H_CC_Root result2 = await httpReq.Get<H_CC_Root>(url);
+
+            //var setup = CharacterCustomizationSetup.Deserialize(result2.results, CharacterCustomizationSetup.CharacterFileSaveFormat.Json);
+            var setup = result2.results;
+            if (setup != null)
+            {
+                SetCharacterSetup(setup);
+            }
+        }
+        public class H_CC_Root
+        {
+            public int httpStatus;
+            public string message;
+            public CharacterCustomizationSetup results;
+        }
+        public class H_CCC_Root
+        {
+            public int httpStatus;
+            public string message;
+            public CharacterCustomizationSetup results;
         }
         /// <summary>
         /// Gets a list of character saves from the directory
@@ -1365,49 +1538,7 @@ namespace AdvancedPeopleSystem
         /// <param name="format">Save format</param>
         /// <param name="path">Directory</param>
         /// <param name="name">File name</param>
-        public void SaveCharacterToFile(CharacterCustomizationSetup.CharacterFileSaveFormat format, string path = "", string name = "")
-        {
-            var savepath = path;
-            string formatString = "json";
-            switch (format)
-            {
-                case CharacterCustomizationSetup.CharacterFileSaveFormat.Json:
-                    formatString = "json";
-                    break;
-                case CharacterCustomizationSetup.CharacterFileSaveFormat.Xml:
-                    formatString = "xml";
-                    break;
-                case CharacterCustomizationSetup.CharacterFileSaveFormat.Binary:
-                    formatString = "bin";
-                    break;
-            }
-            if (path.Length == 0)
-            {
-                string[] formatExt = new string[] { "json", "xml", "bin" };
-
-                var dataPath = Application.persistentDataPath;              
-                var folderPath = string.Format("{0}/{1}", dataPath, "apack_characters_data");
-                
-                folderPath = string.Format("{0}/{1}", folderPath, Settings.name);
-                if (!Directory.Exists(folderPath))
-                {
-                    Directory.CreateDirectory(folderPath);
-                }
-                string savedFileName = gameObject.name;
-
-                savepath = string.Format("{0}/appack25_{1}_{2}.{3}", folderPath, savedFileName, DateTimeOffset.Now.ToUnixTimeSeconds(), formatString);
-            }
-            else
-            {
-                savepath = string.Format("{0}/{1}_{2}.{3}", path, name, DateTimeOffset.Now.ToUnixTimeSeconds(), formatString);
-            }
-            var data = GetSetup().Serialize(format);
-            if (data.Length > 0)
-            {
-                File.WriteAllText(savepath, data, System.Text.Encoding.UTF8);
-                Debug.Log(string.Format("Character data saved to ({0})", savepath));
-            }
-        }
+       
 
         /// <summary>
         /// Recalculate all blendshapes

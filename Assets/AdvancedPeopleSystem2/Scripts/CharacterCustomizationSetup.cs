@@ -106,20 +106,7 @@ namespace AdvancedPeopleSystem
             {
                 case CharacterFileSaveFormat.Json:
                     characterDataLoader = JsonUtility.FromJson<CharacterCustomizationSetup>(data);
-                    break;
-                case CharacterFileSaveFormat.Xml:
-                    XmlSerializer serializer = new XmlSerializer(typeof(CharacterCustomizationSetup));
-                    using (StringReader textReader = new StringReader(data))
-                    {
-                        characterDataLoader = (CharacterCustomizationSetup)serializer.Deserialize(textReader);
-                    }
-                    break;
-                case CharacterFileSaveFormat.Binary:
-                    using (MemoryStream textReader = new MemoryStream(Convert.FromBase64String(data)))
-                    {
-                        characterDataLoader = (CharacterCustomizationSetup)new BinaryFormatter().Deserialize(textReader);
-                    }
-                    break;
+                    break;  
             }
             return characterDataLoader;
         }

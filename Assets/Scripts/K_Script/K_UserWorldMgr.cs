@@ -2,7 +2,7 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using AdvancedPeopleSystem;
 public class K_UserWorldMgr : MonoBehaviourPun
 {
     // Start is called before the first frame update
@@ -14,9 +14,10 @@ public class K_UserWorldMgr : MonoBehaviourPun
     }
     void Start()
     {
-       
 
+        
         _character.PlayerInfoSetting();
+        _character.GetComponent<CharacterCustomization>().LoadCharacterFromFile(_character.avatarName);
         _character.SetActiveObj();
         _character.gridBuildingSystem.FirstLoadBuilding();
         
