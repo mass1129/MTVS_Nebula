@@ -1011,7 +1011,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493682401211939731, guid: 40479411297e6954aa23f2e8613cc82a, type: 3}
       propertyPath: yPos
-      value: 500
+      value: 700
       objectReference: {fileID: 0}
     - target: {fileID: 6493682401211939731, guid: 40479411297e6954aa23f2e8613cc82a, type: 3}
       propertyPath: m_Enabled
@@ -1043,11 +1043,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493682401211939734, guid: 40479411297e6954aa23f2e8613cc82a, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6493682401211939734, guid: 40479411297e6954aa23f2e8613cc82a, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6493682401211939734, guid: 40479411297e6954aa23f2e8613cc82a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -8092,7 +8092,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7173613157490800682}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Profile_Manager_New, Assembly-CSharp
         m_MethodName: OnNextSceneBtn
         m_Mode: 1
@@ -8687,26 +8687,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8123827154696766664}
   m_CullTransparentMesh: 0
---- !u!114 &7173613157490800682
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8266947484633909284}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8ce956a51d715e4083c844ca4f07c20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  user_Nickname: {fileID: 0}
-  user_Image: {fileID: 0}
-  keywords:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  user_IslandId: 
 --- !u!224 &7245971135172072613
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9960,8 +9940,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8266947484633909287}
-  - component: {fileID: 7173613157490800682}
   - component: {fileID: 3999886609709078766}
+  - component: {fileID: 8266947484633909288}
   m_Layer: 5
   m_Name: Nebula_Profile
   m_TagString: Untagged
@@ -9990,6 +9970,26 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 437.5, y: 632.2}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8266947484633909288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8266947484633909284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc31ff7739d47ab47a135e1db339f170, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  user_Nickname: {fileID: 0}
+  user_Image: {fileID: 0}
+  keywords:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  user_IslandId: 
 --- !u!114 &8266947484837351200
 MonoBehaviour:
   m_ObjectHideFlags: 0
