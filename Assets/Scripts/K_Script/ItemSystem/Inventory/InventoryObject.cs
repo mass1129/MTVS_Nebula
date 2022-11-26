@@ -139,31 +139,7 @@ public class InventoryObject : ScriptableObject
         return Container;
     }
 
-    [ContextMenu("Save")]
-    public void Save()
-    {
-
-        string json = JsonUtility.ToJson(Container, true);
-        PlayerPrefs.SetString(savePath, json);
-        K_SaveSystem.Save(savePath, json, true);
-
-    }
-    [ContextMenu("Load")]
-    public void Load()
-    {
-        if (PlayerPrefs.HasKey(savePath))
-        {
-            string json = PlayerPrefs.GetString(savePath);
-            json = K_SaveSystem.Load(savePath);
-
-            JsonUtility.FromJsonOverwrite(json, Container);
-            for(int i = 0; i < Container.slots.Length; i++)
-            {
-                Container.slots[i].UpdateSlot(Container.slots[i].item, Container.slots[i].amount);
-            }
-        }
-
-    }
+   
     public async void TestSave()
     {
 

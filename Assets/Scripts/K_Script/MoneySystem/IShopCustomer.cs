@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IShopCustomer
 {
-    void BoughItem(ItemObject obj);
+    void BoughtItem(ItemObject obj);
 
     bool TrySpendGoldAmount(int goldAmount);
 }

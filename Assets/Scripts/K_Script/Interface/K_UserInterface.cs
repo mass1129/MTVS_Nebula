@@ -24,9 +24,10 @@ public abstract class K_UserInterface : MonoBehaviourPun
     bool isAddedEvent = false;
     public bool onQuickSlot=false;
     bool needFirstUpdate = false;
-    public GameObject parentObj;
+  
     public void Awake()
     {
+        if (!photonView.IsMine) this.enabled = false;
         if (!isAddedEvent&& !needFirstUpdate)
         {
             UISetting();
@@ -35,8 +36,9 @@ public abstract class K_UserInterface : MonoBehaviourPun
         isAddedEvent = true;
     }
     public void OnEnable()
-    {   
-         if(!isAddedEvent && !needFirstUpdate)
+    {
+        ShopUpdate();
+         if (!isAddedEvent && !needFirstUpdate)
          {
             UISetting();
          }
@@ -70,7 +72,10 @@ public abstract class K_UserInterface : MonoBehaviourPun
     }
    
     public abstract void CreateSlots();
+    public virtual void ShopUpdate()
+    {
 
+    }
     public abstract void DistorySlots();
     public void UpdateInventoryLinks()
     {
@@ -171,19 +176,16 @@ public abstract class K_UserInterface : MonoBehaviourPun
         }
         return tempItem;
     }
-    public void OnDragEnd(GameObject obj)
+    public virtual void OnDragEnd(GameObject obj)
     {
         Destroy(MouseData.tempItemBeingDragged);
         
         if (MouseData.slotHoveredOver)
         {
             InventorySlot mouseHoverSlotData = MouseData.interfaceMouseIsOver.slotsOnInterface[MouseData.slotHoveredOver];
-            
-            
+
                 inventory.SwapItems(slotsOnInterface[obj], mouseHoverSlotData);
-                
-            
-               
+     
         }
 
     }

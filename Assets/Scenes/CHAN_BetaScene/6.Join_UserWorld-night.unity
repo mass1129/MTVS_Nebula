@@ -12588,18 +12588,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 357752164107575056}
         m_TargetAssemblyTypeName: UltimateClean.K_PopupOpener, Assembly-CSharp
-        m_MethodName: OpenPopup
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 357752164107575056}
-        m_TargetAssemblyTypeName: UltimateClean.K_PopupOpener, Assembly-CSharp
         m_MethodName: CheckChatActive
         m_Mode: 1
         m_Arguments:
@@ -14650,26 +14638,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!95 &4011033895271415323
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7643924839893446787}
-  m_Enabled: 0
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4f7aa3cf36ab14569b9449cc289f90aa, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &4033935467265537589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54487,11 +54455,11 @@ RectTransform:
   m_Father: {fileID: 8397170917580212913}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -729.52094, y: -38}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 768.26, y: 1180.3555}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!1 &7643924839893446787
 GameObject:
   m_ObjectHideFlags: 0
@@ -54501,7 +54469,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7643924839893446786}
-  - component: {fileID: 4011033895271415323}
   - component: {fileID: 8634960086755656406}
   m_Layer: 5
   m_Name: RoundLight - Chat
@@ -54529,7 +54496,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0.2539, y: -586.92676}
+  m_AnchoredPosition: {x: 0.25390625, y: -586.92676}
   m_SizeDelta: {x: 736.7906, y: 901.8535}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7643924841923400847
@@ -55253,7 +55220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 1
+  m_UiScaleMode: 0
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}

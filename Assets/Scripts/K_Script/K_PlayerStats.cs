@@ -18,7 +18,7 @@ public class K_PlayerStats : MonoBehaviour
     private void Start()
     {   
       
-            _equipment = GetComponent<K_PlayerItemSystem>().inven_Equipment;
+            _equipment = GetComponent<K_PlayerItemSystem>()._equipment;
 
             for (int i = 0; i < attributes.Length; i++)
             {

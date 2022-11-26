@@ -53,7 +53,7 @@ public class K_MoneySystem : MonoBehaviourPun, IShopCustomer
         }
     }
 
-    public void BoughItem(ItemObject obj)
+    public void BoughtItem(ItemObject obj)
     {
         throw new NotImplementedException();
     }

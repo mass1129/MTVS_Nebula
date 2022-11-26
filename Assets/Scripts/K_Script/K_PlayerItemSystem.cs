@@ -1,138 +1,235 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using AdvancedPeopleSystem;
 using Photon.Pun;
+public class K_PlayerItemSystem : MonoBehaviourPun, IPunObservable
+     
 
-public class K_PlayerItemSystem : MonoBehaviourPun
 {
-
-    
     public InventoryObject inven_Cloths;
     public InventoryObject inven_Building;
     public InventoryObject inven_Default;
     public InventoryObject inven_Vehicle;
-    public InventoryObject inven_Equipment;
+    public InventoryObject _equipment;
     public K_Player player;
 
+    //public static GameObject LocalPlayerInstance;
 
-
-
+    private  CharacterCustomization  _CharacterCustomization;
+    bool isdone = false;
     private void Awake()
     {
+       
+            Debug.Log("111");
+            if (photonView.IsMine)
+            {
+                if (!isdone)
+                {
+                    _CharacterCustomization = this.gameObject.GetComponent<CharacterCustomization>();
+
+
+                    for (int i = 0; i < _equipment.GetSlots.Length; i++)
+                    {
+                        _equipment.GetSlots[i].onBeforeUpdated += OnRemoveItem;
+                        _equipment.GetSlots[i].onAfterUpdated += OnEquipItem;
+                    }
+                    Debug.Log("222");
+                }
+                isdone = true;
+            }
         
-    }
-    private void Start()
-    {
 
     }
-    private void Update()
-    {
-        
 
-    }
     private void OnEnable()
     {
         if (!photonView.IsMine) return;
-        inven_Cloths.TestLoad();
-        inven_Equipment.TestLoad();
-        inven_Building.TestLoad();
+        
 
-    }
+        Debug.Log("111");
+        if (photonView.IsMine)
+        {
+            if (!isdone)
+            {
+                _CharacterCustomization = this.gameObject.GetComponent<CharacterCustomization>();
 
-    private void OnDisable()
-    {
-        ItemSave();
-       
+
+                for (int i = 0; i < _equipment.GetSlots.Length; i++)
+                {
+                    _equipment.GetSlots[i].onBeforeUpdated += OnRemoveItem;
+                    _equipment.GetSlots[i].onAfterUpdated += OnEquipItem;
+                }
+                Debug.Log("222");
+            }
+            isdone = true;
+        }
+        ItemLoad();
     }
+  
+
     private void OnDestroy()
     {
-        //TwoInvenSave();
-    }
-    public void OnTriggerEnter(Collider other)
-    {
-        if (!photonView.IsMine) return;
-            //부딪힌 객체의 groundItem 컴포넌트를 가져온다.
-            var item = other.GetComponent<GroundItem>();
-        InventoryObject _inventory = null;
-        //컴포넌트가 있을때
-        if (item)
+        if (photonView.IsMine)
         {
-            //_item을 grounditem컴포넌트의 item변수의 아이템으로 만든다.
-            Item _item = new Item(item.item);
-            Debug.Log(_item.name);
-            switch (item.item.type)
+            ItemSave();
+
+            for (int i = 0; i < _equipment.GetSlots.Length; i++)
             {
-                case ItemType.Hair:
-                case ItemType.Beard:
-                case ItemType.Accessory:
-                case ItemType.Hat:
-                case ItemType.Shirt:
-                case ItemType.Pants:
-                case ItemType.Shoes:
-                case ItemType.Bag:
-                case ItemType.Weapons:
-                case ItemType.Title:
-                    _inventory = inven_Cloths;
-                    break;
-                case ItemType.Bundle_Building:
-                    _inventory = inven_Building;
-                    break;
-                case ItemType.Default:
-                    _inventory = inven_Default;
-                    break;
-                case ItemType.Vehicle:
-                    _inventory = inven_Vehicle;
-                    break;
-
-
-
+                _equipment.GetSlots[i].onBeforeUpdated -= OnRemoveItem;
+                _equipment.GetSlots[i].onAfterUpdated -= OnEquipItem;
             }
-            //InventoryObject에 (bool)Additem를 실행한다. 그리고 리턴값이 true이면 
-            if (_inventory.AddItem(_item, 1))
-            {
-                //그라운드 아이템 객체를 파괴한다.
-               //Destroy(other.gameObject);
-            }
-
+            Debug.Log("222");
         }
     }
+    
 
 
-  
+
+
+
+
+
+    public void OnEquipItem(InventorySlot slot)
+    {
+        if (photonView.IsMine)
+        {
+            var itemObject = slot.GetItemObject();
+            if (itemObject == null)
+                return;
+
+            switch (slot.parent.inventory.type)
+            {
+                case InterfaceType.Equipment:
+
+                    if (itemObject.uiDisplay != null)
+                    {
+                        switch (slot.allowedItems[0])
+                        {
+                            case ItemType.Hat:
+                                _CharacterCustomization.SetElementByIndex(CharacterElementType.Hat, itemObject.charCustomIndex);
+                                break;
+
+                            case ItemType.Accessory:
+                                _CharacterCustomization.SetElementByIndex(CharacterElementType.Accessory, itemObject.charCustomIndex);
+                                break;
+
+                            case ItemType.Shirt:
+                                _CharacterCustomization.SetElementByIndex(CharacterElementType.Shirt, itemObject.charCustomIndex);
+                                break;
+                            case ItemType.Pants:
+                                _CharacterCustomization.SetElementByIndex(CharacterElementType.Pants, itemObject.charCustomIndex);
+                                break;
+                            case ItemType.Shoes:
+                                _CharacterCustomization.SetElementByIndex(CharacterElementType.Shoes, itemObject.charCustomIndex);
+                                break;
+                            case ItemType.Bag:
+                                _CharacterCustomization.SetElementByIndex(CharacterElementType.Item1, itemObject.charCustomIndex);
+                                break;
+
+                        }
+
+
+                    }
+                    break;
+            }
+        }
+
+       
+    }
+    public ItemDatabaseObject dataBase;
+    public void OnRemoveItem(InventorySlot slot)
+    {
+        if (photonView.IsMine)
+        {
+            var itemObject = slot.GetItemObject();
+            if (itemObject == null)
+                return;
+            switch (slot.parent.inventory.type)
+            {
+                case InterfaceType.Equipment:
+                    if (slot.GetItemObject().uiDisplay != null)
+                    {
+                        switch (slot.allowedItems[0])
+                        {
+
+                            case ItemType.Hat:
+                                _CharacterCustomization.SetElementByIndex(CharacterElementType.Hat, -1);
+                                break;
+
+                            case ItemType.Accessory:
+                                _CharacterCustomization.SetElementByIndex(CharacterElementType.Accessory, -1);
+                                //var go = PhotonNetwork.Instantiate("item", transform.position, Quaternion.identity);
+                                //go.GetComponent<GroundItem>().SetItem(slot.item.id, slot.item.uniqueId);
+                                break;
+
+                            case ItemType.Shirt:
+                                _CharacterCustomization.SetElementByIndex(CharacterElementType.Shirt, -1);
+                                break;
+                            case ItemType.Pants:
+                                _CharacterCustomization.SetElementByIndex(CharacterElementType.Pants, -1);
+                                break;
+                            case ItemType.Shoes:
+                                _CharacterCustomization.SetElementByIndex(CharacterElementType.Shoes, -1);
+                                break;
+                            case ItemType.Bag:
+                                _CharacterCustomization.SetElementByIndex(CharacterElementType.Item1, -1);
+                                break;
+                        }
+
+                    }
+                    break;
+                case InterfaceType.Inventory_Cloths:
+                    if (slot.GetItemObject().uiDisplay != null)
+                    {
+                        var go = PhotonNetwork.Instantiate("item", transform.position, Quaternion.identity);
+
+                    }
+                    break;
+            }
+        }
+      
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+       
+    }
     public async void TwoInvenSave()
-    {   
-       if(!photonView.IsMine) return;
+    {
+        if (!photonView.IsMine) return;
         SaveTwoInven saveObject = new SaveTwoInven
         {
-            equipment = inven_Equipment.GetInventory(),
+            equipment = _equipment.GetInventory(),
             clothesInventory = inven_Cloths.GetInventory()
         };
         string json = JsonUtility.ToJson(saveObject, true);
         Debug.Log(json);
         //string s = PlayerPrefs.GetString(" AvatarName");
-        var url = "https://resource.mtvs-nebula.com/" + inven_Equipment.savePath  + PlayerPrefs.GetString("AvatarName");
+        var url = "https://resource.mtvs-nebula.com/" + _equipment.savePath + PlayerPrefs.GetString("AvatarName");
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
         await httpReq.Post(url, json);
-        inven_Equipment.Clear();
+        _equipment.Clear();
         inven_Cloths.Clear();
     }
+
     public void ItemSave()
     {
         TwoInvenSave();
-
-
     }
     public void ItemLoad()
     {
-        
-       
-        
+        inven_Cloths.TestLoad();
+        _equipment.TestLoad();
+        inven_Building.TestLoad();
+
+
     }
     private void OnApplicationQuit()
     {
-      
-    }   
+
+    }
 
     [System.Serializable]
     public class SaveTwoInven
@@ -140,6 +237,12 @@ public class K_PlayerItemSystem : MonoBehaviourPun
         public Inventory equipment;
         public Inventory clothesInventory;
     }
+
+
+
+
+    //public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    //{
+
+    //}
 }
-
-
