@@ -35,6 +35,7 @@ public class SkyView_UI_Manager : MonoBehaviour
     public Transform offline_Location;
 
     public string SelectedFriendName;
+    public string SelectedFriendIslandId;
     private void Start()
     {
         Initialize();
@@ -62,6 +63,7 @@ public class SkyView_UI_Manager : MonoBehaviour
 
             //버튼의 텍스트를 바꾼다. 
             fInfo.image = iInfo.Island_Dic[key].User_image;
+            fInfo.islandId = iInfo.Island_Dic[key].User_IslandId;
             fInfo.NickName = iInfo.Island_Dic[key].User_NickName;
             fInfo.keyword1 = iInfo.Island_Dic[key].User_IslandKeyword1;
             fInfo.keyword2 = iInfo.Island_Dic[key].User_IslandKeyword2;
@@ -135,7 +137,7 @@ public class SkyView_UI_Manager : MonoBehaviour
     //친구섬 놀러가기
     public void Go_FriendIsland()
     {
-        PlayerPrefs.SetString("User_Island_ID", Island_Information.instance.Island_Dic[SelectedFriendName].User_IslandId);
+        PlayerPrefs.SetString("User_Island_ID", SelectedFriendIslandId);
         CHAN_GameManager.instance.Go_User_Scene(SelectedFriendName);
     }
 

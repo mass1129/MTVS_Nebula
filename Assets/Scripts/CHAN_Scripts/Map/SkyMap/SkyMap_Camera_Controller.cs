@@ -80,7 +80,7 @@ public class SkyMap_Camera_Controller : MonoBehaviour
     private Vector3 lookPosition;
     public float InitialcamPos;
     private Vector3 targetCamPos ;
-    bool onClicked;
+    public bool onClicked;
     public float multiplier = 3;
     Vector3 originPos;
     public SphericalCoordinates sphericalCoordinates;
@@ -154,11 +154,6 @@ public class SkyMap_Camera_Controller : MonoBehaviour
             // 감지되는 오브젝트의 태그를 분류하자 
             //만약 hit가 섬이면 그섬의 유저 이름을 가져와서 Texture에 위치시킨다. 
 
-            // 마우스를 클릭하면 텍스트 박스의 위치를 고정시킨다.
-            if (!Input.GetMouseButtonUp(0))
-            { 
-            
-            }
                 Image_ToolTip.position = Input.mousePosition + new Vector3(150, -50, 0);
             if (hit.collider.CompareTag("UserIsland"))
             {
