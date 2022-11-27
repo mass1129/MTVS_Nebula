@@ -31,13 +31,14 @@ public class Item_TVManager_Agora : MonoBehaviourPun
     {
         InitialPos = prefab_Wall.position;
         ss = GetComponent<ScreenShare>();
-        // 처음 입장했을때 스크린이 올라왔는지 검사
-        if (!hasControl&& !isScreenUp)
-        {
-            Debug.Log("중간난입");
-            // 송출자  uid를 받아온다. 
-            StartCoroutine(ReceiveId());
-        }
+        //// 처음 입장했을때 스크린이 올라왔는지 검사
+        //Debug.LogWarning("스크린 올라옴?:"+isScreenUp);
+        //if (isScreenUp)
+        //{
+        //    Debug.LogWarning("중간난입");
+        //    // 송출자  uid를 받아온다. 
+        //    StartCoroutine(ReceiveId());
+        //}
     }
 
     #region 화면공유 준비
@@ -93,7 +94,7 @@ public class Item_TVManager_Agora : MonoBehaviourPun
         //window.position -= window.transform.forward * 0.51f;
         //버튼을 누르면 y=10 만큼 좌표 lerp하게 이동 
         moving = false;
-        AnnounceScreenUp(b);
+        //AnnounceScreenUp(b);
     }
     #endregion
     #region 유저들에게 화면 송출 시작 
@@ -123,14 +124,15 @@ public class Item_TVManager_Agora : MonoBehaviourPun
 
     #endregion
     #region 새로 들어온 유저들을 위한 함수
-    public void UpdateUId()
+    public void UpdateItem(bool b)
     {
-        photonView.RPC("RPCUpdateUId", RpcTarget.All);
+        photonView.RPC("RPCUpdateItem", RpcTarget.All,b);
     }
     [PunRPC]
-    void RPCUpdateUId()
+    void RPCUpdateItem(bool b)
     {
         temp_uId = ScreenShare.myID;
+        isScreenUp = b;
     }
     /// <summary>
     /// 유저들에게 스크린이 올라왔다고 알린다.

@@ -140,11 +140,9 @@ public class SkyMap_Camera_Controller : MonoBehaviour
     void ShootRay()
     {
         Vector3 mousePosition = Input.mousePosition;
-        Debug.Log("Origin Pos" + mousePosition);
         
         mousePosition.x = ((mousePosition.x - (width * (1 - ratio))/2) * (2 - ratio));
         mousePosition.y= ((mousePosition.y - (height * (1 - ratio))/2) * (2 - ratio));
-        Debug.Log("Render Pos"+mousePosition);
 
         var WorldPos = cam.ScreenPointToRay(mousePosition);
 

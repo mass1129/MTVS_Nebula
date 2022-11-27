@@ -26,6 +26,10 @@ public class CHAN_PlayerManger : MonoBehaviourPun
                 transform.GetChild(1).GetComponent<User_IconMove>().OnUserIcon();
             }
         }
+        else if (CHAN_GameManager.instance.prefab == CHAN_GameManager.instance.userPrefab)
+        {
+            CHAN_PlayerManger.LocalPlayerInstance = this.gameObject;
+        }
         //JoinRoom 전에 플레이어가 생성되므로 로드시, 오브젝트가 없어지면 안된다. 
         DontDestroyOnLoad(gameObject);
     }  
