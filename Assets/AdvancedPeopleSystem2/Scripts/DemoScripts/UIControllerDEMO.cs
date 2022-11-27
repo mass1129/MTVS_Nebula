@@ -383,8 +383,13 @@ public class UIControllerDEMO : MonoBehaviour
 
         CharacterCustomization.SaveCharacterToFile(CharacterCustomizationSetup.CharacterFileSaveFormat.Json);
         // 씬 로드
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
+       SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
 
+        
+    }
+    public void LoadToFile()
+    {
+        CharacterCustomization.LoadCharacterFromFile(PlayerPrefs.GetString("AvatarName"));
     }
     public void ClearFromFile()
     {

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-
+using AdvancedPeopleSystem;
 public enum PlayerStates // Player의 기본 상태
 {
     Idle,
@@ -30,6 +30,7 @@ public class K_Player : MonoBehaviourPun, IPunObservable
     public K_CameraMgr camMgr;
     public K_PlayerItemSystem itemSystem;
     public GridBuildingSystem3D gridBuildingSystem;
+    public CharacterCustomization charCustom;
     [System.NonSerialized]
 
     public string avatarName = null;

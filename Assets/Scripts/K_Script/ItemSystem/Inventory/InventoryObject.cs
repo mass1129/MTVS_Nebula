@@ -151,6 +151,7 @@ public class InventoryObject : ScriptableObject
 
         await httpReq.Post(url, json);
     }
+
     public async void TestLoad()
     {
         var url = "https://resource.mtvs-nebula.com/" + loadPath + PlayerPrefs.GetString("AvatarName");
@@ -161,13 +162,9 @@ public class InventoryObject : ScriptableObject
         Inventory newInven = result2.results;
         for (int i = 0; i < GetSlots.Length; i++)
         {
-          GetSlots[i].UpdateSlot(newInven.slots[i].item, newInven.slots[i].amount);
+            GetSlots[i].UpdateSlot(newInven.slots[i].item, newInven.slots[i].amount);
             //Container.slots[i].UpdateSlot(Container.slots[i].item, Container.slots[i].amount);
         }
-      
-
-
-
     }
 
     public void UpdateInventory()

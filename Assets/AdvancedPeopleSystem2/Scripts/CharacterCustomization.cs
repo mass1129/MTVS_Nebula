@@ -1426,23 +1426,24 @@ namespace AdvancedPeopleSystem
             if(photonView.IsMine)
             photonView.RPC("RPCLoadCharacterFromFile", RpcTarget.AllBuffered, s);
             
+            
         }
         [PunRPC]
         public async void RPCLoadCharacterFromFile(string s)
         {
-            var url = "https://resource.mtvs-nebula.com/avatar/texture/" + s;//PlayerPrefs.GetString("AvatarName");
+            var url = "https://resource.mtvs-nebula.com/avatar/appearance/" + s;//PlayerPrefs.GetString("AvatarName");
             var httpReq = new HttpRequester(new JsonSerializationOption());
 
             H_CCC_Root result2 = await httpReq.Get<H_CCC_Root>(url);
 
             //var setup = CharacterCustomizationSetup.Deserialize(result2.results, CharacterCustomizationSetup.CharacterFileSaveFormat.Json);
-            var setup = result2.results;
+            var setup = result2.results.texture;
             if (setup != null)
             {
                  SetCharacterSetup(setup);
             }
         }
-
+        public bool textLoadDone = false;
         public async void LoadCharacterCustomScene(string path)
         {
             var url = "https://resource.mtvs-nebula.com/avatar/texture/" + path;
@@ -1467,7 +1468,14 @@ namespace AdvancedPeopleSystem
         {
             public int httpStatus;
             public string message;
-            public CharacterCustomizationSetup results;
+            public H_CCC_Results results;
+            
+        }
+        public class H_CCC_Results
+        {
+            public string name;
+            public CharacterCustomizationSetup texture;
+            public Inventory equipment;
         }
         /// <summary>
         /// Gets a list of character saves from the directory

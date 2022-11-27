@@ -164,7 +164,7 @@ public class K_PlayerItemSystem : MonoBehaviourPun, IPunObservable
                                 break;
 
                             case ItemType.Shirt:
-                                _CharacterCustomization.SetElementByIndex(CharacterElementType.Shirt, -1);
+                                _CharacterCustomization.SetElementByIndex(CharacterElementType.Shirt, 1);
                                 break;
                             case ItemType.Pants:
                                 _CharacterCustomization.SetElementByIndex(CharacterElementType.Pants, -1);

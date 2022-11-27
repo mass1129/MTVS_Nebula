@@ -64,7 +64,7 @@ namespace UltimateClean
             image.color = newColor;
             image.canvasRenderer.SetAlpha(0.0f);
             image.CrossFadeAlpha(1.0f, 0.4f, false);
-            image.raycastTarget = true;
+            image.raycastTarget = false;
 
             
             m_background.transform.localScale = new Vector3(1, 1, 1);

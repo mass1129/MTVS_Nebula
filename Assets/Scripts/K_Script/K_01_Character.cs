@@ -48,19 +48,24 @@ public class K_01_Character : K_Player
         
     }
 
-    public void SetActiveObj()
+    public IEnumerator SetActiveObj()
     {
         if (photonView.IsMine)
         {
             camPos.SetActive(true);
+            charCustom.LoadCharacterFromFile(PlayerPrefs.GetString("AvatarName"));
+             yield return new WaitForSeconds(0.1f);
             for (int i = 0; i < playerUI.Count; i++)
             {
                 playerUI[i].SetActive(true);
             }
             InActiveObj();
+            
+            
         }
 
     }
+    
     public void PlayerInfoSetting()
     {
         if (photonView.IsMine)

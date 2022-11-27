@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+using CodeMonkey.Utils;
 public class K_StaticInterface : K_UserInterface
 {
     public GameObject[] slots;
@@ -28,5 +28,40 @@ public class K_StaticInterface : K_UserInterface
     }
     public override void DistorySlots()
     { }
+    public override void OnDragEnd(GameObject obj)
+    {   
+        base.OnDragEnd(obj);
+        if (MouseData.interfaceMouseIsOver == null&&!UtilsClass.IsPointerOverUI())
+        {
+            ForGiveItem(obj);
+            slotsOnInterface[obj].RemoveItem();
+            
+            return;
+        }
+    }
+
+    public async void ForGiveItem(GameObject obj)
+    {
+        DropItem dropItem = new DropItem
+        {
+            uniqueId = slotsOnInterface[obj].item.uniqueId
+        };
+
+        string json = JsonUtility.ToJson(dropItem, true);
+        Debug.Log(json);
+        var url = "https://resource.mtvs-nebula.com/achieve/drop/" + PlayerPrefs.GetString("AvatarName");
+        var httpReq = new HttpRequester(new JsonSerializationOption());
+
+        await httpReq.Post(url, json);
+
+    }
+    [System.Serializable]
+    public class DropItem
+    {
+        public int uniqueId;
+
+
+    }
+
 
 }

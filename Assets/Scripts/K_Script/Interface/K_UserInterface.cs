@@ -86,21 +86,30 @@ public abstract class K_UserInterface : MonoBehaviourPun
             i++;
         }
     }
-
+    Sprite previousImg;
     private void OnSlotUpdate(InventorySlot slot)
     {
         if (slot.item.id <= -1)
         {
             slot.slotDisplay.transform.GetChild(0).GetComponent<Image>().sprite = null;
             slot.slotDisplay.transform.GetChild(0).GetComponent<Image>().color = new Color(1, 1, 1, 0);
-            //slot.slotDisplay.GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
+            if (slot.parent.inventory.type == InterfaceType.Equipment)
+            {
+                slot.slotDisplay.transform.GetChild(1).gameObject.SetActive(true);
+            }
+
+
         }
-       else        
+        else
         {
+
             slot.slotDisplay.transform.GetChild(0).GetComponent<Image>().sprite = slot.GetItemObject().uiDisplay;
             slot.slotDisplay.transform.GetChild(0).GetComponent<Image>().color = new Color(1, 1, 1, 1);
-           //slot.slotDisplay.GetComponentInChildren<TextMeshProUGUI>().text
-           //    = slot.amount == 1 ? string.Empty : slot.amount.ToString("n0");
+            if (slot.parent.inventory.type == InterfaceType.Equipment)
+            {
+                slot.slotDisplay.transform.GetChild(1).gameObject.SetActive(false);
+            }
+
         }
     }
 
@@ -161,7 +170,7 @@ public abstract class K_UserInterface : MonoBehaviourPun
     
    
 
-        private GameObject CreateTempItem(GameObject obj)
+    private GameObject CreateTempItem(GameObject obj)
     {
         GameObject tempItem = null;
         if (slotsOnInterface[obj].item.id >= 0)
@@ -200,15 +209,6 @@ public abstract class K_UserInterface : MonoBehaviourPun
     {
         
         var selectInterface = quickSlotList.GetComponent<K_UserInterface>();
-        //if (selectInterface == null) return;
-        //selectInterface.CreateSlots();
-        //for (int i = 0; i < selectInterface.inventory.GetSlots.Length; i++)
-        //{
-
-        //    selectInterface.inventory.GetSlots[i].parent = this;
-        //    selectInterface.inventory.GetSlots[i].onAfterUpdated += OnSlotUpdate;
-
-        //}
         selectInterface.inventory.Clear();
         for (int i = 0; i < selectInterface.inventory.GetSlots.Length; i++)
         {
