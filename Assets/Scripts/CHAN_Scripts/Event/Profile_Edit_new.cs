@@ -17,6 +17,7 @@ public class Profile_Edit_new : MonoBehaviour
     public Button btn_Create_Icon;
     public Button btn_Save;
     public Button btn_Close;
+    public Button btn_Clear;
     public TMP_InputField user_NickName;
     public TMP_InputField[] user_Keywords = new TMP_InputField[4];
     string[] paths;
@@ -26,6 +27,7 @@ public class Profile_Edit_new : MonoBehaviour
     {
         btn_Create_Icon.onClick.AddListener(OnEditDisplay);
         btn_Save.onClick.AddListener(SaveInputs);
+        btn_Clear.onClick.AddListener(ClearInputs);
         btn_upload_Image.onClick.AddListener(AddImage);
     }
     void Start()
@@ -172,7 +174,15 @@ public class Profile_Edit_new : MonoBehaviour
             Debug.Log("저장실패");
         }
 
-
+    }
+    public void ClearInputs()
+    {
+        user_NickName.text = null;
+        transform.GetChild(2).GetChild(0).GetChild(2).GetChild(0).GetComponent<RawImage>().texture = null;
+        for (int i = 0; i < user_Keywords.Length; i++)
+        {
+            user_Keywords[i].text = null;
+        }
     }
 
 }
