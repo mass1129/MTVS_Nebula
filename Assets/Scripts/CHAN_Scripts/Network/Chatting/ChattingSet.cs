@@ -35,6 +35,8 @@ public class ChattingSet : MonoBehaviourPun
     Color32 idColor;
     [HideInInspector]public bool isOpened= false;
 
+    public Animator imgAnim;
+    public GameObject waveImg;
     void Start()
     {
         //각 버튼에 사용할 함수들을 할당한다.
@@ -52,6 +54,8 @@ public class ChattingSet : MonoBehaviourPun
             );
         Area_Chat.GetComponent<CanvasGroup>().alpha = 0;
         Area_Chat.GetComponent<CanvasGroup>().blocksRaycasts = false;
+       
+        
 
     }
     #region 버튼 설정 
@@ -109,6 +113,11 @@ public class ChattingSet : MonoBehaviourPun
         if (isOpened ) return;
         _chatAmount++;
         chatsAmount.text = _chatAmount.ToString();
+ 
+        imgAnim.enabled = true;
+
+        waveImg.SetActive(true);
+        
     }
     IEnumerator AutoScrollBottom()
     {
