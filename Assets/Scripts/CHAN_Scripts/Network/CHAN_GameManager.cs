@@ -91,14 +91,16 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
         { 
             BGMPlayer.instance.GetComponent<AudioSource>().clip = BGMPlayer.instance.audioSources[1];
             BGMPlayer.instance.GetComponent<AudioSource>().Play();
+            PN.LoadLevel(sceneName);
         }
         else if (sceneName == name_UserScene)
         {
             BGMPlayer.instance.GetComponent<AudioSource>().clip = BGMPlayer.instance.audioSources[2];
             BGMPlayer.instance.GetComponent<AudioSource>().Play();
+            PN.LoadLevel(sceneName);
             LoadingObject.SetActive(false);
         }
-        PN.LoadLevel(sceneName);
+        
         if(prefab==WhalePrepab)
         SetPlayer(prefab);
 
