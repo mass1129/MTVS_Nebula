@@ -7,6 +7,7 @@ using UnityEngine.Networking;
 using System.Threading.Tasks;
 using Photon.Pun;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class Island_Profile : MonoBehaviourPun
 {
@@ -17,12 +18,12 @@ public class Island_Profile : MonoBehaviourPun
     public string user_keyword1;
     public string user_keyword2;
     public Image areaImage;
-    Text userName_Text;
+    TMP_Text userName_Text;
     Transform playerPos;
     public bool turn;
     void Start()
     {
-        userName_Text = gameObject.transform.GetComponentInChildren<Text>();
+        userName_Text = gameObject.transform.GetComponentInChildren<TMP_Text>();
         playerPos = CHAN_PlayerManger.LocalPlayerInstance.transform.GetChild(5).gameObject.transform;
         areaImage.enabled=false;
         //섬의 크기에따라 이미지의 위치를 조정한다. 

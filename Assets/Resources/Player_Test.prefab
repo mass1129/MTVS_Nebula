@@ -55653,7 +55653,7 @@ MonoBehaviour:
   cc: {fileID: 5733073701845269105}
   cam: {fileID: 2658522420878604038}
   camMgr: {fileID: 5733073701845269107}
-  itemSystem: {fileID: 5733073701845269111}
+  itemSystem: {fileID: 0}
   gridBuildingSystem: {fileID: 4451760829027110919}
   input: {x: 0, y: 0}
   rootMotion: {x: 0, y: 0, z: 0}
@@ -55816,9 +55816,8 @@ MonoBehaviour:
   inven_Building: {fileID: 11400000, guid: 128d426c0cfe0f940aa8fd7406a56991, type: 2}
   inven_Default: {fileID: 11400000, guid: 711bda56d07eec245bfab8e85bc64549, type: 2}
   inven_Vehicle: {fileID: 11400000, guid: 422cb2658b0d51346a2cf4a932b5bd9e, type: 2}
-  _equipment: {fileID: 11400000, guid: 03e1d40251a619f4a9f2f3e3ac33a076, type: 2}
+  inven_Equipment: {fileID: 0}
   player: {fileID: 5733073701845269104}
-  dataBase: {fileID: 11400000, guid: 2ef6ad25b8d7948488dda3b23dc7008b, type: 2}
 --- !u!114 &3214773754116892971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55840,7 +55839,6 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 5629639970830784067}
   - {fileID: 5733073701845269104}
-  - {fileID: 5733073701845269111}
   - {fileID: 842975793188924700}
   sceneViewId: 0
   InstantiationId: 0

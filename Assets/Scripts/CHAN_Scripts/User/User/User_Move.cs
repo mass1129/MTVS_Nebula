@@ -30,6 +30,7 @@ public class User_Move : MonoBehaviourPun, IPunObservable
     Vector3 dir;
     float lerpSpeed = 10;
     public bool islandSelected;
+    bool mouseClicked;
     float Rotate_Pitch;
     float Rotate_Yaw;
     Vector3 receivePos;
@@ -77,15 +78,18 @@ public class User_Move : MonoBehaviourPun, IPunObservable
         if (photonView.IsMine)
         {
             #region 플레이어 입력기     
-            float Input_Forward = Mathf.Clamp(Input.GetAxis("Vertical"), 0, 1);
-            float Input_Rotate_Yaw = Input.GetAxis("Mouse X");
-            float Input_Rotate_Pitch = Input.GetAxis("Mouse Y");
-            Rotate_Pitch -= Input_Rotate_Pitch * rotateSpeed * Time.deltaTime;
-            Rotate_Yaw += Input_Rotate_Yaw * rotateSpeed * Time.deltaTime;
-            #endregion
-            // 일단 이동방향은 앞뒤로 갈 수 있도록 만든다. 
-            //쉬프트키를 눌렀을 때 대쉬되도록 만든다.
-            float totalSpeed;
+            if (!mouseClicked)
+            {
+                float Input_Forward = Mathf.Clamp(Input.GetAxis("Vertical"), 0, 1);
+                float Input_Rotate_Yaw = Input.GetAxis("Mouse X");
+                float Input_Rotate_Pitch = Input.GetAxis("Mouse Y");
+
+                Rotate_Pitch -= Input_Rotate_Pitch * rotateSpeed * Time.deltaTime;
+                Rotate_Yaw += Input_Rotate_Yaw * rotateSpeed * Time.deltaTime;
+                #endregion
+                // 일단 이동방향은 앞뒤로 갈 수 있도록 만든다. 
+                //쉬프트키를 눌렀을 때 대쉬되도록 만든다.
+                float totalSpeed;
 
 
                 dir = (transform.forward).normalized;
@@ -101,26 +105,28 @@ public class User_Move : MonoBehaviourPun, IPunObservable
                 }
 
 
-            userSpeed = Mathf.Clamp(userSpeed, 0, MaxSpeed);
+                userSpeed = Mathf.Clamp(userSpeed, 0, MaxSpeed);
 
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                totalSpeed = userSpeed * speedMultiplier;
-            }
-            else
-            {
-                totalSpeed = userSpeed;
-            }
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                Do_Shout();
-            }
-            transform.position += dir * totalSpeed * Time.deltaTime;
-            transform.localRotation = Quaternion.EulerAngles(Mathf.Clamp(Rotate_Pitch,-70*Mathf.Deg2Rad, 70 * Mathf.Deg2Rad), Rotate_Yaw, 0);
+                if (Input.GetKey(KeyCode.LeftShift))
+                {
+                    totalSpeed = userSpeed * speedMultiplier;
+                }
+                else
+                {
+                    totalSpeed = userSpeed;
+                }
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    Do_Shout();
+                }
 
+                transform.position += dir * totalSpeed * Time.deltaTime;
+                transform.localRotation = Quaternion.EulerAngles(Mathf.Clamp(Rotate_Pitch, -70 * Mathf.Deg2Rad, 70 * Mathf.Deg2Rad), Rotate_Yaw, 0);
+            }
             if (Input.GetKeyDown(KeyCode.I))
             {
                 MouseVisual(!Cursor.visible);
+                mouseClicked = !mouseClicked;
             }
             if (Input.GetKeyDown(KeyCode.F))
             {
@@ -235,7 +241,7 @@ public class User_Move : MonoBehaviourPun, IPunObservable
         gameObject.GetComponent<SphereCollider>().enabled = false;
         gameObject.GetComponentInChildren<AudioSource>().enabled = false;
         float time=0;
-        while (time < 1)
+        while (time < 3)
         {
             time += Time.deltaTime;
             yield return null;

@@ -7050,7 +7050,7 @@ Transform:
   m_GameObject: {fileID: 4674175883640254200}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4480532473856094455}
@@ -7076,6 +7076,7 @@ MonoBehaviour:
   user_keyword1: 
   user_keyword2: 
   areaImage: {fileID: 3751712570622035009}
+  turn: 0
 --- !u!135 &241083202303798688
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -12391,7 +12392,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6425589532122016927, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 169.8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7520144800185246344, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.size

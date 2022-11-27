@@ -1139,7 +1139,7 @@ Transform:
   m_GameObject: {fileID: 930188127268620692}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2851218415612926005}
@@ -1165,6 +1165,7 @@ MonoBehaviour:
   user_keyword1: 
   user_keyword2: 
   areaImage: {fileID: 3103494784931136214}
+  turn: 0
 --- !u!54 &-3326573853247978457
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1192,7 +1193,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 12
+  m_Radius: 16.2
   m_Center: {x: 0, y: 8.64, z: 0}
 --- !u!1 &1000043063848405324
 GameObject:
@@ -8443,7 +8444,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6425589532122016927, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 200
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
