@@ -76,6 +76,7 @@ public class Island_Profile : MonoBehaviourPun
                 areaImage.enabled = true;
                 userName_Text.enabled = true;
                 turn = true;
+                StartCoroutine(GetComponentInChildren<Island_Follower>().PopUp());
             }
         }
 
