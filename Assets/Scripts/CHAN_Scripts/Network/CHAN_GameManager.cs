@@ -168,7 +168,7 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.InRoom)
         {
-            PhotonNetwork.Destroy(player);
+           
             roomName = "sky";
             sceneName = name_SkyScene;
             prefab = WhalePrepab;
@@ -186,7 +186,7 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.InRoom)
         {
-            PhotonNetwork.Destroy(player);
+            
             roomName = NickName;
             sceneName = name_UserScene;
             prefab = userPrefab;
