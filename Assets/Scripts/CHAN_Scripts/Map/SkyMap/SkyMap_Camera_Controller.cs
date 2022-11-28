@@ -34,10 +34,10 @@ public class SphericalCoordinates
     private float maxAzimuth_Rad;
 
     //Elevation rages
-    public float minElevation_Deg = -90f;
+    public float minElevation_Deg = -80f;
     private float minElevation_Rad;
 
-    public float maxElevation_Deg = 90f;
+    public float maxElevation_Deg = 80f;
     private float maxElevation_Rad;
 
     public SphericalCoordinates(Vector3 _camCoordinate, float _radius)

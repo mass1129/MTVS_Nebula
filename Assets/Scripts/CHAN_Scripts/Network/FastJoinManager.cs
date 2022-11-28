@@ -94,7 +94,7 @@ public class FastJoinManager : MonoBehaviourPunCallbacks
     {
         print("방 입장 완료");
         base.OnJoinedRoom();
-        PhotonNetwork.LoadLevel(Room);
+        //PhotonNetwork.LoadLevel(Room);
     }
     public override void OnJoinRoomFailed(short returnCode, string message)
     {

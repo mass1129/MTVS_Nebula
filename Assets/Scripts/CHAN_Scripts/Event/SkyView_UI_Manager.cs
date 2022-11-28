@@ -49,7 +49,9 @@ public class SkyView_UI_Manager : MonoBehaviour
     // 버튼을 만드는 함수를 만들자 
     void MakeFriendsBtn()
     {
-
+        //초기에 contents에 있는 요소들을 모두 지운다. 
+        DestroyElement(online_Location);
+        DestroyElement(offline_Location);
         Island_Information iInfo = Island_Information.instance;
         //서버내 모든 유저수 만큼 반복
         foreach (string key in iInfo.Island_Dic.Keys)
@@ -77,6 +79,13 @@ public class SkyView_UI_Manager : MonoBehaviour
             fInfo.followers = iInfo.Island_Dic[key].User_followers;
 
             //--------------------------------> 여기에 유저 키워드값 추가 해야 함.
+        }
+    }
+    void DestroyElement(Transform contents)
+    {
+        for (int i = 0; i < contents.childCount; i++)
+        {
+            Destroy(contents.GetChild(i).gameObject);
         }
     }
     // 초기화 기능

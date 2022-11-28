@@ -64,7 +64,6 @@ public class User_Move : MonoBehaviourPun, IPunObservable
             //만약 포톤뷰가 있는 개체라면 콜라이더를 일시적으로 끄자
             StartCoroutine(TurnCollider());
         }
-        Cursor.visible = false;
         OrcaObj.SetActive(true);
         text_EnterRoom.GetComponentInChildren<TMP_Text>();
         text_EnterRoom.SetActive(false);
@@ -81,62 +80,57 @@ public class User_Move : MonoBehaviourPun, IPunObservable
         if (photonView.IsMine)
         {
             #region 플레이어 입력기     
-            if (!mouseClicked)
+            float Input_Forward = Mathf.Clamp(Input.GetAxis("Vertical"), 0, 1);
+            float Input_Rotate_Yaw = Input.GetAxis("Mouse X");
+            float Input_Rotate_Pitch = Input.GetAxis("Mouse Y");
+
+            Rotate_Pitch -= Input_Rotate_Pitch * rotateSpeed * Time.deltaTime;
+            Rotate_Yaw += Input_Rotate_Yaw * rotateSpeed * Time.deltaTime;
+            #endregion
+            // 일단 이동방향은 앞뒤로 갈 수 있도록 만든다. 
+            //쉬프트키를 눌렀을 때 대쉬되도록 만든다.
+            float totalSpeed;
+            dir = (transform.forward).normalized;
+
+            if (Input.GetKey(KeyCode.W))
             {
-                float Input_Forward = Mathf.Clamp(Input.GetAxis("Vertical"), 0, 1);
-                float Input_Rotate_Yaw = Input.GetAxis("Mouse X");
-                float Input_Rotate_Pitch = Input.GetAxis("Mouse Y");
-
-                Rotate_Pitch -= Input_Rotate_Pitch * rotateSpeed * Time.deltaTime;
-                Rotate_Yaw += Input_Rotate_Yaw * rotateSpeed * Time.deltaTime;
-                #endregion
-                // 일단 이동방향은 앞뒤로 갈 수 있도록 만든다. 
-                //쉬프트키를 눌렀을 때 대쉬되도록 만든다.
-                float totalSpeed;
-
-
-                dir = (transform.forward).normalized;
-
-
-                if (Input.GetKey(KeyCode.W))
-                {
-                    userSpeed += (Input_Forward) * accMultipiler * Time.deltaTime;
-                }
-                else
-                {
-                    userSpeed -= accMultipiler * 2 * Time.deltaTime;
-                }
-
-
-                userSpeed = Mathf.Clamp(userSpeed, 0, MaxSpeed);
-
-                if (Input.GetKey(KeyCode.LeftShift))
-                {
-                    totalSpeed = userSpeed * speedMultiplier;
-                }
-                else
-                {
-                    totalSpeed = userSpeed;
-                }
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    Do_Shout();
-                }
-                if (turn)
-                {
-                    ReturnControl();
-                }
-                else
-                { 
-                    transform.position += dir * totalSpeed * Time.deltaTime;
-                }
-                transform.localRotation = Quaternion.EulerAngles(Mathf.Clamp(Rotate_Pitch, -70 * Mathf.Deg2Rad, 70 * Mathf.Deg2Rad), Rotate_Yaw, 0);
+                userSpeed += (Input_Forward) * accMultipiler * Time.deltaTime;
             }
-            if (Input.GetKeyDown(KeyCode.I))
+            else
             {
-                MouseVisual(!Cursor.visible);
-                mouseClicked = !mouseClicked;
+                userSpeed -= accMultipiler * 2 * Time.deltaTime;
             }
+
+
+            userSpeed = Mathf.Clamp(userSpeed, 0, MaxSpeed);
+
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                totalSpeed = userSpeed * speedMultiplier;
+            }
+            else
+            {
+                totalSpeed = userSpeed;
+            }
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Do_Shout();
+            }
+            if (turn)
+            {
+                ReturnControl();
+            }
+            else
+            {
+                transform.position += dir * totalSpeed * Time.deltaTime;
+            }
+            transform.localRotation = Quaternion.EulerAngles(Mathf.Clamp(Rotate_Pitch, -70 * Mathf.Deg2Rad, 70 * Mathf.Deg2Rad), Rotate_Yaw, 0);
+
+            //if (Input.GetKeyDown(KeyCode.I))
+            //{
+            //    MouseVisual(!Cursor.visible);
+            //    mouseClicked = !mouseClicked;
+            //}
             if (Input.GetKeyDown(KeyCode.F))
             {
                 if (islandSelected)
