@@ -25,7 +25,7 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
     private bool isDemolishActive;
     public InventoryObject quickSlot;
     private void Awake() {
-        
+        if (!photonView.IsMine) return;
         Instance = this;
         //그리드 세팅
         int gridWidth = 100;
@@ -56,9 +56,11 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
     }
 
     public void FirstLoadBuilding()
-    {   
-        if(photonView.IsMine)
-        photonView.RPC("RPCFirstLoadBuilding", RpcTarget.AllBuffered);
+    {
+        //if(photonView.IsMine)
+        //photonView.RPC("RPCFirstLoadBuilding", RpcTarget.AllBuffered);
+        if (PhotonNetwork.CurrentRoom.PlayerCount <= 1)
+            TestLoad(PlayerPrefs.GetString("User_Island_ID"));
     }
     [PunRPC]
     public void RPCFirstLoadBuilding()

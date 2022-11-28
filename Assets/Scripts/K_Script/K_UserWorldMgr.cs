@@ -7,17 +7,19 @@ public class K_UserWorldMgr : MonoBehaviourPun
 {
     // Start is called before the first frame update
     K_01_Character _character;
+    public GridBuildingSystem3D buildingSystem;
     private void Awake()
     {
-        CHAN_GameManager.instance.SetPlayer(CHAN_GameManager.instance.prefab);
+        
         _character = CHAN_ClientManager.instance.myCharacter;
 
     }
     void Start()
     {
         _character.PlayerInfoSetting();
-        StartCoroutine(_character.SetActiveObj()); 
-        _character.gridBuildingSystem.FirstLoadBuilding();     
+        StartCoroutine(_character.SetActiveObj());
+        
+        
     }
 
     public void PlayerMoveCC(bool s)

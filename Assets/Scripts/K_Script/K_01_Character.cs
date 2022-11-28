@@ -54,16 +54,24 @@ public class K_01_Character : K_Player
         {
             camPos.SetActive(true);
             charCustom.LoadCharacterFromFile(PlayerPrefs.GetString("AvatarName"));
-             yield return new WaitForSeconds(0.1f);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                gridBuildingSystem.gameObject.SetActive(true);
+                gridBuildingSystem.TestLoad(PlayerPrefs.GetString("User_Island_ID"));
+                
+            }
+            yield return new WaitForSeconds(0.1f);
             for (int i = 0; i < playerUI.Count; i++)
             {
                 playerUI[i].SetActive(true);
             }
+
+            yield return new WaitForSeconds(0.1f);
             InActiveObj();
-            
+            yield break;
             
         }
-
+        
     }
     
     public void PlayerInfoSetting()
@@ -95,7 +103,7 @@ public class K_01_Character : K_Player
     }
     public override void SetTrigger(string s)
     {
-        photonView.RPC("RpcSetTrigger", RpcTarget.AllBuffered, s);
+        photonView.RPC("RpcSetTrigger", RpcTarget.All, s);
     }
 
     [PunRPC]
@@ -106,7 +114,7 @@ public class K_01_Character : K_Player
 
     public override void ResetTrigger(string s)
     {
-        photonView.RPC("RpcResetTrigger", RpcTarget.AllBuffered, s);
+        photonView.RPC("RpcResetTrigger", RpcTarget.All, s);
     }
 
     [PunRPC]
@@ -117,7 +125,7 @@ public class K_01_Character : K_Player
 
     public override void SetFloat(string s, float f)
     {
-        photonView.RPC("RpcSetFloat", RpcTarget.AllBuffered, s, f);
+        photonView.RPC("RpcSetFloat", RpcTarget.All, s, f);
     }
 
     [PunRPC]
@@ -128,7 +136,7 @@ public class K_01_Character : K_Player
 
     public override void Play(string s, int layer, float normallizedTime)
     {
-        photonView.RPC("RpcPlay", RpcTarget.AllBuffered, s, layer, normallizedTime);
+        photonView.RPC("RpcPlay", RpcTarget.All, s, layer, normallizedTime);
     }
 
     [PunRPC]

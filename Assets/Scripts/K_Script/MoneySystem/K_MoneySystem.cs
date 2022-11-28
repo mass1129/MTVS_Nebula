@@ -26,6 +26,7 @@ public class K_MoneySystem : MonoBehaviourPun, IShopCustomer
 
     public int GetGoldAmount()
     {
+        
         Debug.Log("currentGold :" + goldAmount);
         return goldAmount;
     }
@@ -62,6 +63,7 @@ public class K_MoneySystem : MonoBehaviourPun, IShopCustomer
 
     public async void MoneyLoad()
     {
+        if (!photonView.IsMine) return;
         var url = "https://resource.mtvs-nebula.com/inventory/money/" + player.avatarName;
         var httpReq = new HttpRequester(new JsonSerializationOption());
 

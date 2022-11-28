@@ -37,7 +37,8 @@ public abstract class K_UserInterface : MonoBehaviourPun
     }
     public void OnEnable()
     {
-        ShopUpdate();
+        if (!photonView.IsMine) return;
+            ShopUpdate();
          if (!isAddedEvent && !needFirstUpdate)
          {
             UISetting();
@@ -47,6 +48,7 @@ public abstract class K_UserInterface : MonoBehaviourPun
 
     public void UISetting()
     {
+        if (!photonView.IsMine) return;
         CreateSlots();
 
         for (int i = 0; i < inventory.GetSlots.Length; i++)
@@ -63,6 +65,7 @@ public abstract class K_UserInterface : MonoBehaviourPun
     }
     private void OnDestroy()
     {
+        if (!photonView.IsMine) return;
         for (int i = 0; i < inventory.GetSlots.Length; i++)
         {
 
@@ -79,6 +82,7 @@ public abstract class K_UserInterface : MonoBehaviourPun
     public abstract void DistorySlots();
     public void UpdateInventoryLinks()
     {
+        if (!photonView.IsMine) return;
         int i = 0;
         foreach (var key in slotsOnInterface.Keys.ToList())
         {
@@ -89,6 +93,7 @@ public abstract class K_UserInterface : MonoBehaviourPun
     Sprite previousImg;
     private void OnSlotUpdate(InventorySlot slot)
     {
+        if (!photonView.IsMine) return;
         if (slot.item.id <= -1)
         {
             slot.slotDisplay.transform.GetChild(0).GetComponent<Image>().sprite = null;
@@ -115,6 +120,7 @@ public abstract class K_UserInterface : MonoBehaviourPun
 
     public void Update()
     {
+        if (!photonView.IsMine) return;
         if (_previousInventory != inventory)
         {
             UpdateInventoryLinks();

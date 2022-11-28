@@ -101,13 +101,15 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
             LoadingObject.SetActive(false);
         }
         
-        if(prefab==WhalePrepab)
+        
         SetPlayer(prefab);
 
     }
     public override void OnLeftRoom()
     {
         base.OnLeftRoom();
+       
+        
     }
     RoomOptions roomOption()
     {
@@ -122,7 +124,7 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
         //유저 방은 10명으로 제한
         else
         {
-            roomOps.MaxPlayers = 10;
+            roomOps.MaxPlayers = 20;
         }
         return roomOps;
     }
@@ -140,24 +142,73 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
 
     public void Go_Sky_Scene()
     {
-        Destroy(player);
-        roomName = "sky";
-        sceneName = name_SkyScene;
-        prefab = WhalePrepab;
-        print("Join : " + roomName+"Scene");
-        LoadingObject.SetActive(true);
-        PN.LeaveRoom();
+        //PhotonNetwork.Destroy(player);
+        //roomName = "sky";
+        //sceneName = name_SkyScene;
+        //prefab = WhalePrepab;
+        //print("Join : " + roomName+"Scene");
+        //LoadingObject.SetActive(true);
+        //PN.LeaveRoom();
+        //print("Leave : " + roomName);
+        ExitButton_GoSky();
     }
     public void Go_User_Scene(string NickName)
     {
-        Destroy(player);
-        roomName = NickName;
-        sceneName = name_UserScene;
-        prefab = userPrefab;
-        print("Join : " + roomName);
-        LoadingObject.SetActive(true);
-        PN.LeaveRoom();
+        //PhotonNetwork.Destroy(player);
+        //roomName = NickName;
+        //sceneName = name_UserScene;
+        //prefab = userPrefab;
+        //print("Join : " + roomName);
+        //LoadingObject.SetActive(true);
+        //PN.LeaveRoom();
+        //print("Leave : " + roomName);
+        ExitButton_GoWorld(NickName);
     }
+    public void ExitButton_GoSky()
+    {
+        if (PhotonNetwork.InRoom)
+        {
+           
+            roomName = "sky";
+            sceneName = name_SkyScene;
+            prefab = WhalePrepab;
+            LoadingObject.SetActive(true);
+            print("Leave : " + roomName);
+            if (PhotonNetwork.IsMasterClient && PhotonNetwork.CurrentRoom.PlayerCount > 1) MigrateMaster();
+            else
+            {
+                PhotonNetwork.DestroyPlayerObjects(PhotonNetwork.LocalPlayer);
+                PhotonNetwork.LeaveRoom();
+            }
+        }
+    }
+    public void ExitButton_GoWorld(string NickName)
+    {
+        if (PhotonNetwork.InRoom)
+        {
+            
+            roomName = NickName;
+            sceneName = name_UserScene;
+            prefab = userPrefab;
+            print("Join : " + roomName);
+            LoadingObject.SetActive(true);
+
+            if (PhotonNetwork.IsMasterClient && PhotonNetwork.CurrentRoom.PlayerCount > 1) MigrateMaster();
+            else
+            {
+                PhotonNetwork.DestroyPlayerObjects(PhotonNetwork.LocalPlayer);
+                PhotonNetwork.LeaveRoom();
+            }
+        }
+    }
+    private void MigrateMaster()
+    {
+        var dict = PhotonNetwork.CurrentRoom.Players;
+        if (PhotonNetwork.SetMasterClient(dict[dict.Count - 1]))
+            PhotonNetwork.LeaveRoom();
+    }
+
+
     //public void Go_User_Custom()
     //{
     //    Destroy(player);
@@ -183,6 +234,7 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
         //}
         
     }
+    
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         base.OnPlayerLeftRoom(otherPlayer);

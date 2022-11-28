@@ -9,6 +9,7 @@ public class K_StaticInterface : K_UserInterface
     
     public override void CreateSlots()
     {
+        if (!photonView.IsMine) return;
         slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
         for (int i = 0; i < inventory.GetSlots.Length; i++)
         {
