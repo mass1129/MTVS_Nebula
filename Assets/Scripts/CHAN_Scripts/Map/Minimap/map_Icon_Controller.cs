@@ -30,7 +30,7 @@ public class map_Icon_Controller : MonoBehaviour
         if (Map_UIManager.instance.state_View == "minimap")
         {
             transform.forward = Vector3.down;
-            transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+            //transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
             
         }
         // 하늘맵 상태일 때 아이콘을 sky카메라로 바라보도록
