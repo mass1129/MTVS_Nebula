@@ -74,7 +74,7 @@ public class FastJoinManager : MonoBehaviourPunCallbacks
         RoomOptions roomOptions = new RoomOptions();
         //최대인원
         //where '0' means "no limit"
-        roomOptions.MaxPlayers = 4;//byte.Parse(totalNum.text);
+        roomOptions.MaxPlayers = 20;//byte.Parse(totalNum.text);
         // 방을 만든다.
         PhotonNetwork.CreateRoom(roomName, roomOptions, TypedLobby.Default);
     }

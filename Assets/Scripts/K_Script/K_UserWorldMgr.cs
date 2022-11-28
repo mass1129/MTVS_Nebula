@@ -10,7 +10,7 @@ public class K_UserWorldMgr : MonoBehaviourPun
     public GridBuildingSystem3D buildingSystem;
     private void Awake()
     {
-        CHAN_GameManager.instance.SetPlayer(CHAN_GameManager.instance.prefab);
+        
         _character = CHAN_ClientManager.instance.myCharacter;
 
     }

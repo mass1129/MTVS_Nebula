@@ -25,7 +25,7 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
     private bool isDemolishActive;
     public InventoryObject quickSlot;
     private void Awake() {
-        
+        if (!photonView.IsMine) return;
         Instance = this;
         //그리드 세팅
         int gridWidth = 100;

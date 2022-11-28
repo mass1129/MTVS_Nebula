@@ -21,7 +21,8 @@ public class K_MoneyUI : MonoBehaviourPun
     }
     IEnumerator MoneyCoroutine()
     {
-        while (true)
+        
+        while (true&&photonView.IsMine)
         {
             player.MoneyLoad();
             yield return new WaitForSeconds(5f);
@@ -34,11 +35,13 @@ public class K_MoneyUI : MonoBehaviourPun
     }
     private void UpdateText()
     {
+        if (!photonView.IsMine) return;
         goldText.text = player.GetGoldAmount().ToString();
 
     }
     private void Instance_OnGoldAmountChanged(object sender, System.EventArgs e)
     {
+        if (!photonView.IsMine) return;
         UpdateText();
     }
 

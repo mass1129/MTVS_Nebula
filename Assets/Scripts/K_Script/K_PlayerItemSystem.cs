@@ -21,32 +21,13 @@ public class K_PlayerItemSystem : MonoBehaviourPun, IPunObservable
     private void Awake()
     {
        
-            Debug.Log("111");
-            if (photonView.IsMine)
-            {
-                if (!isdone)
-                {
-                    _CharacterCustomization = this.gameObject.GetComponent<CharacterCustomization>();
-
-
-                    for (int i = 0; i < _equipment.GetSlots.Length; i++)
-                    {
-                        _equipment.GetSlots[i].onBeforeUpdated += OnRemoveItem;
-                        _equipment.GetSlots[i].onAfterUpdated += OnEquipItem;
-                    }
-                    Debug.Log("222");
-                }
-                isdone = true;
-            }
-        
+          
 
     }
 
     private void OnEnable()
     {
         if (!photonView.IsMine) return;
-        
-
         Debug.Log("111");
         if (photonView.IsMine)
         {
@@ -63,8 +44,9 @@ public class K_PlayerItemSystem : MonoBehaviourPun, IPunObservable
                 Debug.Log("222");
             }
             isdone = true;
+            ItemLoad();
         }
-        ItemLoad();
+        
     }
   
 
