@@ -54777,8 +54777,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5629639970830784068}
-  m_LocalRotation: {x: -0, y: 0.95970196, z: -0, w: 0.2810198}
-  m_LocalPosition: {x: 51.1, y: 0, z: 47.8}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -54870,7 +54870,7 @@ Transform:
   - {fileID: 1752280606396279191}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 147.358, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5629639970830784067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54883,7 +54883,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4549fe22a66a4b46934ceadea79b736, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSettingsExpanded: 1
+  isSettingsExpanded: 0
   selectedsettings: {fileID: 11400000, guid: e9e5494d13890db4e90f7bb6e6ec19c0, type: 2}
   _settings: {fileID: 11400000, guid: e9e5494d13890db4e90f7bb6e6ec19c0, type: 2}
   characterParts:
@@ -55596,7 +55596,7 @@ MonoBehaviour:
   GroundedRadius: 0.4
   GroundLayers:
     serializedVersion: 2
-    m_Bits: 24577
+    m_Bits: 90113
   camPos: {fileID: 1752280605483343739}
   playerUI:
   - {fileID: 1752280606396279190}

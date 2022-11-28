@@ -548,6 +548,11 @@ namespace K_01_OwnedStates
                 entity.dir = entity.transform.forward * entity.v;
                 entity.dir.Normalize();
                 entity.dir.y = entity.yVelocity;
+                if (Input.GetKey(KeyCode.U))
+                {
+                    entity.GetComponent<CharacterController>().Move(Vector3.up * entity.airControl * Time.deltaTime);
+                }
+                else
                 entity.GetComponent<CharacterController>().Move(entity.dir * entity.airControl * Time.deltaTime);
                 entity.rootMotion = Vector3.zero;
 
@@ -581,6 +586,7 @@ namespace K_01_OwnedStates
 
 
             }
+           
         }
 
         public override void Exit(K_Player entity)
