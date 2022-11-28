@@ -31,7 +31,7 @@ public class WorldManager : MonoBehaviour
     private void Update()
     {
         float distance = Vector3.Distance(Vector3.zero, transform.position);
-        Debug.Log(distance);
+        //Debug.Log(distance);
         if (distance > warningZone_Radius)
         {
             text_warning.enabled = true;
