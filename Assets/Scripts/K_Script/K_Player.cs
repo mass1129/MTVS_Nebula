@@ -96,7 +96,7 @@ public class K_Player : MonoBehaviourPun, IPunObservable
         //Updated_UpperBody();
         GroundedCheck();
         
-       
+       if(Input.GetKeyDown(KeyCode.O))
         Debug.Log(CurrentState.ToString() + "," + PhotonNetwork.CurrentRoom.Name + "," + PlayerPrefs.GetString("AvatarName") + "," + avatarName + "," + ownIslandID+ "," + PlayerPrefs.GetString("User_Island_ID"));
         //Debug.Log(cc.isGrounded);
     }

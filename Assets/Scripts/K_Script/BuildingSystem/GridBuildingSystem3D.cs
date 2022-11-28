@@ -56,9 +56,11 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
     }
 
     public void FirstLoadBuilding()
-    {   
-        if(photonView.IsMine)
-        photonView.RPC("RPCFirstLoadBuilding", RpcTarget.AllBuffered);
+    {
+        //if(photonView.IsMine)
+        //photonView.RPC("RPCFirstLoadBuilding", RpcTarget.AllBuffered);
+        if (PhotonNetwork.CurrentRoom.PlayerCount <= 1)
+            TestLoad(PlayerPrefs.GetString("User_Island_ID"));
     }
     [PunRPC]
     public void RPCFirstLoadBuilding()

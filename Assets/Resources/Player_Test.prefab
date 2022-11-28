@@ -49406,14 +49406,13 @@ GameObject:
   m_Component:
   - component: {fileID: 4970061919972252225}
   - component: {fileID: 4970061919972252230}
-  - component: {fileID: 5275990703873323528}
   m_Layer: 15
   m_Name: GridBuildingSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4970061919972252225
 Transform:
   m_ObjectHideFlags: 0
@@ -49445,29 +49444,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   quickSlot: {fileID: 11400000, guid: 9a99fbbd4b3ab624d8bc9b0211d64736, type: 2}
---- !u!114 &5275990703873323528
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4970061919972252231}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents:
-  - {fileID: 4970061919972252230}
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1 &4970061920129000369
 GameObject:
   m_ObjectHideFlags: 0
@@ -55624,10 +55600,9 @@ MonoBehaviour:
   camPos: {fileID: 1752280605483343739}
   playerUI:
   - {fileID: 1752280606396279190}
-  - {fileID: 8703666805097319914}
-  - {fileID: 7190273671157026432}
   inActiveObj:
   - {fileID: 1653720978748559204}
+  - {fileID: 4970061919972252231}
 --- !u!114 &5733073701845269107
 MonoBehaviour:
   m_ObjectHideFlags: 0

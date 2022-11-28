@@ -54,11 +54,19 @@ public class K_01_Character : K_Player
         {
             camPos.SetActive(true);
             charCustom.LoadCharacterFromFile(PlayerPrefs.GetString("AvatarName"));
-             yield return new WaitForSeconds(0.1f);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                gridBuildingSystem.gameObject.SetActive(true);
+                gridBuildingSystem.TestLoad(PlayerPrefs.GetString("User_Island_ID"));
+                
+            }
+            yield return new WaitForSeconds(0.1f);
             for (int i = 0; i < playerUI.Count; i++)
             {
                 playerUI[i].SetActive(true);
             }
+
+            yield return new WaitForSeconds(0.1f);
             InActiveObj();
             
             
