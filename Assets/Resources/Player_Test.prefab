@@ -54781,12 +54781,12 @@ GameObject:
   - component: {fileID: 5733073701845269104}
   - component: {fileID: 5733073701845269107}
   - component: {fileID: 5733073701845269110}
-  - component: {fileID: 5733073701845269111}
   - component: {fileID: 3214773754116892971}
   - component: {fileID: 842975793188924700}
   - component: {fileID: 626270019936441882}
   - component: {fileID: -9103641153785825190}
   - component: {fileID: 1274903611117160159}
+  - component: {fileID: 7724888543604895138}
   m_Layer: 15
   m_Name: Player_Test
   m_TagString: Player
@@ -55594,7 +55594,7 @@ MonoBehaviour:
   cc: {fileID: 5733073701845269105}
   cam: {fileID: 1752280606319894689}
   camMgr: {fileID: 5733073701845269107}
-  itemSystem: {fileID: 0}
+  itemSystem: {fileID: 7724888543604895138}
   gridBuildingSystem: {fileID: 4970061919972252230}
   charCustom: {fileID: 5629639970830784067}
   input: {x: 0, y: 0}
@@ -55742,24 +55742,6 @@ MonoBehaviour:
   - {fileID: 3364239828693413980}
   - {fileID: 7338543471252043132}
   - {fileID: 284566733683752542}
---- !u!114 &5733073701845269111
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5629639970830784068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e418d1ddcb6a171449d202bf1d7d6508, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inven_Cloths: {fileID: 11400000, guid: c3cb508365f4b5c46b15784258606b4f, type: 2}
-  inven_Building: {fileID: 11400000, guid: 128d426c0cfe0f940aa8fd7406a56991, type: 2}
-  inven_Default: {fileID: 11400000, guid: 711bda56d07eec245bfab8e85bc64549, type: 2}
-  inven_Vehicle: {fileID: 11400000, guid: 422cb2658b0d51346a2cf4a932b5bd9e, type: 2}
-  inven_Equipment: {fileID: 0}
-  player: {fileID: 5733073701845269104}
 --- !u!114 &3214773754116892971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55782,6 +55764,7 @@ MonoBehaviour:
   - {fileID: 5629639970830784067}
   - {fileID: 5733073701845269104}
   - {fileID: 842975793188924700}
+  - {fileID: 7724888543604895138}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -55839,6 +55822,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goldAmount: 0
   player: {fileID: 5733073701845269104}
+--- !u!114 &7724888543604895138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5629639970830784068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9c40c1abf278f741893bb958ef371ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inven_Cloths: {fileID: 11400000, guid: c3cb508365f4b5c46b15784258606b4f, type: 2}
+  inven_Building: {fileID: 11400000, guid: 128d426c0cfe0f940aa8fd7406a56991, type: 2}
+  inven_Default: {fileID: 11400000, guid: 711bda56d07eec245bfab8e85bc64549, type: 2}
+  inven_Vehicle: {fileID: 11400000, guid: 422cb2658b0d51346a2cf4a932b5bd9e, type: 2}
+  _equipment: {fileID: 11400000, guid: 03e1d40251a619f4a9f2f3e3ac33a076, type: 2}
+  player: {fileID: 5733073701845269104}
+  dataBase: {fileID: 11400000, guid: 2ef6ad25b8d7948488dda3b23dc7008b, type: 2}
 --- !u!1 &5641515762003056649
 GameObject:
   m_ObjectHideFlags: 0
