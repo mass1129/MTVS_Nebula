@@ -2892,7 +2892,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 11.7
+  m_Radius: 15
   m_Center: {x: 0, y: 4, z: 0}
 --- !u!1 &6133611717591742524
 GameObject:
@@ -4546,7 +4546,7 @@ Transform:
   m_GameObject: {fileID: 8810655437702021834}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 1.8, y: 1.8, z: 1.8}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8665885918828865666}
@@ -5379,6 +5379,26 @@ PrefabInstance:
       value: -12
       objectReference: {fileID: 0}
     - target: {fileID: 7135539311259150309, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7209913078914092806, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7209913078914092806, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7209913078914092806, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7209913078914092806, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 143.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7209913078914092806, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}

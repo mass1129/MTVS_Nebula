@@ -40,6 +40,8 @@ public class Btn_FriendInfo : MonoBehaviour
     {
         //Friend_info: 친구의 현재 섬의 위치 
         SkyView_UI_Manager.instance.Area_Friend_info.gameObject.SetActive(true);
+        //친구의 이름을 텍스트로 출력
+        SkyView_UI_Manager.instance.Area_Friend_info.gameObject.transform.GetChild(1).GetChild(0).GetComponent<TMP_Text>().text = NickName;
         // 친구정보에는 그 친구가 현재 어느 섬에 있는지
         //만약 온라인이면
         if (CUI.onlineUsers.ContainsKey(NickName))

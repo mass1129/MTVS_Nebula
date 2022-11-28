@@ -39,8 +39,6 @@ public class User_Move : MonoBehaviourPun, IPunObservable
     public AudioSource audio;
     public AudioClip clip;
     public string my_Nickname;
-    Rigidbody rb;
-    public float speedTurnBack;
     bool turn;
     float curTime;
     //W: ÀüÁø
@@ -72,7 +70,7 @@ public class User_Move : MonoBehaviourPun, IPunObservable
         text_EnterRoom.SetActive(false);
         animator = transform.GetComponentInChildren<Animator>();
         my_Nickname = photonView.Owner.NickName;
-        rb = GetComponent<Rigidbody>();
+
         
     }
 
@@ -294,7 +292,7 @@ public class User_Move : MonoBehaviourPun, IPunObservable
     void ReturnControl()
     {
         curTime += Time.deltaTime;
-        if (curTime > 3)
+        if (curTime > 1)
         {
             turn = false;
             curTime = 0;
