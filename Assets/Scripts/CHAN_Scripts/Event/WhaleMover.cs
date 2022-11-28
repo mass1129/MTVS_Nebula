@@ -19,14 +19,15 @@ public class WhaleMover : MonoBehaviour
     void Start()
     {
         targets = GameObject.Find("Islands").transform;
+        StartCoroutine(delay());
         DefineDirection();
     }
 
     // Update is called once per frame
     void Update()
     {
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotGoal, Time.deltaTime);
         transform.position += transform.forward * speed * Time.deltaTime;
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotGoal, 0.005f);
 
         // 고래와 타겟섬의 거리를 계속 측정한다. 
         CheckDistance();
@@ -54,6 +55,10 @@ public class WhaleMover : MonoBehaviour
         {
             DefineDirection();
         }
+    }
+    IEnumerator delay()
+    {
+        yield return new WaitForSeconds(3);
     }
 
 

@@ -12,10 +12,17 @@ public class WhaleManager : MonoBehaviourPun
     float count;
     bool IsCreated;
     GameObject Whale;
+    public float amptitude;
+    public float frequency;
+    float y;
+    float dTime;
     // Update is called once per frame
     void Update()
     {
-        
+        //그냥 위아래로 움직인다. 
+        dTime += Time.deltaTime * frequency;
+        y = amptitude * Mathf.Sin(dTime);
+        transform.position = new Vector3(0, y, 0);
     }
     private void OnTriggerStay(Collider other)
     {
