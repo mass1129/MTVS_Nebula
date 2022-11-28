@@ -387,7 +387,7 @@ public class UIControllerDEMO : MonoBehaviour
 
         CharacterCustomization.SaveCharacterToFile(CharacterCustomizationSetup.CharacterFileSaveFormat.Json);
         // 씬 로드
-       SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
+       SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex-1);
 
         
     }
