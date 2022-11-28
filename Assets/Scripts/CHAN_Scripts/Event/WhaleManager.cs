@@ -11,7 +11,7 @@ public class WhaleManager : MonoBehaviourPun
     // 플레이어가 지정된 범위 내에서 울면 카운트가 증가하고 일정 횟수 달성하면 고래를 발생시킨다. 
     float count;
     bool IsCreated;
-    public GameObject Whale;
+    GameObject Whale;
     // Update is called once per frame
     void Update()
     {
@@ -44,7 +44,7 @@ public class WhaleManager : MonoBehaviourPun
     void CreateWhale()
     {
         Debug.Log("고래 생성");
-        Whale=PN.Instantiate("Player_Whale2", Vector3.zero, Quaternion.identity);
+        Whale=PN.Instantiate("Player_Whale2", Vector3.up*20, Quaternion.identity);
         // 여기에 기타 애니메이션, 나레이션 넣어도 괜찮을 듯
         // 다른 플레이어에게 고래가 생성됐다고 통보한다. 
         AnnounceOthers(true);

@@ -13,13 +13,12 @@ public class WhaleMover : MonoBehaviour
     //고래 속도 속성
     public float speed;
     public float setDistance;
-    Vector3 dir;
     Vector3 targetIslandPos;
     Quaternion rotGoal;
     Transform targets;
     void Start()
     {
-        targets = GameObject.Find("targets").transform;
+        targets = GameObject.Find("Islands").transform;
         DefineDirection();
     }
 
