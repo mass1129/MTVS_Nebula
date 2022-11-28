@@ -30,12 +30,17 @@ public class SkyView_UI_Manager : MonoBehaviour
     public Transform Area_Friend_Profile;
     public GameObject Btn_Obj_Online;
     public GameObject Btn_Obj_Offline;
+    public GameObject btn_JoinTogether;
 
     public Transform online_Location;
     public Transform offline_Location;
-
+    // 선택된 친구의 정보
     public string SelectedFriendName;
     public string SelectedFriendIslandId;
+    // 현재 친구가 들어가있는 친구섬의 정보
+    public string friendName_ForJoin;
+    public string friendIslandId_ForJoin;
+
     private void Start()
     {
         Initialize();
@@ -86,6 +91,7 @@ public class SkyView_UI_Manager : MonoBehaviour
         // 친구 정보 비활성화
         Area_Friend_info.gameObject.SetActive(false);
         Area_Friend_Profile.gameObject.SetActive(false);
+        btn_JoinTogether.SetActive(false);
     }
     // 나의 하늘섬으로 돌아가는 기능
     public void Btn_BackToMyWorld()
@@ -124,6 +130,7 @@ public class SkyView_UI_Manager : MonoBehaviour
     public void Btn_CloseFriendInfo()
     {
         Area_Friend_info.gameObject.SetActive(!Area_Friend_info.gameObject.activeSelf);
+        btn_JoinTogether.SetActive(false);
     }
     public void Btn_CloseFriendProfile()
     {
@@ -132,6 +139,12 @@ public class SkyView_UI_Manager : MonoBehaviour
     public void Btn_GoUserProfile()
     {
         CHAN_GameManager.instance.Btn_GoProfile();
+    }
+    //현재 친구가 있는 섬으로 놀러가는 기능
+    public void Btn_JoinTogether()
+    {
+        PlayerPrefs.SetString("User_Island_ID", friendIslandId_ForJoin);
+        CHAN_GameManager.instance.Go_User_Scene(friendName_ForJoin);
     }
     #endregion
     //친구섬 놀러가기

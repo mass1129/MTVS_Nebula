@@ -40,17 +40,40 @@ public class Btn_FriendInfo : MonoBehaviour
     {
         //Friend_info: 친구의 현재 섬의 위치 
         SkyView_UI_Manager.instance.Area_Friend_info.gameObject.SetActive(true);
+        //친구의 이름을 텍스트로 출력
+        SkyView_UI_Manager.instance.Area_Friend_info.gameObject.transform.GetChild(1).GetChild(0).GetComponent<TMP_Text>().text = NickName;
         // 친구정보에는 그 친구가 현재 어느 섬에 있는지
+        //만약 온라인이면
         if (CUI.onlineUsers.ContainsKey(NickName))
         {
-            SkyView_UI_Manager.instance.Area_Friend_info.gameObject.transform.GetChild(2).GetChild(0).GetComponent<TMP_Text>().text = CUI.onlineUsers[NickName]+"의 섬";
+            //여기서 현재 누구의 방에 있는지 확인 
+            // 만약 유저가 하늘씬에 있다면
+            if (CUI.onlineUsers[NickName] == "sky")
+            {
+                SkyView_UI_Manager.instance.Area_Friend_info.gameObject.transform.GetChild(3).GetComponent<TMP_Text>().text = "하늘바다 여행중";
+            }
+            //다른 유저의 섬에 있다면 같이놀기 버튼 생성
+            else
+            {
+                SkyView_UI_Manager.instance.friendName_ForJoin = CUI.onlineUsers[NickName];
+                foreach (string key in Island_Information.instance.Island_Dic.Keys)
+                {
+                    if (Island_Information.instance.Island_Dic[key].User_NickName == CUI.onlineUsers[NickName])
+                    {
+                        SkyView_UI_Manager.instance.friendIslandId_ForJoin = Island_Information.instance.Island_Dic[key].User_IslandId;
+                    }
+                    break; 
+                }
+                SkyView_UI_Manager.instance.btn_JoinTogether.SetActive(true);
+            }
         }
+        //오프라인이면 오프라인이라고 출력
         else
         {
-            SkyView_UI_Manager.instance.Area_Friend_info.gameObject.transform.GetChild(2).GetChild(0).GetComponent<TMP_Text>().text = "오프라인";
+            SkyView_UI_Manager.instance.Area_Friend_info.gameObject.transform.GetChild(3).GetComponent<TMP_Text>().text = "오프라인";
         }
         // 팔로워가 몇명인지 
-        SkyView_UI_Manager.instance.Area_Friend_info.gameObject.transform.GetChild(3).GetChild(2).GetComponent<TMP_Text>().text = followers.ToString() + "명";
+        //SkyView_UI_Manager.instance.Area_Friend_info.gameObject.transform.GetChild(3).GetChild(2).GetComponent<TMP_Text>().text = followers.ToString() + "명";
         ShowProfile();
         SkyView_UI_Manager.instance.Area_Friend_Profile.gameObject.SetActive(false);
     }

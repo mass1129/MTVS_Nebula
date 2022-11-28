@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 2387479829362294344}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2542465935255977938}
@@ -53,7 +53,8 @@ MonoBehaviour:
   user_Url: 
   user_keyword1: 
   user_keyword2: 
-  profileImage: {fileID: 1103070985348808769}
+  areaImage: {fileID: 0}
+  turn: 0
 --- !u!54 &705647848511406996
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -7424,17 +7425,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
---- !u!114 &1103070985348808769 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6075509779534896158, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}
-  m_PrefabInstance: {fileID: 6565807094800800863}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &5114091952889262222 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2154560426521832657, guid: 71b29790cb942de4385e43c09a0dda05, type: 3}

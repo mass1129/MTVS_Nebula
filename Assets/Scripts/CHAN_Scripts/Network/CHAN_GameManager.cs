@@ -77,7 +77,6 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
         if (CUI.onlineUsers.Count > 0) CUI.onlineUsers.Clear();
         foreach (FriendInfo info in friendList)
         {
-            Debug.LogWarning("유저정보 받음 :" + info.UserId + "지금 온라인?" + info.IsOnline);
             if (info.IsOnline)
             {
                 CUI.onlineUsers[info.UserId] = info.Room;
@@ -92,14 +91,16 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
         { 
             BGMPlayer.instance.GetComponent<AudioSource>().clip = BGMPlayer.instance.audioSources[1];
             BGMPlayer.instance.GetComponent<AudioSource>().Play();
+            PN.LoadLevel(sceneName);
         }
         else if (sceneName == name_UserScene)
         {
             BGMPlayer.instance.GetComponent<AudioSource>().clip = BGMPlayer.instance.audioSources[2];
             BGMPlayer.instance.GetComponent<AudioSource>().Play();
+            PN.LoadLevel(sceneName);
             LoadingObject.SetActive(false);
         }
-        PN.LoadLevel(sceneName);
+        
         if(prefab==WhalePrepab)
         SetPlayer(prefab);
 
@@ -169,7 +170,17 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
     //}
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        base.OnPlayerEnteredRoom(newPlayer);
+        Debug.LogWarning("유저 들어옴");
+        //현재 유저월드에 있다면
+        //if (sceneName == name_UserScene)
+        //{ 
+        //    //만약 유저중에 리모콘을 가진자가 있다면
+        //    if(CHAN_PlayerManger.LocalPlayerInstance.GetComponent<Item_RemoteController>())
+        //    {
+        //        Item_TVManager_Agora.instance.UpdateItem(Item_TVManager_Agora.instance.isScreenUp);
+        //        Debug.LogWarning("유저 난입");
+        //    }
+        //}
         
     }
     public override void OnPlayerLeftRoom(Player otherPlayer)

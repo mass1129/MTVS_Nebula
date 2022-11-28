@@ -141,7 +141,8 @@ namespace Agora_RTC_Plugin.API_Example.Examples.Advanced.ScreenShare
         private void UpdateChannelMediaOptions()
         {
             ChannelMediaOptions options = new ChannelMediaOptions();
-            options.autoSubscribeAudio.SetValue(true);
+            //오디오 설정 끔
+            //options.autoSubscribeAudio.SetValue(true);
             options.autoSubscribeVideo.SetValue(true);
 
             options.publishCameraTrack.SetValue(false);

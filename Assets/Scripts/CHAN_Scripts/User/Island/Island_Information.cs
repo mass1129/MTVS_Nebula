@@ -48,7 +48,7 @@ public class Island_Information :MonoBehaviourPun
     public Dictionary<string, JsonInfo> Island_Dic = new Dictionary<string, JsonInfo>();
     // 유저들의 닉네임을 저장할 리스트(Key:닉네임)
     public List<string> User_name = new List<string>();
-    float dis_multiplier = 350;
+    float dis_multiplier = 280;
     public string jsonFile;
 
     #region 중간에 정보가 추가되거나 삭제됐을 때, 이용되는 함수모음

@@ -204,7 +204,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -568,14 +568,6 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 8345978188192650169, guid: 288c3f4371cf4fd4cb9eb03ff5dfb022, type: 3}
-      propertyPath: WhalePrepab
-      value: Player_Whale
-      objectReference: {fileID: 0}
-    - target: {fileID: 8345978188192650169, guid: 288c3f4371cf4fd4cb9eb03ff5dfb022, type: 3}
-      propertyPath: LoadingObject
-      value: 
-      objectReference: {fileID: 228043295467167374}
     - target: {fileID: 8345978188192650180, guid: 288c3f4371cf4fd4cb9eb03ff5dfb022, type: 3}
       propertyPath: m_Name
       value: FastJoinRoom
@@ -626,11 +618,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 288c3f4371cf4fd4cb9eb03ff5dfb022, type: 3}
---- !u!1 &228043295467167374 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1856772874877593234, guid: 288c3f4371cf4fd4cb9eb03ff5dfb022, type: 3}
-  m_PrefabInstance: {fileID: 228043295467167373}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &324668242996851645
 MonoBehaviour:
   m_ObjectHideFlags: 0
