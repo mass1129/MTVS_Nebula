@@ -61,8 +61,9 @@ public class Btn_FriendInfo : MonoBehaviour
                     if (Island_Information.instance.Island_Dic[key].User_NickName == CUI.onlineUsers[NickName])
                     {
                         SkyView_UI_Manager.instance.friendIslandId_ForJoin = Island_Information.instance.Island_Dic[key].User_IslandId;
+                        Debug.Log("같이가기: "+Island_Information.instance.Island_Dic[key].User_IslandId);
+                        break;
                     }
-                    break; 
                 }
                 SkyView_UI_Manager.instance.btn_JoinTogether.SetActive(true);
             }

@@ -133,7 +133,7 @@ namespace IslandInfo
                 }
                 else
                 {
-                    s1 = "Island 1";
+                    s1 = "Island_Port";
                 }
             }
             return s1;

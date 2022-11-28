@@ -153,6 +153,7 @@ public class SkyView_UI_Manager : MonoBehaviour
     public void Btn_JoinTogether()
     {
         PlayerPrefs.SetString("User_Island_ID", friendIslandId_ForJoin);
+        Debug.Log("놀러가기 입장: "+PlayerPrefs.GetString("User_Island_ID"));
         CHAN_GameManager.instance.Go_User_Scene(friendName_ForJoin);
     }
     #endregion
