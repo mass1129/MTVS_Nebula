@@ -378,6 +378,10 @@ public class UIControllerDEMO : MonoBehaviour
 
         currentPanelIndex = 0;
     }
+    private void Start()
+    {
+        CharacterCustomization.LoadCharacterCustomScene("male");
+    }
     public void SaveToFile()
     {
 

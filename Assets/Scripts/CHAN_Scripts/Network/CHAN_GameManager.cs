@@ -134,35 +134,36 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
         { player = PN.Instantiate(prefab, Vector3.zero, Quaternion.identity); }
         else
         {
-            player = PN.Instantiate(prefab, new Vector3(51, 2, 47), Quaternion.identity);
-            
+            player = PN.Instantiate(prefab, new Vector3((int)Random.Range(40,60), 3, (int)Random.Range(40, 60)), Quaternion.identity);
+            if (PN.CurrentRoom.Name == PlayerPrefs.GetString("AvatarName"))
+                PhotonNetwork.SetMasterClient(PN.LocalPlayer);
             CHAN_ClientManager.instance.myCharacter = player.GetComponent<K_01_Character>();
         }
     }
 
     public void Go_Sky_Scene()
     {
-        //PhotonNetwork.Destroy(player);
-        //roomName = "sky";
-        //sceneName = name_SkyScene;
-        //prefab = WhalePrepab;
-        //print("Join : " + roomName+"Scene");
-        //LoadingObject.SetActive(true);
-        //PN.LeaveRoom();
-        //print("Leave : " + roomName);
-        ExitButton_GoSky();
+        PhotonNetwork.Destroy(player);
+        roomName = "sky";
+        sceneName = name_SkyScene;
+        prefab = WhalePrepab;
+        print("Join : " + roomName + "Scene");
+        LoadingObject.SetActive(true);
+        PN.LeaveRoom();
+        print("Leave : " + roomName);
+        //ExitButton_GoSky();
     }
     public void Go_User_Scene(string NickName)
     {
-        //PhotonNetwork.Destroy(player);
-        //roomName = NickName;
-        //sceneName = name_UserScene;
-        //prefab = userPrefab;
-        //print("Join : " + roomName);
-        //LoadingObject.SetActive(true);
-        //PN.LeaveRoom();
-        //print("Leave : " + roomName);
-        ExitButton_GoWorld(NickName);
+        PhotonNetwork.Destroy(player);
+        roomName = NickName;
+        sceneName = name_UserScene;
+        prefab = userPrefab;
+        print("Join : " + roomName);
+        LoadingObject.SetActive(true);
+        PN.LeaveRoom();
+        print("Leave : " + roomName);
+        //ExitButton_GoWorld(NickName);
     }
     public void ExitButton_GoSky()
     {
