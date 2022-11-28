@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 1640232147893149682}
   - component: {fileID: 6996723994240011100}
   - component: {fileID: 5577216915436078767}
+  - component: {fileID: 8102175959837213575}
   m_Layer: 0
   m_Name: Player_Whale
   m_TagString: Player
@@ -216,11 +217,12 @@ MonoBehaviour:
   CVCam: {fileID: 2141709175}
   OrcaObj: {fileID: 5313807259687966090}
   sornar: {fileID: 1817123281412697222}
-  text_EnterRoom: {fileID: 1715381401216208216}
+  text_Enter: {fileID: 1166486173977665041}
   islandSelected: 0
   audio: {fileID: 7221736026810180726}
   clip: {fileID: 8300000, guid: 819474214d16b9343bb3fa616d0a3a60, type: 3}
   my_Nickname: 
+  turn: 0
 --- !u!135 &1640232147893149682
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -263,6 +265,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &8102175959837213575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3252203795677890440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd27cc7c7966a3544bed21916acd3f6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 600
+  warningZoneRatio: 5
+  text_warning: {fileID: 118677596445889617}
 --- !u!1 &4989768353029664053
 GameObject:
   m_ObjectHideFlags: 0
@@ -667,11 +684,28 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2714717377774499479, guid: 495abc1edcaa98743826e5267c644176, type: 3}
   m_PrefabInstance: {fileID: 2642296112474406623}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1715381401216208216 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3703383978185814919, guid: 495abc1edcaa98743826e5267c644176, type: 3}
+--- !u!114 &118677596445889617 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2670338766339238542, guid: 495abc1edcaa98743826e5267c644176, type: 3}
   m_PrefabInstance: {fileID: 2642296112474406623}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1166486173977665041 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3790732011433976014, guid: 495abc1edcaa98743826e5267c644176, type: 3}
+  m_PrefabInstance: {fileID: 2642296112474406623}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3988327743384304203
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -681,19 +715,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2625306597046197756, guid: 4b428d48be2f194489251f0ea7f100c1, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.00000000426813
+      value: -0.00000000426813
       objectReference: {fileID: 0}
     - target: {fileID: 2625306597046197756, guid: 4b428d48be2f194489251f0ea7f100c1, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -5.3553006e-10
+      value: 5.3553006e-10
       objectReference: {fileID: 0}
     - target: {fileID: 3243104903549655635, guid: 4b428d48be2f194489251f0ea7f100c1, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.00000000426813
+      value: -0.00000000426813
       objectReference: {fileID: 0}
     - target: {fileID: 3243104903549655635, guid: 4b428d48be2f194489251f0ea7f100c1, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -5.3553006e-10
+      value: 5.3553006e-10
       objectReference: {fileID: 0}
     - target: {fileID: 3988327744720492851, guid: 4b428d48be2f194489251f0ea7f100c1, type: 3}
       propertyPath: m_RootOrder

@@ -25,7 +25,7 @@ public class User_Move : MonoBehaviourPun, IPunObservable
     public GameObject OrcaObj;
     public ParticleSystem sornar;
     Animator animator;
-    public GameObject text_EnterRoom; 
+    public TMP_Text text_Enter; 
     string userName;
     Vector3 dir;
     float lerpSpeed = 10;
@@ -39,7 +39,7 @@ public class User_Move : MonoBehaviourPun, IPunObservable
     public AudioSource audio;
     public AudioClip clip;
     public string my_Nickname;
-    bool turn;
+    public bool turn;
     float curTime;
     //W: 전진
     //S: 후진 
@@ -65,8 +65,7 @@ public class User_Move : MonoBehaviourPun, IPunObservable
             StartCoroutine(TurnCollider());
         }
         OrcaObj.SetActive(true);
-        text_EnterRoom.GetComponentInChildren<TMP_Text>();
-        text_EnterRoom.SetActive(false);
+        text_Enter.enabled = false;
         animator = transform.GetComponentInChildren<Animator>();
         my_Nickname = photonView.Owner.NickName;
 
@@ -163,7 +162,7 @@ public class User_Move : MonoBehaviourPun, IPunObservable
         {
             if (photonView.IsMine)
             {
-                text_EnterRoom.SetActive(true);
+                text_Enter.enabled = true;
                 userName = other.gameObject.GetComponent<Island_Profile>().user_name;
                 temp_userIsland_ID = other.gameObject.GetComponent<Island_Profile>().user_IslandID;
                 islandSelected = true;
@@ -190,7 +189,7 @@ public class User_Move : MonoBehaviourPun, IPunObservable
         }
         if (photonView.IsMine && other.gameObject.CompareTag("UserIsland"))
         {
-            text_EnterRoom.SetActive(false);
+            text_Enter.enabled = false;
             islandSelected = false;
             
             //MouseVisual(false);
