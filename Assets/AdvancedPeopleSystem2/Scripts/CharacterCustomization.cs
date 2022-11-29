@@ -114,7 +114,7 @@ namespace AdvancedPeopleSystem
         {
            
             AnimationTick();
-            if (feetOffset != 0 && applyFeetOffset)
+            if (feetOffset != 0 && applyFeetOffset&&GetComponent<K_01_Character>().canMove)
                 SetFeetOffset(new Vector3(0, feetOffset, 0));
         }
 
