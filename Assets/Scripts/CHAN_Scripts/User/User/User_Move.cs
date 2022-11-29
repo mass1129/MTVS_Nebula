@@ -257,7 +257,7 @@ public class User_Move : MonoBehaviourPun, IPunObservable
         gameObject.GetComponent<SphereCollider>().enabled = false;
         gameObject.GetComponentInChildren<AudioSource>().enabled = false;
         float time=0;
-        while (time < 3)
+        while (time < 7)
         {
             time += Time.deltaTime;
             yield return null;

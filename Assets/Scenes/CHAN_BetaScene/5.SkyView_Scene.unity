@@ -6797,17 +6797,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1770253918, guid: dbcfc2749679f8140ab33da7c0553528, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 800
+      objectReference: {fileID: 0}
     - target: {fileID: 2349844433550935187, guid: dbcfc2749679f8140ab33da7c0553528, type: 3}
       propertyPath: m_RootOrder
       value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 2349844433550935187, guid: dbcfc2749679f8140ab33da7c0553528, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -94.9
       objectReference: {fileID: 0}
     - target: {fileID: 2349844433550935187, guid: dbcfc2749679f8140ab33da7c0553528, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 40.1
       objectReference: {fileID: 0}
     - target: {fileID: 2349844433550935187, guid: dbcfc2749679f8140ab33da7c0553528, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6846,12 +6850,33 @@ PrefabInstance:
       value: totem
       objectReference: {fileID: 0}
     - target: {fileID: 2349844433550935196, guid: dbcfc2749679f8140ab33da7c0553528, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
+      propertyPath: m_Radius
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 2349844433550935198, guid: dbcfc2749679f8140ab33da7c0553528, type: 3}
       propertyPath: sceneViewId
       value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 2349844433550935199, guid: dbcfc2749679f8140ab33da7c0553528, type: 3}
+      propertyPath: almostDone
+      value: "\uB204\uAD70\uAC00\uAC00 \uC6B0\uB9AC\uC758 \uC678\uCE68\uC744 \uB4E4\uC5C8\uC2B5\uB2C8\uB2E4."
+      objectReference: {fileID: 0}
+    - target: {fileID: 2349844433550935199, guid: dbcfc2749679f8140ab33da7c0553528, type: 3}
+      propertyPath: createdWhale
+      value: "\uD558\uB298\uBC14\uB2E4 \uC5B4\uB518\uAC00\uC5D0 52 \uD5E4\uB974\uCE20
+        \uACE0\uB798\uAC00 \uB098\uD0C0\uB0AC\uC2B5\uB2C8\uB2E4."
+      objectReference: {fileID: 0}
+    - target: {fileID: 3854921672637612156, guid: dbcfc2749679f8140ab33da7c0553528, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3854921672637612156, guid: dbcfc2749679f8140ab33da7c0553528, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 12de522c0e25986409ffa245af2c5a55, type: 3}
+    - target: {fileID: 3854921672637612156, guid: dbcfc2749679f8140ab33da7c0553528, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbcfc2749679f8140ab33da7c0553528, type: 3}
