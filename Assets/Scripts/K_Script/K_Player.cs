@@ -13,6 +13,7 @@ public enum PlayerStates // Player의 기본 상태
     Sitting,
     Jump,
     Falling,
+    FreeCamMode,
     Death,
     Global
 }
@@ -32,10 +33,10 @@ public class K_Player : MonoBehaviourPun, IPunObservable
     public GridBuildingSystem3D gridBuildingSystem;
     public CharacterCustomization charCustom;
     [System.NonSerialized]
-
     public string avatarName = null;
     [System.NonSerialized]
     public string ownIslandID = null;
+
     [HideInInspector] public Vector2 input;
     [HideInInspector] public Vector3 rootMotion;
     [HideInInspector] public Vector3 velocity;
@@ -52,7 +53,7 @@ public class K_Player : MonoBehaviourPun, IPunObservable
     [HideInInspector] public Vector3 dir;
 
     public bool canMove = true;
-
+    public AudioSource microphone;
 
     public float turnSmoothTime = 0.1f;
     public float turnSpeed = 15;
@@ -63,6 +64,8 @@ public class K_Player : MonoBehaviourPun, IPunObservable
     public float GroundedOffset = -0.14f;
     public float GroundedRadius = 0.28f;
     public LayerMask GroundLayers;
+
+    public GameObject FreeCamRoot;
 
 
     public PlayerStates CurrentState { get; set; } // 현재 기본 상태

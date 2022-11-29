@@ -68,6 +68,11 @@ namespace K_01_OwnedStates
             {
                 entity.ChangeState(PlayerStates.Falling);
             }
+
+            if(Input.GetKeyDown(KeyCode.P))
+            {
+                entity.ChangeState(PlayerStates.FreeCamMode);
+            }
             //if (Input.GetButtonDown("Jump"))
             //{
             //    entity.ChangeState(PlayerStates.Jump);
@@ -410,72 +415,47 @@ namespace K_01_OwnedStates
         }
     }
 
-    //public class Falling : K_PlayerState<K_Player>
-    //{
-    //    bool isLanding = false;
+    public class FreeCamMode : K_PlayerState<K_Player>
+    {
+        bool isLanding = false;
 
-    //    public override void Enter(K_Player entity)
-    //    {
-    //        entity.SetTrigger("Falling");
-    //    }
+        public override void Enter(K_Player entity)
+        {
+            entity.FreeCamRoot.SetActive(true);
+        }
 
-    //    public override void Execute(K_Player entity)
-    //    {
-    //        entity.moveSpeed = 2;
+        public override void Execute(K_Player entity)
+        {
+            float h = Input.GetAxis("Horizontal");
+            float v = Input.GetAxis("Vertical");
 
-    //        if (!isLanding)
-    //        {
-    //            entity.velocity.y += entity.gravity * Time.deltaTime;
-    //            entity.velocity.y = Mathf.Clamp(entity.velocity.y, -6f, 100);
+          
+            float yawCamera = entity.camMgr.playerCamera.transform.rotation.eulerAngles.y;
 
-    //            if (Input.GetButton("Horizontal") || (Input.GetButton("Vertical")))
-    //            {
-    //                entity.input.x = Input.GetAxis("Horizontal");
-    //                entity.input.y = Input.GetAxis("Vertical");
-    //            }
+            entity.FreeCamRoot.transform.rotation = Quaternion.Slerp(entity.FreeCamRoot.transform.rotation, Quaternion.Euler(0, yawCamera, 0),
+                entity.turnSpeed * Time.deltaTime);
+            Vector3 dir = Vector3.right * h + Vector3.forward * v;
+            dir.Normalize();
 
-    //            entity.dir = entity.transform.right * entity.input.x + entity.transform.forward * entity.input.y;
-    //            entity.dir.Normalize();
-    //            entity.dir.y = entity.velocity.y;
-    //            entity.GetComponent<CharacterController>().ThirdMove(entity.dir * entity.moveSpeed * Time.deltaTime);
+            entity.FreeCamRoot.GetComponent<CharacterController>().Move(dir*entity.SpceCamSpeed*Time.deltaTime);
 
-    //            // 땅에 닿으면 Landing 애니메이션 재생
-    //            if (entity.GetComponent<CharacterController>().isGrounded)
-    //            {
-    //                entity.SetTrigger("Landing");
-    //                isLanding = true;
-    //            }
-    //        }
+            if (Input.GetKeyDown(KeyCode.K))
+                entity.SpceCamSpeed++;
 
-    //        if (entity.anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
-    //            entity.SetTrigger("Landing");
+            if(Input.GetKeyDown(KeyCode.L))
+                entity.SpceCamSpeed--;
 
-    //        // Landing 애니메이션 재생 시간 끝난 이후의 입력에 따라 다음 상태로 전이 
-    //        if (entity.anim.GetCurrentAnimatorStateInfo(0).IsName("Landing") && entity.anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
-    //        {
-    //            if (Input.GetButton("Horizontal") || (Input.GetButton("Vertical")))
-    //            {
-    //                entity.ChangeState(PlayerStates.ThirdMove);
-    //            }
-    //            else if (Input.GetButton("Jump"))
-    //            {
-    //                entity.ChangeState(PlayerStates.Jump);
-    //                entity.velocity.y = entity.jumpHeight;
-    //            }
-    //            else
-    //                entity.ChangeState(PlayerStates.Idle);
-    //        }
-    //    }
+            if (Input.GetKeyDown(KeyCode.J))
+                entity.ChangeState(PlayerStates.Idle);
 
-    //    public override void Exit(K_Player entity)
-    //    {
-    //        entity.input.x = 0;
-    //        entity.input.y = 0;
-    //        entity.ResetTrigger("Falling");
-    //        entity.ResetTrigger("Landing");
-    //        isLanding = false;
-    //    }
-    //}
+
+        }
+
+        public override void Exit(K_Player entity)
+        {
+           entity.FreeCamRoot.SetActive(false);
+        }
+    }
     public class Jump : K_PlayerState<K_Player>
     {
         

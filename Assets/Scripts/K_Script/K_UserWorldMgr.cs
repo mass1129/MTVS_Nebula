@@ -13,7 +13,7 @@ public class K_UserWorldMgr : MonoBehaviourPun
     {
         
         _character = CHAN_ClientManager.instance.myCharacter;
-
+        _character.transform.position += Vector3.up * 5;
     }
     void Start()
     {

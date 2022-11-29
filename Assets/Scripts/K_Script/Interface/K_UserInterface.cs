@@ -28,6 +28,7 @@ public abstract class K_UserInterface : MonoBehaviourPun
     public void Awake()
     {
         if (!photonView.IsMine) this.enabled = false;
+        ShopUpdate();
         if (!isAddedEvent&& !needFirstUpdate)
         {
             UISetting();
@@ -91,9 +92,10 @@ public abstract class K_UserInterface : MonoBehaviourPun
         }
     }
     Sprite previousImg;
+    public bool shopList = false;
     private void OnSlotUpdate(InventorySlot slot)
     {
-        if (!photonView.IsMine) return;
+        if (!photonView.IsMine||shopList) return;
         if (slot.item.id <= -1)
         {
             slot.slotDisplay.transform.GetChild(0).GetComponent<Image>().sprite = null;

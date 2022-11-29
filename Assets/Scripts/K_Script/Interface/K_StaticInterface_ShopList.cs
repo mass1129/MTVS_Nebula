@@ -19,11 +19,12 @@ public class K_StaticInterface_ShopList : K_UserInterface
     public Button[] buyButton;
     bool isAdded = false;
     public GameObject[] toolTip;
-    
+    public Image[] slopImg;
     public override void CreateSlots()
     {
 
         if (!photonView.IsMine) return;
+        
         slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
         for (int i = 0; i < inventory.GetSlots.Length; i++)
         {
@@ -45,7 +46,7 @@ public class K_StaticInterface_ShopList : K_UserInterface
         }
         isAdded = true;
 
-        ShopItemLoad();
+        
     }
     public override void ShopUpdate()
     {
@@ -89,7 +90,7 @@ public class K_StaticInterface_ShopList : K_UserInterface
         //    Debug.Log("Cannot afford" + item.name);
         //}
     }
-
+    
     public async void BuyClothesEvent(ItemObject item)
     {
         if (!photonView.IsMine) return;
@@ -174,13 +175,15 @@ public class K_StaticInterface_ShopList : K_UserInterface
 
         for (int i = 0; i < newList.Count; i++)
         {
-            Item item = new Item(inventory.database.ItemObjects[newList[i].id]);
-            inventory.AddItem(item, 1);
-            itemCostTxt[i].SetText("$" + newList[i].price.ToString());
-            itemNameTxt[i].SetText(newList[i].name.ToString());
-            toolTip[i].transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().SetText(newList[i].name.ToString());
-            toolTip[i].transform.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().SetText(inventory.database.ItemObjects[newList[i].id].description);
             int temp = i;
+            Item item = new Item(inventory.database.ItemObjects[newList[temp].id]);
+            inventory.AddItem(item, 1);
+            itemCostTxt[temp].SetText("$" + newList[i].price.ToString());
+            itemNameTxt[temp].SetText(newList[i].name.ToString());
+            toolTip[temp].transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().SetText(newList[temp].name.ToString());
+            toolTip[temp].transform.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().SetText(inventory.database.ItemObjects[newList[temp].id].description);
+            slopImg[temp].sprite = inventory.database.ItemObjects[newList[temp].id].uiDisplay;
+            
             buyButton[temp].onClick.AddListener(() => TryBuyItem(inventory.database.ItemObjects[newList[temp].id]));
             //Container.slots[i].UpdateSlot(Container.slots[i].item, Container.slots[i].amount);
         }
@@ -188,7 +191,10 @@ public class K_StaticInterface_ShopList : K_UserInterface
 
 
     }
-
+    public void UpdateList()
+    {
+        inventory.UpdateInventory();
+    }
 
     [System.Serializable]
     public class H_CheckBuy_Root

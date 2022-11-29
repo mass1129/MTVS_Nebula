@@ -4,7 +4,7 @@
 
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+using TMPro;
 namespace UltimateClean
 {
     /// <summary>
@@ -24,7 +24,8 @@ namespace UltimateClean
             }
 
             if (tooltip != null)
-            {
+            {   
+              
                 StartCoroutine(Utils.FadeIn(tooltip.GetComponent<CanvasGroup>(), 1.0f, fadeTime));
             }
         }

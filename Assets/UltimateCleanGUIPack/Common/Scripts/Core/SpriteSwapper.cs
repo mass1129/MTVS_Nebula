@@ -31,11 +31,13 @@ namespace UltimateClean
             {
                 m_swapped = false;
                 m_image.sprite = disabledSprite;
+                CHAN_ClientManager.instance.myCharacter.microphone.enabled = false;
             }
             else
             {
                 m_swapped = true;
                 m_image.sprite = enabledSprite;
+                CHAN_ClientManager.instance.myCharacter.microphone.enabled = true ;
             }
         }
     }
