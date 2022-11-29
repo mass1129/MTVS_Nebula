@@ -18,7 +18,7 @@ public class K_StaticInterface_ShopList : K_UserInterface
     public TextMeshProUGUI[] itemNameTxt;
     public Button[] buyButton;
     bool isAdded = false;
-    
+    public GameObject[] toolTip;
     
     public override void CreateSlots()
     {
@@ -178,6 +178,8 @@ public class K_StaticInterface_ShopList : K_UserInterface
             inventory.AddItem(item, 1);
             itemCostTxt[i].SetText("$" + newList[i].price.ToString());
             itemNameTxt[i].SetText(newList[i].name.ToString());
+            toolTip[i].transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().SetText(newList[i].name.ToString());
+            toolTip[i].transform.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().SetText(inventory.database.ItemObjects[newList[i].id].description);
             int temp = i;
             buyButton[temp].onClick.AddListener(() => TryBuyItem(inventory.database.ItemObjects[newList[temp].id]));
             //Container.slots[i].UpdateSlot(Container.slots[i].item, Container.slots[i].amount);
