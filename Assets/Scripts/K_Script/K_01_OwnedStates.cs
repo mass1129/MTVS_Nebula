@@ -532,8 +532,8 @@ namespace K_01_OwnedStates
 
         public override void Execute(K_Player entity)
         {
-           
 
+            if (!entity.canMove) return;
             if (!isLanding)
             {
                 entity.yVelocity  += entity.gravity * Time.deltaTime;

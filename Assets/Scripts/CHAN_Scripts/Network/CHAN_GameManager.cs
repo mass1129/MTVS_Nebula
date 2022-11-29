@@ -131,7 +131,7 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
     public void SetPlayer(string prefab)
     {
         if (prefab == WhalePrepab)
-        { player = PN.Instantiate(prefab, Vector3.zero, Quaternion.identity); }
+        { player = PN.Instantiate(prefab, new Vector3(0, 3, 0), Quaternion.identity); }
         else
         {
             player = PN.Instantiate(prefab, new Vector3((int)Random.Range(40,60), 3, (int)Random.Range(40, 60)), Quaternion.identity);
