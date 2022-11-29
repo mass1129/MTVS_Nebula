@@ -44,9 +44,9 @@ namespace UltimateClean
         public void OnNextButtonPressed()
         {
             ++currentIndex;
-            if (currentIndex > Options.Count - 1)
+            if (inventory.GetSlots[currentIndex].amount == 0)
             {
-                currentIndex = Options.Count - 1;
+                currentIndex --;
             }
 
             SetCurrentOptionLabel();
@@ -59,8 +59,8 @@ namespace UltimateClean
 
         protected void SetCurrentOptionLabel()
         {
-            optionLabel.text = Options[currentIndex];
-            optionNumberLabel.text = $"{currentIndex + 1}/{Options.Count}";
+
+
             var slot = inventory.GetSlots[currentIndex];
             icon.sprite = inventory.database.ItemObjects[slot.item.id].uiDisplay;
             quickSlot.inventory.Clear();
