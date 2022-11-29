@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using PN = Photon.Pun.PhotonNetwork;
-using System;
-
+using TMPro;
 public class WhaleManager : MonoBehaviourPun
 {
     // 여기는 고래 생성을 위한 매니저 
@@ -16,14 +15,26 @@ public class WhaleManager : MonoBehaviourPun
     public float frequency;
     float y;
     float dTime;
+    public TMP_Text text_Narration;
+    public ParticleSystem bubble;
+    public ParticleSystem Light;
+    [Header("여기는 내레이션 대사 모음")]
+    public string enterAera;
+    public string almostDone;
+    public string createdWhale;
+    bool turn;
     // Update is called once per frame
+    private void Start()
+    {
+        text_Narration.enabled = false;
+        bubble.Pause();
+        Light.Pause();
+    }
     void Update()
     {
-        //그냥 위아래로 움직인다. 
-        dTime += Time.deltaTime * frequency;
-        y = amptitude * Mathf.Sin(dTime);
-        transform.position = new Vector3(0, y, 0);
+        JustMoving();
     }
+
     private void OnTriggerStay(Collider other)
     {
         // 만약 들어온자가 플레이어이면
@@ -38,8 +49,10 @@ public class WhaleManager : MonoBehaviourPun
                     count++;
                     Debug.Log("카운트: " + count);
                     // 여기서 카운트가 조건에 도달한 경우 고래 생성 시작
-                    if(count==5)
-                    CreateWhale();
+                    if (count == 3)
+                        StartCoroutine(Narrate(almostDone));
+                    if (count == 5 && photonView.IsMine)
+                        CreateWhale();
                 }
                 else if (photonView.IsMine && IsCreated)
                 {
@@ -51,12 +64,41 @@ public class WhaleManager : MonoBehaviourPun
     void CreateWhale()
     {
         Debug.Log("고래 생성");
-        Whale=PN.Instantiate("Player_Whale2", Vector3.up*20, Quaternion.identity);
-        // 여기에 기타 애니메이션, 나레이션 넣어도 괜찮을 듯
-        // 다른 플레이어에게 고래가 생성됐다고 통보한다. 
         AnnounceOthers(true);
-        StartCoroutine(Timer());
-        //타이머를 작동시킨다. 
+        StartCoroutine(Narrate(createdWhale));
+        Doeffect();
+        if (turn)
+        { 
+            StartCoroutine(create());
+        }
+
+    }
+    void Doeffect()
+    { photonView.RPC("RPCDoeffect", RpcTarget.All); }
+    [PunRPC]
+    void RPCDoeffect()
+    {
+        StartCoroutine(DoEffect());
+    }
+    IEnumerator DoEffect()
+    {
+        bubble.Play();
+        yield return new WaitForSeconds(5);
+        bubble.Stop();
+        Light.Play();
+        yield return new WaitForSeconds(3);
+        Light.Stop();
+        if (photonView.IsMine)
+        {
+            Whale = PN.Instantiate("Player_Whale2", Vector3.up * 60, Quaternion.identity);
+            StartCoroutine(Timer());
+        }
+        
+    }
+    IEnumerator create()
+    {
+        yield return null;
+
     }
     IEnumerator Timer()
     {
@@ -74,6 +116,23 @@ public class WhaleManager : MonoBehaviourPun
         AnnounceOthers(false);
         Debug.Log("고래파괴");
         DestroyWhale();
+        turn = false;
+    }
+    IEnumerator Narrate(string ment)
+    {
+        float SetTime = 3;
+        float curTime = 0;
+        //3초동안 자막 킨다.
+        while (curTime < SetTime)
+        {
+            text_Narration.enabled = true;
+            text_Narration.text = ment;
+            curTime += Time.deltaTime;
+            yield return null;
+        }
+        //끝나면 자막 종료
+        text_Narration.enabled = false;
+
     }
 
     public void DestroyWhale()
@@ -98,6 +157,13 @@ public class WhaleManager : MonoBehaviourPun
     void RPCAnnounceOthers(bool b)
     {
         IsCreated = b;
-        
+        StartCoroutine(Narrate(createdWhale));
+    }
+    void JustMoving()
+    {
+        //그냥 위아래로 움직인다. 
+        dTime += Time.deltaTime * frequency;
+        y = amptitude * Mathf.Sin(dTime);
+        transform.position = new Vector3(0, y, 0);
     }
 }

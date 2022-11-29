@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class WhaleMover : MonoBehaviour
+public class WhaleMover : MonoBehaviourPun
 {
     //생성 모션 재생되면서 등장
     // 방향을 결정 (결정방법은 랜덤한 섬의 위치)
@@ -18,17 +19,22 @@ public class WhaleMover : MonoBehaviour
     Transform targets;
     void Start()
     {
-        targets = GameObject.Find("Islands").transform;
-        StartCoroutine(delay());
-        DefineDirection();
+        if (photonView.IsMine)
+        {
+            targets = GameObject.Find("Islands").transform;
+            StartCoroutine(delay());
+            DefineDirection();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotGoal, Time.deltaTime);
-        transform.position += transform.forward * speed * Time.deltaTime;
-
+        if (photonView.IsMine)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotGoal, Time.deltaTime);
+            transform.position += transform.forward * speed * Time.deltaTime;
+        }
         // 고래와 타겟섬의 거리를 계속 측정한다. 
         CheckDistance();
     }

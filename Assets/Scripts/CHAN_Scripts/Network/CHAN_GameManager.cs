@@ -246,6 +246,8 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
     {
         PN.Disconnect();
         SceneManager.LoadScene(1);
+        BGMPlayer.instance.GetComponent<AudioSource>().clip = BGMPlayer.instance.audioSources[0];
+        BGMPlayer.instance.GetComponent<AudioSource>().Play();
         GameObject Voice = GameObject.Find("VoiceManager");
         Destroy(Voice);
         Destroy(gameObject);
