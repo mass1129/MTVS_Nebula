@@ -17426,7 +17426,6 @@ MonoBehaviour:
   quickSlotList: {fileID: 0}
   invenTab: {fileID: 0}
   onQuickSlot: 0
-  shopList: 0
   slots:
   - {fileID: 5836676130869776110}
   - {fileID: 3681876739333299869}
@@ -17816,7 +17815,6 @@ MonoBehaviour:
   quickSlotList: {fileID: 0}
   invenTab: {fileID: 0}
   onQuickSlot: 0
-  shopList: 0
   slots:
   - {fileID: 5369308461987937860}
   - {fileID: 2778189110900591405}
@@ -29621,19 +29619,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: beb61ed79cd9b2942883e57c3288ce68, type: 2}
-  quickSlotList: {fileID: 0}
-  invenTab: {fileID: 0}
-  onQuickSlot: 0
-  shopList: 1
   clothesInven: {fileID: 11400000, guid: c3cb508365f4b5c46b15784258606b4f, type: 2}
   bbinven: {fileID: 11400000, guid: 128d426c0cfe0f940aa8fd7406a56991, type: 2}
   moneySystem: {fileID: 1274903611117160159}
-  subSlots:
-  - {fileID: 8572652065070864005}
-  - {fileID: 8252263517967281443}
-  - {fileID: 4025811525025912778}
-  - {fileID: 5065102645913692543}
-  - {fileID: 6408151987874866926}
   itemCostTxt:
   - {fileID: 694312437675591737}
   - {fileID: 3442454346803681240}
@@ -58066,7 +58054,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1872992304860807444}
         m_TargetAssemblyTypeName: K_StaticInterface_ShopList, Assembly-CSharp
-        m_MethodName: ShopUpdate
+        m_MethodName: ShopItemLoad
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -71607,7 +71595,6 @@ MonoBehaviour:
   quickSlotList: {fileID: 0}
   invenTab: {fileID: 0}
   onQuickSlot: 1
-  shopList: 0
   subSlots:
   - {fileID: 1334322727127351679}
   - {fileID: 5115877134317612881}

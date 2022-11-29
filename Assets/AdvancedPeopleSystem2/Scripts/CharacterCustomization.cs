@@ -759,7 +759,7 @@ namespace AdvancedPeopleSystem
         public void SetElementByIndex(CharacterElementType type, int index)
         {
             if (photonView.IsMine&&PhotonNetwork.IsConnected) 
-            photonView.RPC("RPCSetElementByIndex", RpcTarget.AllBuffered, type, index);
+            photonView.RPC("RPCSetElementByIndex", RpcTarget.AllBufferedViaServer, type, index);
             else
             {
                 if (Settings == null)

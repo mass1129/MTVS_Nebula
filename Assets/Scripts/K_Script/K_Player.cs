@@ -79,7 +79,7 @@ public class K_Player : MonoBehaviourPun, IPunObservable
 
     private void Awake()
     {
-        canMove = true;
+
     }
     private void Start()
     {
@@ -106,12 +106,15 @@ public class K_Player : MonoBehaviourPun, IPunObservable
 
     private void OnAnimatorMove()
     {
+        if (!photonView.IsMine)
+            return;
         rootMotion += anim.deltaPosition;
     }
 
     private void GroundedCheck()
     {
-        // set sphere position, with offset
+        if (!photonView.IsMine)
+            return;
         Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset,
             transform.position.z);
         Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers,
@@ -121,6 +124,8 @@ public class K_Player : MonoBehaviourPun, IPunObservable
     }
     private void OnDrawGizmosSelected()
     {
+        if (!photonView.IsMine)
+            return;
         Color transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
         Color transparentRed = new Color(1.0f, 0.0f, 0.0f, 0.35f);
 
@@ -147,6 +152,8 @@ public class K_Player : MonoBehaviourPun, IPunObservable
 
     public void ChangeState(PlayerStates newState)
     {
+        if (!photonView.IsMine)
+            return;
         CurrentState = newState;
         stateMachine.ChangeState(states[(int)newState]);
     }

@@ -417,43 +417,44 @@ namespace K_01_OwnedStates
 
     public class FreeCamMode : K_PlayerState<K_Player>
     {
-        bool isLanding = false;
-
+        Vector2 _currentVelocity;
         public override void Enter(K_Player entity)
         {
-            entity.FreeCamRoot.SetActive(true);
+            entity.input.x = 0;
+            entity.input.y = 0;
+            entity.camMgr.firstPersonCamera.gameObject.SetActive(true);
+            entity.SetTrigger("FirstMove");
         }
 
         public override void Execute(K_Player entity)
         {
-            float h = Input.GetAxis("Horizontal");
-            float v = Input.GetAxis("Vertical");
 
-          
-            float yawCamera = entity.camMgr.playerCamera.transform.rotation.eulerAngles.y;
 
-            entity.FreeCamRoot.transform.rotation = Quaternion.Slerp(entity.FreeCamRoot.transform.rotation, Quaternion.Euler(0, yawCamera, 0),
+            entity.input.x = Input.GetAxis("Horizontal");
+            entity.input.y = Input.GetAxis("Vertical");
+
+            Vector3 yawCamera = entity.camMgr.playerCamera.transform.rotation.eulerAngles;
+
+            entity.transform.rotation = Quaternion.Slerp(entity.transform.rotation, Quaternion.Euler(yawCamera.x, yawCamera.y, yawCamera.z),
                 entity.turnSpeed * Time.deltaTime);
-            Vector3 dir = Vector3.right * h + Vector3.forward * v;
-            dir.Normalize();
+            entity.dir = entity.transform.right * entity.input.x + entity.transform.forward * entity.input.y;
+            entity.dir.Normalize();
 
-            entity.FreeCamRoot.GetComponent<CharacterController>().Move(dir*entity.SpceCamSpeed*Time.deltaTime);
+            entity.cc.Move(entity.dir * entity.SpceCamSpeed * Time.deltaTime);
+           
 
-            if (Input.GetKeyDown(KeyCode.K))
-                entity.SpceCamSpeed++;
 
-            if(Input.GetKeyDown(KeyCode.L))
-                entity.SpceCamSpeed--;
-
-            if (Input.GetKeyDown(KeyCode.J))
+            if (Input.GetKeyDown(KeyCode.L))
+            {
                 entity.ChangeState(PlayerStates.Idle);
-
+            }
 
         }
 
         public override void Exit(K_Player entity)
         {
-           entity.FreeCamRoot.SetActive(false);
+           
+            entity.ResetTrigger("FirstMove");
         }
     }
     public class Jump : K_PlayerState<K_Player>

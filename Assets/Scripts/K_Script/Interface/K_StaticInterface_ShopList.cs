@@ -6,53 +6,30 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UltimateClean;
 using UnityEngine.UI;
+using Photon.Pun;
 
-public class K_StaticInterface_ShopList : K_UserInterface
+public class K_StaticInterface_ShopList : MonoBehaviourPun
 {
+
+
+    public InventoryObject inventory;
     public InventoryObject clothesInven;
     public InventoryObject bbinven;
     public K_MoneySystem moneySystem;
-    public GameObject[] subSlots;
+    
 
     public TextMeshProUGUI[] itemCostTxt;
     public TextMeshProUGUI[] itemNameTxt;
     public Button[] buyButton;
-    bool isAdded = false;
     public GameObject[] toolTip;
     public Image[] slopImg;
-    public override void CreateSlots()
+    private void OnEnable()
     {
-
         if (!photonView.IsMine) return;
-        
-        slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
-        for (int i = 0; i < inventory.GetSlots.Length; i++)
-        {
-            var obj = subSlots[i];
-
-            if (!isAdded&&!onQuickSlot)
-            {
-                AddEvent(obj, EventTriggerType.PointerEnter, delegate { OnEnter(obj); });
-                AddEvent(obj, EventTriggerType.PointerExit, delegate { OnExit(obj); });
-                
-                //AddEvent(obj, EventTriggerType.Select, delegate { OnSelect(obj); });
-                //AddEvent(obj, EventTriggerType.Deselect, delegate { OnDeselect(obj); });
-            }
-            
-            inventory.GetSlots[i].slotDisplay = obj;
-            //inventory.GetSlots[i].parent = this;
-            slotsOnInterface.Add(obj, inventory.GetSlots[i]);
-
-        }
-        isAdded = true;
-
-        
-    }
-    public override void ShopUpdate()
-    {
-        base.ShopUpdate();
         ShopItemLoad();
     }
+
+
     private void TryBuyItem(ItemObject item)
     {
         if (!photonView.IsMine) return;
@@ -147,22 +124,19 @@ public class K_StaticInterface_ShopList : K_UserInterface
         }
 
     }
-   
 
 
-    public override void DistorySlots()
+    private void OnDestroy()
     {
         if (!photonView.IsMine) return;
-        foreach (var key in slotsOnInterface.Keys.ToList())
-        {
-            Destroy(key);
-        }
-        slotsOnInterface.Clear();
+        inventory.Clear();
     }
+
 
     public async void ShopItemLoad()
     {
         if (!photonView.IsMine) return;
+        inventory.Clear();
         var url = "https://resource.mtvs-nebula.com/" + inventory.loadPath + PlayerPrefs.GetString("AvatarName");
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
@@ -187,14 +161,20 @@ public class K_StaticInterface_ShopList : K_UserInterface
             buyButton[temp].onClick.AddListener(() => TryBuyItem(inventory.database.ItemObjects[newList[temp].id]));
             //Container.slots[i].UpdateSlot(Container.slots[i].item, Container.slots[i].amount);
         }
-        inventory.UpdateInventory();
+        
 
 
     }
-    public void UpdateList()
-    {
-        inventory.UpdateInventory();
-    }
+   
+
+
+
+    
+
+
+
+
+
 
     [System.Serializable]
     public class H_CheckBuy_Root

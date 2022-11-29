@@ -27,19 +27,11 @@ public abstract class K_UserInterface : MonoBehaviourPun
   
     public void Awake()
     {
-        if (!photonView.IsMine) this.enabled = false;
-        ShopUpdate();
-        if (!isAddedEvent&& !needFirstUpdate)
-        {
-            UISetting();
-
-        }
-        isAddedEvent = true;
+        
     }
     public void OnEnable()
     {
         if (!photonView.IsMine) return;
-            ShopUpdate();
          if (!isAddedEvent && !needFirstUpdate)
          {
             UISetting();
@@ -76,10 +68,7 @@ public abstract class K_UserInterface : MonoBehaviourPun
     }
    
     public abstract void CreateSlots();
-    public virtual void ShopUpdate()
-    {
 
-    }
     public abstract void DistorySlots();
     public void UpdateInventoryLinks()
     {
@@ -91,11 +80,9 @@ public abstract class K_UserInterface : MonoBehaviourPun
             i++;
         }
     }
-    Sprite previousImg;
-    public bool shopList = false;
     private void OnSlotUpdate(InventorySlot slot)
     {
-        if (!photonView.IsMine||shopList) return;
+        if (!photonView.IsMine) return;
         if (slot.item.id <= -1)
         {
             slot.slotDisplay.transform.GetChild(0).GetComponent<Image>().sprite = null;
@@ -104,8 +91,6 @@ public abstract class K_UserInterface : MonoBehaviourPun
             {
                 slot.slotDisplay.transform.GetChild(1).gameObject.SetActive(true);
             }
-
-
         }
         else
         {
@@ -130,14 +115,6 @@ public abstract class K_UserInterface : MonoBehaviourPun
         _previousInventory = inventory;
 
     }
-    bool isShowed = false;
-    string avatarName => PlayerPrefs.GetString("AvatarName");
-   
-
-   
-
-   
-
 
     protected void AddEvent(GameObject obj, EventTriggerType type, UnityAction<BaseEventData> action)
     {
@@ -224,15 +201,7 @@ public abstract class K_UserInterface : MonoBehaviourPun
         }
 
         selectInterface.inventory.AddBundleListToWindow(slotsOnInterface[obj].GetItemObject().subItem);
-        for (int i = 0; i < selectInterface.inventory.GetSlots.Length; i++)
-        {
-            selectInterface.inventory.GetSlots[i].onAfterUpdated += selectInterface.OnSlotUpdate;
-        }
-        
-        
-        
 
-        Debug.Log(obj.name);
         selectInterface.inventory.UpdateInventory();
         
        
@@ -241,13 +210,7 @@ public abstract class K_UserInterface : MonoBehaviourPun
     public void OnDeselect(GameObject obj)
     {
        
-        //var deselectInterface = quickSlotList.GetComponent<K_UserInterface>();
-        //deselectInterface.inventory.Clear();
-        //for (int i = 0; i < deselectInterface.inventory.GetSlots.Length; i++)
-        //{
-        //    deselectInterface.inventory.GetSlots[i].onAfterUpdated += deselectInterface.OnSlotUpdate;
-        //}
-        //deselectInterface.inventoryWindow.SetActive(false);
+
     }
 
 

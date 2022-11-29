@@ -11,7 +11,7 @@ public class K_01_Character : K_Player
     private void Awake()
     {
         if (!photonView.IsMine)
-            this.enabled = false;
+            return;
         
         // Assult가 가질 수 있는 상태 개수만큼 메모리 할당, 각 상태에 클래스 메모리 할당. states[(int)PlayerStates.Idle].Execute()와 같은 방식으로 사용.
         states = new K_PlayerState<K_Player>[9];
@@ -55,19 +55,28 @@ public class K_01_Character : K_Player
             canMove = false;
             camPos.SetActive(true);
             charCustom.LoadCharacterFromFile(PlayerPrefs.GetString("AvatarName"));
-            if (PhotonNetwork.IsMasterClient)
+            
+            yield return new WaitForSeconds(0.2f);
+            if (PhotonNetwork.IsMasterClient&&PhotonNetwork.CurrentRoom.PlayerCount<2)
             {
                 gridBuildingSystem.gameObject.SetActive(true);
                 gridBuildingSystem.TestLoad(PlayerPrefs.GetString("User_Island_ID"));
                 
             }
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.2f);
+            itemSystem.UpdateItemSystem();
+            yield return new WaitForSeconds(0.2f);
             for (int i = 0; i < playerUI.Count; i++)
             {
-                playerUI[i].SetActive(true);
+                int temp = i;
+                playerUI[temp].SetActive(true);
+                yield return new WaitForSeconds(0.2f);
+
             }
 
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.2f);
+            itemSystem.ItemLoad();
+            yield return new WaitForSeconds(0.2f);
             InActiveObj();
             yield return new WaitForSeconds(1f);
             canMove = true;
@@ -153,8 +162,10 @@ public class K_01_Character : K_Player
 
 
     public void ChangeToBuildingState()
-    {   
-       if(PhotonNetwork.CurrentRoom.Name == avatarName)
+    {
+        if (!photonView.IsMine)
+            return;
+        if (PhotonNetwork.CurrentRoom.Name == avatarName)
        {
             if (CurrentState == PlayerStates.Idle)
                 ChangeState(PlayerStates.BuildingMode);

@@ -12,11 +12,12 @@ public class K_PlayerItemSystem : MonoBehaviourPun, IPunObservable
     public InventoryObject inven_Default;
     public InventoryObject inven_Vehicle;
     public InventoryObject _equipment;
+   
     public K_Player player;
 
     //public static GameObject LocalPlayerInstance;
 
-    private  CharacterCustomization  _CharacterCustomization;
+    CharacterCustomization  _CharacterCustomization;
     bool isdone = false;
     private void Awake()
     {
@@ -25,30 +26,21 @@ public class K_PlayerItemSystem : MonoBehaviourPun, IPunObservable
 
     }
 
-    private void OnEnable()
+    public void UpdateItemSystem()
     {
-        if (!photonView.IsMine) return;
-        Debug.Log("111");
-        if (photonView.IsMine)
+        _CharacterCustomization = GetComponent<CharacterCustomization>();
+        for (int i = 0; i < _equipment.GetSlots.Length; i++)
         {
-            if (!isdone)
-            {
-                _CharacterCustomization = this.gameObject.GetComponent<CharacterCustomization>();
-
-
-                for (int i = 0; i < _equipment.GetSlots.Length; i++)
-                {
-                    _equipment.GetSlots[i].onBeforeUpdated += OnRemoveItem;
-                    _equipment.GetSlots[i].onAfterUpdated += OnEquipItem;
-                }
-                Debug.Log("222");
-            }
-            isdone = true;
-            ItemLoad();
+            _equipment.GetSlots[i].onBeforeUpdated += OnRemoveItem;
+            _equipment.GetSlots[i].onAfterUpdated += OnEquipItem;
         }
+    }
+    public void RPCUpdateItemSystem()
+    {
         
     }
-  
+
+
 
     private void OnDestroy()
     {
@@ -205,7 +197,7 @@ public class K_PlayerItemSystem : MonoBehaviourPun, IPunObservable
         inven_Cloths.TestLoad();
         _equipment.TestLoad();
         inven_Building.TestLoad();
-
+        
 
     }
     private void OnApplicationQuit()
