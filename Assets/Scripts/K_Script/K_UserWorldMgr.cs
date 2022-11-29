@@ -8,6 +8,7 @@ public class K_UserWorldMgr : MonoBehaviourPun
     // Start is called before the first frame update
     K_01_Character _character;
     public GridBuildingSystem3D buildingSystem;
+    
     private void Awake()
     {
         
@@ -16,7 +17,7 @@ public class K_UserWorldMgr : MonoBehaviourPun
     }
     void Start()
     {
-        _character.transform.position += Vector3.up * 4;
+        _character.transform.position += Vector3.up * 5;
         _character.PlayerInfoSetting();
         StartCoroutine(_character.SetActiveObj());
         

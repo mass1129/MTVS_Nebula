@@ -52,6 +52,7 @@ public class K_01_Character : K_Player
     {
         if (photonView.IsMine)
         {
+            canMove = false;
             camPos.SetActive(true);
             charCustom.LoadCharacterFromFile(PlayerPrefs.GetString("AvatarName"));
             if (PhotonNetwork.IsMasterClient)
@@ -68,10 +69,12 @@ public class K_01_Character : K_Player
 
             yield return new WaitForSeconds(0.1f);
             InActiveObj();
+            yield return new WaitForSeconds(1f);
+            canMove = true;
             yield break;
-            
+
         }
-        
+        yield break;
     }
     
     public void PlayerInfoSetting()
@@ -86,6 +89,7 @@ public class K_01_Character : K_Player
     public void InActiveObj()
     {
         photonView.RPC("RpcInActiveTrigger", RpcTarget.AllBuffered);
+        
     }
     [PunRPC]
     public void RpcInActiveTrigger()
@@ -94,6 +98,7 @@ public class K_01_Character : K_Player
         {
             inActiveObj[i].SetActive(false);
         }
+       
     }
 
 
