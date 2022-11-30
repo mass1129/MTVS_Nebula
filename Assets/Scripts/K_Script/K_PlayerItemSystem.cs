@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using AdvancedPeopleSystem;
 using Photon.Pun;
+using Cysharp.Threading.Tasks;
 public class K_PlayerItemSystem : MonoBehaviourPun, IPunObservable
      
 
@@ -169,7 +170,7 @@ public class K_PlayerItemSystem : MonoBehaviourPun, IPunObservable
     {
        
     }
-    public async void TwoInvenSave()
+    public async UniTaskVoid TwoInvenSave()
     {
         if (!photonView.IsMine) return;
         SaveTwoInven saveObject = new SaveTwoInven
@@ -186,11 +187,12 @@ public class K_PlayerItemSystem : MonoBehaviourPun, IPunObservable
         await httpReq.Post(url, json);
         _equipment.Clear();
         inven_Cloths.Clear();
+        await UniTask.Yield();
     }
 
     public void ItemSave()
     {
-        TwoInvenSave();
+        TwoInvenSave().Forget();
     }
     public void ItemLoad()
     {

@@ -19,7 +19,7 @@ public class K_UserWorldMgr : MonoBehaviourPun
     {
         _character.transform.position += Vector3.up * 5;
         _character.PlayerInfoSetting();
-        StartCoroutine(_character.SetActiveObj());
+        _character.SetActiveObj().Forget();
         
         
     }

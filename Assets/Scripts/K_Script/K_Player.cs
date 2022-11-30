@@ -65,8 +65,7 @@ public class K_Player : MonoBehaviourPun, IPunObservable
     public float GroundedRadius = 0.28f;
     public LayerMask GroundLayers;
 
-    public GameObject FreeCamRoot;
-
+    public GameObject allUi;
 
     public PlayerStates CurrentState { get; set; } // 현재 기본 상태
  

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Cysharp.Threading.Tasks;
 
 public class K_01_Character : K_Player
 {
@@ -48,42 +49,37 @@ public class K_01_Character : K_Player
         
     }
 
-    public IEnumerator SetActiveObj()
+    public async UniTaskVoid SetActiveObj()
     {
         if (photonView.IsMine)
         {
             canMove = false;
             camPos.SetActive(true);
             charCustom.LoadCharacterFromFile(PlayerPrefs.GetString("AvatarName"));
-            
-            yield return new WaitForSeconds(0.2f);
+            await UniTask.DelayFrame(50);
             if (PhotonNetwork.IsMasterClient&&PhotonNetwork.CurrentRoom.PlayerCount<2)
             {
                 gridBuildingSystem.gameObject.SetActive(true);
                 gridBuildingSystem.TestLoad(PlayerPrefs.GetString("User_Island_ID"));
                 
             }
-            yield return new WaitForSeconds(0.2f);
+            await UniTask.DelayFrame(50);
             itemSystem.UpdateItemSystem();
-            yield return new WaitForSeconds(0.2f);
+            await UniTask.DelayFrame(50);
             for (int i = 0; i < playerUI.Count; i++)
             {
                 int temp = i;
                 playerUI[temp].SetActive(true);
-                yield return new WaitForSeconds(0.2f);
-
+                
             }
-
-            yield return new WaitForSeconds(0.2f);
+            await UniTask.DelayFrame(50);
             itemSystem.ItemLoad();
-            yield return new WaitForSeconds(0.2f);
+            await UniTask.DelayFrame(50);
             InActiveObj();
-            yield return new WaitForSeconds(1f);
+            await UniTask.DelayFrame(50);
             canMove = true;
-            yield break;
 
         }
-        yield break;
     }
     
     public void PlayerInfoSetting()

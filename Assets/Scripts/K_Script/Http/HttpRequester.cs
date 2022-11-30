@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -18,7 +19,7 @@ public class HttpRequester
     
 
     
-    public async Task<TResultType> Get<TResultType>(string url)
+    public async UniTask<TResultType> Get<TResultType>(string url)
     {
         try
         {
@@ -58,7 +59,7 @@ public class HttpRequester
 
         
     }
-    public async Task Post(string url, string json) //<TResultType> Get<TResultType>(string url)
+    public async UniTask Post(string url, string json) //<TResultType> Get<TResultType>(string url)
     {
         try
         {
@@ -107,7 +108,7 @@ public class HttpRequester
         }
 
     }
-    public async Task<TResultType> Post1<TResultType>(string url, string json) //<TResultType> Get<TResultType>(string url)
+    public async UniTask<TResultType> Post1<TResultType>(string url, string json) //<TResultType> Get<TResultType>(string url)
     {
         try
         {
@@ -133,12 +134,12 @@ public class HttpRequester
                 Debug.LogError($"Failed: {request.error}");
             }
             var result = _serializionOption.Deserialize<TResultType>(request.downloadHandler.text);
-            return result;
+            
 
             if (token != null)
                 SetToken(request.downloadHandler.text);
 
-
+            return result;
 
 
         }

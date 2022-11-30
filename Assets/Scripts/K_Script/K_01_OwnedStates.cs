@@ -424,6 +424,8 @@ namespace K_01_OwnedStates
             entity.input.y = 0;
             entity.camMgr.firstPersonCamera.gameObject.SetActive(true);
             entity.SetTrigger("FirstMove");
+            entity.allUi.SetActive(false);
+            GameObject.Find("New_Chatting").SetActive(false);
         }
 
         public override void Execute(K_Player entity)
@@ -446,6 +448,8 @@ namespace K_01_OwnedStates
 
             if (Input.GetKeyDown(KeyCode.L))
             {
+                entity.allUi.SetActive(false);
+                GameObject.Find("New_Chatting").SetActive(false);
                 entity.ChangeState(PlayerStates.Idle);
             }
 

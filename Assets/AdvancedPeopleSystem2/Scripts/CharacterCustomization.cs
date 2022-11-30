@@ -8,6 +8,7 @@ using UnityEngine;
 using System.Text.RegularExpressions;
 using System.Globalization;
 using Photon.Pun;
+using Cysharp.Threading.Tasks;
 using UnityEngine.SceneManagement;
 namespace AdvancedPeopleSystem
 {
@@ -1427,8 +1428,9 @@ namespace AdvancedPeopleSystem
             
             
         }
+
         [PunRPC]
-        public async void RPCLoadCharacterFromFile(string s)
+        public async UniTaskVoid RPCLoadCharacterFromFile(string s)
         {
             var url = "https://resource.mtvs-nebula.com/avatar/appearance/" + s;//PlayerPrefs.GetString("AvatarName");
             var httpReq = new HttpRequester(new JsonSerializationOption());
@@ -1441,6 +1443,7 @@ namespace AdvancedPeopleSystem
             {
                  SetCharacterSetup(setup);
             }
+            await UniTask.Yield();
         }
         public bool textLoadDone = false;
         public async void LoadCharacterCustomScene(string path)
