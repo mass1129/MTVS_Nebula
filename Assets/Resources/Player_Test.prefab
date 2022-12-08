@@ -55664,7 +55664,7 @@ GameObject:
   - component: {fileID: 626270019936441882}
   - component: {fileID: -9103641153785825190}
   - component: {fileID: 1274903611117160159}
-  - component: {fileID: 7724888543604895138}
+  - component: {fileID: 1453835040984893679}
   m_Layer: 15
   m_Name: Player_Test
   m_TagString: Player
@@ -56472,7 +56472,7 @@ MonoBehaviour:
   cc: {fileID: 5733073701845269105}
   cam: {fileID: 1752280606319894689}
   camMgr: {fileID: 5733073701845269107}
-  itemSystem: {fileID: 7724888543604895138}
+  itemSystem: {fileID: 1453835040984893679}
   gridBuildingSystem: {fileID: 4970061919972252230}
   charCustom: {fileID: 5629639970830784067}
   input: {x: 0, y: 0}
@@ -56500,7 +56500,7 @@ MonoBehaviour:
   GroundLayers:
     serializedVersion: 2
     m_Bits: 90113
-  FreeCamRoot: {fileID: 1421709771}
+  allUi: {fileID: 1752280606396279190}
   camPos: {fileID: 1752280605483343739}
   playerUI:
   - {fileID: 1752280606396279190}
@@ -56646,7 +56646,7 @@ MonoBehaviour:
   - {fileID: 5629639970830784067}
   - {fileID: 5733073701845269104}
   - {fileID: 842975793188924700}
-  - {fileID: 7724888543604895138}
+  - {fileID: 1453835040984893679}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -56704,7 +56704,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goldAmount: 0
   player: {fileID: 5733073701845269104}
---- !u!114 &7724888543604895138
+--- !u!114 &1453835040984893679
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -56713,7 +56713,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5629639970830784068}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9c40c1abf278f741893bb958ef371ad, type: 3}
+  m_Script: {fileID: 11500000, guid: e418d1ddcb6a171449d202bf1d7d6508, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   inven_Cloths: {fileID: 11400000, guid: c3cb508365f4b5c46b15784258606b4f, type: 2}
