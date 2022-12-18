@@ -86,7 +86,7 @@ public class K_StaticInterface_ShopList : MonoBehaviourPun
         //string json2 = JsonUtility.ToJson(result);
         if (result.httpStatus == 201)
         {
-            clothesInven.TestLoad();
+            clothesInven.TestLoad(PlayerPrefs.GetString("AvatarName"));
             moneySystem.MoneyLoad();
             
         }
@@ -114,7 +114,7 @@ public class K_StaticInterface_ShopList : MonoBehaviourPun
         //string json2 = JsonUtility.ToJson(result);
         if (result.httpStatus == 201)
         {
-            bbinven.TestLoad();
+            bbinven.TestLoad(PlayerPrefs.GetString("AvatarName"));
             moneySystem.MoneyLoad();
             ShopItemLoad();
         }

@@ -13,7 +13,10 @@ public class BuildingGhost : MonoBehaviour {
 
         buildingSystem.OnSelectedChanged += Instance_OnSelectedChanged;
     }
-
+    private void OnDestroy()
+    {
+        buildingSystem.OnSelectedChanged -= Instance_OnSelectedChanged;
+    }
     private void Instance_OnSelectedChanged(object sender, System.EventArgs e) {
         RefreshVisual();
     }

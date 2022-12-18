@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using CodeMonkey.Utils;
 using Photon.Pun;
+using Cysharp.Threading.Tasks;
+using Photon.Realtime;
 
 public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
 {
@@ -24,12 +26,26 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
 
     private bool isDemolishActive;
     public InventoryObject quickSlot;
-    private void Awake() {
-        if (!photonView.IsMine) return;
+    private void Awake() 
+    {
+        
+
+
+    }
+ 
+    public void BuildingSetup()
+    {
+        
+        photonView.RPC("RPCBuildingSetup", RpcTarget.AllBuffered);
+    }
+    [PunRPC]
+    public void RPCBuildingSetup()
+    {
+        
         Instance = this;
         //그리드 세팅
         int gridWidth = 100;
-        int gridHeight =100;
+        int gridHeight = 100;
         float cellSize = 1f;
         gridList = new List<GridXZ<GridObject>>();
         int gridVerticalCount = 1;
@@ -39,42 +55,24 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
             GridXZ<GridObject> grid = new GridXZ<GridObject>(gridWidth, gridHeight, cellSize, new Vector3(0, gridVerticalSize * i, 0), (GridXZ<GridObject> g, int x, int y) => new GridObject(g, x, y));
             gridList.Add(grid);
         }
-       
+
         placedObjectTypeSO = null;
         selectedGrid = gridList[0];
-        Debug.Log(PhotonNetwork.CurrentRoom.PlayerCount);
-       
-
-
+        
     }
 
     private void Start()
     {
+        
         quickSlot.Clear();
 
 
     }
 
-    public void FirstLoadBuilding()
-    {
-        //if(photonView.IsMine)
-        //photonView.RPC("RPCFirstLoadBuilding", RpcTarget.AllBuffered);
-        if (PhotonNetwork.CurrentRoom.PlayerCount <= 1)
-            TestLoad(PlayerPrefs.GetString("User_Island_ID"));
-    }
-    [PunRPC]
-    public void RPCFirstLoadBuilding()
-    {
-        if (PhotonNetwork.CurrentRoom.PlayerCount <= 1)
-            TestLoad(PlayerPrefs.GetString("User_Island_ID"));
-
-        gameObject.SetActive(false);
-    }
     private void Update()
     {
         if (!photonView.IsMine) return;
-            //HandleTypeSelect();
-            HandleNormalObjectPlacement();
+        HandleNormalObjectPlacement();
         HandleDirRotation();
         HandleDemolish();
         
@@ -196,31 +194,12 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
         RefreshSelectedObjectType();
     }
 
-    private void RefreshSelectedObjectType() {
-        //UpdateCanBuildTilemap();
-
-        if (placedObjectTypeSO == null) {
-            //TilemapVisual.Instance.Hide();
-        } else {
-            //TilemapVisual.Instance.Show();
-        }
-
+    private void RefreshSelectedObjectType() 
+    {
         OnSelectedChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    private void UpdateCanBuildTilemap() {
-        /*
-        // Not implemented by default
-        for (int x = 0; x < grid.GetWidth(); x++) {
-            for (int y = 0; y < grid.GetHeight(); y++) {
-                // Tilemap
-                Tilemap.Instance.SetTilemapSprite(new Vector3(x, y),
-                    grid.GetGridObject(x, y).CanBuild() ?
-                    Tilemap.TilemapObject.TilemapSprite.CanBuild :
-                    Tilemap.TilemapObject.TilemapSprite.CannotBuild);
-            }
-        }*/
-    }
+   
 
     public bool TryPlaceObject(int x, int y, PlacedObjectTypeSO placedObjectTypeSO, PlacedObjectTypeSO.Dir dir) {
         return TryPlaceObject(new Vector2Int(x, y), placedObjectTypeSO, dir, out PlacedObject placedObject);
@@ -338,7 +317,7 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
     }
 
     
-    public async void TestSave(string s)
+    public async UniTaskVoid TestSave(string s)
     {
         List<PlacedObjectSaveObjectArray> placedObjectSaveObjectArrayList = new List<PlacedObjectSaveObjectArray>();
 
@@ -379,8 +358,9 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
     }
 
    
-    public async void TestLoad(string s)
+    public async UniTaskVoid TestLoad(string s)
     {
+        
         var url = "https://resource.mtvs-nebula.com/skyisland/" + s;
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
@@ -396,14 +376,26 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
                 PlacedObjectTypeSO placedObjectTypeSO = BuildingSystemAssets.Instance.GetPlacedObjectTypeSOFromName(placedObjectSaveObject.placedObjectTypeSOName);
               
                 TryPlaceObject(placedObjectSaveObject.origin, placedObjectTypeSO, placedObjectSaveObject.dir, out PlacedObject placedObject);
-                
+               
             }
         }
+        
+    }
+
+    public async UniTaskVoid FirstBuildingLoad()
+    {
+        TestLoad(PlayerPrefs.GetString("User_Island_ID")).Forget();
+        await UniTask.Yield();
+        
+        
+
     }
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         
     }
+
+   
 
     [Serializable]
     public class SaveAllBuilding

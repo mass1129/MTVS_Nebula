@@ -6,9 +6,7 @@ using Cysharp.Threading.Tasks;
 
 public class K_01_Character : K_Player
 {
-    public GameObject camPos;
-    public List<GameObject> playerUI;
-    public List<GameObject> inActiveObj;
+    
     private void Awake()
     {
         if (!photonView.IsMine)
@@ -47,63 +45,6 @@ public class K_01_Character : K_Player
     private void Start()
     {
         
-    }
-
-    public async UniTaskVoid SetActiveObj()
-    {
-        if (photonView.IsMine)
-        {
-            canMove = false;
-            camPos.SetActive(true);
-            charCustom.LoadCharacterFromFile(PlayerPrefs.GetString("AvatarName"));
-            await UniTask.DelayFrame(50);
-            if (PhotonNetwork.IsMasterClient&&PhotonNetwork.CurrentRoom.PlayerCount<2)
-            {
-                gridBuildingSystem.gameObject.SetActive(true);
-                gridBuildingSystem.TestLoad(PlayerPrefs.GetString("User_Island_ID"));
-                
-            }
-            await UniTask.DelayFrame(50);
-            itemSystem.UpdateItemSystem();
-            await UniTask.DelayFrame(50);
-            for (int i = 0; i < playerUI.Count; i++)
-            {
-                int temp = i;
-                playerUI[temp].SetActive(true);
-                
-            }
-            await UniTask.DelayFrame(50);
-            itemSystem.ItemLoad();
-            await UniTask.DelayFrame(50);
-            InActiveObj();
-            await UniTask.DelayFrame(50);
-            canMove = true;
-
-        }
-    }
-    
-    public void PlayerInfoSetting()
-    {
-        if (photonView.IsMine)
-        {
-            avatarName = PlayerPrefs.GetString("AvatarName");
-            ownIslandID = PlayerPrefs.GetString("Island_ID");
-            Debug.Log("AvatarName : " + avatarName + "  Island_ID : " + ownIslandID);
-        }
-    }
-    public void InActiveObj()
-    {
-        photonView.RPC("RpcInActiveTrigger", RpcTarget.AllBuffered);
-        
-    }
-    [PunRPC]
-    public void RpcInActiveTrigger()
-    {
-        for (int i = 0; i < inActiveObj.Count; i++)
-        {
-            inActiveObj[i].SetActive(false);
-        }
-       
     }
 
 

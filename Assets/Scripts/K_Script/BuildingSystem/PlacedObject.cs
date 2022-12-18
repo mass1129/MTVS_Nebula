@@ -32,9 +32,13 @@ public class PlacedObject : MonoBehaviourPun
     }
 
     public virtual void GridSetupDone() {
-        //Debug.Log("PlacedObject.GridSetupDone() " + transform);
+        photonView.RPC("RPCGridSetupDone", RpcTarget.AllBuffered);
     }
-
+    [PunRPC]
+    public void RPCGridSetupDone()
+    {
+        K_UserWorldMgr.instance.loadObjectList.Add(this);
+    }
     protected virtual void TriggerGridObjectChanged() {
         foreach (Vector2Int gridPosition in GetGridPositionList()) {
             GridBuildingSystem3D.Instance.GetGridObject(gridPosition).TriggerGridObjectChanged();
@@ -50,9 +54,16 @@ public class PlacedObject : MonoBehaviourPun
     }
 
     public virtual void DestroySelf() {
-        PhotonNetwork.Destroy(gameObject);
-    }
 
+        photonView.RPC("RPCDestroySelf", RpcTarget.AllBuffered);
+        PhotonNetwork.Destroy(photonView);
+        
+    }
+    [PunRPC]
+    public void RPCDestroySelf()
+    {
+        K_UserWorldMgr.instance.loadObjectList.Remove(this);
+    }
     public override string ToString() {
         return placedObjectTypeSO.nameString;
     }

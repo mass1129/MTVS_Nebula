@@ -17,39 +17,7 @@ public class PlayerEquipment : MonoBehaviourPun
 
 
 
-    private void Awake()
-    {
-        
-    }
-    private void Start()
-    {
-
-    }
-    private void Update()
-    {
-        
-
-    }
-    private void OnEnable()
-    {
-        if (!photonView.IsMine) return;
-        inven_Cloths.TestLoad();
-        inven_Equipment.TestLoad();
-        inven_Building.TestLoad();
-
-    }
-
-    private void OnDisable()
-    {
-        ItemSave();
-       
-    }
-    private void OnDestroy()
-    {
-        //TwoInvenSave();
-    }
-
-
+   
 
 
 
@@ -128,47 +96,7 @@ public class PlayerEquipment : MonoBehaviourPun
 
 
   
-    public async void TwoInvenSave()
-    {   
-       if(!photonView.IsMine) return;
-        SaveTwoInven saveObject = new SaveTwoInven
-        {
-            equipment = inven_Equipment.GetInventory(),
-            clothesInventory = inven_Cloths.GetInventory()
-        };
-        string json = JsonUtility.ToJson(saveObject, true);
-        Debug.Log(json);
-        //string s = PlayerPrefs.GetString(" AvatarName");
-        var url = "https://resource.mtvs-nebula.com/" + inven_Equipment.savePath  + PlayerPrefs.GetString("AvatarName");
-        var httpReq = new HttpRequester(new JsonSerializationOption());
-
-        await httpReq.Post(url, json);
-        inven_Equipment.Clear();
-        inven_Cloths.Clear();
-    }
-    public void ItemSave()
-    {
-        TwoInvenSave();
-
-
-    }
-    public void ItemLoad()
-    {
-        
-       
-        
-    }
-    private void OnApplicationQuit()
-    {
-      
-    }   
-
-    [System.Serializable]
-    public class SaveTwoInven
-    {
-        public Inventory equipment;
-        public Inventory clothesInventory;
-    }
+   
 }
 
 

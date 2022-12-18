@@ -99,6 +99,7 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
             BGMPlayer.instance.GetComponent<AudioSource>().Play();
             PN.LoadLevel(sceneName);
             LoadingObject.SetActive(false);
+            
         }
         
         
@@ -125,6 +126,7 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
         else
         {
             roomOps.MaxPlayers = 20;
+            
         }
         return roomOps;
     }
@@ -135,9 +137,17 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
         else
         {
             player = PN.Instantiate(prefab, new Vector3((int)Random.Range(40,60), 3, (int)Random.Range(40, 60)), Quaternion.identity);
-            if (PN.CurrentRoom.Name == PlayerPrefs.GetString("AvatarName"))
-                PhotonNetwork.SetMasterClient(PN.LocalPlayer);
             CHAN_ClientManager.instance.myCharacter = player.GetComponent<K_01_Character>();
+            //if (PhotonNetwork.CurrentRoom.Name == PlayerPrefs.GetString("AvatarName")&& PhotonNetwork.CurrentRoom.PlayerCount>1)
+            //{
+            //    //K_UserWorldMgr.instance.HandleBuildingObj(true);
+            //    //K_UserWorldMgr.instance.buildingSystem.DestoryAllBuilding();
+            //    PhotonNetwork.SetMasterClient(PhotonNetwork.LocalPlayer);
+            //    //K_UserWorldMgr.instance.buildingSystem.FirstBuildingLoad().Forget();
+
+            //}
+
+
         }
     }
 

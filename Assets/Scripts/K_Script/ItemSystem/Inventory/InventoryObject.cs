@@ -140,21 +140,21 @@ public class InventoryObject : ScriptableObject
     }
 
    
-    public async void TestSave()
+    public async void TestSave(string s)
     {
 
         string json = JsonUtility.ToJson(Container, true);
         Debug.Log(json);
         //string s = PlayerPrefs.GetString(" AvatarName");
-        var url = "https://resource.mtvs-nebula.com/" + savePath + PlayerPrefs.GetString("AvatarName");
+        var url = "https://resource.mtvs-nebula.com/" + savePath + s;
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
         await httpReq.Post(url, json);
     }
 
-    public async void TestLoad()
+    public async void TestLoad(string s)
     {
-        var url = "https://resource.mtvs-nebula.com/" + loadPath + PlayerPrefs.GetString("AvatarName");
+        var url = "https://resource.mtvs-nebula.com/" + loadPath + s;
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
         H_I_Root result2 = await httpReq.Get<H_I_Root>(url);

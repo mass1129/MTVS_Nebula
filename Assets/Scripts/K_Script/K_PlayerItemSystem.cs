@@ -54,7 +54,8 @@ public class K_PlayerItemSystem : MonoBehaviourPun, IPunObservable
                 _equipment.GetSlots[i].onBeforeUpdated -= OnRemoveItem;
                 _equipment.GetSlots[i].onAfterUpdated -= OnEquipItem;
             }
-            Debug.Log("222");
+            inven_Building.Clear();
+            
         }
     }
     
@@ -194,9 +195,9 @@ public class K_PlayerItemSystem : MonoBehaviourPun, IPunObservable
     }
     public void ItemLoad()
     {
-        inven_Cloths.TestLoad();
-        _equipment.TestLoad();
-        inven_Building.TestLoad();
+        inven_Cloths.TestLoad(player.avatarName);
+        _equipment.TestLoad(player.avatarName);
+        inven_Building.TestLoad(player.avatarName);
         
 
     }

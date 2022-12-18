@@ -11,7 +11,7 @@ public class K_CameraMgr : MonoBehaviourPun
     public Transform cameraLookAt;
     public Transform camModeRoot;
 
-    public List<GameObject> buildingSystemSet;
+   
 
 
     public Cinemachine.AxisState xAxis;
@@ -36,11 +36,7 @@ public class K_CameraMgr : MonoBehaviourPun
         if (!photonView.IsMine)
             this.enabled = false;
     }
-    public void InActiveBuildingSystem(bool b)
-    {
-        for (int i = 0; i < buildingSystemSet.Count; i++)
-            buildingSystemSet[i].SetActive(b);
-    }
+   
     // Start is called before the first frame update
     void Start()
     {

@@ -21,13 +21,13 @@ public class K_MoneySystem : MonoBehaviourPun, IShopCustomer
         if (!photonView.IsMine) return;
             goldAmount += addGoldAmount;
         OnGoldAmountChanged?.Invoke(this, EventArgs.Empty);
-        Debug.Log("currentGold :" + goldAmount);
+        
     }
 
     public int GetGoldAmount()
     {
         
-        Debug.Log("currentGold :" + goldAmount);
+       
         return goldAmount;
     }
 
@@ -36,7 +36,7 @@ public class K_MoneySystem : MonoBehaviourPun, IShopCustomer
         if (!photonView.IsMine) return;
         MoneyLoad();
         OnGoldAmountChanged?.Invoke(this, EventArgs.Empty);
-        Debug.Log("currentGold :" + goldAmount);
+        
     }
 
     public bool TrySpendGoldAmount(int spendGoldAmount)

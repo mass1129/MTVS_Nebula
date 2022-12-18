@@ -17,9 +17,6 @@ public abstract class K_UserInterface : MonoBehaviourPun
     private InventoryObject _previousInventory;
     public Dictionary<GameObject, InventorySlot> slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
 
-
-    public GameObject quickSlotList;
-    public GameObject invenTab;
   
     bool isAddedEvent = false;
     public bool onQuickSlot=false;
@@ -82,7 +79,7 @@ public abstract class K_UserInterface : MonoBehaviourPun
     }
     private void OnSlotUpdate(InventorySlot slot)
     {
-        if (!photonView.IsMine) return;
+        
         if (slot.item.id <= -1)
         {
             slot.slotDisplay.transform.GetChild(0).GetComponent<Image>().sprite = null;
@@ -193,16 +190,16 @@ public abstract class K_UserInterface : MonoBehaviourPun
     public void OnSelect(GameObject obj)
     {
         
-        var selectInterface = quickSlotList.GetComponent<K_UserInterface>();
-        selectInterface.inventory.Clear();
-        for (int i = 0; i < selectInterface.inventory.GetSlots.Length; i++)
-        {
-            selectInterface.inventory.GetSlots[i].onAfterUpdated += selectInterface.OnSlotUpdate;
-        }
+        //var selectInterface = quickSlotList.GetComponent<K_UserInterface>();
+        //selectInterface.inventory.Clear();
+        //for (int i = 0; i < selectInterface.inventory.GetSlots.Length; i++)
+        //{
+        //    selectInterface.inventory.GetSlots[i].onAfterUpdated += selectInterface.OnSlotUpdate;
+        //}
 
-        selectInterface.inventory.AddBundleListToWindow(slotsOnInterface[obj].GetItemObject().subItem);
+        //selectInterface.inventory.AddBundleListToWindow(slotsOnInterface[obj].GetItemObject().subItem);
 
-        selectInterface.inventory.UpdateInventory();
+        //selectInterface.inventory.UpdateInventory();
         
        
 

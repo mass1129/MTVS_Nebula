@@ -29,7 +29,7 @@ namespace UltimateClean
         {
             get { return currentIndex; }
         }
-        protected int currentIndex;
+        protected int currentIndex=0;
 
         public void OnPreviousButtonPressed()
         {
@@ -54,20 +54,30 @@ namespace UltimateClean
    
         private void OnEnable()
         {
+
+            //SetCurrentOptionLabel();
+
+
+        }
+        private void Start()
+        {
+            
             SetCurrentOptionLabel();
         }
-
         protected void SetCurrentOptionLabel()
         {
 
 
             var slot = inventory.GetSlots[currentIndex];
             icon.sprite = inventory.database.ItemObjects[slot.item.id].uiDisplay;
-            quickSlot.inventory.Clear();
+            
             quickSlot.inventory.AddBundleListToWindow(inventory.database.ItemObjects[slot.item.id].subItem);
-            quickSlot.inventory.UpdateInventory();
+            
         }
-
+        public void OnDestroy()
+        {
+            quickSlot.inventory.Clear();
+        }
 
         public string GetCurrentOptionText()
         {

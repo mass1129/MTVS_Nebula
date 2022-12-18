@@ -321,8 +321,9 @@ namespace K_01_OwnedStates
             entity.input.x = 0;
             entity.input.y = 0;
             entity.SetTrigger("ThirdMove");
-            entity.gridBuildingSystem.TestLoad(entity.ownIslandID);
-            entity.camMgr.InActiveBuildingSystem(true);
+            K_UserWorldMgr.instance.HandleBuildingObj(true);
+            K_UserWorldMgr.instance.buildingSystem.TestLoad(entity.ownIslandID).Forget();
+            
             entity.camMgr.buildCamera.gameObject.SetActive(true);
             
             entity.camMgr.buildCamOffset.m_Offset.z = 0f;
@@ -381,8 +382,9 @@ namespace K_01_OwnedStates
 
     public override void Exit(K_Player entity)
         {
-            entity.gridBuildingSystem.TestSave(entity.ownIslandID);
-            entity.camMgr.InActiveBuildingSystem(false);
+            K_UserWorldMgr.instance.buildingSystem.TestSave(entity.ownIslandID).Forget();
+
+            K_UserWorldMgr.instance.HandleBuildingObj(false);
             entity.camMgr.buildCamera.gameObject.SetActive(false);
             entity.ResetTrigger("ThirdMove");
         }
@@ -418,6 +420,7 @@ namespace K_01_OwnedStates
     public class FreeCamMode : K_PlayerState<K_Player>
     {
         Vector2 _currentVelocity;
+        GameObject chatting;
         public override void Enter(K_Player entity)
         {
             entity.input.x = 0;
@@ -425,7 +428,8 @@ namespace K_01_OwnedStates
             entity.camMgr.firstPersonCamera.gameObject.SetActive(true);
             entity.SetTrigger("FirstMove");
             entity.allUi.SetActive(false);
-            GameObject.Find("New_Chatting").SetActive(false);
+            chatting = GameObject.Find("New_Chatting");
+            chatting.SetActive(false);
         }
 
         public override void Execute(K_Player entity)
@@ -448,8 +452,8 @@ namespace K_01_OwnedStates
 
             if (Input.GetKeyDown(KeyCode.L))
             {
-                entity.allUi.SetActive(false);
-                GameObject.Find("New_Chatting").SetActive(false);
+                entity.allUi.SetActive(true);
+                chatting.SetActive(true);
                 entity.ChangeState(PlayerStates.Idle);
             }
 

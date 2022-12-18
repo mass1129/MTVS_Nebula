@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using AdvancedPeopleSystem;
+using Cysharp.Threading.Tasks;
 public enum PlayerStates // Player의 기본 상태
 {
     Idle,
@@ -30,8 +31,8 @@ public class K_Player : MonoBehaviourPun, IPunObservable
     public Transform cam;
     public K_CameraMgr camMgr;
     public K_PlayerItemSystem itemSystem;
-    public GridBuildingSystem3D gridBuildingSystem;
     public CharacterCustomization charCustom;
+
     [System.NonSerialized]
     public string avatarName = null;
     [System.NonSerialized]
@@ -68,7 +69,11 @@ public class K_Player : MonoBehaviourPun, IPunObservable
     public GameObject allUi;
 
     public PlayerStates CurrentState { get; set; } // 현재 기본 상태
- 
+
+
+    public GameObject camPos;
+    public List<GameObject> playerUI;
+    public List<GameObject> inActiveObj;
 
     // Player가 가지고 있는 모든 상태, 상태 관리자. 기본 상태와 상체 상태 따로 관리
     public K_PlayerState<K_Player>[] states;
@@ -102,6 +107,52 @@ public class K_Player : MonoBehaviourPun, IPunObservable
         Debug.Log(CurrentState.ToString() + "," + PhotonNetwork.CurrentRoom.Name + "," + PlayerPrefs.GetString("AvatarName") + "," + avatarName + "," + ownIslandID+ "," + PlayerPrefs.GetString("User_Island_ID"));
         //Debug.Log(cc.isGrounded);
     }
+
+    public async UniTaskVoid SetActiveObj()
+    {
+        if (photonView.IsMine)
+        {
+            canMove = false;
+            camPos.SetActive(true);
+            charCustom.LoadCharacterFromFile(PlayerPrefs.GetString("AvatarName"));
+            await UniTask.DelayFrame(50);
+            itemSystem.UpdateItemSystem();
+            await UniTask.DelayFrame(50);
+            for (int i = 0; i < playerUI.Count; i++)
+            {
+                int temp = i;
+                playerUI[temp].SetActive(true);
+
+            }
+            await UniTask.DelayFrame(50);
+            itemSystem.ItemLoad();
+            await UniTask.DelayFrame(50);
+            InActiveObj();
+            await UniTask.DelayFrame(50);
+            canMove = true;
+
+        }
+    }
+   
+    public void InActiveObj()
+    {
+        for (int i = 0; i < inActiveObj.Count; i++)
+        {
+            inActiveObj[i].SetActive(false);
+        }
+
+    }
+
+    public void PlayerInfoSetting()
+    {
+        if (photonView.IsMine)
+        {
+            avatarName = PlayerPrefs.GetString("AvatarName");
+            ownIslandID = PlayerPrefs.GetString("Island_ID");
+            Debug.Log("AvatarName : " + avatarName + "  Island_ID : " + ownIslandID);
+        }
+    }
+
 
     private void OnAnimatorMove()
     {
@@ -158,7 +209,7 @@ public class K_Player : MonoBehaviourPun, IPunObservable
     }
 
 
-
+    
 
 
     // PunRPC 함수들은 항상 오브젝트에 붙어있는 컴포넌트에서 실행되어야 한다. 따라서 virtual 클래스로 구현하여 각 직업군들의 클래스에서 override로 재정의 해줘야 한다.
