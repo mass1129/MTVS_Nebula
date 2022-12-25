@@ -45,21 +45,24 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
     public string WhalePrepab;
     GameObject player;
     public GameObject LoadingObject;
+
+    public string avatarName;
+    public string ownIslandId;
     private void Start()
     {
         //로딩 시작
         LoadingObject.SetActive(true);
         //처음에는 스카이씬에 바로 들어가도록 함
-        InitialLoadScene(PlayerPrefs.GetString("AvatarName"), name_UserScene, userPrefab);
+        InitialLoadScene("요희", name_UserScene, userPrefab);
         // 서버접속 시작
         Connect();
     }
     public void Connect()
     {
         //유저 아이디를 커스텀으로 설정
-        AuthenticationValues authValues = new AuthenticationValues(PlayerPrefs.GetString("AvatarName"));
+        AuthenticationValues authValues = new AuthenticationValues(avatarName);
         PN.AuthValues = authValues;
-        PN.NickName = PlayerPrefs.GetString("AvatarName");
+        PN.NickName = avatarName;
         // 마스터 서버에 접속한다.
         PN.ConnectUsingSettings();
     }
@@ -138,14 +141,7 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
         {
             player = PN.Instantiate(prefab, new Vector3((int)Random.Range(40,60), 3, (int)Random.Range(40, 60)), Quaternion.identity);
             CHAN_ClientManager.instance.myCharacter = player.GetComponent<K_01_Character>();
-            //if (PhotonNetwork.CurrentRoom.Name == PlayerPrefs.GetString("AvatarName")&& PhotonNetwork.CurrentRoom.PlayerCount>1)
-            //{
-            //    //K_UserWorldMgr.instance.HandleBuildingObj(true);
-            //    //K_UserWorldMgr.instance.buildingSystem.DestoryAllBuilding();
-            //    PhotonNetwork.SetMasterClient(PhotonNetwork.LocalPlayer);
-            //    //K_UserWorldMgr.instance.buildingSystem.FirstBuildingLoad().Forget();
 
-            //}
 
 
         }
@@ -267,5 +263,7 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
         roomName = _roomName;
         sceneName = _sceneName;
         prefab = _prefab;
+        avatarName = PlayerPrefs.GetString("AvatarName");
+        ownIslandId = PlayerPrefs.GetString("Island_ID");
     }
 }   

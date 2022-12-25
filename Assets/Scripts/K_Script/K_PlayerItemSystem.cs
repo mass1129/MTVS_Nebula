@@ -180,7 +180,7 @@ public class K_PlayerItemSystem : MonoBehaviourPun, IPunObservable
         string json = JsonUtility.ToJson(saveObject, true);
         Debug.Log(json);
         //string s = PlayerPrefs.GetString(" AvatarName");
-        var url = "https://resource.mtvs-nebula.com/" + _equipment.savePath + PlayerPrefs.GetString("AvatarName");
+        var url = "https://resource.mtvs-nebula.com/" + _equipment.savePath + player.avatarName;
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
         await httpReq.Post(url, json);

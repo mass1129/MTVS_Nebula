@@ -53,8 +53,9 @@ public class PlacedObject : MonoBehaviourPun
         return placedObjectTypeSO.GetGridPositionList(origin, dir);
     }
 
-    public virtual void DestroySelf() {
+    public virtual void DestroySelf(bool oneByOne =false) {
 
+        if(oneByOne)
         photonView.RPC("RPCDestroySelf", RpcTarget.AllBuffered);
         PhotonNetwork.Destroy(photonView);
         

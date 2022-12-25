@@ -106,7 +106,7 @@ public class SkyView_UI_Manager : MonoBehaviour
     public void Btn_BackToMyWorld()
     {
         //현재는 single play 위해서 설정했을 뿐 네트워크 추가할 시 바꿔야 할 사항임
-        CHAN_GameManager.instance.Go_User_Scene(PlayerPrefs.GetString("AvatarName"));
+        CHAN_GameManager.instance.Go_User_Scene(CHAN_GameManager.instance.avatarName);
         PlayerPrefs.SetString("User_Island_ID", PlayerPrefs.GetString("Island_ID"));
     }
 

@@ -78,7 +78,7 @@ public class K_StaticInterface_ShopList : MonoBehaviourPun
 
         string json = JsonUtility.ToJson(buyClothes, true);
         Debug.Log(json);
-        var url = "https://resource.mtvs-nebula.com/purchase/clothes/" + PlayerPrefs.GetString("AvatarName");
+        var url = "https://resource.mtvs-nebula.com/purchase/clothes/" + moneySystem.player.avatarName;
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
 
@@ -86,7 +86,7 @@ public class K_StaticInterface_ShopList : MonoBehaviourPun
         //string json2 = JsonUtility.ToJson(result);
         if (result.httpStatus == 201)
         {
-            clothesInven.TestLoad(PlayerPrefs.GetString("AvatarName"));
+            clothesInven.TestLoad(moneySystem.player.avatarName);
             moneySystem.MoneyLoad();
             
         }
@@ -106,7 +106,7 @@ public class K_StaticInterface_ShopList : MonoBehaviourPun
 
         string json = JsonUtility.ToJson(buyBB, true);
         Debug.Log(json);
-        var url = "https://resource.mtvs-nebula.com/purchase/building-bundle/" + PlayerPrefs.GetString("AvatarName");
+        var url = "https://resource.mtvs-nebula.com/purchase/building-bundle/" + moneySystem.player.avatarName;
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
 
@@ -114,7 +114,7 @@ public class K_StaticInterface_ShopList : MonoBehaviourPun
         //string json2 = JsonUtility.ToJson(result);
         if (result.httpStatus == 201)
         {
-            bbinven.TestLoad(PlayerPrefs.GetString("AvatarName"));
+            bbinven.TestLoad(moneySystem.player.avatarName);
             moneySystem.MoneyLoad();
             ShopItemLoad();
         }
@@ -137,7 +137,7 @@ public class K_StaticInterface_ShopList : MonoBehaviourPun
     {
         if (!photonView.IsMine) return;
         inventory.Clear();
-        var url = "https://resource.mtvs-nebula.com/" + inventory.loadPath + PlayerPrefs.GetString("AvatarName");
+        var url = "https://resource.mtvs-nebula.com/" + inventory.loadPath + moneySystem.player.avatarName;
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
         H_Shop_Root result2 = await httpReq.Get<H_Shop_Root>(url);

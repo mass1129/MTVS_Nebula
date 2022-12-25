@@ -83,7 +83,7 @@ public class K_Player : MonoBehaviourPun, IPunObservable
 
     private void Awake()
     {
-
+        
     }
     private void Start()
     {
@@ -104,7 +104,7 @@ public class K_Player : MonoBehaviourPun, IPunObservable
         GroundedCheck();
         
        if(Input.GetKeyDown(KeyCode.O))
-        Debug.Log(CurrentState.ToString() + "," + PhotonNetwork.CurrentRoom.Name + "," + PlayerPrefs.GetString("AvatarName") + "," + avatarName + "," + ownIslandID+ "," + PlayerPrefs.GetString("User_Island_ID"));
+        Debug.Log(CurrentState.ToString() + "," + PhotonNetwork.CurrentRoom.Name + "," + avatarName + "," + avatarName + "," + ownIslandID+ "," + PlayerPrefs.GetString("User_Island_ID"));
         //Debug.Log(cc.isGrounded);
     }
 
@@ -114,7 +114,7 @@ public class K_Player : MonoBehaviourPun, IPunObservable
         {
             canMove = false;
             camPos.SetActive(true);
-            charCustom.LoadCharacterFromFile(PlayerPrefs.GetString("AvatarName"));
+            charCustom.LoadCharacterFromFile(avatarName);
             await UniTask.DelayFrame(50);
             itemSystem.UpdateItemSystem();
             await UniTask.DelayFrame(50);
@@ -147,8 +147,8 @@ public class K_Player : MonoBehaviourPun, IPunObservable
     {
         if (photonView.IsMine)
         {
-            avatarName = PlayerPrefs.GetString("AvatarName");
-            ownIslandID = PlayerPrefs.GetString("Island_ID");
+            avatarName = CHAN_GameManager.instance.avatarName;
+            ownIslandID = CHAN_GameManager.instance.ownIslandId;
             Debug.Log("AvatarName : " + avatarName + "  Island_ID : " + ownIslandID);
         }
     }
