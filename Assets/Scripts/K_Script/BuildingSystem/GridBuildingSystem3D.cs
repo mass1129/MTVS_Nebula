@@ -35,13 +35,7 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
  
     public void BuildingSetup()
     {
-        
-        photonView.RPC("RPCBuildingSetup", RpcTarget.AllBuffered);
-    }
-    [PunRPC]
-    public void RPCBuildingSetup()
-    {
-        
+        quickSlot.Clear();
         Instance = this;
         //그리드 세팅
         int gridWidth = 100;
@@ -58,14 +52,11 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
 
         placedObjectTypeSO = null;
         selectedGrid = gridList[0];
-        
     }
+
 
     private void Start()
     {
-        
-        quickSlot.Clear();
-
 
     }
 
@@ -130,7 +121,8 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
 
     
 
-    private void HandleNormalObjectPlacement() {
+    private void HandleNormalObjectPlacement() 
+    {
         if (Input.GetMouseButtonDown(0) && placedObjectTypeSO != null && !UtilsClass.IsPointerOverUI())
         {
             Vector3 mousePosition = Mouse3D.GetMouseWorldPosition();
@@ -152,15 +144,7 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
 
     public void HandleTypeSelect(int i) 
     {
-        //if (Input.GetKeyDown(KeyCode.Alpha1)) { placedObjectTypeSO = quickSlot.GetSlots[0].GetItemObject().matchToBuildingSO; RefreshSelectedObjectType(); }
-        //if (Input.GetKeyDown(KeyCode.Alpha2)) { placedObjectTypeSO = quickSlot.GetSlots[1].GetItemObject().matchToBuildingSO; RefreshSelectedObjectType(); }
-        //if (Input.GetKeyDown(KeyCode.Alpha3)) { placedObjectTypeSO = quickSlot.GetSlots[2].GetItemObject().matchToBuildingSO; RefreshSelectedObjectType(); }
-        //if (Input.GetKeyDown(KeyCode.Alpha4)) { placedObjectTypeSO = quickSlot.GetSlots[3].GetItemObject().matchToBuildingSO; RefreshSelectedObjectType(); }
-        //if (Input.GetKeyDown(KeyCode.Alpha5)) { placedObjectTypeSO = quickSlot.GetSlots[4].GetItemObject().matchToBuildingSO; RefreshSelectedObjectType(); }
-        //if (Input.GetKeyDown(KeyCode.Alpha6)) { placedObjectTypeSO = quickSlot.GetSlots[5].GetItemObject().matchToBuildingSO; RefreshSelectedObjectType(); }
-        //if (Input.GetKeyDown(KeyCode.Alpha7)) { placedObjectTypeSO = quickSlot.GetSlots[6].GetItemObject().matchToBuildingSO; RefreshSelectedObjectType(); }
         placedObjectTypeSO = quickSlot.GetSlots[i].GetItemObject().matchToBuildingSO; RefreshSelectedObjectType();
-
     }
 
     private void HandleDirRotation() {
@@ -177,7 +161,7 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
             if (placedObject != null) 
             {
                 // Demolish
-                placedObject.DestroySelf();
+                placedObject.DestroySelf(true);
 
                 List<Vector2Int> gridPositionList = placedObject.GetGridPositionList();
                 foreach (Vector2Int gridPosition in gridPositionList)
@@ -384,7 +368,7 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
 
     public async UniTaskVoid FirstBuildingLoad()
     {
-        TestLoad(PlayerPrefs.GetString("User_Island_ID")).Forget();
+        TestLoad(CHAN_GameManager.instance.ownIslandId).Forget();
         await UniTask.Yield();
         
         

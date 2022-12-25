@@ -46,22 +46,24 @@ public class K_UserWorldMgr : MonoBehaviourPunCallbacks
         }
             
     }
-    public void DestoryAllBuilding()
+    public void DestoryAllBuilding(Player other)
     {
-        for (int i = 0; i < loadObjectList.Count; i++)
+        int count = loadObjectList.Count;
+        for (int i = 0; i < count; i++)
         {
             int temp = i;
             loadObjectList[temp].DestroySelf();
         }
-       
+        loadObjectList.Clear();
+        PhotonNetwork.SetMasterClient(other);
     }
     public override void OnPlayerEnteredRoom(Player other)
     {
 
         if (PhotonNetwork.CurrentRoom.Name == other.NickName && PhotonNetwork.CurrentRoom.PlayerCount > 1)
         {
+            DestoryAllBuilding(other);
             
-            PhotonNetwork.SetMasterClient(other);
             
         }
 
@@ -84,7 +86,7 @@ public class K_UserWorldMgr : MonoBehaviourPunCallbacks
         Debug.Log(newMasterClient.NickName + "," + PhotonNetwork.CurrentRoom.Name);
         if (  newMasterClient.NickName == PhotonNetwork.CurrentRoom.Name)
         {
-            DestoryAllBuilding();
+            
 
             HandleBuildingObj(true);
             buildingSystem.BuildingSetup();
