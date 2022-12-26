@@ -143,7 +143,8 @@ public class K_StaticInterface_ShopList : MonoBehaviourPun
         H_Shop_Root result2 = await httpReq.Get<H_Shop_Root>(url);
 
         List<H_Shop_items> newList = result2.results.clothesList;
-        newList.AddRange(result2.results.bundleList);
+        if(result2.results.bundleList.Count>0)
+            newList.Add(result2.results.bundleList[0]);
 
         
 

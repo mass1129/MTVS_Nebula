@@ -368,7 +368,7 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
 
     public async UniTaskVoid FirstBuildingLoad()
     {
-        TestLoad(CHAN_GameManager.instance.ownIslandId).Forget();
+        TestLoad(PlayerPrefs.GetString("User_Island_ID")).Forget();
         await UniTask.Yield();
         
         

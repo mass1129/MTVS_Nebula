@@ -109,6 +109,8 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
         SetPlayer(prefab);
 
     }
+
+
     public override void OnLeftRoom()
     {
         base.OnLeftRoom();

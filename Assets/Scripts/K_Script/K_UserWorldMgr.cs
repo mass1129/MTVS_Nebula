@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using AdvancedPeopleSystem;
 using Cysharp.Threading.Tasks;
+using UnityEngine.SceneManagement;
+
 public class K_UserWorldMgr : MonoBehaviourPunCallbacks
 {
     public static K_UserWorldMgr instance;
@@ -37,6 +39,12 @@ public class K_UserWorldMgr : MonoBehaviourPunCallbacks
 
 
     }
+    public void LoadSkyScene()
+    {
+        //_character.GetComponent<K_PlayerItemSystem>().DestoryPlayer();
+        CHAN_GameManager.instance.Go_Sky_Scene();
+    }
+
     public void HandleBuildingObj(bool s)
     {
         for (int i = 0; i < buildingSystemSet.Count; i++)
@@ -63,11 +71,9 @@ public class K_UserWorldMgr : MonoBehaviourPunCallbacks
         if (PhotonNetwork.CurrentRoom.Name == other.NickName && PhotonNetwork.CurrentRoom.PlayerCount > 1)
         {
             DestoryAllBuilding(other);
-            
-            
         }
-
-
+        _character.itemSystem.UpdateEquipment();
+        Debug.Log("equipLoad");
        
 
 

@@ -4,6 +4,7 @@ using UnityEngine;
 using AdvancedPeopleSystem;
 using Photon.Pun;
 using Cysharp.Threading.Tasks;
+using System.Linq;
 public class K_PlayerItemSystem : MonoBehaviourPun, IPunObservable
      
 
@@ -26,7 +27,12 @@ public class K_PlayerItemSystem : MonoBehaviourPun, IPunObservable
           
 
     }
+    private void Start()
+    {
 
+
+
+    }
     public void UpdateItemSystem()
     {
         _CharacterCustomization = GetComponent<CharacterCustomization>();
@@ -47,7 +53,7 @@ public class K_PlayerItemSystem : MonoBehaviourPun, IPunObservable
     {
         if (photonView.IsMine)
         {
-            ItemSave();
+            TwoInvenSave().Forget();
 
             for (int i = 0; i < _equipment.GetSlots.Length; i++)
             {
@@ -55,13 +61,30 @@ public class K_PlayerItemSystem : MonoBehaviourPun, IPunObservable
                 _equipment.GetSlots[i].onAfterUpdated -= OnEquipItem;
             }
             inven_Building.Clear();
-            
+
         }
     }
-    
+    public void DestoryPlayer()
+    {
+        if (photonView.IsMine)
+        {
+            TwoInvenSave().Forget();
+
+            for (int i = 0; i < _equipment.GetSlots.Length; i++)
+            {
+                _equipment.GetSlots[i].onBeforeUpdated -= OnRemoveItem;
+                _equipment.GetSlots[i].onAfterUpdated -= OnEquipItem;
+            }
+            inven_Building.Clear();
+
+        }
+    }
 
 
-
+    public void UpdateEquipment()
+    {
+        _equipment.UpdateInventory();
+    }
 
 
 
@@ -177,16 +200,15 @@ public class K_PlayerItemSystem : MonoBehaviourPun, IPunObservable
             equipment = _equipment.GetInventory(),
             clothesInventory = inven_Cloths.GetInventory()
         };
+        await UniTask.DelayFrame(2);
         string json = JsonUtility.ToJson(saveObject, true);
-        Debug.Log(json);
+        
         //string s = PlayerPrefs.GetString(" AvatarName");
         var url = "https://resource.mtvs-nebula.com/" + _equipment.savePath + player.avatarName;
         var httpReq = new HttpRequester(new JsonSerializationOption());
-
+        Debug.Log(url);
         await httpReq.Post(url, json);
-        _equipment.Clear();
-        inven_Cloths.Clear();
-        await UniTask.Yield();
+
     }
 
     public void ItemSave()
@@ -203,7 +225,9 @@ public class K_PlayerItemSystem : MonoBehaviourPun, IPunObservable
     }
     private void OnApplicationQuit()
     {
-
+        inven_Cloths.Clear();
+        _equipment.Clear();
+        inven_Building.Clear();
     }
 
     [System.Serializable]

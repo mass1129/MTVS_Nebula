@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
-
+using System.Threading;
 public class HttpRequester
 {
     public Action onComplete;
@@ -23,30 +23,30 @@ public class HttpRequester
     {
         try
         {
-        string token = PlayerPrefs.GetString("PlayerToken");
-        using var request = UnityWebRequest.Get(url);
-        
-        request.SetRequestHeader("Content-Type", _serializionOption.ContentType);
-        request.SetRequestHeader("Authorization", "Bearer " + token);
+            string token = PlayerPrefs.GetString("PlayerToken");
+            using var request = UnityWebRequest.Get(url);
 
-       
-        var operation = request.SendWebRequest();
-
-        while (!operation.isDone)
-            await Task.Yield();
-
-    
-        
-        if (request.result != UnityWebRequest.Result.Success)
-        {
-            Debug.LogError($"Failed: {request.error}");
-        }
+            request.SetRequestHeader("Content-Type", _serializionOption.ContentType);
+            request.SetRequestHeader("Authorization", "Bearer " + token);
 
 
-           
+            var operation = request.SendWebRequest();
+
+            while (!operation.isDone)
+                await Task.Yield();
+
+
+
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError($"Failed: {request.error}");
+            }
+
+
+
             var result = _serializionOption.Deserialize<TResultType>(request.downloadHandler.text);
 
-            
+
             return result;
             //SceneManager.LoadScene(1);
         }
@@ -57,8 +57,9 @@ public class HttpRequester
             return default;
         }
 
-        
+
     }
+    protected static double timeout = 300;
     public async UniTask Post(string url, string json) //<TResultType> Get<TResultType>(string url)
     {
         try
@@ -69,16 +70,16 @@ public class HttpRequester
             byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
             request.uploadHandler = new UploadHandlerRaw(jsonToSend);
             request.SetRequestHeader("Content-Type", _serializionOption.ContentType);
-            if(token != null)
-            request.SetRequestHeader("Authorization", "Bearer " + token);
+            if (token != null)
+                request.SetRequestHeader("Authorization", "Bearer " + token);
 
 
-            var operation = request.SendWebRequest();
+            var operation = await request.SendWebRequest();
 
             while (!operation.isDone)
-                await Task.Yield();
+                await UniTask.Yield();
 
-            
+
 
             if (request.result != UnityWebRequest.Result.Success)
             {
@@ -96,13 +97,13 @@ public class HttpRequester
 
 
 
-           
+
 
         }
 
-        catch (Exception ex)
+        catch (Exception ex) when (ex.Message != "Index was outside the bounds of the array.")
         {
-            Debug.LogError($"{nameof(Get)} failed: {ex.Message}");
+            Debug.LogError($"{nameof(Get)} failed: {ex.Message} Json : {json}");
 
 
         }
@@ -148,9 +149,8 @@ public class HttpRequester
         {
             Debug.LogError($"{nameof(Get)} failed: {ex.Message}");
             return default;
-
         }
-
+      
     }
     int SetToken(string _input)
     {

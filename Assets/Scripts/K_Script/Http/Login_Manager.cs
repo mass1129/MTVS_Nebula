@@ -83,6 +83,8 @@ public class Login_Manager : MonoBehaviour
         await httpReq.Post(url, json);
         
     }
+
+
     public async void GetAvatorInfo()
     {
         var url = "https://resource.mtvs-nebula.com/avatar";

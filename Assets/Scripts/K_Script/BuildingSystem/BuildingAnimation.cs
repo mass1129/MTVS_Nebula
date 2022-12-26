@@ -45,20 +45,18 @@ public class BuildingAnimation : MonoBehaviourPun {
 
         string json = JsonUtility.ToJson(money, true);
         Debug.Log(json);
-        var url = "https://resource.mtvs-nebula.com/money/" + PlayerPrefs.GetString("AvatarName");
+        var url = "https://resource.mtvs-nebula.com/money/" + CHAN_GameManager.instance.avatarName;
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
         H_BM_Root result = await httpReq.Post1<H_BM_Root>(url, json);
         string json2 = JsonUtility.ToJson(result);
         if (result.httpStatus == 201)
         {
-            UtilsClass.CreateWorldTextPopup(this.transform, json2, textPos.localPosition, 10, Color.white, textPos.localPosition + new Vector3(0, 2), 1f);
             GameObject obj = Instantiate(winEffect, effectPos.position, Quaternion.identity);
             Destroy(obj, 2);
         }
         else
         {
-            UtilsClass.CreateWorldTextPopup(this.transform, json2, textPos.localPosition, 10, Color.red, textPos.localPosition + new Vector3(0, 2), 1f);
             GameObject obj = Instantiate(loseEffect, effectPos.position, Quaternion.identity) ;
             Destroy(obj, 2);
         }
