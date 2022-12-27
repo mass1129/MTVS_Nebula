@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Photon.Pun;
 using System;
 using System.Collections;
@@ -34,7 +35,7 @@ public class K_MoneySystem : MonoBehaviourPun, IShopCustomer
     public void UpdateMoney()
     {
         if (!photonView.IsMine) return;
-        MoneyLoad();
+        MoneyLoad().Forget();
         OnGoldAmountChanged?.Invoke(this, EventArgs.Empty);
         
     }
@@ -61,7 +62,7 @@ public class K_MoneySystem : MonoBehaviourPun, IShopCustomer
 
 
 
-    public async void MoneyLoad()
+    public async UniTask MoneyLoad()
     {
         if (!photonView.IsMine) return;
         var url = "https://resource.mtvs-nebula.com/inventory/money/" + player.avatarName;

@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Networking;
-
+using Cysharp.Threading.Tasks;
 [System.Serializable]
 public class LoginInfo
 {
@@ -44,17 +44,14 @@ public class Login_Manager : MonoBehaviour
     public void ClickedLogInBtn()
     {
 
-        //GetAvatorInfo();
-
-        API_Login();
-        
-        
+        API_Login().Forget();
+  
     }
     #region API_Func
 
 
 
-    public async void API_Login()
+    public async UniTask API_Login()
     {
         LoginInfo user = new LoginInfo
         {
@@ -67,6 +64,8 @@ public class Login_Manager : MonoBehaviour
  
 
         var httpReq = new HttpRequester(new JsonSerializationOption());
+
+        
         httpReq.onError = () =>
         {
             //여기서 오류 팝업 나오도록 설정
@@ -81,77 +80,11 @@ public class Login_Manager : MonoBehaviour
             SceneManager.LoadScene(1);
         };
         await httpReq.Post(url, json);
-        
+
     }
 
 
-    public async void GetAvatorInfo()
-    {
-        var url = "https://resource.mtvs-nebula.com/avatar";
-        var httpReq = new HttpRequester(new JsonSerializationOption());
 
-        H_Av_Root result2 = await httpReq.Get<H_Av_Root>(url);
-      
-       PlayerPrefs.SetString("AvatarName", result2.results[0].name);
-        
-    }
-
-
-    public class H_Av_Root
-    {
-        public int httpStatus { get; set; }
-        public string message { get; set; }
-        public List<H_Av_Result> results { get; set; }
-    }
-    public class H_Av_Result
-    {
-        public int id { get; set; }
-        public string name { get; set; }
-        public string imageUrl { get; set; }
-        public List<string> hashTags { get; set; }
-        public int skyIslandId { get; set; }
-        public H_Av_Texture texture { get; set; }
-    }
-
-    public class H_Av_Texture
-    {
-        public List<double> TeethColor { get; set; }
-        public List<double> OralCavityColor { get; set; }
-        public H_Av_SelectedElements selectedElements { get; set; }
-        public List<double> HairColor { get; set; }
-        public int MaxLod { get; set; }
-        public int MinLod { get; set; }
-        public List<double> EyeColor { get; set; }
-        public List<double> SkinColor { get; set; }
-        public List<double> UnderpantsColor { get; set; }
-        public string settingsName { get; set; }
-        public double HeadSize { get; set; }
-        public double Height { get; set; }
-        public List<H_Av_Blendshape> blendshapes { get; set; }
-    }
-
-    public class H_Av_Blendshape
-    {
-        public string blendshapeName { get; set; }
-        public int type { get; set; }
-        public double value { get; set; }
-        public int group { get; set; }
-    }
-   
-
-   
-
-    public class H_Av_SelectedElements
-    {
-        public int Hair { get; set; }
-        public int Beard { get; set; }
-        public int Accessory { get; set; }
-        public int Shirt { get; set; }
-        public int Item1 { get; set; }
-        public int Pants { get; set; }
-        public int Hat { get; set; }
-        public int Shoes { get; set; }
-    }
 
    
 

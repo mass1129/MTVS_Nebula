@@ -1,12 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UltimateClean;
 using UnityEngine.UI;
 using Photon.Pun;
+using Cysharp.Threading.Tasks;
 
 public class K_StaticInterface_ShopList : MonoBehaviourPun
 {
@@ -26,7 +23,7 @@ public class K_StaticInterface_ShopList : MonoBehaviourPun
     private void OnEnable()
     {
         if (!photonView.IsMine) return;
-        ShopItemLoad();
+        ShopItemLoad().Forget();
     }
 
 
@@ -47,10 +44,10 @@ public class K_StaticInterface_ShopList : MonoBehaviourPun
             case ItemType.Bag:
             case ItemType.Weapons:
             case ItemType.Title:
-                BuyClothesEvent(item);
+                BuyClothesEvent(item).Forget();
                 break;
             case ItemType.Bundle_Building:
-                BuyBBundleEvent(item);
+                BuyBBundleEvent(item).Forget();
                 break;
 
         }
@@ -68,7 +65,7 @@ public class K_StaticInterface_ShopList : MonoBehaviourPun
         //}
     }
     
-    public async void BuyClothesEvent(ItemObject item)
+    public async UniTask BuyClothesEvent(ItemObject item)
     {
         if (!photonView.IsMine) return;
         H_Buy_Clothes buyClothes = new H_Buy_Clothes
@@ -86,8 +83,8 @@ public class K_StaticInterface_ShopList : MonoBehaviourPun
         //string json2 = JsonUtility.ToJson(result);
         if (result.httpStatus == 201)
         {
-            clothesInven.TestLoad(moneySystem.player.avatarName);
-            moneySystem.MoneyLoad();
+            await clothesInven.InventoryLoad(moneySystem.player.avatarName);
+            await moneySystem.MoneyLoad();
             
         }
         else
@@ -96,7 +93,7 @@ public class K_StaticInterface_ShopList : MonoBehaviourPun
         }
     }
     
-    public async void BuyBBundleEvent(ItemObject item)
+    public async UniTask BuyBBundleEvent(ItemObject item)
     {
         if (!photonView.IsMine) return;
         H_Buy_Building buyBB = new H_Buy_Building
@@ -114,9 +111,9 @@ public class K_StaticInterface_ShopList : MonoBehaviourPun
         //string json2 = JsonUtility.ToJson(result);
         if (result.httpStatus == 201)
         {
-            bbinven.TestLoad(moneySystem.player.avatarName);
-            moneySystem.MoneyLoad();
-            ShopItemLoad();
+            await bbinven.InventoryLoad(moneySystem.player.avatarName);
+            await moneySystem.MoneyLoad();
+            await ShopItemLoad();
         }
         else
         {
@@ -133,7 +130,7 @@ public class K_StaticInterface_ShopList : MonoBehaviourPun
     }
 
 
-    public async void ShopItemLoad()
+    public async UniTask ShopItemLoad()
     {
         if (!photonView.IsMine) return;
         inventory.Clear();

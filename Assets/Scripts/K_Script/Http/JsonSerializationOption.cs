@@ -11,32 +11,21 @@ public class JsonSerializationOption : ISerializationOption
         try
         {
             var result = JsonConvert.DeserializeObject<T>(text);
+#if UNITY_EDITOR
             Debug.Log($"Success: {text}");
+#endif
             return result;
             
         }
 
         catch (Exception ex)
         {
-            Debug.LogError($"{this}Could not parse response {text}. {ex.Message}");
+#if UNITY_EDITOR
+            Debug.LogError($"Could not parse response {text}. {ex.Message}");
+#endif
             return default;
         }
     }
-    public string Serialize(string text)
-    {
-        try
-        {
-            var result = text;
-            Debug.Log($"Success: {text}");
-            return result;
-            //SceneManager.LoadScene(1);
-        }
 
-        catch (Exception ex)
-        {
-            Debug.LogError($"{this}Could not parse response {text}. {ex.Message}");
-            return default;
-        }
-    }
    
 }

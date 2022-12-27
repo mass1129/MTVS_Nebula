@@ -74,9 +74,9 @@ public class K_UserWorldMgr : MonoBehaviourPunCallbacks
         }
         _character.itemSystem.UpdateEquipment();
         Debug.Log("equipLoad");
-       
 
 
+        
 
     }
     public override void OnPlayerLeftRoom(Player other)

@@ -1,14 +1,12 @@
 using System;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
-using System.Threading;
 public class HttpRequester
 {
     public Action onComplete;
     public Action onError;
-    //
+
     private readonly ISerializationOption _serializionOption;
 
     public HttpRequester(ISerializationOption serializionOption)
@@ -21,28 +19,17 @@ public class HttpRequester
     
     public async UniTask<TResultType> Get<TResultType>(string url)
     {
+        using var request = UnityWebRequest.Get(url);
         try
         {
             string token = PlayerPrefs.GetString("PlayerToken");
-            using var request = UnityWebRequest.Get(url);
+
 
             request.SetRequestHeader("Content-Type", _serializionOption.ContentType);
             request.SetRequestHeader("Authorization", "Bearer " + token);
 
 
-            var operation = request.SendWebRequest();
-
-            while (!operation.isDone)
-                await Task.Yield();
-
-
-
-            if (request.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogError($"Failed: {request.error}");
-            }
-
-
+            var operation = await request.SendWebRequest();
 
             var result = _serializionOption.Deserialize<TResultType>(request.downloadHandler.text);
 
@@ -53,19 +40,25 @@ public class HttpRequester
 
         catch (Exception ex)
         {
+#if UNITY_EDITOR
             Debug.LogError($"{nameof(Get)} failed: {ex.Message}");
+#endif
             return default;
         }
-
+        finally
+        {
+            request.Dispose();
+        }
 
     }
     protected static double timeout = 300;
     public async UniTask Post(string url, string json) //<TResultType> Get<TResultType>(string url)
     {
+        using var request = UnityWebRequest.Post(url, json);
         try
         {
             string token = PlayerPrefs.GetString("PlayerToken");
-            using var request = UnityWebRequest.Post(url, json);
+            
 
             byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
             request.uploadHandler = new UploadHandlerRaw(jsonToSend);
@@ -76,45 +69,33 @@ public class HttpRequester
 
             var operation = await request.SendWebRequest();
 
-            while (!operation.isDone)
-                await UniTask.Yield();
-
-
-
-            if (request.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogError($"Failed: {request.error}");
-                Debug.LogError($"Failed: {request.downloadHandler.text}");
-                onError();
-            }
-            else
-            {
-                var result = _serializionOption.Serialize(request.downloadHandler.text);
-                if (token != null)
-                    SetToken(request.downloadHandler.text);
+           
+            if (token == "")
+                SetToken(request.downloadHandler.text);
+            if(onComplete != null)
                 onComplete();
-            }
-
-
-
-
-
         }
 
         catch (Exception ex) when (ex.Message != "Index was outside the bounds of the array.")
         {
-            Debug.LogError($"{nameof(Get)} failed: {ex.Message} Json : {json}");
-
-
+#if UNITY_EDITOR
+            Debug.LogError($"{nameof(Post)} failed: {ex.Message} Json : {json}");
+#endif
+            if(onError != null)
+                onError();
+        }
+        finally
+        {
+            request.Dispose();
         }
 
     }
     public async UniTask<TResultType> Post1<TResultType>(string url, string json) //<TResultType> Get<TResultType>(string url)
     {
+        using var request = UnityWebRequest.Post(url, json);
         try
         {
             string token = PlayerPrefs.GetString("PlayerToken");
-            using var request = UnityWebRequest.Post(url, json);
 
             byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
             request.uploadHandler = new UploadHandlerRaw(jsonToSend);
@@ -123,51 +104,43 @@ public class HttpRequester
                 request.SetRequestHeader("Authorization", "Bearer " + token);
 
 
-            var operation = request.SendWebRequest();
+            var operation = await request.SendWebRequest();
 
-            while (!operation.isDone)
-                await Task.Yield();
-
-
-
-            if (request.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogError($"Failed: {request.error}");
-            }
             var result = _serializionOption.Deserialize<TResultType>(request.downloadHandler.text);
             
-
-            if (token != null)
-                SetToken(request.downloadHandler.text);
-
             return result;
-
 
         }
 
         catch (Exception ex)
         {
-            Debug.LogError($"{nameof(Get)} failed: {ex.Message}");
+#if UNITY_EDITOR
+            Debug.LogError($"{nameof(Post1)} failed: {ex.Message}");
+#endif
             return default;
         }
-      
+        finally
+        {
+            request.Dispose();
+        }
     }
     int SetToken(string _input)
     {
-        // �α׾ƿ��� ��ū �ʱ�ȭ
         if (_input == null)
         {
-            //token = null;
             return 0;
         }
 
-        // �α��ν� ��ū ����
         string[] temp = _input.Split('"');
 
         if (temp[9] != "token")
-            Debug.Log("ErrorCheck(-1001)"); // ��ū ���� ����
-
-        //token = temp[11];
+        {
+#if UNITY_EDITOR
+            Debug.Log("ErrorCheck(-1001)");
+#endif
+            return 0;
+        }
+            
         PlayerPrefs.SetString("PlayerToken", temp[11]);
         return 0;
     }

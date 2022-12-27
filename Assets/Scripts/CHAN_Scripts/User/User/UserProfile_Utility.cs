@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using UserProfile;
-
+using Cysharp.Threading.Tasks;
 
 public class UserProfile_Utility : MonoBehaviour
 {
@@ -34,11 +34,11 @@ public class UserProfile_Utility : MonoBehaviour
     // 2-4.로드해서 가져온 정보를 생성 프로필 오브젝트의 각 값에 저장한다. 
     private void Start()
     {
-        Load();
-        Load_Agora();
+        Load().Forget();
+        Load_Agora().Forget();
     }
 
-    public async void Load()
+    public async UniTask Load()
     {
         var url = "https://resource.mtvs-nebula.com/avatar";
         var httpRequest = new HttpRequester(new JsonSerializationOption());
@@ -47,7 +47,7 @@ public class UserProfile_Utility : MonoBehaviour
         //CreateProfile();
         CreateProfile_New();
     }
-    public async void Load_Agora()
+    public async UniTask Load_Agora()
     {
         var url = "http://ec2-43-201-5-193.ap-northeast-2.compute.amazonaws.com:8001/token";
         var httpRequest = new HttpRequester(new JsonSerializationOption());

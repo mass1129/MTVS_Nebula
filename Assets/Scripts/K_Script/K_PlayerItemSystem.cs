@@ -203,10 +203,8 @@ public class K_PlayerItemSystem : MonoBehaviourPun, IPunObservable
         await UniTask.DelayFrame(2);
         string json = JsonUtility.ToJson(saveObject, true);
         
-        //string s = PlayerPrefs.GetString(" AvatarName");
         var url = "https://resource.mtvs-nebula.com/" + _equipment.savePath + player.avatarName;
         var httpReq = new HttpRequester(new JsonSerializationOption());
-        Debug.Log(url);
         await httpReq.Post(url, json);
 
     }
@@ -217,10 +215,10 @@ public class K_PlayerItemSystem : MonoBehaviourPun, IPunObservable
     }
     public void ItemLoad()
     {
-        inven_Cloths.TestLoad(player.avatarName);
-        _equipment.TestLoad(player.avatarName);
-        inven_Building.TestLoad(player.avatarName);
-        
+        inven_Cloths.InventoryLoad(player.avatarName).Forget();
+        _equipment.InventoryLoad(player.avatarName).Forget();
+        inven_Building.InventoryLoad(player.avatarName).Forget();
+
 
     }
     private void OnApplicationQuit()

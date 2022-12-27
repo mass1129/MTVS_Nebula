@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-
+using Cysharp.Threading.Tasks;
 
 [CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory System/Inventory")]
 public class InventoryObject : ScriptableObject
@@ -140,7 +140,7 @@ public class InventoryObject : ScriptableObject
     }
 
    
-    public async void TestSave(string s)
+    public async UniTask InventorySave(string s)
     {
 
         string json = JsonUtility.ToJson(Container, true);
@@ -152,13 +152,12 @@ public class InventoryObject : ScriptableObject
         await httpReq.Post(url, json);
     }
 
-    public async void TestLoad(string s)
+    public async UniTask InventoryLoad(string s)
     {
         var url = "https://resource.mtvs-nebula.com/" + loadPath + s;
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
         H_I_Root result2 = await httpReq.Get<H_I_Root>(url);
-
         Inventory newInven = result2.results;
         for (int i = 0; i < GetSlots.Length; i++)
         {
