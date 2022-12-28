@@ -51,6 +51,14 @@
     }
     ```
 ## 아이템 시스템  
+  - [Assets/Scripts/K_Script/ItemSystem](https://github.com/mass1129/MTVS_Nebula/tree/mass7/Assets/Scripts/K_Script/ItemSystem)  
+  - 유니티의 Scriptable Object를 활용하여 설계  
+      - 유니티에서 제공하는 대량의 데이터를 저장하는 데이터 컨테이너  
+      - 인스턴스화 될때 데이터에 대한 사본을 생성하지 않고 메모리에 Scriptable Object의 데이터 사본만을 저장하고 이를 참조하는 방식 -> 메모리 사용 줄일 수 있다.  
+  - **ItemObject.cs : Scriptable Object** : 아이템의 모든 정보를 저장한 스크립터블 오브젝트  
+    
+      -  직렬화하는 정보는 Data(item 클래스)뿐 나머지 정보는 클라이언트에 에셋 형태로 저장  
+          <img src="Image/itemobject.png" width="800px">  
 
 ## 월드 꾸미기
 
