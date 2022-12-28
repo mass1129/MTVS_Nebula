@@ -20,6 +20,7 @@ public class K_StaticInterface_ShopList : MonoBehaviourPun
     public Button[] buyButton;
     public GameObject[] toolTip;
     public Image[] slopImg;
+    private bool firstLoad = false;
     private void OnEnable()
     {
         if (!photonView.IsMine) return;
@@ -27,12 +28,11 @@ public class K_StaticInterface_ShopList : MonoBehaviourPun
     }
 
 
-    private void TryBuyItem(ItemObject item)
+    private void TryBuyItem(Item item)
     {
         if (!photonView.IsMine) return;
-        Item _item = new Item(item);
-        Debug.Log(_item.name);
-        switch (item.type)
+        ItemObject itemObject = inventory.database.ItemObjects[item.id];
+        switch (itemObject.type)
         {
             case ItemType.Hair:
             case ItemType.Beard:
@@ -65,12 +65,12 @@ public class K_StaticInterface_ShopList : MonoBehaviourPun
         //}
     }
     
-    public async UniTask BuyClothesEvent(ItemObject item)
+    public async UniTask BuyClothesEvent(Item item)
     {
         if (!photonView.IsMine) return;
         H_Buy_Clothes buyClothes = new H_Buy_Clothes
         {
-            clothesName = item.name,
+            clothesName = item.name
         };
 
         string json = JsonUtility.ToJson(buyClothes, true);
@@ -93,12 +93,12 @@ public class K_StaticInterface_ShopList : MonoBehaviourPun
         }
     }
     
-    public async UniTask BuyBBundleEvent(ItemObject item)
+    public async UniTask BuyBBundleEvent(Item item)
     {
         if (!photonView.IsMine) return;
         H_Buy_Building buyBB = new H_Buy_Building
         {
-            buildingBundleName = item.name,
+            buildingBundleName = item.name
         };
 
         string json = JsonUtility.ToJson(buyBB, true);
@@ -139,7 +139,8 @@ public class K_StaticInterface_ShopList : MonoBehaviourPun
 
         H_Shop_Root result2 = await httpReq.Get<H_Shop_Root>(url);
 
-        List<H_Shop_items> newList = result2.results.clothesList;
+        List<H_Shop_items> newList = new List<H_Shop_items>();
+        newList.AddRange(result2.results.clothesList);
         if(result2.results.bundleList.Count>0)
             newList.Add(result2.results.bundleList[0]);
 
@@ -148,18 +149,19 @@ public class K_StaticInterface_ShopList : MonoBehaviourPun
         for (int i = 0; i < newList.Count; i++)
         {
             int temp = i;
-            Item item = new Item(inventory.database.ItemObjects[newList[temp].id]);
-            inventory.AddItem(item, 1);
+            ItemObject itemObject = inventory.database.ItemObjects[newList[temp].id];
+            Item item = new Item(itemObject);
+            inventory.GetSlots[temp].UpdateSlot(item,1);
             itemCostTxt[temp].SetText("$" + newList[i].price.ToString());
-            itemNameTxt[temp].SetText(newList[i].name.ToString());
-            toolTip[temp].transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().SetText(newList[temp].name.ToString());
-            toolTip[temp].transform.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().SetText(inventory.database.ItemObjects[newList[temp].id].description);
-            slopImg[temp].sprite = inventory.database.ItemObjects[newList[temp].id].uiDisplay;
-            
-            buyButton[temp].onClick.AddListener(() => TryBuyItem(inventory.database.ItemObjects[newList[temp].id]));
+            itemNameTxt[temp].SetText(itemObject.name.ToString());
+            toolTip[temp].transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().SetText(itemObject.name.ToString());
+            toolTip[temp].transform.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().SetText(itemObject.description);
+            slopImg[temp].sprite = itemObject.uiDisplay;
+            if(!firstLoad)
+            buyButton[temp].onClick.AddListener(() => TryBuyItem(inventory.GetSlots[temp].item));
             //Container.slots[i].UpdateSlot(Container.slots[i].item, Container.slots[i].amount);
         }
-        
+        firstLoad = true;
 
 
     }

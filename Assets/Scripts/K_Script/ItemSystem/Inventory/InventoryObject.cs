@@ -12,6 +12,7 @@ public class InventoryObject : ScriptableObject
 
     [SerializeField]
     private Inventory Container = new Inventory();
+    //private로 처리된 Container에 접근하기위한 슬롯 변수
     public InventorySlot[] GetSlots => Container.slots;
 
     public bool AddItem(Item item, int amount)
@@ -37,7 +38,7 @@ public class InventoryObject : ScriptableObject
             if(bundleList[i] !=null)
             {
                 Item item = new Item(bundleList[i]);
-                GetSlots[i].UpdateSlot(item, 1);
+                Container.slots[i].UpdateSlot(item, 1);
 
             }
             
@@ -53,9 +54,9 @@ public class InventoryObject : ScriptableObject
         get
         {
             int counter = 0;
-            for(int i =0; i<GetSlots.Length; i++)
+            for(int i =0; i< Container.slots.Length; i++)
             {
-                if (GetSlots[i].item.id <= -1)
+                if (Container.slots[i].item.id <= -1)
                 {
                     counter++;
                 }
@@ -69,11 +70,11 @@ public class InventoryObject : ScriptableObject
     public InventorySlot FindItemOnInventory(Item item)
     {   
         //
-        for (int i = 0; i < GetSlots.Length; i++)
+        for (int i = 0; i < Container.slots.Length; i++)
         {
-            if (GetSlots[i].item.id == item.id)
+            if (Container.slots[i].item.id == item.id)
             {
-                return GetSlots[i];
+                return Container.slots[i];
             }
             
         }
@@ -82,9 +83,9 @@ public class InventoryObject : ScriptableObject
     }
     public bool IsItemInInventory(ItemObject item)
     {
-        for (int i = 0; i < GetSlots.Length; i++)
+        for (int i = 0; i < Container.slots.Length; i++)
         {
-            if (GetSlots[i].item.id == item.data.id)
+            if (Container.slots[i].item.id == item.data.id)
             {
                 return true;
             }
@@ -95,11 +96,11 @@ public class InventoryObject : ScriptableObject
 
     public InventorySlot GetEmptySlot()
     {
-        for (int i = 0; i < GetSlots.Length; i++)
+        for (int i = 0; i < Container.slots.Length; i++)
         {
-            if (GetSlots[i].item.id <= -1)
+            if (Container.slots[i].item.id <= -1)
             {
-                return GetSlots[i];
+                return Container.slots[i];
             }
         }
         return null;
@@ -156,14 +157,13 @@ public class InventoryObject : ScriptableObject
     {
         var url = "https://resource.mtvs-nebula.com/" + loadPath + s;
         var httpReq = new HttpRequester(new JsonSerializationOption());
-
+        //스택 변수 = 힙 참조 값
         H_I_Root result2 = await httpReq.Get<H_I_Root>(url);
-        Inventory newInven = result2.results;
-        for (int i = 0; i < GetSlots.Length; i++)
+        for (int i = 0; i < Container.slots.Length; i++)
         {
-            GetSlots[i].UpdateSlot(newInven.slots[i].item, newInven.slots[i].amount);
-            //Container.slots[i].UpdateSlot(Container.slots[i].item, Container.slots[i].amount);
+            Container.slots[i].UpdateSlot(result2.results.slots[i].item, result2.results.slots[i].amount);
         }
+        //코드블록 종료시 스택 자동 삭제 -> 힙의 데이터를 참조하는 스택 데이터가 삭제되어 가비지콜렉터가 힙에 저장된 데이터 삭제  
     }
 
     public void UpdateInventory()
@@ -179,28 +179,6 @@ public class InventoryObject : ScriptableObject
     {
         Container.Clear();
     }
-    public void Click()
-    {
-        //Debug.Log(GetSlots.item.);
-    }
-
-
-    //public class Item
-    //{
-    //    public int uniqueId { get; set; }
-    //    public ItemBuff[] buffs { get; set; }
-    //    public int id { get; set; }
-    //    public string name { get; set; }
-    //}
-
-    //[SerializeField]
-    //public class H_I_Slot
-    //{
-    //    public Item item { get; set; }
-    //    public int amount { get; set; }
-    //    public ItemType[] allowedItems { get; set; }
-
-    //}
 
  
 

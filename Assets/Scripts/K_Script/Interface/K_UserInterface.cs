@@ -189,19 +189,7 @@ public abstract class K_UserInterface : MonoBehaviourPun
     }
     public void OnSelect(GameObject obj)
     {
-        
-        //var selectInterface = quickSlotList.GetComponent<K_UserInterface>();
-        //selectInterface.inventory.Clear();
-        //for (int i = 0; i < selectInterface.inventory.GetSlots.Length; i++)
-        //{
-        //    selectInterface.inventory.GetSlots[i].onAfterUpdated += selectInterface.OnSlotUpdate;
-        //}
-
-        //selectInterface.inventory.AddBundleListToWindow(slotsOnInterface[obj].GetItemObject().subItem);
-
-        //selectInterface.inventory.UpdateInventory();
-        
-       
+ 
 
     }
     public void OnDeselect(GameObject obj)

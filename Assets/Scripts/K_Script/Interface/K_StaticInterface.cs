@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using CodeMonkey.Utils;
+using Cysharp.Threading.Tasks;
+
 public class K_StaticInterface : K_UserInterface
 {
     public GameObject[] slots;
@@ -34,27 +36,26 @@ public class K_StaticInterface : K_UserInterface
         base.OnDragEnd(obj);
         if (MouseData.interfaceMouseIsOver == null&&!UtilsClass.IsPointerOverUI())
         {
-            ForGiveItem(obj);
-            slotsOnInterface[obj].RemoveItem();
+            ForGiveItem(obj).Forget();
             
-            return;
         }
     }
 
-    public async void ForGiveItem(GameObject obj)
+    public async UniTask ForGiveItem(GameObject obj)
     {
         DropItem dropItem = new DropItem
         {
             uniqueId = slotsOnInterface[obj].item.uniqueId
         };
-
+        if (dropItem.uniqueId < 0) return;
         string json = JsonUtility.ToJson(dropItem, true);
         Debug.Log(json);
-        var url = "https://resource.mtvs-nebula.com/achieve/drop/" + PlayerPrefs.GetString("AvatarName");
+        var url = "https://resource.mtvs-nebula.com/achieve/drop/" + CHAN_GameManager.instance.avatarName;
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
         await httpReq.Post(url, json);
 
+        await inventory.InventoryLoad(CHAN_GameManager.instance.avatarName);
     }
     [System.Serializable]
     public class DropItem

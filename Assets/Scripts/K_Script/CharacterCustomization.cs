@@ -83,7 +83,7 @@ namespace AdvancedPeopleSystem
 
         public bool notAPP2Shader = false;
 
-        public Inventory equipment;
+
         private void Awake()
         {
             this._transform = transform;
@@ -96,11 +96,7 @@ namespace AdvancedPeopleSystem
         {
            
         }
-        
-        void LoadLastSaveData()
-        {
-            
-        }
+
         private void OnEnable()
         {
             

@@ -27,7 +27,7 @@ public class Item
         {
 
             //아이템 버프리스트에 있는 항목에 랜덤 값을 가진 버프 항목 생성
-            buffs[i] = new ItemBuff(item.data.buffs[i].Min, item.data.buffs[i].Max)
+            buffs[i] = new ItemBuff(item.data.buffs[i].value)
             {
                 //버프타입 생성
                 stat = item.data.buffs[i].stat

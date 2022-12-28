@@ -7,7 +7,10 @@ using UnityEngine.Profiling;
 public class Inventory
 {
     public InventorySlot[] slots = new InventorySlot[24];
+    public Inventory()
+    {
 
+    }
     public void Clear()
     {
         for (int i = 0; i < slots.Length; i++)

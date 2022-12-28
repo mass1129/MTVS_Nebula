@@ -18,6 +18,10 @@ public class ItemBuff : IModifiers
         max = _max;
         GenerateField();
     }
+    public ItemBuff(int getValue)
+    {
+        value = getValue;
+    }
 
     public void AddValue(ref int v)
     {

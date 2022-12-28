@@ -66,7 +66,7 @@ public class Login_Manager : MonoBehaviour
         var httpReq = new HttpRequester(new JsonSerializationOption());
 
         
-        httpReq.onError = () =>
+        httpReq.onError = (httpReq) =>
         {
             //여기서 오류 팝업 나오도록 설정
             Debug.Log("로그인 실패");
@@ -75,7 +75,7 @@ public class Login_Manager : MonoBehaviour
             Input_Pass.text = "";
 
         };
-        httpReq.onComplete = () =>
+        httpReq.onComplete = (httpReq) =>
         {
             SceneManager.LoadScene(1);
         };

@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.Networking;
 public class HttpRequester
 {
-    public Action onComplete;
-    public Action onError;
+    public Action<HttpRequester> onComplete;
+    public Action<HttpRequester> onError;
 
     private readonly ISerializationOption _serializionOption;
 
@@ -70,10 +70,8 @@ public class HttpRequester
             var operation = await request.SendWebRequest();
 
            
-            if (token == "")
-                SetToken(request.downloadHandler.text);
-            if(onComplete != null)
-                onComplete();
+             SetToken(request.downloadHandler.text);
+            onComplete?.Invoke(this);
         }
 
         catch (Exception ex) when (ex.Message != "Index was outside the bounds of the array.")
@@ -81,8 +79,7 @@ public class HttpRequester
 #if UNITY_EDITOR
             Debug.LogError($"{nameof(Post)} failed: {ex.Message} Json : {json}");
 #endif
-            if(onError != null)
-                onError();
+                onError?.Invoke(this);
         }
         finally
         {
@@ -133,7 +130,7 @@ public class HttpRequester
 
         string[] temp = _input.Split('"');
 
-        if (temp[9] != "token")
+        if (temp.Length < 9  || temp[9] != "token")
         {
 #if UNITY_EDITOR
             Debug.Log("ErrorCheck(-1001)");
@@ -142,6 +139,7 @@ public class HttpRequester
         }
             
         PlayerPrefs.SetString("PlayerToken", temp[11]);
+        
         return 0;
     }
 

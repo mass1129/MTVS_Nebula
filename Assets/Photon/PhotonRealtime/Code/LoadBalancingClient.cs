@@ -1469,14 +1469,15 @@ namespace Photon.Realtime
                 return false;
             }
 
-            if (friendsToFind.Length > FriendRequestListMax)
-            {
-                this.DebugReturn(DebugLevel.ERROR, string.Format("OpFindFriends skipped: friendsToFind array exceeds allowed length of {0}.", FriendRequestListMax));
-                return false;
-            }
+            //if (friendsToFind.Length > FriendRequestListMax)
+            //{
+            //    this.DebugReturn(DebugLevel.ERROR, string.Format("OpFindFriends skipped: friendsToFind array exceeds allowed length of {0}.", FriendRequestListMax));
+            //    return false;
+            //}
+            int numberOfFriend = (friendsToFind.Length > FriendRequestListMax) ? FriendRequestListMax : friendsToFind.Length;
 
-            List<string> friendsList = new List<string>(friendsToFind.Length);
-            for (int i = 0; i < friendsToFind.Length; i++)
+            List<string> friendsList = new List<string>(numberOfFriend);
+            for (int i = 0; i < numberOfFriend; i++)
             {
                 string friendUserId = friendsToFind[i];
                 if (string.IsNullOrEmpty(friendUserId))
