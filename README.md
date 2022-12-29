@@ -54,11 +54,62 @@
   - [Assets/Scripts/K_Script/ItemSystem](https://github.com/mass1129/MTVS_Nebula/tree/mass7/Assets/Scripts/K_Script/ItemSystem)  
   - 유니티의 Scriptable Object를 활용하여 설계  
       - 유니티에서 제공하는 대량의 데이터를 저장하는 데이터 컨테이너  
-      - 인스턴스화 될때 데이터에 대한 사본을 생성하지 않고 메모리에 Scriptable Object의 데이터 사본만을 저장하고 이를 참조하는 방식 -> 메모리 사용 줄일 수 있다.  
+      - 인스턴스화 될때 데이터에 대한 사본을 생성하지 않고 메모리(힙)에 Scriptable Object의 데이터 사본만을 저장하고 이를 참조하는 방식 -> 메모리 사용 줄일 수 있다.  
+      - json 정적 데이터를 런타임에서 바로 읽는것이 아니라 SCriptable Object에 먼저 파싱하고 읽음으로서 성능 최적화 효과  
   - **ItemObject.cs : Scriptable Object** : 아이템의 모든 정보를 저장한 스크립터블 오브젝트  
     
       -  직렬화하는 정보는 Data(item 클래스)뿐 나머지 정보는 클라이언트에 에셋 형태로 저장  
           <img src="Image/itemobject.png" width="800px">  
+   
+  - **ItemDatabaseObject.cs : Scriptable Object** : 모든 아이템 Scriptable Object를 배열로 저장해 놓은 아이템 데이터베이스  
+    - 아이템를 만들고 데이터베이스에 추가시 id가 자동으로 업데이트(유니티에서 제공하는 OnValidate() 메소드 사용, 또는 인스펙터에서 Update ID's 클릭)    
+  - **Item.cs** : 서버와 주고 받을 직렬화 아이템 데이터 클래스  
+    - 생성자  
+      - Item() : 아이템 초기화(id = -1 => item = null)
+      - Item(ItemObject item) : 아이템 Scriptable Object 데이터로 세팅된 아이템 생성  
+      
+  - **InventorySlot.cs** : 인벤토리를 구성하는 단위   
+    - 직렬화 데이터 : 해당 슬롯에 있는 아이템과 해당 아이템 개수, 저장할수있는 아이템 타입 배열
+    - 속성(관련 UI, 슬롯 디스플레이, 슬롯 업데이트 전후 Action 대리자)으로 구성  
+    - **Function**  
+      - **ItemObject GetItemObject()** : 아이템의 id로 아이템 데이터 베이스에 등록된 ItemObject를 찾아서 반환  
+      - **void UpdateSlot(Item itemValue, int amountValue)** : **슬롯을 업데이트하는 핵심 메소드**    
+        ```C#
+        public void UpdateSlot(Item itemValue, int amountValue)
+        {
+            onBeforeUpdated?.Invoke(this); //슬롯 업데이트 전 Action (ex. 기존 장비 벗기, 기존 아이템에 의한 능력치 제거) 
+            item = itemValue;
+            amount = amountValue;  //슬롯 아이템 변경  
+            onAfterUpdated?.Invoke(this); //슬롯 업데이트 후 Action   (ex. 새로운 장비 입기, 새 아이템에 의한 능력치 추가)
+        }
+        ```
+      - **bool CanPlaceInSlot(ItemObject itemObject)** : 아이템 드래그&드롭시 해당 슬롯에 배치할 수 있는지 여부 체크  
+  
+  - **InventoryObject.cs : Scriptable Object** : 인벤토리의 정보를 저장하는 Scriptable Object  
+    - 직렬화 데이터 : Inventory 클래스(InventorySlot[]로 이루어짐)
+    - 속성(Save & Load api 호출 경로, ItemDatabaseObject, UI타입)으로 구성  
+        ```C#
+        [SerializeField]
+        private Inventory Container = new Inventory(); // 에디터상에서 인벤토리 Scriptable Object 생성시에만 호출  
+        
+        public InventorySlot[] GetSlots => Container.slots; //외부에서 인벤토리 슬롯에 접근하기 위한 변수 
+        ```
+    - **Function**  
+      - **void AddBundleListToWindow(ItemObject[] bundleList)** : ItemObject.cs의 subItem[]배열를 받아 빌딩번들 리스트(InventoryObject로 관리)에 추가  
+      - **void SwapItems(InventorySlot dragExitSlot, InventorySlot dragStartSlot)** : UI상에서 드래그&드롭시 슬롯 위치 변경  
+      - **Inventory GetInventory()** : 직렬화 데이터(Inventory) return - equipment와 clothes 인벤토리는 데이터 멱등성 유지를 위해 함께 저장하는데 이때 필요  
+      - **void UpdateInventory()** : 인벤토리가 로드되고 슬롯 Action에 관련 메소드가 등록되면(UI와 장비에서) 해당 메소드가 스킵되기 때문에 Action에 메소드를 등록후 해당 메소드를 호출하기 위해 만든 메소드  
+      - **async UniTask InventorySave(string s)** : 비동기 인벤토리 세이브 메소드  
+      - **async UniTask InventoryLoad(string s)** : 비동기 인벤토리 로드 메소드    
+      
+  - **Inventory.cs** : 서버와 주고 받을 인벤토리  클래스  
+
+
+
+
+
+
+
 
 ## 월드 꾸미기
 
