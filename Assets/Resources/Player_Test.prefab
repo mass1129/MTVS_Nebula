@@ -12155,7 +12155,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1653720978748559205
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20193,7 +20193,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2798787681593361920
 RectTransform:
   m_ObjectHideFlags: 0
@@ -38820,6 +38820,7 @@ MonoBehaviour:
   camMgr: {fileID: 5733073701845269107}
   itemSystem: {fileID: 1453835040984893679}
   charCustom: {fileID: 5629639970830784067}
+  statOfPlayer: {fileID: 5733073701845269110}
   input: {x: 0, y: 0}
   rootMotion: {x: 0, y: 0, z: 0}
   velocity: {x: 0, y: 0, z: 0}
@@ -38845,15 +38846,8 @@ MonoBehaviour:
   GroundLayers:
     serializedVersion: 2
     m_Bits: 90113
-  allUi: {fileID: 1752280606396279190}
+  playerUi: {fileID: 1752280606396279190}
   camPos: {fileID: 1752280605483343739}
-  playerUI:
-  - {fileID: 1752280606396279190}
-  - {fileID: 1653720977831973260}
-  - {fileID: 1653720979011561153}
-  inActiveObj:
-  - {fileID: 1653720978748559204}
-  - {fileID: 2798787681593361923}
 --- !u!114 &5733073701845269107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38963,6 +38957,7 @@ MonoBehaviour:
   - {fileID: 3364239828693413980}
   - {fileID: 7338543471252043132}
   - {fileID: 284566733683752542}
+  _equipment: {fileID: 11400000, guid: 03e1d40251a619f4a9f2f3e3ac33a076, type: 2}
 --- !u!114 &3214773754116892971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39057,10 +39052,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inven_Cloths: {fileID: 11400000, guid: c3cb508365f4b5c46b15784258606b4f, type: 2}
   inven_Building: {fileID: 11400000, guid: 128d426c0cfe0f940aa8fd7406a56991, type: 2}
-  inven_Default: {fileID: 11400000, guid: 711bda56d07eec245bfab8e85bc64549, type: 2}
-  inven_Vehicle: {fileID: 11400000, guid: 422cb2658b0d51346a2cf4a932b5bd9e, type: 2}
   _equipment: {fileID: 11400000, guid: 03e1d40251a619f4a9f2f3e3ac33a076, type: 2}
+  equipmentUI: {fileID: 2795611443790105518}
   player: {fileID: 5733073701845269104}
+  _CharacterCustomization: {fileID: 5629639970830784067}
   dataBase: {fileID: 11400000, guid: 2ef6ad25b8d7948488dda3b23dc7008b, type: 2}
 --- !u!1 &5641515762003056649
 GameObject:

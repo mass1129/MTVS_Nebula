@@ -24,7 +24,7 @@ public class K_MoneyUI : MonoBehaviourPun
         
         while (true&&photonView.IsMine)
         {
-            player.MoneyLoad();
+            yield return player.MoneyLoad();
             yield return new WaitForSeconds(5f);
         }
     }

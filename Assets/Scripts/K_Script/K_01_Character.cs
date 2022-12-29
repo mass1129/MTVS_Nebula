@@ -42,16 +42,7 @@ public class K_01_Character : K_Player
 
 
     }
-    private void Start()
-    {
-        
-    }
 
-
-    private void OnEnable()
-    {
-        
-    }
     public override void SetTrigger(string s)
     {
         photonView.RPC("RpcSetTrigger", RpcTarget.All, s);

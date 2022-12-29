@@ -1,85 +1,50 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using AdvancedPeopleSystem;
 using Photon.Pun;
 using Cysharp.Threading.Tasks;
-using System.Linq;
-public class K_PlayerItemSystem : MonoBehaviourPun, IPunObservable
+
+public class K_PlayerItemSystem : MonoBehaviourPun
      
 
 {
     public InventoryObject inven_Cloths;
     public InventoryObject inven_Building;
-    public InventoryObject inven_Default;
-    public InventoryObject inven_Vehicle;
     public InventoryObject _equipment;
-   
+
+    public K_UserInterface equipmentUI;
     public K_Player player;
 
-    //public static GameObject LocalPlayerInstance;
+    public CharacterCustomization  _CharacterCustomization;
 
-    CharacterCustomization  _CharacterCustomization;
-    bool isdone = false;
-    private void Awake()
+
+    public async UniTask SetEquipmentSystem()
     {
-       
-          
-
-    }
-    private void Start()
-    {
-
-
-
-    }
-    public void UpdateItemSystem()
-    {
-        _CharacterCustomization = GetComponent<CharacterCustomization>();
+        if (!photonView.IsMine) return;
         for (int i = 0; i < _equipment.GetSlots.Length; i++)
         {
+            _equipment.GetSlots[i].parent = equipmentUI;
             _equipment.GetSlots[i].onBeforeUpdated += OnRemoveItem;
             _equipment.GetSlots[i].onAfterUpdated += OnEquipItem;
         }
+        await UniTask.Yield();
     }
-    public void RPCUpdateItemSystem()
-    {
-        
-    }
-
 
 
     private void OnDestroy()
     {
-        if (photonView.IsMine)
+        if (!photonView.IsMine) return;
+        
+        TwoInvenSave().Forget();
+
+        for (int i = 0; i < _equipment.GetSlots.Length; i++)
         {
-            TwoInvenSave().Forget();
-
-            for (int i = 0; i < _equipment.GetSlots.Length; i++)
-            {
-                _equipment.GetSlots[i].onBeforeUpdated -= OnRemoveItem;
-                _equipment.GetSlots[i].onAfterUpdated -= OnEquipItem;
-            }
-            inven_Building.Clear();
-
+            _equipment.GetSlots[i].onBeforeUpdated -= OnRemoveItem;
+            _equipment.GetSlots[i].onAfterUpdated -= OnEquipItem;
         }
+        inven_Building.Clear();
+
+        
     }
-    public void DestoryPlayer()
-    {
-        if (photonView.IsMine)
-        {
-            TwoInvenSave().Forget();
-
-            for (int i = 0; i < _equipment.GetSlots.Length; i++)
-            {
-                _equipment.GetSlots[i].onBeforeUpdated -= OnRemoveItem;
-                _equipment.GetSlots[i].onAfterUpdated -= OnEquipItem;
-            }
-            inven_Building.Clear();
-
-        }
-    }
-
 
     public void UpdateEquipment()
     {
@@ -188,10 +153,7 @@ public class K_PlayerItemSystem : MonoBehaviourPun, IPunObservable
       
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-       
-    }
+
     public async UniTaskVoid TwoInvenSave()
     {
         if (!photonView.IsMine) return;

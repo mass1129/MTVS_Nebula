@@ -7,27 +7,23 @@ using UnityEngine.Profiling;
 public class Inventory
 {
     public InventorySlot[] slots = new InventorySlot[24];
-    public Inventory()
-    {
 
-    }
     public void Clear()
-    {
+    {   
         for (int i = 0; i < slots.Length; i++)
         {
-            slots[i].item = new Item();
-            slots[i].amount = 0;
+            slots[i].RemoveItem();
         }
     }
 
-    public bool ContainsItem(ItemObject itemObject)
-    {
-        return Array.Find(slots, i => i.item.id == itemObject.data.id) != null;
-    }
+    //public bool ContainsItem(ItemObject itemObject)
+    //{
+    //    return Array.Find(slots, i => i.item.id == itemObject.data.id) != null;
+    //}
 
 
-    public bool ContainsItem(int id)
-    {
-        return slots.FirstOrDefault(i => i.item.id == id) != null;
-    }
+    //public bool ContainsItem(int id)
+    //{
+    //    return slots.FirstOrDefault(i => i.item.id == id) != null;
+    //}
 }

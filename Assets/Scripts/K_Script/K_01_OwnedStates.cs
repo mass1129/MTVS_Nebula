@@ -427,7 +427,7 @@ namespace K_01_OwnedStates
             entity.input.y = 0;
             entity.camMgr.firstPersonCamera.gameObject.SetActive(true);
             entity.SetTrigger("FirstMove");
-            entity.allUi.SetActive(false);
+            entity.playerUi.SetActive(false);
             chatting = GameObject.Find("New_Chatting");
             chatting.SetActive(false);
         }
@@ -452,7 +452,7 @@ namespace K_01_OwnedStates
 
             if (Input.GetKeyDown(KeyCode.L))
             {
-                entity.allUi.SetActive(true);
+                entity.playerUi.SetActive(true);
                 chatting.SetActive(true);
                 entity.ChangeState(PlayerStates.Idle);
             }

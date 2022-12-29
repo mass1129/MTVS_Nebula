@@ -89,15 +89,7 @@ public class K_CameraMgr : MonoBehaviourPun
 
       
     }
-    private void OnEnable()
-    {
-        //buildingSystem.SetActive(false);
-    }
-    void FixedUpdate()
-    {
-        
-        
-    }
+
     private void LateUpdate()
     {
         

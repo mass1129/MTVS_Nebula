@@ -23,13 +23,6 @@ public class ItemObject : ScriptableObject
     public ItemObject[] subItem;
     public PlacedObjectTypeSO matchToBuildingSO;
     public Item data = new Item();
-
-    public Item CreateItem()
-    {   
-        Item newItem = new Item(this);
-        return newItem;
-    }
-    
     
 }
 

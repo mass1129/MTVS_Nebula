@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 
@@ -15,24 +14,9 @@ public class InventoryObject : ScriptableObject
     //private로 처리된 Container에 접근하기위한 슬롯 변수
     public InventorySlot[] GetSlots => Container.slots;
 
-    public bool AddItem(Item item, int amount)
-    {
-        //빈 슬룻이 없다면 false리턴
-        if (EmptySlotCount <= 0)
-            return false;
-        //
-        InventorySlot slot = FindItemOnInventory(item);
-        if (!database.ItemObjects[item.id].stackable || slot == null)
-        {
-            GetEmptySlot().UpdateSlot(item, amount);
-            return true;
-        }
-        slot.AddAmount(amount);
-        return true;
-    }
+
     public void AddBundleListToWindow(ItemObject[] bundleList)
     {
-        Clear();
         for(int i = 0; i < bundleList.Length; i++)
         {   
             if(bundleList[i] !=null)
@@ -41,106 +25,44 @@ public class InventoryObject : ScriptableObject
                 Container.slots[i].UpdateSlot(item, 1);
 
             }
-            
         }
+
+    }
+
+    public void SwapItems(InventorySlot dragExitSlot, InventorySlot dragStartSlot)
+    {
+        if (dragExitSlot == dragStartSlot || !dragStartSlot.CanPlaceInSlot(dragExitSlot.GetItemObject()) 
+            || !dragExitSlot.CanPlaceInSlot(dragStartSlot.GetItemObject()))
+            return;
+        
+        InventorySlot temp = new InventorySlot(dragExitSlot.item, dragExitSlot.amount);
+
+        dragExitSlot.UpdateSlot(dragStartSlot.item, dragStartSlot.amount);
        
-        
-        
-    }
-
-
-    public int EmptySlotCount
-    {
-        get
-        {
-            int counter = 0;
-            for(int i =0; i< Container.slots.Length; i++)
-            {
-                if (Container.slots[i].item.id <= -1)
-                {
-                    counter++;
-                }
-                   
-            }
-            return counter;
-        }
-    }
-
-    //인벤토리 슬롯에 해당 item이 있는 슬롯을 찾아서 해당 slot를 리턴한다.
-    public InventorySlot FindItemOnInventory(Item item)
-    {   
-        //
-        for (int i = 0; i < Container.slots.Length; i++)
-        {
-            if (Container.slots[i].item.id == item.id)
-            {
-                return Container.slots[i];
-            }
-            
-        }
-        return null;
+        dragStartSlot.UpdateSlot(temp.item, temp.amount);
 
     }
-    public bool IsItemInInventory(ItemObject item)
-    {
-        for (int i = 0; i < Container.slots.Length; i++)
-        {
-            if (Container.slots[i].item.id == item.data.id)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
 
-
-    public InventorySlot GetEmptySlot()
-    {
-        for (int i = 0; i < Container.slots.Length; i++)
-        {
-            if (Container.slots[i].item.id <= -1)
-            {
-                return Container.slots[i];
-            }
-        }
-        return null;
-    }
-    
-    public void SwapItems(InventorySlot item1, InventorySlot item2)
-    {
-        if (item1 == item2)
-            return;
-        if (item2.CanPlaceInSlot(item1.GetItemObject()) && item1.CanPlaceInSlot(item2.GetItemObject()))
-        {
-            InventorySlot temp = new InventorySlot(item1.item, item1.amount);
-            if (item2 != null)
-                item1.UpdateSlot(item2.item, item2.amount);
-            else
-                item1.RemoveItem();
-            item2.UpdateSlot(temp.item, temp.amount);
-            Debug.Log("Swap");
-        }
-
-    }
-    public void ItemsToQuickSlot(InventorySlot item1, InventorySlot item2)
-    {
-        if (item1 == item2)
-            return;
-        if (item2.CanPlaceInSlot(item1.GetItemObject()) && item1.CanPlaceInSlot(item2.GetItemObject()))
-        {
-            
-            item2.UpdateSlot(item1.item, item1.amount);
-            item1.UpdateSlot(item1.item, item1.amount);
-            Debug.Log("Quick" +item2.item.name + ","+ item1.item.name);
-        }
-
-    }
     public Inventory GetInventory()
     {
         return Container;
     }
+    public void UpdateInventory()
+    {
+        for (int i = 0; i < Container.slots.Length; i++)
+        {
+            Container.slots[i].UpdateSlot(Container.slots[i].item, Container.slots[i].amount);
+        }
+    }
 
-   
+    [ContextMenu("Clear")]
+    public void Clear()
+    {
+        Container.Clear();
+    }
+
+
+
     public async UniTask InventorySave(string s)
     {
 
@@ -166,19 +88,7 @@ public class InventoryObject : ScriptableObject
         //코드블록 종료시 스택 자동 삭제 -> 힙의 데이터를 참조하는 스택 데이터가 삭제되어 가비지콜렉터가 힙에 저장된 데이터 삭제  
     }
 
-    public void UpdateInventory()
-    {
-        for (int i = 0; i < Container.slots.Length; i++)
-        {
-            Container.slots[i].UpdateSlot(Container.slots[i].item, Container.slots[i].amount);
-        }
-    }
-
-    [ContextMenu("Clear")]
-    public void Clear()
-    {
-        Container.Clear();
-    }
+   
 
  
 
@@ -191,7 +101,77 @@ public class InventoryObject : ScriptableObject
         //public InventorySlot[] slots => results.slots;
     }
 
-   
+    //public bool AddItem(Item item, int amount)
+    //{
+    //    //빈 슬룻이 없다면 false리턴
+    //    if (EmptySlotCount <= 0)
+    //        return false;
+    //    //
+    //    InventorySlot slot = FindItemOnInventory(item);
+    //    if (!database.ItemObjects[item.id].stackable || slot == null)
+    //    {
+    //        GetEmptySlot().UpdateSlot(item, amount);
+    //        return true;
+    //    }
+    //    slot.AddAmount(amount);
+    //    return true;
+    //}
+    //public bool IsItemInInventory(ItemObject item)
+    //{
+    //    for (int i = 0; i < Container.slots.Length; i++)
+    //    {
+    //        if (Container.slots[i].item.id == item.data.id)
+    //        {
+    //            return true;
+    //        }
+    //    }
+    //    return false;
+    //}
 
+    //public int EmptySlotCount
+    //{
+    //    get
+    //    {
+    //        int counter = 0;
+    //        for (int i = 0; i < Container.slots.Length; i++)
+    //        {
+    //            if (Container.slots[i].item.id <= -1)
+    //            {
+    //                counter++;
+    //            }
+
+    //        }
+    //        return counter;
+    //    }
+    //}
+
+    ////인벤토리 슬롯에 해당 item이 있는 슬롯을 찾아서 해당 slot를 리턴한다.
+    //public InventorySlot FindItemOnInventory(Item item)
+    //{
+    //    //
+    //    for (int i = 0; i < Container.slots.Length; i++)
+    //    {
+    //        if (Container.slots[i].item.id == item.id)
+    //        {
+    //            return Container.slots[i];
+    //        }
+
+    //    }
+    //    return null;
+
+    //}
+
+
+    //public InventorySlot GetEmptySlot()
+    //{
+    //    for (int i = 0; i < Container.slots.Length; i++)
+    //    {
+    //        if (Container.slots[i].item.id <= -1)
+    //        {
+    //            return Container.slots[i];
+    //        }
+    //    }
+    //    return null;
+    //}
 }
 

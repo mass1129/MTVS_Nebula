@@ -52,17 +52,7 @@ public class K_StaticInterface_ShopList : MonoBehaviourPun
 
         }
 
-                
-        //if (shopCustomer.TrySpendGoldAmount(i))
-        //{
-        //    // Can afford cost
-        //    shopCustomer.BoughtItem(item);
-        //}
-        //else
-        //{
-        //    //Tooltip_Warning.ShowTooltip_Static("Cannot afford " + Item.GetCost(itemType) + "!");
-        //    Debug.Log("Cannot afford" + item.name);
-        //}
+
     }
     
     public async UniTask BuyClothesEvent(Item item)
@@ -150,8 +140,7 @@ public class K_StaticInterface_ShopList : MonoBehaviourPun
         {
             int temp = i;
             ItemObject itemObject = inventory.database.ItemObjects[newList[temp].id];
-            Item item = new Item(itemObject);
-            inventory.GetSlots[temp].UpdateSlot(item,1);
+            inventory.GetSlots[temp].UpdateSlot(new Item(itemObject), 1);
             itemCostTxt[temp].SetText("$" + newList[i].price.ToString());
             itemNameTxt[temp].SetText(itemObject.name.ToString());
             toolTip[temp].transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().SetText(itemObject.name.ToString());

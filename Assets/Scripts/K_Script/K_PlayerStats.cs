@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
 using UltimateClean;
+using Cysharp.Threading.Tasks;
+
 public class K_PlayerStats : MonoBehaviour
 {
 
@@ -12,33 +11,25 @@ public class K_PlayerStats : MonoBehaviour
     public SlicedFilledImage[] _fillImg;
     public Attribute Agility => attributes[0];
 
-    private InventoryObject _equipment;
+    public InventoryObject _equipment;
 
-    bool isAdded = false;
-    private void Start()
-    {   
-      
-            _equipment = GetComponent<K_PlayerItemSystem>()._equipment;
+    public async UniTask SetPlayerStats()
+    {
+        for (int i = 0; i < attributes.Length; i++)
+        {
+            attributes[i].SetParent(this);
+            attributes[i].textUI = displayValue[i];
+            attributes[i].fillImg = _fillImg[i];
+        }
 
-            for (int i = 0; i < attributes.Length; i++)
-            {
-                attributes[i].SetParent(this);
-                attributes[i].textUI = displayValue[i];
-                attributes[i].fillImg = _fillImg[i];
-            }
-
-            for (int i = 0; i < _equipment.GetSlots.Length; i++)
-            {
-                _equipment.GetSlots[i].onBeforeUpdated += OnRemoveItem;
-                _equipment.GetSlots[i].onAfterUpdated += OnEquipItem;
-            }
-
-        
-       
-       
-
+        for (int i = 0; i < _equipment.GetSlots.Length; i++)
+        {
+            _equipment.GetSlots[i].onBeforeUpdated += OnRemoveItem;
+            _equipment.GetSlots[i].onAfterUpdated += OnEquipItem;
+        }
+        await UniTask.Yield();
     }
-    private void OnDisable()
+    private void OnDestroy()
     {
         for (int i = 0; i < _equipment.GetSlots.Length; i++)
         {
@@ -46,14 +37,7 @@ public class K_PlayerStats : MonoBehaviour
             _equipment.GetSlots[i].onAfterUpdated -= OnEquipItem;
         }
     }
-    private void OnApplicationQuit()
-    {
-        for (int i = 0; i < _equipment.GetSlots.Length; i++)
-        {
-            _equipment.GetSlots[i].onBeforeUpdated -= OnRemoveItem;
-            _equipment.GetSlots[i].onAfterUpdated -= OnEquipItem;
-        }
-    }
+
     public void AttributeModified(Attribute attribute)
     {
         attribute.textUI.GetComponentInChildren<TextMeshProUGUI>().text = string.Concat(attribute.value.ModifiedValue , "%");

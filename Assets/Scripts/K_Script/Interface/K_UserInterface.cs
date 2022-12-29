@@ -22,18 +22,16 @@ public abstract class K_UserInterface : MonoBehaviourPun
     public bool onQuickSlot=false;
     bool needFirstUpdate = false;
   
-    public void Awake()
-    {
-        
-    }
+  
     public void OnEnable()
     {
         if (!photonView.IsMine) return;
          if (!isAddedEvent && !needFirstUpdate)
          {
             UISetting();
-         }
-        isAddedEvent = true;
+            isAddedEvent = true;
+        }
+        
     }
 
     public void UISetting()
@@ -43,7 +41,7 @@ public abstract class K_UserInterface : MonoBehaviourPun
 
         for (int i = 0; i < inventory.GetSlots.Length; i++)
         {
-
+            if(inventory.type != InterfaceType.Equipment)
             inventory.GetSlots[i].parent = this;
             inventory.GetSlots[i].onAfterUpdated += OnSlotUpdate;
         }

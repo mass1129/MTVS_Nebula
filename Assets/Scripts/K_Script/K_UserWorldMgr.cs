@@ -35,7 +35,7 @@ public class K_UserWorldMgr : MonoBehaviourPunCallbacks
         HandleBuildingObj(false);
 
         _character.PlayerInfoSetting();
-        _character.SetActiveObj().Forget();
+        _character.PlayerSetting().Forget();
 
 
     }

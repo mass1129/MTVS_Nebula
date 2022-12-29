@@ -32,7 +32,7 @@ public class K_Player : MonoBehaviourPun, IPunObservable
     public K_CameraMgr camMgr;
     public K_PlayerItemSystem itemSystem;
     public CharacterCustomization charCustom;
-
+    public K_PlayerStats statOfPlayer;
     [System.NonSerialized]
     public string avatarName = null;
     [System.NonSerialized]
@@ -66,14 +66,12 @@ public class K_Player : MonoBehaviourPun, IPunObservable
     public float GroundedRadius = 0.28f;
     public LayerMask GroundLayers;
 
-    public GameObject allUi;
+    public GameObject playerUi;
 
     public PlayerStates CurrentState { get; set; } // 현재 기본 상태
 
 
     public GameObject camPos;
-    public List<GameObject> playerUI;
-    public List<GameObject> inActiveObj;
 
     // Player가 가지고 있는 모든 상태, 상태 관리자. 기본 상태와 상체 상태 따로 관리
     public K_PlayerState<K_Player>[] states;
@@ -81,20 +79,7 @@ public class K_Player : MonoBehaviourPun, IPunObservable
     public K_PlayerState<K_Player>[] upperBodyStates;
     public K_StateMachine<K_Player> upperBodyStateMachine;
 
-    private void Awake()
-    {
-        
-    }
-    private void Start()
-    {
-        
-       
-    }
-    private void OnEnable()
-    {
-        
-    }
-    
+
     private void Update()
     {
         if (!photonView.IsMine)
@@ -108,40 +93,24 @@ public class K_Player : MonoBehaviourPun, IPunObservable
         //Debug.Log(cc.isGrounded);
     }
 
-    public async UniTaskVoid SetActiveObj()
+    public async UniTask PlayerSetting()
     {
         if (photonView.IsMine)
         {
             canMove = false;
             camPos.SetActive(true);
+            playerUi.SetActive(true);
             charCustom.LoadCharacterFromFile(avatarName);
             await UniTask.DelayFrame(50);
-            itemSystem.UpdateItemSystem();
-            await UniTask.DelayFrame(50);
-            for (int i = 0; i < playerUI.Count; i++)
-            {
-                int temp = i;
-                playerUI[temp].SetActive(true);
-
-            }
-            await UniTask.DelayFrame(50);
+            await itemSystem.SetEquipmentSystem();
+            await statOfPlayer.SetPlayerStats();
             itemSystem.ItemLoad();
-            await UniTask.DelayFrame(50);
-            InActiveObj();
             await UniTask.DelayFrame(50);
             canMove = true;
 
         }
     }
-   
-    public void InActiveObj()
-    {
-        for (int i = 0; i < inActiveObj.Count; i++)
-        {
-            inActiveObj[i].SetActive(false);
-        }
 
-    }
 
     public void PlayerInfoSetting()
     {

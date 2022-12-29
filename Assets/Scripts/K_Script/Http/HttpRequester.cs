@@ -74,7 +74,7 @@ public class HttpRequester
             onComplete?.Invoke(this);
         }
 
-        catch (Exception ex) when (ex.Message != "Index was outside the bounds of the array.")
+        catch (Exception ex) //when (ex.Message != "Index was outside the bounds of the array.")
         {
 #if UNITY_EDITOR
             Debug.LogError($"{nameof(Post)} failed: {ex.Message} Json : {json}");
@@ -87,7 +87,7 @@ public class HttpRequester
         }
 
     }
-    public async UniTask<TResultType> Post1<TResultType>(string url, string json) //<TResultType> Get<TResultType>(string url)
+    public async UniTask<TResultType> Post1<TResultType>(string url, string json)
     {
         using var request = UnityWebRequest.Post(url, json);
         try
@@ -133,7 +133,7 @@ public class HttpRequester
         if (temp.Length < 9  || temp[9] != "token")
         {
 #if UNITY_EDITOR
-            Debug.Log("ErrorCheck(-1001)");
+            Debug.Log("NotRequestToken");
 #endif
             return 0;
         }
