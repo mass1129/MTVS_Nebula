@@ -42,7 +42,7 @@
     H_I_Root result2 = await httpReq.Get<H_I_Root>(url);
     Inventory newInven = result2.results;
     ```
-  - 인터페이스를 통한 전략 패턴으로 이후 시스템 확장시 ContentType과 직렬화/역직렬화 방식을 유연하게 수정할 수 있도록 함  
+  - 인터페이스를 통한 전략 패턴으로 종속성 삭제 및 이후 시스템 확장시 ContentType과 직렬화/역직렬화 방식을 유연하게 수정할 수 있도록 함  
     ```C#
     public interface ISerializationOption
     {   
