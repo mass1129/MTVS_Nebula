@@ -26,13 +26,8 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
 
     private bool isDemolishActive;
     public InventoryObject quickSlot;
-    private void Awake() 
-    {
-        
 
-
-    }
- 
+    public BuildingSystemAssetsDatabase buildingAssetDatabase;
     public void BuildingSetup()
     {
         quickSlot.Clear();
@@ -54,11 +49,6 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
         selectedGrid = gridList[0];
     }
 
-
-    private void Start()
-    {
-
-    }
 
     private void Update()
     {
@@ -144,7 +134,8 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
 
     public void HandleTypeSelect(int i) 
     {
-        placedObjectTypeSO = quickSlot.GetSlots[i].GetItemObject().matchToBuildingSO; RefreshSelectedObjectType();
+        placedObjectTypeSO = quickSlot.GetSlots[i].GetItemObject().matchToBuildingSO; 
+        RefreshSelectedObjectType();
     }
 
     private void HandleDirRotation() {
@@ -357,7 +348,7 @@ public class GridBuildingSystem3D : MonoBehaviourPun, IPunObservable
             foreach (PlacedObject.SaveObject  placedObjectSaveObject in result2.results.placeObjects.islandGridList[i].gridPlaceObjectList)
             {   
                 
-                PlacedObjectTypeSO placedObjectTypeSO = BuildingSystemAssets.Instance.GetPlacedObjectTypeSOFromName(placedObjectSaveObject.placedObjectTypeSOName);
+                PlacedObjectTypeSO placedObjectTypeSO = buildingAssetDatabase.GetPlacedObjectTypeSOFromName(placedObjectSaveObject.placedObjectTypeSOName);
               
                 TryPlaceObject(placedObjectSaveObject.origin, placedObjectTypeSO, placedObjectSaveObject.dir, out PlacedObject placedObject);
                

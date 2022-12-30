@@ -1,19 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class BuildingSystemAssets : MonoBehaviour
+[CreateAssetMenu(fileName = "NewBuildingSystemAssetsDatabase", menuName = "Inventory System/Items/Building/Database")]
+public class BuildingSystemAssetsDatabase : ScriptableObject
 {
-    public static BuildingSystemAssets Instance { get; private set; }
-
-
-    private void Awake()
-    {
-        Instance = this;
-    }
-
 
     public PlacedObjectTypeSO[] placedObjectTypeSOArray;
+
+
     public PlacedObjectTypeSO GetPlacedObjectTypeSOFromName(string placedObjectTypeSOName)
     {
         foreach (PlacedObjectTypeSO placedObjectTypeSO in placedObjectTypeSOArray)
