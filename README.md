@@ -100,9 +100,10 @@
       - **Inventory GetInventory()** : 직렬화 데이터(Inventory) return - equipment와 clothes 인벤토리는 데이터 멱등성 유지를 위해 함께 저장하는데 이때 필요  
       - **void UpdateInventory()** : 인벤토리가 로드되고 슬롯 Action에 관련 메소드가 등록되면(UI와 장비에서) 해당 메소드가 스킵되기 때문에 Action에 메소드를 등록후 해당 메소드를 호출하기 위해 만든 메소드  
       - **async UniTask InventorySave(string s)** : 비동기 인벤토리 세이브 메소드  
-      - **async UniTask InventoryLoad(string s)** : 비동기 인벤토리 로드 메소드    
+      - **async UniTask InventoryLoad(string s)** : 비동기 인벤토리 로드 메소드   
+      - **async UniTask ForGiveItem(InventorySlot dropSlot, string avatarName)** : 비동기 아이템 소유권 포기 후 인벤토리 로드 메소드(데이터 멱등성 유지)    
       
-  - **Inventory.cs** : 서버와 주고 받을 인벤토리  클래스  
+  - **Inventory.cs** : 서버와 주고 받을 인벤토리 데이터 클래스(InventorySlot[]으로 구성)    
 
 
 
