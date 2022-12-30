@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace UltimateClean
 {
 
-    public class K_NonLoopSlectSlider : MonoBehaviour
+    public class K_BundleSlectSlider : MonoBehaviour
     {
 #pragma warning disable 649
         [SerializeField]
@@ -52,13 +52,7 @@ namespace UltimateClean
             SetCurrentOptionLabel();
         }
    
-        private void OnEnable()
-        {
 
-            //SetCurrentOptionLabel();
-
-
-        }
         private void Start()
         {
             

@@ -17,21 +17,20 @@ public abstract class K_UserInterface : MonoBehaviourPun
     private InventoryObject _previousInventory;
     public Dictionary<GameObject, InventorySlot> slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
 
-  
+
     bool isAddedEvent = false;
-    public bool onQuickSlot=false;
     bool needFirstUpdate = false;
-  
-  
+
+
     public void OnEnable()
     {
         if (!photonView.IsMine) return;
-         if (!isAddedEvent && !needFirstUpdate)
-         {
+        if (!isAddedEvent && !needFirstUpdate)
+        {
             UISetting();
             isAddedEvent = true;
         }
-        
+
     }
 
     public void UISetting()
@@ -41,8 +40,8 @@ public abstract class K_UserInterface : MonoBehaviourPun
 
         for (int i = 0; i < inventory.GetSlots.Length; i++)
         {
-            if(inventory.type != InterfaceType.Equipment)
-            inventory.GetSlots[i].parent = this;
+            if (inventory.type != InterfaceType.Equipment)
+                inventory.GetSlots[i].parent = this;
             inventory.GetSlots[i].onAfterUpdated += OnSlotUpdate;
         }
 
@@ -56,28 +55,25 @@ public abstract class K_UserInterface : MonoBehaviourPun
         if (!photonView.IsMine) return;
         for (int i = 0; i < inventory.GetSlots.Length; i++)
         {
-
-
             inventory.GetSlots[i].onAfterUpdated -= OnSlotUpdate;
         }
     }
-   
+
     public abstract void CreateSlots();
 
-    public abstract void DistorySlots();
     public void UpdateInventoryLinks()
     {
-        if (!photonView.IsMine) return;
         int i = 0;
         foreach (var key in slotsOnInterface.Keys.ToList())
         {
             slotsOnInterface[key] = inventory.GetSlots[i];
             i++;
         }
+        _previousInventory = inventory;
     }
     private void OnSlotUpdate(InventorySlot slot)
     {
-        
+
         if (slot.item.id <= -1)
         {
             slot.slotDisplay.transform.GetChild(0).GetComponent<Image>().sprite = null;
@@ -102,12 +98,10 @@ public abstract class K_UserInterface : MonoBehaviourPun
 
     public void Update()
     {
-        if (!photonView.IsMine) return;
-        if (_previousInventory != inventory)
-        {
-            UpdateInventoryLinks();
-        }
-        _previousInventory = inventory;
+        if (!photonView.IsMine || _previousInventory == inventory)
+            return;
+
+        UpdateInventoryLinks();
 
     }
 
@@ -121,14 +115,20 @@ public abstract class K_UserInterface : MonoBehaviourPun
 
     }
 
-    public void OnEnter(GameObject obj)
-    {
-        MouseData.slotHoveredOver = obj;
-    }
+
     public void OnEnterInterface(GameObject obj)
     {
         MouseData.interfaceMouseIsOver = obj.GetComponent<K_UserInterface>();
     }
+    public void OnExitInterface(GameObject obj)
+    {
+        MouseData.interfaceMouseIsOver = null;
+    }
+    public void OnEnter(GameObject obj)
+    {
+        MouseData.slotHoveredOver = obj;
+    }
+
     public void OnExit(GameObject obj)
     {
         //player.mouseItem.hoverObj = null;
@@ -136,19 +136,34 @@ public abstract class K_UserInterface : MonoBehaviourPun
         MouseData.slotHoveredOver = null;
 
     }
-    
-    public void OnExitInterface(GameObject obj)
-    {
-        MouseData.interfaceMouseIsOver = null;
-    }
+
     public void OnDragStart(GameObject obj)
     {
         Debug.Log(slotsOnInterface[obj].item.name);
         //slotsOnInterface[obj].UpdateSlot(slotsOnInterface[obj].item, slotsOnInterface[obj].amount);
         MouseData.tempItemBeingDragged = CreateTempItem(obj);
     }
-    
-   
+    public void OnDrag(GameObject obj)
+    {
+        if (MouseData.tempItemBeingDragged != null)
+        {
+            MouseData.tempItemBeingDragged.GetComponent<RectTransform>().position = Input.mousePosition;
+        }
+    }
+
+    public virtual void OnDragEnd(GameObject obj)
+    {
+        Destroy(MouseData.tempItemBeingDragged);
+
+        if (MouseData.slotHoveredOver)
+        {
+            InventorySlot mouseHoverSlotData = MouseData.interfaceMouseIsOver.slotsOnInterface[MouseData.slotHoveredOver];
+
+            inventory.SwapItems(slotsOnInterface[obj], mouseHoverSlotData);
+
+        }
+
+    }
 
     private GameObject CreateTempItem(GameObject obj)
     {
@@ -165,39 +180,9 @@ public abstract class K_UserInterface : MonoBehaviourPun
         }
         return tempItem;
     }
-    public virtual void OnDragEnd(GameObject obj)
-    {
-        Destroy(MouseData.tempItemBeingDragged);
-        
-        if (MouseData.slotHoveredOver)
-        {
-            InventorySlot mouseHoverSlotData = MouseData.interfaceMouseIsOver.slotsOnInterface[MouseData.slotHoveredOver];
-
-                inventory.SwapItems(slotsOnInterface[obj], mouseHoverSlotData);
-     
-        }
-
-    }
-    public void OnDrag(GameObject obj)
-    {
-        if (MouseData.tempItemBeingDragged != null)
-        {
-            MouseData.tempItemBeingDragged.GetComponent<RectTransform>().position = Input.mousePosition;
-        }
-    }
-    public void OnSelect(GameObject obj)
-    {
- 
-
-    }
-    public void OnDeselect(GameObject obj)
-    {
-       
-
-    }
-
-
 }
+
+
 
 public static class MouseData
 {
