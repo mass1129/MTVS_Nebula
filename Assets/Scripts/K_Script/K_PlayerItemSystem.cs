@@ -4,28 +4,32 @@ using Photon.Pun;
 using Cysharp.Threading.Tasks;
 
 public class K_PlayerItemSystem : MonoBehaviourPun
-     
-
 {
+
     public InventoryObject inven_Cloths;
     public InventoryObject inven_Building;
     public InventoryObject _equipment;
 
     public K_UserInterface equipmentUI;
-    public K_Player player;
+
+    public string avatarName { get; private set; }
 
     public CharacterCustomization  _CharacterCustomization;
 
-
-    public async UniTask SetEquipmentSystem()
+    public async UniTask SetItemSystem(string s)
     {
         if (!photonView.IsMine) return;
+        avatarName = s;
+        await _CharacterCustomization.LoadCharacterFromFile(s);
+        GetComponent<K_MoneySystem>().MoneySystemSetting(s);
         for (int i = 0; i < _equipment.GetSlots.Length; i++)
         {
             _equipment.GetSlots[i].parent = equipmentUI;
             _equipment.GetSlots[i].onBeforeUpdated += OnRemoveItem;
             _equipment.GetSlots[i].onAfterUpdated += OnEquipItem;
         }
+        await GetComponent<K_PlayerStats>().SetPlayerStats();
+        ItemLoad();
         await UniTask.Yield();
     }
 
@@ -101,7 +105,7 @@ public class K_PlayerItemSystem : MonoBehaviourPun
 
        
     }
-    public ItemDatabaseObject dataBase;
+
     public void OnRemoveItem(InventorySlot slot)
     {
         if (photonView.IsMine)
@@ -154,7 +158,7 @@ public class K_PlayerItemSystem : MonoBehaviourPun
     }
 
 
-    public async UniTaskVoid TwoInvenSave()
+    public async UniTask TwoInvenSave()
     {
         if (!photonView.IsMine) return;
         SaveTwoInven saveObject = new SaveTwoInven
@@ -165,7 +169,7 @@ public class K_PlayerItemSystem : MonoBehaviourPun
         await UniTask.DelayFrame(2);
         string json = JsonUtility.ToJson(saveObject, true);
         
-        var url = "https://resource.mtvs-nebula.com/" + _equipment.savePath + player.avatarName;
+        var url = "https://resource.mtvs-nebula.com/" + _equipment.savePath + avatarName;
         var httpReq = new HttpRequester(new JsonSerializationOption());
         await httpReq.Post(url, json);
 
@@ -177,18 +181,11 @@ public class K_PlayerItemSystem : MonoBehaviourPun
     }
     public void ItemLoad()
     {
-        inven_Cloths.InventoryLoad(player.avatarName).Forget();
-        _equipment.InventoryLoad(player.avatarName).Forget();
-        inven_Building.InventoryLoad(player.avatarName).Forget();
-
-
+        inven_Cloths.InventoryLoad(avatarName).Forget();
+        _equipment.InventoryLoad(avatarName).Forget();
+        inven_Building.InventoryLoad(avatarName).Forget();
     }
-    private void OnApplicationQuit()
-    {
-        inven_Cloths.Clear();
-        _equipment.Clear();
-        inven_Building.Clear();
-    }
+
 
     [System.Serializable]
     public class SaveTwoInven
@@ -197,11 +194,4 @@ public class K_PlayerItemSystem : MonoBehaviourPun
         public Inventory clothesInventory;
     }
 
-
-
-
-    //public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    //{
-
-    //}
 }

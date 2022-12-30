@@ -31,8 +31,7 @@ public class K_Player : MonoBehaviourPun, IPunObservable
     public Transform cam;
     public K_CameraMgr camMgr;
     public K_PlayerItemSystem itemSystem;
-    public CharacterCustomization charCustom;
-    public K_PlayerStats statOfPlayer;
+    
     [System.NonSerialized]
     public string avatarName = null;
     [System.NonSerialized]
@@ -93,32 +92,21 @@ public class K_Player : MonoBehaviourPun, IPunObservable
         //Debug.Log(cc.isGrounded);
     }
 
+   
+
     public async UniTask PlayerSetting()
-    {
-        if (photonView.IsMine)
-        {
-            canMove = false;
-            camPos.SetActive(true);
-            playerUi.SetActive(true);
-            charCustom.LoadCharacterFromFile(avatarName);
-            await UniTask.DelayFrame(50);
-            await itemSystem.SetEquipmentSystem();
-            await statOfPlayer.SetPlayerStats();
-            itemSystem.ItemLoad();
-            await UniTask.DelayFrame(50);
-            canMove = true;
-
-        }
-    }
-
-
-    public void PlayerInfoSetting()
     {
         if (photonView.IsMine)
         {
             avatarName = CHAN_GameManager.instance.avatarName;
             ownIslandID = CHAN_GameManager.instance.ownIslandId;
             Debug.Log("AvatarName : " + avatarName + "  Island_ID : " + ownIslandID);
+            canMove = false;
+            camPos.SetActive(true);
+            playerUi.SetActive(true);
+            await itemSystem.SetItemSystem(avatarName);
+            canMove = true;
+
         }
     }
 
@@ -230,11 +218,6 @@ public class K_Player : MonoBehaviourPun, IPunObservable
     {
     }
     #endregion
-
-    private void OnApplicationQuit()
-    {
-       //PhotonNetwork.Destroy(gameObject);
-    }
 
 
 

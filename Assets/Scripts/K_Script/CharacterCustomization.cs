@@ -1417,16 +1417,16 @@ namespace AdvancedPeopleSystem
             await httpReq.Post(url, data);
 
         }
-        public void LoadCharacterFromFile(string s)
+        public async UniTask LoadCharacterFromFile(string s)
         {   
             if(photonView.IsMine)
             photonView.RPC("RPCLoadCharacterFromFile", RpcTarget.AllBuffered, s);
-            
-            
+            await UniTask.Yield();
+
         }
 
         [PunRPC]
-        public async UniTaskVoid RPCLoadCharacterFromFile(string s)
+        public async UniTask RPCLoadCharacterFromFile(string s)
         {
             var url = "https://resource.mtvs-nebula.com/avatar/appearance/" + s;//PlayerPrefs.GetString("AvatarName");
             var httpReq = new HttpRequester(new JsonSerializationOption());
