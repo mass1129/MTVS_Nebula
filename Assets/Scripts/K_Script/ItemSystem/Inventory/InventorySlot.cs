@@ -26,8 +26,12 @@ public class InventorySlot
         
         return item.id >= 0 && parent != null  ? parent.inventory.database.ItemObjects[item.id] : null;
     }
-    
-   
+    public ItemObject GetShopItemObject(InventoryObject inventory)
+    {
+
+        return item.id >= 0 ? inventory.database.ItemObjects[item.id] : null;
+    }
+
 
     public InventorySlot(Item item, int amount) => UpdateSlot(item, amount);
     
@@ -48,7 +52,7 @@ public class InventorySlot
         amount = amountValue; //슬롯 아이템 변경  
         onAfterUpdated?.Invoke(this); //슬롯 업데이트 후 Action   (ex. 새로운 장비 입기, 새 아이템에 의한 능력치 추가)
     }
-   
+
 
     public bool CanPlaceInSlot(ItemObject itemObject)
     {

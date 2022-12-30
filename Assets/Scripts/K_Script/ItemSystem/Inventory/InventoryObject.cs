@@ -88,9 +88,25 @@ public class InventoryObject : ScriptableObject
         //코드블록 종료시 스택 자동 삭제 -> 힙의 데이터를 참조하는 스택 데이터가 삭제되어 가비지콜렉터가 힙에 저장된 데이터 삭제  
     }
 
+    public async UniTask ForGiveItem(InventorySlot dropSlot, string avatarName)
+    {
+        DropItem dropItem = new DropItem
+        {
+            uniqueId = dropSlot.item.uniqueId
+        };
+        if (dropItem.uniqueId < 0) return;
+        string json = JsonUtility.ToJson(dropItem, true);
+        Debug.Log(json);
+        var url = "https://resource.mtvs-nebula.com/achieve/drop/" + avatarName;
+        var httpReq = new HttpRequester(new JsonSerializationOption());
+
+        await httpReq.Post(url, json);
+
+        await InventoryLoad(avatarName);
+    }
    
 
- 
+
 
     public class H_I_Root
     {
@@ -98,9 +114,9 @@ public class InventoryObject : ScriptableObject
         public string message { get; set; }
         
         public Inventory results { get; set; }
-        //public InventorySlot[] slots => results.slots;
     }
 
+    #region 주석처리
     //public bool AddItem(Item item, int amount)
     //{
     //    //빈 슬룻이 없다면 false리턴
@@ -173,5 +189,12 @@ public class InventoryObject : ScriptableObject
     //    }
     //    return null;
     //}
+    #endregion 
+}
+
+[System.Serializable]
+public class DropItem
+{
+    public int uniqueId;
 }
 
