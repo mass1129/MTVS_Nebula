@@ -69,9 +69,10 @@
       - Item(ItemObject item) : 아이템 Scriptable Object 데이터로 세팅된 아이템 생성  
       
   - **InventorySlot.cs** : 인벤토리를 구성하는 단위   
-    - 직렬화 데이터 : 해당 슬롯에 있는 아이템과 해당 아이템 개수, 저장할수있는 아이템 타입 배열
-    - 속성(관련 UI, 슬롯 디스플레이, 슬롯 업데이트 전후 Action 대리자)으로 구성  
-    - **Function**  
+    - **field**
+      - 직렬화 데이터 : 해당 슬롯에 있는 아이템과 해당 아이템 개수, 저장할수있는 아이템 타입 배열
+      - 기타 속성 : 관련 UI, 슬롯 디스플레이, 슬롯 업데이트 전후 Action 대리자  
+    - **Method**  
       - **ItemObject GetItemObject()** : 아이템의 id로 아이템 데이터 베이스에 등록된 ItemObject를 찾아서 반환  
       - **void UpdateSlot(Item itemValue, int amountValue)** : **슬롯을 업데이트하는 핵심 메소드**    
         ```C#
@@ -86,15 +87,16 @@
       - **bool CanPlaceInSlot(ItemObject itemObject)** : 아이템 드래그&드롭시 해당 슬롯에 배치할 수 있는지 여부 체크  
   
   - **InventoryObject.cs : Scriptable Object** : 인벤토리의 정보를 저장하는 Scriptable Object  
-    - 직렬화 데이터 : Inventory 클래스(InventorySlot[]로 이루어짐)  
-        ```C#
-        [SerializeField]
-        private Inventory Container = new Inventory(); // 에디터상에서 인벤토리 Scriptable Object 생성시에만 호출  
-        
-        public InventorySlot[] GetSlots => Container.slots; //외부에서 인벤토리 슬롯에 접근하기 위한 변수 
-        ```
-    - 속성(Save & Load api 호출 경로, ItemDatabaseObject, UI타입)으로 구성  
-    - **Function**  
+    - **field**  
+      - 직렬화 데이터 : Inventory 클래스(InventorySlot[]로 이루어짐)  
+          ```C#
+          [SerializeField]
+          private Inventory Container = new Inventory(); // 에디터상에서 인벤토리 Scriptable Object 생성시에만 호출  
+
+          public InventorySlot[] GetSlots => Container.slots; //외부에서 인벤토리 슬롯에 접근하기 위한 변수 
+          ```
+      - 기타 속성 : Save & Load api 호출 경로, ItemDatabaseObject, UI타입  
+    - **Method**  
       - **void AddBundleListToWindow(ItemObject[] bundleList)** : ItemObject.cs의 subItem[]배열를 받아 빌딩번들 리스트(InventoryObject로 관리)에 추가  
       - **void SwapItems(InventorySlot dragExitSlot, InventorySlot dragStartSlot)** : UI상에서 드래그&드롭시 슬롯 위치 변경  
       - **Inventory GetInventory()** : 직렬화 데이터(Inventory) return - equipment와 clothes 인벤토리는 데이터 멱등성 유지를 위해 함께 저장하는데 이때 필요  
