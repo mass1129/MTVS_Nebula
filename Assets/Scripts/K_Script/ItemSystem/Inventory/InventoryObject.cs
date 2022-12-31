@@ -11,7 +11,7 @@ public class InventoryObject : ScriptableObject
 
     [SerializeField]
     private Inventory Container = new Inventory();
-    //private로 처리된 Container에 접근하기위한 슬롯 변수
+    //private로 처리된 Container에 접근하기위한 읽기 전용 슬롯
     public InventorySlot[] GetSlots => Container.slots;
 
 
@@ -28,6 +28,7 @@ public class InventoryObject : ScriptableObject
         }
 
     }
+
 
     public void SwapItems(InventorySlot dragExitSlot, InventorySlot dragStartSlot)
     {

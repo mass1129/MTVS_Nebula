@@ -12,18 +12,14 @@ public class ShopSlotModule : MonoBehaviour
     public TextMeshProUGUI toolTipTitle;
     public TextMeshProUGUI toolTipDiscription;
     public Image slopImg;
-
+    public int itemPrice;
 
     public void SetShopModule(InventorySlot slot, InventoryObject inventory)
     {
         ItemObject itemObj = slot.GetShopItemObject(inventory);
         if (!itemObj)
         {
-            itemNameTxt.SetText("구매완료 번들");
-            toolTipTitle.SetText("");
-            toolTipDiscription.SetText("");
-            slopImg.sprite = null;
-
+            Destroy(gameObject);
         }
         else
         {
@@ -31,7 +27,7 @@ public class ShopSlotModule : MonoBehaviour
             toolTipTitle.SetText(itemObj.name.ToString());
             toolTipDiscription.SetText(itemObj.description);
             slopImg.sprite = itemObj.uiDisplay;
-           
+            itemCostTxt.SetText("$" + itemPrice.ToString());
         }
     }
 }
