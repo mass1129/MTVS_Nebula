@@ -117,3 +117,12 @@
 ## 월드 꾸미기
 
 ## 게임 머니 및 상점 시스템
+
+# 이슈 관리 및 개선 사항  
+### (photon) master client 변경시 건물이 중복 생성 및 삭제 불가능한 이슈 [#1](https://github.com/mass1129/MTVS_Nebula/issues/1)  
+### 유저월드에 입장할때 먼저 입장한 유저의 아바타가 업데이트가 안되는 이슈 [#2](https://github.com/mass1129/MTVS_Nebula/issues/2)  
+### 인벤토리 저장할 때 "부정한 행위가 발생하였습니다"라는 네트워크 오류가 발생하는 이슈 [#3](https://github.com/mass1129/MTVS_Nebula/issues/3)  
+### 아이템 시스템 관련 코드 리펙토링 [#4](https://github.com/mass1129/MTVS_Nebula/issues/4)  
+### 빌딩시스템 코드 리펙토링 [#5](https://github.com/mass1129/MTVS_Nebula/issues/5)  
+### UI관련 코드 리펙토링  [#6](https://github.com/mass1129/MTVS_Nebula/issues/6)
+### HTTP 통신 모듈 개 [#7](https://github.com/mass1129/MTVS_Nebula/issues/7)
