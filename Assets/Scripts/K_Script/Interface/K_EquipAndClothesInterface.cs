@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using CodeMonkey.Utils;
-using Cysharp.Threading.Tasks;
 
 public class K_EquipAndClothesInterface : K_UserInterface
 {
@@ -16,7 +14,7 @@ public class K_EquipAndClothesInterface : K_UserInterface
         for (int i = 0; i < inventory.GetSlots.Length; i++)
         {
             var obj = slots[i];
-
+            
             AddEvent(obj, EventTriggerType.PointerEnter, delegate { OnEnter(obj); });
             AddEvent(obj, EventTriggerType.PointerExit, delegate { OnExit(obj); });
             AddEvent(obj, EventTriggerType.BeginDrag, delegate { OnDragStart(obj); });
@@ -29,16 +27,11 @@ public class K_EquipAndClothesInterface : K_UserInterface
         }
     }
 
-    public override void OnDragEnd(GameObject obj)
-    {   
-        base.OnDragEnd(obj);
-        if (MouseData.interfaceMouseIsOver == null&&!UtilsClass.IsPointerOverUI())
-        {
-            inventory.ForGiveItem(slotsOnInterface[obj],CHAN_GameManager.instance.avatarName).Forget();
-            
-        }
-    }
+    public override void OnSlotUpdate(InventorySlot slot)
+    {
 
+        
+    }
 
 
 

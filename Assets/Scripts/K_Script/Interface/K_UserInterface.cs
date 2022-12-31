@@ -1,55 +1,36 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
-using System.Linq;
 using Photon.Pun;
+using CodeMonkey.Utils;
+using Cysharp.Threading.Tasks;
 
-[RequireComponent(typeof(EventTrigger))]
+
 public abstract class K_UserInterface : MonoBehaviourPun
 {
     //public K_PlayerItemSystem player;
     public InventoryObject inventory;
-    private InventoryObject _previousInventory;
     public Dictionary<GameObject, InventorySlot> slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
 
 
     bool isAddedEvent = false;
-    bool needFirstUpdate = false;
+
 
 
     public void OnEnable()
     {
         if (!photonView.IsMine) return;
-        if (!isAddedEvent && !needFirstUpdate)
+        if (!isAddedEvent)
         {
-            UISetting();
+            CreateSlots();
             isAddedEvent = true;
         }
-
-    }
-
-    public void UISetting()
-    {
-        if (!photonView.IsMine) return;
-        CreateSlots();
-
-        for (int i = 0; i < inventory.GetSlots.Length; i++)
-        {
-            if (inventory.type != InterfaceType.Equipment)
-                inventory.GetSlots[i].parent = this;
-            inventory.GetSlots[i].onAfterUpdated += OnSlotUpdate;
-        }
-
-        AddEvent(gameObject, EventTriggerType.PointerEnter, delegate { OnEnterInterface(gameObject); });
-        AddEvent(gameObject, EventTriggerType.PointerExit, delegate { OnExitInterface(gameObject); });
-
         inventory.UpdateInventory();
     }
+
+
     private void OnDestroy()
     {
         if (!photonView.IsMine) return;
@@ -61,49 +42,13 @@ public abstract class K_UserInterface : MonoBehaviourPun
 
     public abstract void CreateSlots();
 
-    public void UpdateInventoryLinks()
-    {
-        int i = 0;
-        foreach (var key in slotsOnInterface.Keys.ToList())
-        {
-            slotsOnInterface[key] = inventory.GetSlots[i];
-            i++;
-        }
-        _previousInventory = inventory;
-    }
-    private void OnSlotUpdate(InventorySlot slot)
-    {
 
-        if (slot.item.id <= -1)
-        {
-            slot.slotDisplay.transform.GetChild(0).GetComponent<Image>().sprite = null;
-            slot.slotDisplay.transform.GetChild(0).GetComponent<Image>().color = new Color(1, 1, 1, 0);
-            if (slot.parent.inventory.type == InterfaceType.Equipment)
-            {
-                slot.slotDisplay.transform.GetChild(1).gameObject.SetActive(true);
-            }
-        }
-        else
-        {
+    public abstract void OnSlotUpdate(InventorySlot slot);
 
-            slot.slotDisplay.transform.GetChild(0).GetComponent<Image>().sprite = slot.GetItemObject().uiDisplay;
-            slot.slotDisplay.transform.GetChild(0).GetComponent<Image>().color = new Color(1, 1, 1, 1);
-            if (slot.parent.inventory.type == InterfaceType.Equipment)
-            {
-                slot.slotDisplay.transform.GetChild(1).gameObject.SetActive(false);
-            }
+    
 
-        }
-    }
 
-    public void Update()
-    {
-        if (!photonView.IsMine || _previousInventory == inventory)
-            return;
 
-        UpdateInventoryLinks();
-
-    }
 
     protected void AddEvent(GameObject obj, EventTriggerType type, UnityAction<BaseEventData> action)
     {
@@ -151,7 +96,7 @@ public abstract class K_UserInterface : MonoBehaviourPun
         }
     }
 
-    public virtual void OnDragEnd(GameObject obj)
+    public void OnDragEnd(GameObject obj)
     {
         Destroy(MouseData.tempItemBeingDragged);
 
@@ -160,6 +105,11 @@ public abstract class K_UserInterface : MonoBehaviourPun
             InventorySlot mouseHoverSlotData = MouseData.interfaceMouseIsOver.slotsOnInterface[MouseData.slotHoveredOver];
 
             inventory.SwapItems(slotsOnInterface[obj], mouseHoverSlotData);
+
+        }
+        if (MouseData.interfaceMouseIsOver == null && !UtilsClass.IsPointerOverUI())
+        {
+            inventory.ForGiveItem(slotsOnInterface[obj], CHAN_GameManager.instance.avatarName).Forget();
 
         }
 
@@ -180,14 +130,30 @@ public abstract class K_UserInterface : MonoBehaviourPun
         }
         return tempItem;
     }
+
+
+    //public void Update()
+    //{
+    //    if (!photonView.IsMine || _previousInventory == inventory)
+    //        return;
+
+    //    UpdateInventoryLinks();
+
+    //}
+
+    //public void UpdateInventoryLinks()
+    //{
+    //    int i = 0;
+    //    foreach (var key in slotsOnInterface.Keys.ToList())
+    //    {
+    //        slotsOnInterface[key] = inventory.GetSlots[i];
+    //        i++;
+    //    }
+    //    _previousInventory = inventory;
+    //}
+
 }
 
 
 
-public static class MouseData
-{
-    public static K_UserInterface interfaceMouseIsOver;
-    public static GameObject tempItemBeingDragged;
-    public static GameObject slotHoveredOver;
-    public static GameObject slotSelected;
-}
+
