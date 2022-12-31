@@ -23,25 +23,30 @@ public class HttpRequester
         try
         {
             string token = PlayerPrefs.GetString("PlayerToken");
-
+  
 
             request.SetRequestHeader("Content-Type", _serializionOption.ContentType);
             request.SetRequestHeader("Authorization", "Bearer " + token);
 
 
-            var operation = await request.SendWebRequest();
+            var operation = request.SendWebRequest();
+            await UniTask.WaitUntil(() => operation.isDone == true);
+
+            if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.DataProcessingError)
+            {
+                throw new InvalidArgumentException();
+            }
 
             var result = _serializionOption.Deserialize<TResultType>(request.downloadHandler.text);
 
 
             return result;
-            //SceneManager.LoadScene(1);
         }
 
-        catch (Exception ex)
+        catch (InvalidArgumentException ex)
         {
 #if UNITY_EDITOR
-            Debug.LogError($"{nameof(Get)} failed: {ex.Message}");
+            Debug.LogError($"{nameof(Get)} failed");
 #endif
             return default;
         }
@@ -69,15 +74,14 @@ public class HttpRequester
 
             var operation = await request.SendWebRequest();
 
-           
-             SetToken(request.downloadHandler.text);
+            SetToken(request.downloadHandler.text);
             onComplete?.Invoke(this);
         }
 
-        catch (Exception ex) //when (ex.Message != "Index was outside the bounds of the array.")
+        catch (Exception ex)
         {
 #if UNITY_EDITOR
-            Debug.LogError($"{nameof(Post)} failed: {ex.Message} Json : {json}");
+            Debug.LogError($"{nameof(Post)} failed : {ex.Message}, Json : {json}");
 #endif
                 onError?.Invoke(this);
         }
@@ -101,7 +105,13 @@ public class HttpRequester
                 request.SetRequestHeader("Authorization", "Bearer " + token);
 
 
-            var operation = await request.SendWebRequest();
+            var operation = request.SendWebRequest();
+            await UniTask.WaitUntil(() => operation.isDone == true);
+
+            if (request.result == UnityWebRequest.Result.ConnectionError|| request.result == UnityWebRequest.Result.DataProcessingError)
+            {
+                throw new InvalidArgumentException();
+            }
 
             var result = _serializionOption.Deserialize<TResultType>(request.downloadHandler.text);
             
@@ -109,15 +119,16 @@ public class HttpRequester
 
         }
 
-        catch (Exception ex)
+        catch (InvalidArgumentException ex)
         {
 #if UNITY_EDITOR
-            Debug.LogError($"{nameof(Post1)} failed: {ex.Message}");
+            Debug.LogError($"{nameof(Post1)} failed");
 #endif
             return default;
         }
         finally
         {
+            
             request.Dispose();
         }
     }
@@ -142,5 +153,10 @@ public class HttpRequester
         
         return 0;
     }
+
+}
+
+public class InvalidArgumentException : Exception
+{
 
 }
