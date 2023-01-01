@@ -92,21 +92,7 @@ namespace AdvancedPeopleSystem
             UpdateSkinnedMeshesOffscreenBounds();
 
         }
-        private void Start()
-        {
-           
-        }
 
-        private void OnEnable()
-        {
-            
-                
-
-            
-            
-
-
-        }
         private void Update()
         {
            
@@ -115,11 +101,6 @@ namespace AdvancedPeopleSystem
                 SetFeetOffset(new Vector3(0, feetOffset, 0));
         }
 
-        private void LateUpdate()
-        {
-           
-           
-        }
 
         public void AnimationTick()
         {
@@ -756,7 +737,7 @@ namespace AdvancedPeopleSystem
         public void SetElementByIndex(CharacterElementType type, int index)
         {
             if (photonView.IsMine&&PhotonNetwork.IsConnected) 
-            photonView.RPC("RPCSetElementByIndex", RpcTarget.AllBufferedViaServer, type, index);
+            photonView.RPC("RPCSetElementByIndex", RpcTarget.AllBuffered, type, index);
             else
             {
                 if (Settings == null)
@@ -1317,11 +1298,11 @@ namespace AdvancedPeopleSystem
         /// Set character setup, use setup class
         /// </summary>
         /// <param name="characterCustomizationSetup">Setup class</param>
-        public void SetCharacterSetup(CharacterCustomizationSetup characterCustomizationSetup)
+        public void SetCharacterSetup(CharacterCustomizationSetup characterCustomizationSetup, bool withClothes = true)
         {
-            characterCustomizationSetup.ApplyToCharacter(this);
+            characterCustomizationSetup.ApplyToCharacter(this, withClothes);
         }
-       
+
         /// <summary>
         /// Generate setup class from current character
         /// </summary>
@@ -1417,31 +1398,24 @@ namespace AdvancedPeopleSystem
             await httpReq.Post(url, data);
 
         }
-        public async UniTask LoadCharacterFromFile(string s)
-        {   
-            if(photonView.IsMine)
-            photonView.RPC("RPCLoadCharacterFromFile", RpcTarget.AllBuffered, s);
-            await UniTask.Yield();
 
-        }
 
-        [PunRPC]
-        public async UniTask RPCLoadCharacterFromFile(string s)
+
+        public async UniTask LoadCharacterFromFile(string s, bool withClothes = true)
         {
-            var url = "https://resource.mtvs-nebula.com/avatar/appearance/" + s;//PlayerPrefs.GetString("AvatarName");
+            
+            var url = "https://resource.mtvs-nebula.com/avatar/appearance/" + s;
             var httpReq = new HttpRequester(new JsonSerializationOption());
 
             H_CCC_Root result2 = await httpReq.Get<H_CCC_Root>(url);
 
-            //var setup = CharacterCustomizationSetup.Deserialize(result2.results, CharacterCustomizationSetup.CharacterFileSaveFormat.Json);
             var setup = result2.results.texture;
             if (setup != null)
             {
-                 SetCharacterSetup(setup);
+                 SetCharacterSetup(setup, withClothes);
             }
-            await UniTask.Yield();
         }
-        public bool textLoadDone = false;
+
         public async void LoadCharacterCustomScene(string path)
         {
             var url = "https://resource.mtvs-nebula.com/avatar/texture/" + path;
