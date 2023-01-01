@@ -126,3 +126,4 @@
 ### 빌딩시스템 코드 리펙토링 [#5](https://github.com/mass1129/MTVS_Nebula/issues/5)  
 ### UI관련 코드 리펙토링  [#6](https://github.com/mass1129/MTVS_Nebula/issues/6)
 ### HTTP 통신 모듈 개선 [#7](https://github.com/mass1129/MTVS_Nebula/issues/7)
+### Photon Multiplay 개선 작업 [#8](https://github.com/mass1129/MTVS_Nebula/issues/8)
