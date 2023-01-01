@@ -20,17 +20,15 @@ public class K_PlayerItemSystem : MonoBehaviourPun
     {
         if (!photonView.IsMine) return;
         avatarName = s;
-        await _CharacterCustomization.LoadCharacterFromFile(s);
+        await _CharacterCustomization.LoadCharacterFromFile(s, false);
         GetComponent<K_MoneySystem>().MoneySystemSetting(s);
         for (int i = 0; i < _equipment.GetSlots.Length; i++)
         {
             _equipment.GetSlots[i].parent = equipmentUI;
-            _equipment.GetSlots[i].onBeforeUpdated += OnRemoveItem;
             _equipment.GetSlots[i].onAfterUpdated += OnEquipItem;
         }
         await GetComponent<K_PlayerStats>().SetPlayerStats();
         ItemLoad();
-        await UniTask.Yield();
     }
 
 
@@ -42,7 +40,6 @@ public class K_PlayerItemSystem : MonoBehaviourPun
 
         for (int i = 0; i < _equipment.GetSlots.Length; i++)
         {
-            _equipment.GetSlots[i].onBeforeUpdated -= OnRemoveItem;
             _equipment.GetSlots[i].onAfterUpdated -= OnEquipItem;
         }
         inven_Building.Clear();
@@ -60,102 +57,69 @@ public class K_PlayerItemSystem : MonoBehaviourPun
 
     public void OnEquipItem(InventorySlot slot)
     {
-        if (photonView.IsMine)
+        
+        var itemObject = slot.GetItemObject();
+        if (itemObject == null)
         {
-            var itemObject = slot.GetItemObject();
-            if (itemObject == null)
-                return;
-
-            switch (slot.parent.inventory.type)
+            switch (slot.allowedItems[0])
             {
-                case InterfaceType.Equipment:
-
-                    if (itemObject.uiDisplay != null)
-                    {
-                        switch (slot.allowedItems[0])
-                        {
-                            case ItemType.Hat:
-                                _CharacterCustomization.SetElementByIndex(CharacterElementType.Hat, itemObject.charCustomIndex);
-                                break;
-
-                            case ItemType.Accessory:
-                                _CharacterCustomization.SetElementByIndex(CharacterElementType.Accessory, itemObject.charCustomIndex);
-                                break;
-
-                            case ItemType.Shirt:
-                                _CharacterCustomization.SetElementByIndex(CharacterElementType.Shirt, itemObject.charCustomIndex);
-                                break;
-                            case ItemType.Pants:
-                                _CharacterCustomization.SetElementByIndex(CharacterElementType.Pants, itemObject.charCustomIndex);
-                                break;
-                            case ItemType.Shoes:
-                                _CharacterCustomization.SetElementByIndex(CharacterElementType.Shoes, itemObject.charCustomIndex);
-                                break;
-                            case ItemType.Bag:
-                                _CharacterCustomization.SetElementByIndex(CharacterElementType.Item1, itemObject.charCustomIndex);
-                                break;
-
-                        }
-
-
-                    }
+                case ItemType.Hat:
+                    _CharacterCustomization.SetElementByIndex(CharacterElementType.Hat,-1);
                     break;
+
+                case ItemType.Accessory:
+                    _CharacterCustomization.SetElementByIndex(CharacterElementType.Accessory, -1);
+                    break;
+
+                case ItemType.Shirt:
+                    _CharacterCustomization.SetElementByIndex(CharacterElementType.Shirt, 1);
+                    break;
+                case ItemType.Pants:
+                    _CharacterCustomization.SetElementByIndex(CharacterElementType.Pants, -1);
+                    break;
+                case ItemType.Shoes:
+                    _CharacterCustomization.SetElementByIndex(CharacterElementType.Shoes, -1);
+                    break;
+                case ItemType.Bag:
+                    _CharacterCustomization.SetElementByIndex(CharacterElementType.Item1, -1);
+                    break;
+
             }
         }
 
-       
-    }
-
-    public void OnRemoveItem(InventorySlot slot)
-    {
-        if (photonView.IsMine)
+        else
         {
-            var itemObject = slot.GetItemObject();
-            if (itemObject == null)
-                return;
-            switch (slot.parent.inventory.type)
+            switch (slot.allowedItems[0])
             {
-                case InterfaceType.Equipment:
-                    if (slot.GetItemObject().uiDisplay != null)
-                    {
-                        switch (slot.allowedItems[0])
-                        {
-
-                            case ItemType.Hat:
-                                _CharacterCustomization.SetElementByIndex(CharacterElementType.Hat, -1);
-                                break;
-
-                            case ItemType.Accessory:
-                                _CharacterCustomization.SetElementByIndex(CharacterElementType.Accessory, -1);
-                                break;
-
-                            case ItemType.Shirt:
-                                _CharacterCustomization.SetElementByIndex(CharacterElementType.Shirt, 1);
-                                break;
-                            case ItemType.Pants:
-                                _CharacterCustomization.SetElementByIndex(CharacterElementType.Pants, -1);
-                                break;
-                            case ItemType.Shoes:
-                                _CharacterCustomization.SetElementByIndex(CharacterElementType.Shoes, -1);
-                                break;
-                            case ItemType.Bag:
-                                _CharacterCustomization.SetElementByIndex(CharacterElementType.Item1, -1);
-                                break;
-                        }
-
-                    }
+                case ItemType.Hat:
+                    _CharacterCustomization.SetElementByIndex(CharacterElementType.Hat, itemObject.charCustomIndex);
                     break;
-                case InterfaceType.Inventory_Cloths:
-                    if (slot.GetItemObject().uiDisplay != null)
-                    {
-                        var go = PhotonNetwork.Instantiate("item", transform.position, Quaternion.identity);
 
-                    }
+                case ItemType.Accessory:
+                    _CharacterCustomization.SetElementByIndex(CharacterElementType.Accessory, itemObject.charCustomIndex);
                     break;
+
+                case ItemType.Shirt:
+                    _CharacterCustomization.SetElementByIndex(CharacterElementType.Shirt, itemObject.charCustomIndex);
+                    break;
+                case ItemType.Pants:
+                    _CharacterCustomization.SetElementByIndex(CharacterElementType.Pants, itemObject.charCustomIndex);
+                    break;
+                case ItemType.Shoes:
+                    _CharacterCustomization.SetElementByIndex(CharacterElementType.Shoes, itemObject.charCustomIndex);
+                    break;
+                case ItemType.Bag:
+                    _CharacterCustomization.SetElementByIndex(CharacterElementType.Item1, itemObject.charCustomIndex);
+                    break;
+
             }
+           
+
         }
-      
+                   
     }
+
+
 
 
     public async UniTask TwoInvenSave()
