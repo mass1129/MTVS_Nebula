@@ -17,6 +17,7 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
     {
         PN.SendRate = 30;
         PN.SerializationRate = 15;
+        PhotonNetwork.AutomaticallySyncScene = true;
         if (instance == null)
         {
             instance = this;
@@ -95,18 +96,20 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
             BGMPlayer.instance.GetComponent<AudioSource>().clip = BGMPlayer.instance.audioSources[1];
             BGMPlayer.instance.GetComponent<AudioSource>().Play();
             PN.LoadLevel(sceneName);
+            SetPlayer(prefab);
         }
         else if (sceneName == name_UserScene)
         {
             BGMPlayer.instance.GetComponent<AudioSource>().clip = BGMPlayer.instance.audioSources[2];
             BGMPlayer.instance.GetComponent<AudioSource>().Play();
+            if(PN.CurrentRoom.PlayerCount <= 1)
             PN.LoadLevel(sceneName);
             LoadingObject.SetActive(false);
             
         }
         
         
-        SetPlayer(prefab);
+        
 
     }
 
@@ -120,9 +123,6 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
     RoomOptions roomOption()
     {
         RoomOptions roomOps = new();
-        //플레이어 유저ID 공유 가능하도록 설정
-        //roomOps.PublishUserId = true;
-        //하늘씬 뷰는 일단 20명 제한
         if (roomName == "sky")
         {
             roomOps.MaxPlayers = 20;
@@ -137,21 +137,12 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
     }
     public void SetPlayer(string prefab)
     {
-        if (prefab == WhalePrepab)
-        { player = PN.Instantiate(prefab, new Vector3(0, 3, 0), Quaternion.identity); }
-        else
-        {
-            player = PN.Instantiate(prefab, new Vector3((int)Random.Range(40,60), 3, (int)Random.Range(40, 60)), Quaternion.identity);
-            CHAN_ClientManager.instance.myCharacter = player.GetComponent<K_01_Character>();
+        player = PN.Instantiate(prefab, new Vector3(0, 3, 0), Quaternion.identity);
 
-
-
-        }
     }
 
     public void Go_Sky_Scene()
     {
-        PhotonNetwork.Destroy(player);
         roomName = "sky";
         sceneName = name_SkyScene;
         prefab = WhalePrepab;
@@ -217,30 +208,9 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
             PhotonNetwork.LeaveRoom();
     }
 
-
-    //public void Go_User_Custom()
-    //{
-    //    Destroy(player);
-    //    roomName = customName.text;
-    //    sceneName = name_UserScene;
-    //    prefab = userPrefab;
-    //    print("Join : " + customName.text);
-    //    LoadingObject.SetActive(true);
-    //    PN.LeaveRoom();
-    //}
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        Debug.LogWarning("유저 들어옴");
-        //현재 유저월드에 있다면
-        //if (sceneName == name_UserScene)
-        //{ 
-        //    //만약 유저중에 리모콘을 가진자가 있다면
-        //    if(CHAN_PlayerManger.LocalPlayerInstance.GetComponent<Item_RemoteController>())
-        //    {
-        //        Item_TVManager_Agora.instance.UpdateItem(Item_TVManager_Agora.instance.isScreenUp);
-        //        Debug.LogWarning("유저 난입");
-        //    }
-        //}
+
         
     }
     

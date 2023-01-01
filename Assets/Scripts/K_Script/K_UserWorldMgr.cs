@@ -16,16 +16,16 @@ public class K_UserWorldMgr : MonoBehaviourPunCallbacks
     public GridBuildingSystem3D buildingSystem;
     public List<GameObject> buildingSystemSet;
     public List<PlacedObject> loadObjectList;
+    public string playerPrefeb;
     private void Awake()
     {
         instance = this;
-        _character = CHAN_ClientManager.instance.myCharacter;
-        _character.transform.position += Vector3.up * 5;
 
     }
     void Start()
     {
-        _character.transform.position += Vector3.up * 5;
+        var player = PhotonNetwork.Instantiate(playerPrefeb, new Vector3((int)Random.Range(40, 60), 3, (int)Random.Range(40, 60)), Quaternion.identity);
+        _character = player.GetComponent<K_01_Character>(); 
 
         if (PhotonNetwork.CurrentRoom.PlayerCount <2)
         {
@@ -35,9 +35,10 @@ public class K_UserWorldMgr : MonoBehaviourPunCallbacks
         HandleBuildingObj(false);
 
         _character.PlayerSetting().Forget();
-
-
     }
+
+
+
     public void LoadSkyScene()
     {
         //_character.GetComponent<K_PlayerItemSystem>().DestoryPlayer();
