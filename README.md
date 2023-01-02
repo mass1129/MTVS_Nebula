@@ -106,8 +106,14 @@
       - **async UniTask ForGiveItem(InventorySlot dropSlot, string avatarName)** : 비동기 아이템 소유권 포기 후 인벤토리 로드 메소드(데이터 멱등성 유지)    
       
   - **Inventory.cs** : 서버와 주고 받을 인벤토리 데이터 클래스(InventorySlot[]으로 구성)    
-
-
+  - **Inventory 데이터 Post/Get 구조도**  
+     <img src="Image/InventoryPostGet1.png" width="800px">  
+  - **Inventory 전체 구조도**  
+     <img src="Image/inventoryAllStructure.png" width="800px">  
+## UI - Inventory  
+ - 개요 : 추상클래스 
+   ![Diagram](https://github.com/mass1129/MTVS_Nebula/blob/mass7/Image/testDiagram.drawio.png)
+    <a href="https://github.com/mass1129/MTVS_Nebula/blob/mass7/Image/testDiagram.drawio.html?repo=MTVS_Nebula&path=Image/testDiagram.drawio.png" target="_blank">Edit</a>
 
 
 
