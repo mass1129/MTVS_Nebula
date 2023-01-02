@@ -111,18 +111,42 @@
   - **Inventory 전체 구조도**  
      <img src="Image/inventoryAllStructure.png" width="800px">  
 ## UI - Inventory  
- - 개요 : 추상클래스 
-   ![Diagram](https://github.com/mass1129/MTVS_Nebula/blob/mass7/Image/testDiagram.drawio.png)
-    <a href="https://github.com/mass1129/MTVS_Nebula/blob/mass7/Image/testDiagram.drawio.html?repo=MTVS_Nebula&path=Image/testDiagram.drawio.png" target="_blank">Edit</a>
+ - 개요  
+    - 추상클래스를 상속받음으로서 **슬롯 세팅 - CreateSlots()** / **슬롯 Action - OnSlotUpdate(InventorySlot)** 를 자식 클래스에서 반드시 구현하도록 함.  
+    - 또 한가지 이유는 UI type 별로 위에 기술한 두가지 메소드가 다르기 때문이다. virtual로 하기에는 for문 안에 코드가 다른 것들을 다시 for문으로 돌려주기에는 부담스러웠다.  
+    - 세팅시 슬롯마다 등록하는 UI이벤트 메소드들은 자식 클래스에서 공통으로 사용하므로 추상클래스에 선언 후 자식클래스에서 구현하는 CreateSlots()에서 사용  
+      ![Diagram](https://github.com/mass1129/MTVS_Nebula/blob/mass7/Image/testDiagram.drawio.png)
+ - **K_UserInterface.cs : 추상 클래스**  
+    -  **abstract Function**  
+        -  void CreateSlots() : 슬롯 세팅  
+        -  void OnSlotUpdate(InventorySlot slot) : 슬롯 업데이트시 호출되는 Action  
+    -  **Function**  
+        -  void AddEvent(GameObject obj, EventTriggerType type, UnityAction\<BaseEventData> action) : 오브젝트(슬롯 or UI창), EventTriggerType, Action를 매개변수로 받아서 이벤트를 등록하는 메소드  
+    -  **Action** : MouseData라는 static클래스에 필드 값을 EventTriggerType 마다 설정한다.  
+        - **UI 창에 적용** 
+        - void OnEnterInterface(GameObject obj) : 마우스가 UI상에 있을 때 MouseData.interfaceMouseIsOver = 해당 UI의 K_UserInterface  
+        - void OnExitInterface(GameObject obj) : 마우스가 UI에서 이탈할 때 MouseData.interfaceMouseIsOver = null  
+        - **슬롯에 적용**
+        - void OnEnter(GameObject obj) : 마우스가 슬롯 안에 있을 때 MouseData.slotHoveredOver = obj  
+        - void OnExit(GameObject obj) : 마우스가 슬롯에서 나갈 때 MouseData.slotHoveredOver = null  
+        - void OnDragStart(GameObject obj) : 슬롯 드래그 시작할 때 MouseData.tempItemBeingDragged = CreateTempItem(obj) => 슬롯 이미지 복사본 생성  
+        - void OnDrag(GameObject obj) : 슬롯 드래그 중일 때 슬롯 이미지 복사본 마우스 커서 위치로 세팅  
+        - void OnDragEnd(GameObject obj) : 드래그 종료시 복사본 삭제, 마우스가 슬롯 위에 있을시 슬롯 스왑, 마우스가 UI 밖에 있을때 아이템 포기  
+        - GameObject CreateTempItem(GameObject obj) : 이미지 복사본 오브젝트를 생성 기능  
+- **자식 클래스** : 장비, 옷, 빌딩 퀵슬롯, 상점 UI  
 
-
-
-
-
-
+|   |  <center>K_EquipmentInterface</center> |  <center>K_ClothesInterface</center> |<center>K_BuildingQuickSlotInterface</center> |  <center>K_ShopListInterface</center> |
+|:--------:|:--------:|:--------:|:--------:|:--------:|
+|**등록 이벤트 개수** | <center>7 </center> | <center>7 </center> |<center>0 </center> |<center>0 </center> |
+|**슬롯 업데이트 Action** | <center>img 업뎃 + 디폴드 img on/off </center> |<center>img 업뎃 </center> |<center>img 업뎃 </center> |<center>전용 슬롯 업뎃 함수, 버튼 onClick 등록</center> |
+|**슬롯 parent설정 여부** | <center> X </center> |<center>O </center>|<center>O </center> |<center>X </center> |
+|**비고** | <center> - </center> |<center>- </center>|<center>- </center> |<center>상점 시스템 참조 </center> |
+  
+## 게임 머니 및 상점 시스템  
+  
 ## 월드 꾸미기
 
-## 게임 머니 및 상점 시스템
+
 
 # 프로젝트 종료 이후 (22.12.2~) 이슈 관리 및 개선 사항  
 ### (photon) master client 변경시 건물이 중복 생성 및 삭제 불가능한 이슈 [#1](https://github.com/mass1129/MTVS_Nebula/issues/1)  
