@@ -109,9 +109,10 @@
   - **Inventory.cs** : 서버와 주고 받을 인벤토리 데이터 클래스(InventorySlot[]으로 구성)    
   - **Inventory 데이터 Post/Get 구조도**  
      <img src="Image/InventoryPostGet1.png" width="800px">  
-  - **Inventory 전체 구조도**  
+  - **Inventory 전체 구조도 : NetWork 파트와 관련 정보를 공유하기 위함**  
      <img src="Image/inventoryAllStructure.png" width="800px">  
-     
+  - **Inventory Network 파트 구조도**  
+     <img src="Image/ServerInvenStructure.png" width="800px">  
   ### PlayerItemSystem.cs
   - **개요** : 플레이어의 전반적인 inventory를 관리(저장/불러오기) => 그렇기 때문에 플레이어 생성시 플레이어 세팅, 아바타 장비 장착 시스템  
   - **Function**  
