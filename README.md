@@ -126,7 +126,7 @@
 ## UI - Inventory  
  - 개요  
     - 추상클래스를 상속받음으로서 **슬롯 세팅 - CreateSlots()** / **슬롯 event 참조 메소드 - OnSlotUpdate(InventorySlot)** 를 자식 클래스에서 반드시 구현하도록 함.  
-    - 또 한가지 이유는 UI type 별로 위에 기술한 두가지 메소드가 다르기 때문이다. virtual로 하기에는 for문 안에 코드가 다른 것들을 다시 for문으로 돌려주기에는 부담스러웠다.  
+    - 또 한가지 이유는 UI type 별로 위에 기술한 두가지 메소드가 다르기 때문이다.  
     - 세팅시 슬롯마다 등록하는 UI이벤트 메소드들은 자식 클래스에서 공통으로 사용하므로 추상클래스에 선언 후 자식클래스에서 구현하는 CreateSlots()에서 사용  
       ![Diagram](https://github.com/mass1129/MTVS_Nebula/blob/mass7/Image/testDiagram.drawio.png)
  - **K_UserInterface.cs : 추상 클래스**  
@@ -186,7 +186,7 @@
     - **Field** 
       - 부모 클래스에서는 Dictionary<GameObject, InventorySlot> 형태의 딕션어리를 사용했다. 왜냐면 인벤토리 슬롯 드래그/드롭시 해당 슬롯 GameObject를 Key값으로 InventorySlot을 찾아야 했기 때문인다.  
       - 이미지만 갱신하면 되었던 기존 UI와는 다르게 상점 UI는 이미지, discription, 가격, 등등 많은 것들을 갱신해줘야했다. 
-      - 따라서 **샵 아이템 슬롯 모듈 클래스(ShopSlotModule.cs)**를 만들어서 갱신해야하는 속성들을 필드에 선언하고 세팅해주는 메소드를 만들고 이것을 슬롯 갱신 이벤트에 참조시켜야했다.    
+      - 따라서 **샵 아이템 슬롯 모듈 클래스\(ShopSlotModule.cs)** 를 만들어서 갱신해야하는 속성들을 필드에 선언하고 세팅해주는 메소드를 만들고 이것을 슬롯 갱신 이벤트에 참조시켜야했다.    
       - 슬롯 갱신 이벤트는 **InventorySlot**를 입력 매개변수로 받는다. 따라서 슬롯을 매개변수로 ShopSlotModule로 접근해야했다.  
       - 물론 기존 UI에서 GameObject를 **InventorySlot.slotDisplay**에 참조시킨것처럼 슬롯 클래스에 ShopSlotModule 필드를 만들고 참조시켜도 되었지만 상점 UI때문에 모든 슬롯에 해당 필드를 만드는 것은 비효율적으로 보였다.  
       - 따라서 **K_ShopListInterface**클래스에서는 아래와 같이 부모 클래스의 필드를 숨기고 재정의 하였다.
@@ -194,17 +194,44 @@
         public new Dictionary<InventorySlot, ShopSlotModule> slotsOnInterface; //new를 통해 재정의
         ```   
     -  **override Function**  
-        -  **void MoneySystemSetting(string s)** : **머니시스템 세팅 메소드** - 관련 속성과 참조 값 세팅 및 머니 로드 코루틴 시작  
-        -  **IEnumerator MoneyCoroutine()** : 5초마다 머니 로드 코루틴   
-        -  **UniTaskVoid MoneyLoad()** : 서버에 머니 정보 요청 및 관련 이벤트 호출
-        -  **UniTaskVoid BuyClothesEvent(ItemObject item)** : 옷 구매 요청 - 아이템의 이름을 Json형태로 보내고 구매 성공시 옷 인벤토리 Load, 머니 Load  
-        -  **UniTaskVoid BuyBBundleEvent(ItemObject item)** : 건물 번들 구매 요청 - 빌딩 인벤 Load, 머니 Load, **+상점 물품 목록 Load**  
+        -  **void CreateSlots()** : UI 세팅시 호출되는 메소드이다.   
+            - 상점 UI는 상점 아이템 개수에 따라 모듈이 생성/파괴 되기 때문에 UI세팅과 상점 아이템 로드를 하나의 메소드로 통합했다.  
+        ```C#
+        public async UniTask ShopItemLoad(){
+            // ...
+            newList.AddRange(result2.results.clothesList);//데이터 구조가 달라서 기존 인벤 로드처럼 Inventory클래스 형식으로 바로 Deserialize 불가
+            if(result2.results.bundleList.Count>0)
+                newList.AddRange(result2.results.bundleList); //상점 아이템 리스트화
+            slotsOnInterface = new Dictionary<InventorySlot, ShopSlotModule>();
+            for (int i = 0; i < newList.Count; i++){ //슬롯 세팅
+                int temp = i; //순서가 건너뛰어지지않게 하드 코딩
+                var obj = Instantiate(shopSlotModuleprefeb, Vector3.zero, Quaternion.identity, moduleParent); //모듈 생성
+                slotsOnInterface.Add(inventory.GetSlots[temp], obj.GetComponent<ShopSlotModule>()); //Dictionary 세팅
+                inventory.GetSlots[temp].onAfterUpdated += OnSlotUpdate;} //슬롯 이벤트에 관련 메소드 참조  
+            for (int i = 0; i < newList.Count; i++){ //슬롯 갱신
+                int temp = i;
+                ItemObject itemObject = inventory.database.ItemObjects[newList[temp].id]; //리스트의 아이템 id를 바탕으로 데이터베이스에서 기존 아이템 참조 생성  
+                slotsOnInterface[inventory.GetSlots[temp]].itemPrice = newList[temp].price; //price속성은 기존 아이템이 없는 속성이라서 상점 모듈 필드에 할당  
+                inventory.GetSlots[temp].UpdateSlot(new Item(itemObject), 1);}  //상점 인벤토리의 슬롯을 UpdateSlot해주면 이벤트가 호출되면서 갱신 완료  
+        ```   
+      - **void OnSlotUpdate(InventorySlot slot)** : 이벤트에 참조시킬 메소드이다. slot를 입력매개변수로 받으면 재정의한 dictionary에 key값을 통해 ShopSlotModule접근하여 메소드를 참조시켜 훨씬 깔끔하고 간결한 코드가 되었다.
+          ```C#
+          public override void OnSlotUpdate(InventorySlot slot){
+              slotsOnInterface[slot].SetShopModule(slot, inventory); //
+              slotsOnInterface[slot].buyButton.onClick.AddListener(() => TryBuyItem(slot));}
+          ```   
+          ### [관련 유지 보수 기록 보기](https://github.com/mass1129/MTVS_Nebula/issues/6)  
+          
+    -  **Added Function**  
+        -  **void TryBuyItem(InventorySlot slot)** 
+            - 슬롯을 매개변수로 아이템 오브젝트 Get -> 아이템 종류에 따라 K_MoneySystem에 BuyClothesEvent(itemObject) or BuyBBundleEvent(itemObject) 호출  
+
   
 ## 월드 꾸미기
 
 
 
-# 프로젝트 종료 이후 (22.12.2~) 이슈 관리 및 개선 사항  
+# 프로젝트 종료 이후 (22.12.18~) 이슈 관리 및 개선 사항  
 ### (photon) master client 변경시 건물이 중복 생성 및 삭제 불가능한 이슈 [#1](https://github.com/mass1129/MTVS_Nebula/issues/1)  
 ### 유저월드에 입장할때 먼저 입장한 유저의 아바타가 업데이트가 안되는 이슈 [#2](https://github.com/mass1129/MTVS_Nebula/issues/2)  
 ### 인벤토리 저장할 때 "부정한 행위가 발생하였습니다"라는 네트워크 오류가 발생하는 이슈 [#3](https://github.com/mass1129/MTVS_Nebula/issues/3)  
