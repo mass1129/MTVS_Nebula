@@ -3,25 +3,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
-using Photon.Pun;
 using CodeMonkey.Utils;
-using Cysharp.Threading.Tasks;
-
-
-public abstract class K_UserInterface : MonoBehaviourPun
+public abstract class K_UserInterface : MonoBehaviour
 {
     //public K_PlayerItemSystem player;
     public InventoryObject inventory;
     public Dictionary<GameObject, InventorySlot> slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
-
-
     bool isAddedEvent = false;
-
-
-
-    public void OnEnable()
+    private void OnEnable()
     {
-        if (!photonView.IsMine) return;
         if (!isAddedEvent)
         {
             CreateSlots();
@@ -29,26 +19,15 @@ public abstract class K_UserInterface : MonoBehaviourPun
         }
         inventory.UpdateInventory();
     }
-
-
     private void OnDestroy()
     {
-        if (!photonView.IsMine) return;
         for (int i = 0; i < inventory.GetSlots.Length; i++)
         {
             inventory.GetSlots[i].onAfterUpdated -= OnSlotUpdate;
         }
     }
-
     public abstract void CreateSlots();
-
-
     public abstract void OnSlotUpdate(InventorySlot slot);
-
-    
-
-
-
 
     protected void AddEvent(GameObject obj, EventTriggerType type, UnityAction<BaseEventData> action)
     {
@@ -57,65 +36,52 @@ public abstract class K_UserInterface : MonoBehaviourPun
         var eventTrigger = new EventTrigger.Entry { eventID = type };
         eventTrigger.callback.AddListener(action);
         trigger.triggers.Add(eventTrigger);
-
     }
-
-
-    public void OnEnterInterface(GameObject obj)
+    protected void OnEnterInterface(GameObject obj)
     {
         MouseData.interfaceMouseIsOver = obj.GetComponent<K_UserInterface>();
     }
-    public void OnExitInterface(GameObject obj)
+    protected void OnExitInterface(GameObject obj)
     {
         MouseData.interfaceMouseIsOver = null;
     }
-    public void OnEnter(GameObject obj)
+    protected void OnEnter(GameObject obj)
     {
         MouseData.slotHoveredOver = obj;
     }
-
-    public void OnExit(GameObject obj)
+    protected void OnExit(GameObject obj)
     {
         //player.mouseItem.hoverObj = null;
         //player.mouseItem.hoverItem = null;
         MouseData.slotHoveredOver = null;
-
     }
-
-    public void OnDragStart(GameObject obj)
+    protected void OnDragStart(GameObject obj)
     {
         Debug.Log(slotsOnInterface[obj].item.name);
         //slotsOnInterface[obj].UpdateSlot(slotsOnInterface[obj].item, slotsOnInterface[obj].amount);
         MouseData.tempItemBeingDragged = CreateTempItem(obj);
     }
-    public void OnDrag(GameObject obj)
+    protected void OnDrag(GameObject obj)
     {
         if (MouseData.tempItemBeingDragged != null)
         {
             MouseData.tempItemBeingDragged.GetComponent<RectTransform>().position = Input.mousePosition;
         }
     }
-
-    public void OnDragEnd(GameObject obj)
+    protected void OnDragEnd(GameObject obj)
     {
         Destroy(MouseData.tempItemBeingDragged);
-
         if (MouseData.slotHoveredOver)
         {
             InventorySlot mouseHoverSlotData = MouseData.interfaceMouseIsOver.slotsOnInterface[MouseData.slotHoveredOver];
-
             inventory.SwapItems(slotsOnInterface[obj], mouseHoverSlotData);
-
         }
         if (MouseData.interfaceMouseIsOver == null && !UtilsClass.IsPointerOverUI())
         {
             inventory.ForGiveItem(slotsOnInterface[obj], CHAN_GameManager.instance.avatarName).Forget();
-
         }
-
     }
-
-    private GameObject CreateTempItem(GameObject obj)
+    protected GameObject CreateTempItem(GameObject obj)
     {
         GameObject tempItem = null;
         if (slotsOnInterface[obj].item.id >= 0)
@@ -130,17 +96,12 @@ public abstract class K_UserInterface : MonoBehaviourPun
         }
         return tempItem;
     }
-
-
     //public void Update()
     //{
     //    if (!photonView.IsMine || _previousInventory == inventory)
     //        return;
-
     //    UpdateInventoryLinks();
-
     //}
-
     //public void UpdateInventoryLinks()
     //{
     //    int i = 0;
@@ -151,9 +112,4 @@ public abstract class K_UserInterface : MonoBehaviourPun
     //    }
     //    _previousInventory = inventory;
     //}
-
 }
-
-
-
-
