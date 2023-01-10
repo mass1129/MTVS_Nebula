@@ -16,18 +16,18 @@ public class K_PlayerItemSystem : MonoBehaviourPun
 
     public CharacterCustomization  _CharacterCustomization;
 
-    public async UniTask SetItemSystem(string s)
+    public async UniTaskVoid SetItemSystem(string s)
     {
         if (!photonView.IsMine) return;
         avatarName = s;
-        await _CharacterCustomization.LoadCharacterFromFile(s, false);
-        GetComponent<K_MoneySystem>().MoneySystemSetting(s);
+        //await _CharacterCustomization.LoadCharacterFromFile(s, false);
+        //GetComponent<K_MoneySystem>().MoneySystemSetting(s);
         for (int i = 0; i < _equipment.GetSlots.Length; i++)
         {
             _equipment.GetSlots[i].parent = equipmentUI;
             _equipment.GetSlots[i].onAfterUpdated += OnEquipItem;
         }
-        await GetComponent<K_PlayerStats>().SetPlayerStats();
+        GetComponent<K_PlayerStats>().SetPlayerStats();
         ItemLoad();
     }
 
@@ -35,16 +35,13 @@ public class K_PlayerItemSystem : MonoBehaviourPun
     private void OnDestroy()
     {
         if (!photonView.IsMine) return;
-        
-        TwoInvenSave().Forget();
 
+        //TwoInvenSave().Forget();
+        ItemSave();
         for (int i = 0; i < _equipment.GetSlots.Length; i++)
         {
             _equipment.GetSlots[i].onAfterUpdated -= OnEquipItem;
-        }
-        inven_Building.Clear();
-
-        
+        } 
     }
 
     public void UpdateEquipment()
@@ -124,24 +121,27 @@ public class K_PlayerItemSystem : MonoBehaviourPun
 
     public async UniTask TwoInvenSave()
     {
-        if (!photonView.IsMine) return;
-        SaveTwoInven saveObject = new SaveTwoInven
-        {
-            equipment = _equipment.GetInventory(),
-            clothesInventory = inven_Cloths.GetInventory()
-        };
-        await UniTask.DelayFrame(2);
-        string json = JsonUtility.ToJson(saveObject, true);
+        //if (!photonView.IsMine) return;
+        //SaveTwoInven saveObject = new SaveTwoInven
+        //{
+        //    equipment = _equipment.GetInventory(),
+        //    clothesInventory = inven_Cloths.GetInventory()
+        //};
+        //await UniTask.DelayFrame(2);
+        //string json = JsonUtility.ToJson(saveObject, true);
         
-        var url = "https://resource.mtvs-nebula.com/" + _equipment.savePath + avatarName;
-        var httpReq = new HttpRequester(new JsonSerializationOption());
-        await httpReq.Post(url, json);
+        //var url = "https://resource.mtvs-nebula.com/" + _equipment.savePath + avatarName;
+        //var httpReq = new HttpRequester(new JsonSerializationOption());
+        //await httpReq.Post(url, json);
 
     }
 
     public void ItemSave()
     {
-        TwoInvenSave().Forget();
+        //TwoInvenSave().Forget();
+        inven_Cloths.InventorySave(avatarName).Forget();
+        _equipment.InventorySave(avatarName).Forget();
+        inven_Building.InventorySave(avatarName).Forget();
     }
     public void ItemLoad()
     {
@@ -157,5 +157,28 @@ public class K_PlayerItemSystem : MonoBehaviourPun
         public Inventory equipment;
         public Inventory clothesInventory;
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.TryGetComponent<GroundItem>(out GroundItem item))
+        {
+            ItemObject itemObj = item.item;
+            switch (itemObj.type)
+            {
+                case ItemType.Hat:
+                case ItemType.Accessory:
+                case ItemType.Shirt:
+                case ItemType.Pants:
+                case ItemType.Shoes:
+                case ItemType.Bag:
+                    inven_Cloths.AddItem(itemObj.data, 1);
+                    break;
+                case ItemType.Bundle_Building:
+                    inven_Building.AddItem(itemObj.data, 1);
+                    break;
+                default:
+                    return;
 
+            }
+        }
+    }
 }
