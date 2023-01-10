@@ -72,7 +72,7 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
         // 서버에 접속하면 Room으로 바로 입장한다. 
         base.OnConnectedToMaster();
         //유저 정보 조회는 마스터 서버시점부터 시작된다.
-        PN.FindFriends(CUI.userLists.ToArray());
+        //PN.FindFriends(CUI.userLists.ToArray());
         PN.JoinOrCreateRoom(roomName, roomOption(), TypedLobby.Default);
 
     }
@@ -100,8 +100,8 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
         }
         else if (sceneName == name_UserScene)
         {
-            BGMPlayer.instance.GetComponent<AudioSource>().clip = BGMPlayer.instance.audioSources[2];
-            BGMPlayer.instance.GetComponent<AudioSource>().Play();
+            //BGMPlayer.instance.GetComponent<AudioSource>().clip = BGMPlayer.instance.audioSources[2];
+            //BGMPlayer.instance.GetComponent<AudioSource>().Play();
             if(PN.CurrentRoom.PlayerCount <= 1)
             PN.LoadLevel(sceneName);
             LoadingObject.SetActive(false);
@@ -235,7 +235,6 @@ public class CHAN_GameManager : MonoBehaviourPunCallbacks
         roomName = _roomName;
         sceneName = _sceneName;
         prefab = _prefab;
-        avatarName = PlayerPrefs.GetString("AvatarName");
         ownIslandId = PlayerPrefs.GetString("Island_ID");
     }
 }   
