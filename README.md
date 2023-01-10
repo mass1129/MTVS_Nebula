@@ -38,7 +38,7 @@
     ```
     예시  
     ```C#
-    //어떤 클래스든 역직렬화 가능
+    //어떤 클래스든 역직렬화 가능  
     H_I_Root result2 = await httpReq.Get<H_I_Root>(url);
     Inventory newInven = result2.results;
     ```
