@@ -19,9 +19,10 @@ public class HttpRequester
     
     public async UniTask<TResultType> Get<TResultType>(string url)
     {
-        using var request = UnityWebRequest.Get(url);
+        
         try
         {
+            using var request = UnityWebRequest.Get(url);
             string token = PlayerPrefs.GetString("PlayerToken");
   
 
@@ -30,7 +31,8 @@ public class HttpRequester
 
 
             var operation = request.SendWebRequest();
-            await UniTask.WaitUntil(() => operation.isDone == true);
+            while (!operation.isDone)
+               await UniTask.Yield();
 
             if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.DataProcessingError)
             {
@@ -50,22 +52,23 @@ public class HttpRequester
 #endif
             return default;
         }
-        finally
-        {
-            request.Dispose();
-        }
+
 
     }
     protected static double timeout = 300;
     public async UniTask Post(string url, string json) //<TResultType> Get<TResultType>(string url)
     {
-        using var request = UnityWebRequest.Post(url, json);
+        
         try
         {
+            using var request = UnityWebRequest.Post(url, json);
             string token = PlayerPrefs.GetString("PlayerToken");
             
 
             byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
+
+            request.uploadHandler.Dispose();
+
             request.uploadHandler = new UploadHandlerRaw(jsonToSend);
             request.SetRequestHeader("Content-Type", _serializionOption.ContentType);
             if (token != null)
@@ -73,6 +76,8 @@ public class HttpRequester
 
 
             var operation = await request.SendWebRequest();
+            while (!operation.isDone)
+                await UniTask.Yield();
 
             SetToken(request.downloadHandler.text);
             onComplete?.Invoke(this);
@@ -85,20 +90,21 @@ public class HttpRequester
 #endif
                 onError?.Invoke(this);
         }
-        finally
-        {
-            request.Dispose();
-        }
 
     }
     public async UniTask<TResultType> Post1<TResultType>(string url, string json)
     {
-        using var request = UnityWebRequest.Post(url, json);
+        
         try
         {
+            using UnityWebRequest request = UnityWebRequest.Post(url, json);
             string token = PlayerPrefs.GetString("PlayerToken");
 
+            
             byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
+
+            request.uploadHandler.Dispose();
+
             request.uploadHandler = new UploadHandlerRaw(jsonToSend);
             request.SetRequestHeader("Content-Type", _serializionOption.ContentType);
             if (token != null)
@@ -114,7 +120,7 @@ public class HttpRequester
             }
 
             var result = _serializionOption.Deserialize<TResultType>(request.downloadHandler.text);
-            
+
             return result;
 
         }
@@ -122,16 +128,14 @@ public class HttpRequester
         catch (InvalidArgumentException ex)
         {
 #if UNITY_EDITOR
-            Debug.LogError($"{nameof(Post1)} failed");
+            Debug.LogError($"{nameof(Post1)} failed{ex.code}");
 #endif
             return default;
         }
-        finally
-        {
-            
-            request.Dispose();
-        }
+
     }
+
+
     int SetToken(string _input)
     {
         if (_input == null)
@@ -158,5 +162,5 @@ public class HttpRequester
 
 public class InvalidArgumentException : Exception
 {
-
+    public int code;
 }
