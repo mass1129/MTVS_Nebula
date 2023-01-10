@@ -5,7 +5,6 @@ public class K_ShopListInterface : K_UserInterface
 {
 
     public K_MoneySystem moneySystem;
-    
     public GameObject shopSlotModuleprefeb;
     public Transform moduleParent;
     public new Dictionary<InventorySlot, ShopSlotModule> slotsOnInterface;
@@ -59,7 +58,6 @@ public class K_ShopListInterface : K_UserInterface
 
     public async UniTask ShopItemLoad()
     {
-        if (!photonView.IsMine) return;
         inventory.Clear();
         var url = "https://resource.mtvs-nebula.com/" + inventory.loadPath + moneySystem.avatarName;
         var httpReq = new HttpRequester(new JsonSerializationOption());
