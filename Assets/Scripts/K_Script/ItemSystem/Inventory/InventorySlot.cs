@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+public delegate void SlotEvent(InventorySlot slot);
 [System.Serializable]
 public class InventorySlot
 {
@@ -13,8 +14,8 @@ public class InventorySlot
     [System.NonSerialized]
     public GameObject slotDisplay;
 
-    [System.NonSerialized]
-    public Action<InventorySlot> onAfterUpdated;
+    //[System.NonSerialized]
+    public event SlotEvent onAfterUpdated;
     [System.NonSerialized]
     public Action<InventorySlot> onBeforeUpdated;
 
