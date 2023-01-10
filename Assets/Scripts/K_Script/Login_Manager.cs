@@ -60,7 +60,7 @@ public class Login_Manager : MonoBehaviour
         };
         string json = JsonUtility.ToJson(user, true);
 
-        var url = "https://auth.mtvs-nebula.com/auth/login";
+        var url = "http://ec2-43-201-62-61.ap-northeast-2.compute.amazonaws.com:8001/login";
  
 
         var httpReq = new HttpRequester(new JsonSerializationOption());

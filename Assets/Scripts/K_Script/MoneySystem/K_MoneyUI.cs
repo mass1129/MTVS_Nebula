@@ -30,7 +30,7 @@ public class K_MoneyUI : MonoBehaviourPun
     }
     private void UpdateText()
     {
-        goldText.text = player.GetGoldAmount().ToString();
+        goldText.text = player.goldAmount.ToString();
 
     }
     private void Instance_OnGoldAmountChanged(object sender, System.EventArgs e)

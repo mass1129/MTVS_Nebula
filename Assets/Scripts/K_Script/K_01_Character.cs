@@ -23,22 +23,11 @@ public class K_01_Character : K_Player
         states[(int)PlayerStates.Jump] = new K_01_OwnedStates.Jump();
         states[(int)PlayerStates.Falling] = new K_01_OwnedStates.Falling();
         states[(int)PlayerStates.FreeCamMode] = new K_01_OwnedStates.FreeCamMode();
-        //states[(int)PlayerStates.Global] = new K_01_OwnedStates.Global();
-
-        // upperBodyStates는 기존 states와 따로 관리.
-        //upperBodyStates = new K_PlayerState<K_Player>[7];
-        //upperBodyStates[(int)PlayerUpperBodyStates.None] = new K_01_OwnedStates.None();
-        //upperBodyStates[(int)PlayerUpperBodyStates.Move_Upper] = new K_01_OwnedStates.Move_Upper();
-        //upperBodyStates[(int)PlayerUpperBodyStates.Global] = new K_01_OwnedStates.Global_Upper();
 
         // 상태를 관리하는 StateMachine에 메모리 할당 및 첫 상태 결정
         stateMachine = new K_StateMachine<K_Player>();
         stateMachine.SetUp(this, states[(int)PlayerStates.Idle]);
-        //stateMachine.SetGlobalState(states[(int)PlayerStates.Global]);
 
-        //upperBodyStateMachine = new K_StateMachine<K_Player>();
-        //upperBodyStateMachine.SetUp(this, upperBodyStates[(int)PlayerUpperBodyStates.None]);
-        //upperBodyStateMachine.SetGlobalState(upperBodyStates[(int)PlayerUpperBodyStates.Global]);
 
 
     }

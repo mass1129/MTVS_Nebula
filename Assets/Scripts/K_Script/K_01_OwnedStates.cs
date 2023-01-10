@@ -322,7 +322,7 @@ namespace K_01_OwnedStates
             entity.input.y = 0;
             entity.SetTrigger("ThirdMove");
             K_UserWorldMgr.instance.HandleBuildingObj(true);
-            K_UserWorldMgr.instance.buildingSystem.TestLoad(entity.ownIslandID).Forget();
+            K_UserWorldMgr.instance.buildingSystem.BuildingLoad(entity.ownIslandID).Forget();
             
             entity.camMgr.buildCamera.gameObject.SetActive(true);
             
@@ -382,7 +382,7 @@ namespace K_01_OwnedStates
 
     public override void Exit(K_Player entity)
         {
-            K_UserWorldMgr.instance.buildingSystem.TestSave(entity.ownIslandID).Forget();
+            K_UserWorldMgr.instance.buildingSystem.BuildingSave(entity.ownIslandID).Forget();
 
             K_UserWorldMgr.instance.HandleBuildingObj(false);
             entity.camMgr.buildCamera.gameObject.SetActive(false);
