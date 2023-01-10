@@ -3,12 +3,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
-using Photon.Pun;
 using CodeMonkey.Utils;
-using Cysharp.Threading.Tasks;
 
 
-public abstract class K_UserInterface : MonoBehaviourPun
+
+public abstract class K_UserInterface : MonoBehaviour
 {
     //public K_PlayerItemSystem player;
     public InventoryObject inventory;
@@ -19,9 +18,8 @@ public abstract class K_UserInterface : MonoBehaviourPun
 
 
 
-    public void OnEnable()
+    private void OnEnable()
     {
-        if (!photonView.IsMine) return;
         if (!isAddedEvent)
         {
             CreateSlots();
@@ -33,7 +31,6 @@ public abstract class K_UserInterface : MonoBehaviourPun
 
     private void OnDestroy()
     {
-        if (!photonView.IsMine) return;
         for (int i = 0; i < inventory.GetSlots.Length; i++)
         {
             inventory.GetSlots[i].onAfterUpdated -= OnSlotUpdate;
@@ -61,20 +58,20 @@ public abstract class K_UserInterface : MonoBehaviourPun
     }
 
 
-    public void OnEnterInterface(GameObject obj)
+    protected void OnEnterInterface(GameObject obj)
     {
         MouseData.interfaceMouseIsOver = obj.GetComponent<K_UserInterface>();
     }
-    public void OnExitInterface(GameObject obj)
+    protected void OnExitInterface(GameObject obj)
     {
         MouseData.interfaceMouseIsOver = null;
     }
-    public void OnEnter(GameObject obj)
+    protected void OnEnter(GameObject obj)
     {
         MouseData.slotHoveredOver = obj;
     }
 
-    public void OnExit(GameObject obj)
+    protected void OnExit(GameObject obj)
     {
         //player.mouseItem.hoverObj = null;
         //player.mouseItem.hoverItem = null;
@@ -82,13 +79,13 @@ public abstract class K_UserInterface : MonoBehaviourPun
 
     }
 
-    public void OnDragStart(GameObject obj)
+    protected void OnDragStart(GameObject obj)
     {
         Debug.Log(slotsOnInterface[obj].item.name);
         //slotsOnInterface[obj].UpdateSlot(slotsOnInterface[obj].item, slotsOnInterface[obj].amount);
         MouseData.tempItemBeingDragged = CreateTempItem(obj);
     }
-    public void OnDrag(GameObject obj)
+    protected void OnDrag(GameObject obj)
     {
         if (MouseData.tempItemBeingDragged != null)
         {
@@ -96,7 +93,7 @@ public abstract class K_UserInterface : MonoBehaviourPun
         }
     }
 
-    public void OnDragEnd(GameObject obj)
+    protected void OnDragEnd(GameObject obj)
     {
         Destroy(MouseData.tempItemBeingDragged);
 
@@ -115,7 +112,7 @@ public abstract class K_UserInterface : MonoBehaviourPun
 
     }
 
-    private GameObject CreateTempItem(GameObject obj)
+    protected GameObject CreateTempItem(GameObject obj)
     {
         GameObject tempItem = null;
         if (slotsOnInterface[obj].item.id >= 0)
