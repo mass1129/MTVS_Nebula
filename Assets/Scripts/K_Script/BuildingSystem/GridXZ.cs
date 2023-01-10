@@ -4,94 +4,71 @@ using System.Collections.Generic;
 using UnityEngine;
 using CodeMonkey.Utils;
 
+//형식 매개변수 TGridObject
 public class GridXZ<TGridObject> {
 
-    public event EventHandler<OnGridObjectChangedEventArgs> OnGridObjectChanged;
-    public class OnGridObjectChangedEventArgs : EventArgs 
-    {
-        public int x;
-        public int z;
-    }
 
+    //가로
     private int width;
+    //세로
     private int height;
+    //정사각형 cell 한개의 변길이
     private float cellSize;
+    //cell이 만들어지기 시작하는 지점
     private Vector3 originPosition;
+    //객체를 생성할 때 입력받은 형식으로 치환  
+    //cell의 2차원 배열
     private TGridObject[,] gridArray;
 
-    public GridXZ(int width, int height, float cellSize, Vector3 originPosition, Func<GridXZ<TGridObject>, int, int, TGridObject> createGridObject) {
+    //클래스 생성자
+    //Func<GridXZ<TGridObject>, int, int, TGridObject> createGridObject 의 형식 매개변수중 마지막은 반환 형식
+    public GridXZ(int width, int height, float cellSize, Vector3 originPosition, Func<TGridObject> createGridObject) 
+    {
+        //매개변수와 이름이 같은것은 this를 통해 모호성 제거
         this.width = width;
         this.height = height;
         this.cellSize = cellSize;
         this.originPosition = originPosition;
-
+        //cell 2차원 배열 초기화
         gridArray = new TGridObject[width, height];
-
+        //cell 2차원 배열 할당
         for (int x = 0; x < gridArray.GetLength(0); x++) {
             for (int z = 0; z < gridArray.GetLength(1); z++) {
-                gridArray[x, z] = createGridObject(this, x, z);
-            }
+                //Func를 통해 GridObject세팅
+                gridArray[x, z] = createGridObject();
+            }                                             
         }
 
-        bool showDebug = false;
-        if (showDebug) {
-            TextMesh[,] debugTextArray = new TextMesh[width, height];
-
-            for (int x = 0; x < gridArray.GetLength(0); x++) {
-                for (int z = 0; z < gridArray.GetLength(1); z++) {
-                    debugTextArray[x, z] = UtilsClass.CreateWorldText(gridArray[x, z]?.ToString(), null, GetWorldPosition(x, z) + new Vector3(cellSize, 0, cellSize) * .5f, 80, Color.white, TextAnchor.MiddleCenter, TextAlignment.Center);
-                    debugTextArray[x, z].transform.localScale = Vector3.one * .13f;
-                    debugTextArray[x, z].transform.eulerAngles = new Vector3(90, 0, 0);
-                    Debug.DrawLine(GetWorldPosition(x, z), GetWorldPosition(x, z + 1), Color.white, 100f);
-                    Debug.DrawLine(GetWorldPosition(x, z), GetWorldPosition(x + 1, z), Color.white, 100f);
-                }
-            }
-            Debug.DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height), Color.white, 100f);
-            Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height), Color.white, 100f);
-
-            OnGridObjectChanged += (object sender, OnGridObjectChangedEventArgs eventArgs) => {
-                debugTextArray[eventArgs.x, eventArgs.z].text = gridArray[eventArgs.x, eventArgs.z]?.ToString();
-            };
-        }
     }
-
+    //가로 길이 Get
     public int GetWidth() {
         return width;
     }
-
+    //세로 길이 Get
     public int GetHeight() {
         return height;
     }
-
+    //cell 한변 길이 Get
     public float GetCellSize() {
         return cellSize;
     }
-
-    public Vector3 GetWorldPosition(int x, int z) {
-        return new Vector3(x, 0, z) * cellSize + originPosition;
+    //2차원 좌표를 3차원 좌표로 반환
+    public Vector3 GetWorldPosition(Vector2Int gridPosition)
+    {
+        return new Vector3(gridPosition.x, 0, gridPosition.y) * cellSize + originPosition;
     }
-
-    public void GetXZ(Vector3 worldPosition, out int x, out int z) {
+    //3차원좌표를 버림을 통해 그리드 좌측 하단의 꼭지점 좌표로
+    public void GetVertext(Vector3 worldPosition, out int x, out int z) {
         x = Mathf.FloorToInt((worldPosition - originPosition).x / cellSize);
         z = Mathf.FloorToInt((worldPosition - originPosition).z / cellSize);
     }
-
-    public void SetGridObject(int x, int z, TGridObject value) {
-        if (x >= 0 && z >= 0 && x < width && z < height) {
-            gridArray[x, z] = value;
-            TriggerGridObjectChanged(x, z);
-        }
+    public void GetVertext(Vector3 worldPosition, out Vector2Int gridPosition)
+    {
+        int x = Mathf.FloorToInt((worldPosition - originPosition).x / cellSize);
+        int z = Mathf.FloorToInt((worldPosition - originPosition).z / cellSize);
+        gridPosition = new Vector2Int(x, z);
     }
-
-    public void TriggerGridObjectChanged(int x, int z) {
-        OnGridObjectChanged?.Invoke(this, new OnGridObjectChangedEventArgs { x = x, z = z });
-    }
-
-    public void SetGridObject(Vector3 worldPosition, TGridObject value) {
-        GetXZ(worldPosition, out int x, out int z);
-        SetGridObject(x, z, value);
-    }
-
+    //그리드 칸 반환
     public TGridObject GetGridObject(int x, int z) {
         if (x >= 0 && z >= 0 && x < width && z < height) {
             return gridArray[x, z];
@@ -102,17 +79,11 @@ public class GridXZ<TGridObject> {
 
     public TGridObject GetGridObject(Vector3 worldPosition) {
         int x, z;
-        GetXZ(worldPosition, out x, out z);
+        GetVertext(worldPosition, out x, out z);
         return GetGridObject(x, z);
     }
 
-    public Vector2Int ValidateGridPosition(Vector2Int gridPosition) {
-        return new Vector2Int(
-            Mathf.Clamp(gridPosition.x, 0, width - 1),
-            Mathf.Clamp(gridPosition.y, 0, height - 1)
-        );
-    }
-
+    //좌표가 범위 안에 있는지 확인
     public bool IsValidGridPosition(Vector2Int gridPosition) {
         int x = gridPosition.x;
         int z = gridPosition.y;
@@ -124,16 +95,5 @@ public class GridXZ<TGridObject> {
         }
     }
 
-    public bool IsValidGridPositionWithPadding(Vector2Int gridPosition) {
-        Vector2Int padding = new Vector2Int(2, 2);
-        int x = gridPosition.x;
-        int z = gridPosition.y;
-
-        if (x >= padding.x && z >= padding.y && x < width - padding.x && z < height - padding.y) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
 }

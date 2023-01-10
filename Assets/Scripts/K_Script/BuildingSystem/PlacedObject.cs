@@ -4,9 +4,16 @@ using UnityEngine;
 using Photon.Pun;
 using System.IO;
 
+
 public class PlacedObject : MonoBehaviourPun
 {
-
+    public PlacedObjectTypeSO placedObjectTypeSO;
+    public Vector2Int origin;
+    public PlacedObjectTypeSO.Dir dir;
+    //인스턴스 유무에 관계없이 실행할수있는 정적 메소드
+    //네트워크 객체로 모든플레이어에게 동일하게 생성한다.
+    //네트워크 객체로 생성하지 않을려면 건물 속성들을 전부 동기화 시켜서 각 클라이언트에서 만들어야 한다.
+    //네트워크 객체로 생성하려면 각 건물에 photonview가 붙어야 한다. 각 클라이언트는 보유할수있는 viewiD가 제한이 있기때문에 건물이 많아질때는 좋은 방법은 아니다.
     public static PlacedObject Create(Vector3 worldPosition, Vector2Int origin, PlacedObjectTypeSO.Dir dir, PlacedObjectTypeSO placedObjectTypeSO)
     {
         
@@ -19,78 +26,52 @@ public class PlacedObject : MonoBehaviourPun
 
         placedObject.Setup();
         return placedObject;
-        //TestCreate(worldPosition, origin, dir, placedObjectTypeSO);
     }
-   
-
-    private PlacedObjectTypeSO placedObjectTypeSO;
-    private Vector2Int origin;
-    private PlacedObjectTypeSO.Dir dir;
-
-    protected virtual void Setup() {
-        //Debug.Log("PlacedObject.Setup() " + transform);
-    }
-
-    public virtual void GridSetupDone() {
-        photonView.RPC("RPCGridSetupDone", RpcTarget.AllBuffered);
-    }
+    //유저월드 매니저에 건물 리스트 추가 OR 제거
     [PunRPC]
-    public void RPCGridSetupDone()
+    public void RPCPlaceObjListUpdate(bool toAdd)
     {
-        K_UserWorldMgr.instance.loadObjectList.Add(this);
+        if (toAdd)
+            K_UserWorldMgr.instance.loadObjectList.Add(this);
+        else
+            K_UserWorldMgr.instance.loadObjectList.Remove(this);
     }
-    protected virtual void TriggerGridObjectChanged() {
-        foreach (Vector2Int gridPosition in GetGridPositionList()) {
-            GridBuildingSystem3D.Instance.GetGridObject(gridPosition).TriggerGridObjectChanged();
-        }
+    void Setup() {
+        photonView.RPC("RPCPlaceObjListUpdate", RpcTarget.AllBuffered, true);
     }
+    public virtual void DestroySelf()
+    {
 
-    public Vector2Int GetGridPosition() {
-        return origin;
+
+        photonView.RPC("RPCPlaceObjListUpdate", RpcTarget.AllBuffered, false);
+        PhotonNetwork.Destroy(photonView);
+
     }
+    
+
 
     public List<Vector2Int> GetGridPositionList() {
         return placedObjectTypeSO.GetGridPositionList(origin, dir);
     }
 
-    public virtual void DestroySelf(bool oneByOne =false) {
-
-        if(oneByOne)
-        photonView.RPC("RPCDestroySelf", RpcTarget.AllBuffered);
-        PhotonNetwork.Destroy(photonView);
-        
-    }
-    [PunRPC]
-    public void RPCDestroySelf()
+   
+    //직렬화 데이터 생성후 반환
+    public SaveObject GetSaveObject()
     {
-        K_UserWorldMgr.instance.loadObjectList.Remove(this);
-    }
-    public override string ToString() {
-        return placedObjectTypeSO.nameString;
-    }
-
-
-    public PlacedObject(PlacedObjectTypeSO placedObjectTypeSO, Vector2Int origin, PlacedObjectTypeSO.Dir dir)
-    {
-        this.placedObjectTypeSO = placedObjectTypeSO;
-        this.origin = origin;
-        this.dir = dir;
-    }
-
-    public SaveObject GetSaveObject() 
-    {
-        return new SaveObject {
+        return new SaveObject
+        {
             placedObjectTypeSOName = placedObjectTypeSO.name,
             origin = origin,
             dir = dir,
-            
+
         };
     }
 
- 
+
 
     [System.Serializable]
-    public class SaveObject {
+    public class SaveObject
+    {
 
         public string placedObjectTypeSOName;
         public Vector2Int origin;

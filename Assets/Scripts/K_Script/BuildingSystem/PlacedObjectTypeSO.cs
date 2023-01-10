@@ -22,31 +22,6 @@ public class PlacedObjectTypeSO : ScriptableObject
         }
     }
 
-    public static Vector2Int GetDirForwardVector(Dir dir) {
-        switch (dir) {
-            default:
-            case Dir.Down: return new Vector2Int(0, -1);
-            case Dir.Left: return new Vector2Int(-1, 0);
-            case Dir.Up: return new Vector2Int(0, +1);
-            case Dir.Right: return new Vector2Int(+1, 0);
-        }
-    }
-
-    public static Dir GetDir(Vector2Int from, Vector2Int to) {
-        if (from.x < to.x) {
-            return Dir.Right;
-        } else {
-            if (from.x > to.x) {
-                return Dir.Left;
-            } else {
-                if (from.y < to.y) {
-                    return Dir.Up;
-                } else {
-                    return Dir.Down;
-                }
-            }
-        }
-    }
 
     public enum Dir {
         Down,
@@ -57,7 +32,7 @@ public class PlacedObjectTypeSO : ScriptableObject
 
     
 
-
+    //건물의 rotation Quaternion값을 계산해줌
     public int GetRotationAngle(Dir dir) {
         switch (dir) {
             default:
@@ -67,7 +42,7 @@ public class PlacedObjectTypeSO : ScriptableObject
             case Dir.Right: return 270;
         }
     }
-
+    //회전 방향에 따라 마우스그리드점과의 offset를 계산
     public Vector2Int GetRotationOffset(Dir dir) {
         switch (dir) {
             default:
@@ -79,6 +54,9 @@ public class PlacedObjectTypeSO : ScriptableObject
         }
     }
 
+    //해당 오브젝트가 차지하고 있는 좌표 리스트를 반환한다.
+    //offset은 origin, dir은 건물의 방향
+    //orgin과 dir를 바탕으로 좌표 리스트를 계산
     public List<Vector2Int> GetGridPositionList(Vector2Int offset, Dir dir) {
         List<Vector2Int> gridPositionList = new List<Vector2Int>();
         switch (dir) {
