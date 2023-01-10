@@ -1,7 +1,6 @@
 using UnityEngine;
 using TMPro;
 using UltimateClean;
-using Cysharp.Threading.Tasks;
 
 public class K_PlayerStats : MonoBehaviour
 {
@@ -13,7 +12,7 @@ public class K_PlayerStats : MonoBehaviour
 
     public InventoryObject _equipment;
 
-    public async UniTask SetPlayerStats()
+    public void SetPlayerStats()
     {
         for (int i = 0; i < attributes.Length; i++)
         {
@@ -27,7 +26,7 @@ public class K_PlayerStats : MonoBehaviour
             _equipment.GetSlots[i].onBeforeUpdated += OnRemoveItem;
             _equipment.GetSlots[i].onAfterUpdated += OnEquipItem;
         }
-        await UniTask.Yield();
+
     }
     private void OnDestroy()
     {

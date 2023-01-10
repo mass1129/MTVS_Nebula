@@ -8,8 +8,7 @@ using UnityEngine;
 public class K_MoneySystem : MonoBehaviourPun
 {
     public event EventHandler OnGoldAmountChanged;
-    [SerializeField]
-    private int goldAmount;
+    public int goldAmount { get; private set; }
     K_PlayerItemSystem itemsystem;
     public string avatarName { get; private set; }
     public K_ShopListInterface shopInterface { get; }
@@ -21,59 +20,56 @@ public class K_MoneySystem : MonoBehaviourPun
         itemsystem=GetComponent<K_PlayerItemSystem>();
         StartCoroutine(MoneyCoroutine());
     }
-    public int GetGoldAmount()
-    {
-        return goldAmount;
-    }
+
     IEnumerator MoneyCoroutine()
     {
         while (true)
         {
-            yield return MoneyLoad();
+            MoneyLoad().Forget();
             yield return new WaitForSeconds(5f);
         }
     }
-    public async UniTask MoneyLoad()
+    public async UniTaskVoid MoneyLoad()
     {
-        if (!photonView.IsMine) return;
-        var url = "https://resource.mtvs-nebula.com/inventory/money/" + avatarName;
-        var httpReq = new HttpRequester(new JsonSerializationOption());
+        //if (!photonView.IsMine) return;
+        //var url = "https://resource.mtvs-nebula.com/inventory/money/" + avatarName;
+        //var httpReq = new HttpRequester(new JsonSerializationOption());
 
-        H_Money_Root result2 = await httpReq.Get<H_Money_Root>(url);
+        //H_Money_Root result2 = await httpReq.Get<H_Money_Root>(url);
 
-        goldAmount = result2.results.money; 
-        OnGoldAmountChanged?.Invoke(this, EventArgs.Empty);
+        //goldAmount = result2.results.money; 
+        //OnGoldAmountChanged?.Invoke(this, EventArgs.Empty);
       
 
     }
-    public async UniTask BuyClothesEvent(ItemObject item)
+    public async UniTaskVoid BuyClothesEvent(ItemObject item)
     {
-        H_Buy_Clothes buyClothes = new H_Buy_Clothes
-        {
-            clothesName = item.name
-        };
+        //H_Buy_Clothes buyClothes = new H_Buy_Clothes
+        //{
+        //    clothesName = item.name
+        //};
 
-        string json = JsonUtility.ToJson(buyClothes, true);
-        Debug.Log(json);
-        var url = "https://resource.mtvs-nebula.com/purchase/clothes/" + avatarName;
-        var httpReq = new HttpRequester(new JsonSerializationOption());
+        //string json = JsonUtility.ToJson(buyClothes, true);
+        //Debug.Log(json);
+        //var url = "https://resource.mtvs-nebula.com/purchase/clothes/" + avatarName;
+        //var httpReq = new HttpRequester(new JsonSerializationOption());
 
 
-        H_CheckBuy_Root result = await httpReq.Post1<H_CheckBuy_Root>(url, json);
-        //string json2 = JsonUtility.ToJson(result);
-        if (result.httpStatus == 201)
-        {
-            await itemsystem.inven_Cloths.InventoryLoad(avatarName);
-            await MoneyLoad();
+        //H_CheckBuy_Root result = await httpReq.Post1<H_CheckBuy_Root>(url, json);
+        ////string json2 = JsonUtility.ToJson(result);
+        //if (result.httpStatus == 201)
+        //{
+        //    await itemsystem.inven_Cloths.InventoryLoad(avatarName);
+        //    MoneyLoad().Forget();
 
-        }
-        else
-        {
-            Debug.Log("FailToBuy");
-        }
+        //}
+        //else
+        //{
+        //    Debug.Log("FailToBuy");
+        //}
     }
 
-    public async UniTask BuyBBundleEvent(ItemObject item)
+    public async UniTaskVoid BuyBBundleEvent(ItemObject item)
     {
         H_Buy_Building buyBB = new H_Buy_Building
         {
@@ -90,8 +86,8 @@ public class K_MoneySystem : MonoBehaviourPun
 
         if (result.httpStatus == 201)
         {
-            await itemsystem.inven_Building.InventoryLoad(avatarName);
-            await MoneyLoad();
+            itemsystem.inven_Building.InventoryLoad(avatarName);
+            MoneyLoad().Forget();
             await shopInterface.ShopItemLoad();
         }
         else

@@ -6,6 +6,7 @@ using UnityEngine;
 using AdvancedPeopleSystem;
 using Cysharp.Threading.Tasks;
 using UnityEngine.SceneManagement;
+using PN = Photon.Pun.PhotonNetwork;
 
 public class K_UserWorldMgr : MonoBehaviourPunCallbacks
 {
@@ -17,11 +18,17 @@ public class K_UserWorldMgr : MonoBehaviourPunCallbacks
     public List<GameObject> buildingSystemSet;
     public List<PlacedObject> loadObjectList;
     public string playerPrefeb;
+
+
+
     private void Awake()
     {
-        instance = this;
+
+            instance = this;
 
     }
+
+
     void Start()
     {
         var player = PhotonNetwork.Instantiate(playerPrefeb, new Vector3((int)Random.Range(40, 60), 3, (int)Random.Range(40, 60)), Quaternion.identity);
@@ -34,7 +41,7 @@ public class K_UserWorldMgr : MonoBehaviourPunCallbacks
         }
         HandleBuildingObj(false);
 
-        _character.PlayerSetting().Forget();
+        _character.PlayerSetting();
     }
 
 
@@ -72,12 +79,6 @@ public class K_UserWorldMgr : MonoBehaviourPunCallbacks
         {
             DestoryAllBuilding(other);
         }
-        _character.itemSystem.UpdateEquipment();
-        Debug.Log("equipLoad");
-
-
-        
-
     }
     public override void OnPlayerLeftRoom(Player other)
     {

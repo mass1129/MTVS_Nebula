@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-using AdvancedPeopleSystem;
-using Cysharp.Threading.Tasks;
+
 public enum PlayerStates // Player의 기본 상태
 {
     Idle,
@@ -94,7 +91,7 @@ public class K_Player : MonoBehaviourPun, IPunObservable
 
    
 
-    public async UniTask PlayerSetting()
+    public void PlayerSetting()
     {
         if (photonView.IsMine)
         {
@@ -104,7 +101,7 @@ public class K_Player : MonoBehaviourPun, IPunObservable
             canMove = false;
             camPos.SetActive(true);
             playerUi.SetActive(true);
-            await itemSystem.SetItemSystem(avatarName);
+            itemSystem.SetItemSystem(avatarName);
             canMove = true;
 
         }
