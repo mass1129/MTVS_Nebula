@@ -39,7 +39,7 @@ public class PlacedObject : MonoBehaviourPun
     void Setup() {
         photonView.RPC("RPCPlaceObjListUpdate", RpcTarget.AllBuffered, true);
     }
-    public virtual void DestroySelf()
+    public void DestroySelf()
     {
 
 

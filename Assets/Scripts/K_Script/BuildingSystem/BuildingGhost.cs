@@ -39,15 +39,16 @@ public class BuildingGhost : MonoBehaviour {
         }
         //빌딩시스템에서 선택한 빌딩 종류를 받아라
         PlacedObjectTypeSO placedObjectTypeSO = buildingSystem.GetPlacedObjectTypeSO();
+        //선택한 빌딩이 없다면 return
+        if (placedObjectTypeSO == null) return;
         //선택한 빌딩이 있다면
-        if (placedObjectTypeSO != null) {
-            //해당 빌딩의 임시 오브젝트 생성
-            visual = Instantiate(placedObjectTypeSO.visual, Vector3.zero, Quaternion.identity, this.transform);
-            visual.localPosition = Vector3.zero;
-            visual.localEulerAngles = Vector3.zero;
-            //오브젝트레이어 설정
-            SetLayerRecursive(visual.gameObject, 12);
-        }
+        //해당 빌딩의 임시 오브젝트 생성
+        visual = Instantiate(placedObjectTypeSO.visual, Vector3.zero, Quaternion.identity, this.transform);
+        visual.localPosition = Vector3.zero;
+        visual.localEulerAngles = Vector3.zero;
+        //오브젝트레이어 설정
+        SetLayerRecursive(visual.gameObject, 12);
+        
     }
     //12번 레이어를 파랑색으로 렌더링하도록 URP rendering 세팅을 했기 때문에
     private void SetLayerRecursive(GameObject targetGameObject, int layer) {
