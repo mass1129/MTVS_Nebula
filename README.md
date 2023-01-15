@@ -75,7 +75,7 @@
       - 슬롯 업데이트 전후 ~~Action~~ 이벤트   
     - **Method**  
       - **ItemObject GetItemObject()** : 아이템의 id로 아이템 데이터 베이스에 등록된 ItemObject를 찾아서 반환  
-      - **void UpdateSlot(Item itemValue, int amountValue)** : **슬롯을 업데이트하는 핵심 메소드**    
+      - **void UpdateSlot(Item itemValue, int amountValue)** : **슬롯을 업데이트하는 핵심 메서드**    
         ```C#
         public void UpdateSlot(Item itemValue, int amountValue)
         {
@@ -101,10 +101,10 @@
       - **void AddBundleListToWindow(ItemObject[] bundleList)** : ItemObject.cs의 subItem[]배열를 받아 빌딩번들 리스트(InventoryObject로 관리)에 추가  
       - **void SwapItems(InventorySlot dragExitSlot, InventorySlot dragStartSlot)** : UI상에서 드래그&드롭시 슬롯 위치 변경  
       - **Inventory GetInventory()** : 직렬화 데이터(Inventory) return - equipment와 clothes 인벤토리는 데이터 멱등성 유지를 위해 함께 저장하는데 이때 필요  
-      - **void UpdateInventory()** : 인벤토리가 로드되고 슬롯 event에 관련 메소드가 참조되면(UI와 장비에서) 해당 메소드가 스킵되기 때문에 event에 메소드를 등록후 해당 메소드를 호출하기 위해 만든 메소드  
-      - **async UniTask InventorySave(string s)** : 비동기 인벤토리 세이브 메소드  
-      - **async UniTask InventoryLoad(string s)** : 비동기 인벤토리 로드 메소드   
-      - **async UniTask ForGiveItem(InventorySlot dropSlot, string avatarName)** : 비동기 아이템 소유권 포기 후 인벤토리 로드 메소드(데이터 멱등성 유지)    
+      - **void UpdateInventory()** : 인벤토리가 로드되고 슬롯 event에 관련 메서드가 참조되면(UI와 장비에서) 해당 메소드가 스킵되기 때문에 event에 메서드를 등록후 해당 메서드를 호출하기 위해 만든 메서드  
+      - **async UniTask InventorySave(string s)** : 비동기 인벤토리 세이브 메서드  
+      - **async UniTask InventoryLoad(string s)** : 비동기 인벤토리 로드 메서드   
+      - **async UniTask ForGiveItem(InventorySlot dropSlot, string avatarName)** : 비동기 아이템 소유권 포기 후 인벤토리 로드 메서드(데이터 멱등성 유지)    
       
   - **Inventory.cs** : 서버와 주고 받을 인벤토리 데이터 클래스(InventorySlot[]으로 구성)    
   - **Inventory 데이터 Post/Get 구조도**  
@@ -117,17 +117,17 @@
   - **개요** : 플레이어의 전반적인 inventory를 관리(저장/불러오기) => 그렇기 때문에 플레이어 생성시 플레이어 세팅, 아바타 장비 장착 시스템  
   - **Function**  
     - **UniTask SetItemSystem(string s)** : 플레이어 세팅 메소드
-      - 플레이어가 처음 생성되면 각 클래스에서 세팅 메소드를 순차적으로 실행해야 하기에 순서를 이 클래스에서 관리  
+      - 플레이어가 처음 생성되면 각 클래스에서 세팅 메서드를 순차적으로 실행해야 하기에 순서를 이 클래스에서 관리  
       - 순서  
-        아바타 클래스(캐릭터 텍스쳐 Load) -> 장비 슬롯 event에 메소드 참조 -> 플레이어 스탯 시스템 세팅 -> 이후 아이템 로드를 통해 슬롯 event에 참조된 모든 메소드가 실행되면서 정상적으로 플레이어가 로드  
-    - **void OnEquipItem(InventorySlot slot)** : 슬롯 event 참조 메소드 => 아이템 장착에 따른 캐릭터 비주얼 업데이트  
-    - **UniTask TwoInvenSave()** : 네트워크 파트에서 아이템 세이브 시 데이터 멱등성 유지를 위해(해킹 방지) 클라이언트에서 보내는 저장 데이터와 기존 서버 데이터 베이스에 있는 인벤토리 정보를 비교 한다고 함, 이 때장비-옷 통합 인벤토리가 필요하다고 해서 하나의 인벤토리 저장 메소드는 있지만 통합 인벤토리 저장 메소드를 따로 만들었다.   
+        아바타 클래스(캐릭터 텍스쳐 Load) -> 장비 슬롯 event에 메서드 참조 -> 플레이어 스탯 시스템 세팅 -> 이후 아이템 로드를 통해 슬롯 event에 참조된 모든 메서드가 실행되면서 정상적으로 플레이어가 로드  
+    - **void OnEquipItem(InventorySlot slot)** : 슬롯 event 참조 메서드 => 아이템 장착에 따른 캐릭터 비주얼 업데이트  
+    - **UniTask TwoInvenSave()** : 네트워크 파트에서 아이템 세이브 시 데이터 멱등성 유지를 위해(해킹 방지) 클라이언트에서 보내는 저장 데이터와 기존 서버 데이터 베이스에 있는 인벤토리 정보를 비교 한다고 함, 이 때장비-옷 통합 인벤토리가 필요하다고 해서 하나의 인벤토리 저장 메서드는 있지만 통합 인벤토리 저장 메서드를 따로 만들었다.   
 
 
 ## UI - Inventory  
  - 개요  
-    - 추상클래스를 상속받음으로서 **슬롯 세팅 - CreateSlots()** / **슬롯 event 참조 메소드 - OnSlotUpdate(InventorySlot)** 를 자식 클래스에서 반드시 구현하도록 함.  
-    - 또 한가지 이유는 UI type 별로 위에 기술한 두가지 메소드가 다르기 때문이다.  
+    - 추상클래스를 상속받음으로서 **슬롯 세팅 - CreateSlots()** / **슬롯 event 참조 메서드 - OnSlotUpdate(InventorySlot)** 를 자식 클래스에서 반드시 구현하도록 함.  
+    - 또 한가지 이유는 UI type 별로 위에 기술한 두가지 메서드가 다르기 때문이다.  
     - 세팅시 슬롯마다 등록하는 UI이벤트 메소드들은 자식 클래스에서 공통으로 사용하므로 추상클래스에 선언 후 자식클래스에서 구현하는 CreateSlots()에서 사용  
       ![Diagram](https://github.com/mass1129/MTVS_Nebula/blob/mass7/Image/testDiagram.drawio.png)
  - **K_UserInterface.cs : 추상 클래스**  
@@ -177,7 +177,7 @@
  - **K_MoneyUI.cs** : 게임 머니 UI를 관리하는 클래스  
     - 해당 클래스를 사용하는 머니 UI는 2개이다. 
     - 화면 상단에 항상 있는 UI와 상점 탭을 눌렀을때 보여지는 UI  
-    - 상점 탭을 눌렀을때 보여지는 UI는 평상시에는 비활성화 되어 있기 때문에 이벤트가 정상적으로 가지 않기 때문에 OnEnable()에 머니시스템 이벤트에 참조 메소드는 한번만 등록하되 머니 UI갱신은 OnEnable될때마다 계속 호출되도록 하였다. 
+    - 상점 탭을 눌렀을때 보여지는 UI는 평상시에는 비활성화 되어 있기 때문에 이벤트가 정상적으로 가지 않기 때문에 OnEnable()에 머니시스템 이벤트에 참조 메서드는 한번만 등록하되 머니 UI갱신은 OnEnable될때마다 계속 호출되도록 하였다. 
   
  - **K_ShopListInterface.cs**  
     -  **개요**  
@@ -187,7 +187,7 @@
     - **Field** 
       - 부모 클래스에서는 Dictionary<GameObject, InventorySlot> 형태의 딕션어리를 사용했다. 왜냐면 인벤토리 슬롯 드래그/드롭시 해당 슬롯 GameObject를 Key값으로 InventorySlot을 찾아야 했기 때문인다.  
       - 이미지만 갱신하면 되었던 기존 UI와는 다르게 상점 UI는 이미지, discription, 가격, 등등 많은 것들을 갱신해줘야했다. 
-      - 따라서 **샵 아이템 슬롯 모듈 클래스\(ShopSlotModule.cs)** 를 만들어서 갱신해야하는 속성들을 필드에 선언하고 세팅해주는 메소드를 만들고 이것을 슬롯 갱신 이벤트에 참조시켜야했다.    
+      - 따라서 **샵 아이템 슬롯 모듈 클래스\(ShopSlotModule.cs)** 를 만들어서 갱신해야하는 속성들을 필드에 선언하고 세팅해주는 메서드를 만들고 이것을 슬롯 갱신 이벤트에 참조시켜야했다.    
       - 슬롯 갱신 이벤트는 **InventorySlot**를 입력 매개변수로 받는다. 따라서 슬롯을 매개변수로 ShopSlotModule로 접근해야했다.  
       - 물론 기존 UI에서 GameObject를 **InventorySlot.slotDisplay**에 참조시킨것처럼 슬롯 클래스에 ShopSlotModule 필드를 만들고 참조시켜도 되었지만 상점 UI때문에 모든 슬롯에 해당 필드를 만드는 것은 비효율적으로 보였다.  
       - 따라서 **K_ShopListInterface**클래스에서는 아래와 같이 부모 클래스의 필드를 숨기고 재정의 하였다.
@@ -195,8 +195,8 @@
         public new Dictionary<InventorySlot, ShopSlotModule> slotsOnInterface; //new를 통해 재정의
         ```   
     -  **override Function**  
-        -  **void CreateSlots()** : UI 세팅시 호출되는 메소드이다.   
-            - 상점 UI는 상점 아이템 개수에 따라 모듈이 생성/파괴 되기 때문에 UI세팅과 상점 아이템 로드를 하나의 메소드로 통합했다.  
+        -  **void CreateSlots()** : UI 세팅시 호출되는 메서드이다.   
+            - 상점 UI는 상점 아이템 개수에 따라 모듈이 생성/파괴 되기 때문에 UI세팅과 상점 아이템 로드를 하나의 메서드로 통합했다.  
         ```C#
         public async UniTask ShopItemLoad(){
             // ...
@@ -208,14 +208,14 @@
                 int temp = i; //순서가 건너뛰어지지않게 하드 코딩
                 var obj = Instantiate(shopSlotModuleprefeb, Vector3.zero, Quaternion.identity, moduleParent); //모듈 생성
                 slotsOnInterface.Add(inventory.GetSlots[temp], obj.GetComponent<ShopSlotModule>()); //Dictionary 세팅
-                inventory.GetSlots[temp].onAfterUpdated += OnSlotUpdate;} //슬롯 이벤트에 관련 메소드 참조  
+                inventory.GetSlots[temp].onAfterUpdated += OnSlotUpdate;} //슬롯 이벤트에 관련 메서드 참조  
             for (int i = 0; i < newList.Count; i++){ //슬롯 갱신
                 int temp = i;
                 ItemObject itemObject = inventory.database.ItemObjects[newList[temp].id]; //리스트의 아이템 id를 바탕으로 데이터베이스에서 기존 아이템 참조 생성  
                 slotsOnInterface[inventory.GetSlots[temp]].itemPrice = newList[temp].price; //price속성은 기존 아이템이 없는 속성이라서 상점 모듈 필드에 할당  
                 inventory.GetSlots[temp].UpdateSlot(new Item(itemObject), 1);}  //상점 인벤토리의 슬롯을 UpdateSlot해주면 이벤트가 호출되면서 갱신 완료  
         ```   
-      - **void OnSlotUpdate(InventorySlot slot)** : 이벤트에 참조시킬 메소드이다. slot를 입력매개변수로 받으면 재정의한 dictionary에 key값을 통해 ShopSlotModule접근하여 메소드를 참조시켜 훨씬 깔끔하고 간결한 코드가 되었다.
+      - **void OnSlotUpdate(InventorySlot slot)** : 이벤트에 참조시킬 메서드이다. slot를 입력매개변수로 받으면 재정의한 dictionary에 key값을 통해 ShopSlotModule접근하여 메서드를 참조시켜 훨씬 깔끔하고 간결한 코드가 되었다.
           ```C#
           public override void OnSlotUpdate(InventorySlot slot){
               slotsOnInterface[slot].SetShopModule(slot, inventory); //
@@ -229,7 +229,21 @@
 
   
 ## 월드 꾸미기
-
+ - **월드 꾸미기 알고리즘**
+   
+    <img src="Image/GBdiagram.png" width="400px">  
+    
+ - **건축 부지**  
+    
+    <img src="Image/grid.jpg" width="500px">  
+    
+ - **건물**  
+   
+    <img src="Image/placeobject.jpg" width="500px">  
+    
+ - **클래스 다이어그램**
+   
+    <img src="Image/DG_buidling2.png" width="700px">  
 
 
 # 프로젝트 종료 이후 (22.12.18~) 이슈 관리 및 개선 사항  
@@ -241,3 +255,5 @@
 ### UI관련 코드 리펙토링  [#6](https://github.com/mass1129/MTVS_Nebula/issues/6)
 ### HTTP 통신 모듈 개선 [#7](https://github.com/mass1129/MTVS_Nebula/issues/7)
 ### Photon Multiplay 개선 작업 [#8](https://github.com/mass1129/MTVS_Nebula/issues/8)
+### 서버 종료에 따른 서버 비의존성 코드 작성 [#9](https://github.com/mass1129/MTVS_Nebula/issues/9)
+### 비동기 메서드 무분별 사용 수정 [#10](https://github.com/mass1129/MTVS_Nebula/issues/10)
