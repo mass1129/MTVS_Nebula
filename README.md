@@ -2,6 +2,7 @@
   - 메타버스 아카데미 최종 프로젝트(2022.10.4 ~ 2022.12.1)  
   - 🏆 최종 성과공유회 장려상(한국전파진흥협회장)  
   - [프로젝트 pdf](https://github.com/mass1129/MTVS_Nebula/blob/mass7/Image/52Hertz_Nebula_MTVS.pdf) 
+  - [팀 깃허브](https://github.com/MTVS-Nebula)
 
 ## 애플리케이션 개요
   - 메타버스 소셜 네트워크 서비스  
