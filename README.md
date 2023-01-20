@@ -20,7 +20,7 @@
 ----
 # 주요 구현 요소(김혜성) : 유저 월드 담당  
   
-## 프로토타입 영상 (10/5 - 10/10)  
+## 프로토타입 개발 및 영상 제작  (10/5 - 10/10)  
 [![Video Label](http://img.youtube.com/vi/HBiD05-DEZE/0.jpg)](https://youtu.be/HBiD05-DEZE)
 
 ## HTTP 통신 모듈 제작  
@@ -53,7 +53,7 @@
         T Deserialize<T>(string text);
     }
     ```
-## 아이템 시스템 [Assets/Scripts/K_Script/ItemSystem](https://github.com/mass1129/MTVS_Nebula/tree/mass7/Assets/Scripts/K_Script/ItemSystem)    
+## 아이템 시스템  
   - 구현 Gif  
     <img src="Image/GetItem.gif" style="width:400px"></img>  <img src="Image/EquipItem.gif" style="width:400px"></img>  
   - 유니티의 Scriptable Object를 활용하여 설계  
