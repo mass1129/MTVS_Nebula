@@ -18,7 +18,10 @@
 <img src="Image/ppt_xrStructure.jpg" width="800px">  
 
 ----
-# 주요 구현 요소(김혜성) : 유저 월드 담당
+# 주요 구현 요소(김혜성) : 유저 월드 담당  
+  
+## 프로토타입 영상 (10/5 - 10/10)  
+[![Video Label](http://img.youtube.com/vi/HBiD05-DEZE/0.jpg)](https://youtu.be/HBiD05-DEZE)
 
 ## HTTP 통신 모듈 제작  
   - [Assets/Scripts/K_Script/Http](https://github.com/mass1129/MTVS_Nebula/tree/mass7/Assets/Scripts/K_Script/Http)  
@@ -50,8 +53,9 @@
         T Deserialize<T>(string text);
     }
     ```
-## 아이템 시스템  
-  - [Assets/Scripts/K_Script/ItemSystem](https://github.com/mass1129/MTVS_Nebula/tree/mass7/Assets/Scripts/K_Script/ItemSystem)  
+## 아이템 시스템 [Assets/Scripts/K_Script/ItemSystem](https://github.com/mass1129/MTVS_Nebula/tree/mass7/Assets/Scripts/K_Script/ItemSystem)    
+  - 구현 Gif  
+    <img src="Image/GetItem.gif" style="width:400px"></img>  <img src="Image/EquipItem.gif" style="width:400px"></img>  
   - 유니티의 Scriptable Object를 활용하여 설계  
       - 유니티에서 제공하는 대량의 데이터를 저장하는 데이터 컨테이너  
       - 인스턴스화 될때 데이터에 대한 사본을 생성하지 않고 메모리(힙)에 Scriptable Object의 데이터 사본만을 저장하고 이를 참조하는 방식 -> 메모리 사용 줄일 수 있다.  
@@ -240,6 +244,7 @@
  - **건물**  
    
     <img src="Image/placeobject.jpg" width="500px">  
+    <img src="Image/buildingRot.gif" style="width:500px"></img>
     
  - **클래스 다이어그램**
    
